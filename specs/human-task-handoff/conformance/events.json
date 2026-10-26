@@ -1,0 +1,362 @@
+{
+  "hth": "0.1",
+  "description": "Message vectors: event -> which schema it must validate against (dispatch on type+origin), or invalid.",
+  "cases": [
+    {
+      "id": "registered",
+      "schema": "registered",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "task-demo-aaaaaaaaaa",
+        "type": "registered",
+        "origin": "registrar",
+        "text": "Renew the domain",
+        "due": "2026-11-30",
+        "context": "bulk-import"
+      }
+    },
+    {
+      "id": "registered-no-text",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "task-demo-aaaaaaaaaa",
+        "type": "registered",
+        "origin": "registrar"
+      }
+    },
+    {
+      "id": "registered-from-owner",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "task-demo-aaaaaaaaaa",
+        "type": "registered",
+        "origin": "owner",
+        "text": "x"
+      }
+    },
+    {
+      "id": "owner-done",
+      "schema": "resolution",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "r1",
+        "type": "done",
+        "origin": "owner",
+        "note": "paid"
+      }
+    },
+    {
+      "id": "owner-dropped",
+      "schema": "resolution",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "r2",
+        "type": "dropped",
+        "origin": "owner"
+      }
+    },
+    {
+      "id": "owner-already-done",
+      "schema": "resolution",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "r3",
+        "type": "already_done",
+        "origin": "owner"
+      }
+    },
+    {
+      "id": "owner-done-inferred",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "r4",
+        "type": "done",
+        "origin": "owner",
+        "inferred": true,
+        "evidence": "x"
+      }
+    },
+    {
+      "id": "reopened",
+      "schema": "reopened",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "r5",
+        "type": "reopened",
+        "origin": "owner",
+        "text": "Renew the domain"
+      }
+    },
+    {
+      "id": "reopened-no-text",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "r6",
+        "type": "reopened",
+        "origin": "owner"
+      }
+    },
+    {
+      "id": "agent-done",
+      "schema": "agent-report",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "a1",
+        "type": "done",
+        "origin": "agent",
+        "note": "paid in session"
+      }
+    },
+    {
+      "id": "agent-dropped",
+      "schema": "agent-report",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "a2",
+        "type": "dropped",
+        "origin": "agent"
+      }
+    },
+    {
+      "id": "agent-already-done",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "a3",
+        "type": "already_done",
+        "origin": "agent"
+      }
+    },
+    {
+      "id": "agent-reopened",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "a4",
+        "type": "reopened",
+        "origin": "agent",
+        "text": "x"
+      }
+    },
+    {
+      "id": "inferred-done",
+      "schema": "inferred-done",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "done-task-demo-aaaaaaaaaa",
+        "type": "done",
+        "origin": "registrar",
+        "inferred": true,
+        "evidence": "Line removed on 2026-10-26: the domain renewal shows as paid."
+      }
+    },
+    {
+      "id": "inferred-done-no-evidence",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "i2",
+        "type": "done",
+        "origin": "registrar",
+        "inferred": true
+      }
+    },
+    {
+      "id": "registrar-done-not-inferred",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "i3",
+        "type": "done",
+        "origin": "registrar",
+        "evidence": "x"
+      }
+    },
+    {
+      "id": "registrar-dropped",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "i4",
+        "type": "dropped",
+        "origin": "registrar",
+        "inferred": true,
+        "evidence": "x"
+      }
+    },
+    {
+      "id": "unknown-field-ignored",
+      "schema": "resolution",
+      "valid": true,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "u1",
+        "type": "done",
+        "origin": "owner",
+        "x_vendor": {
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "bad-key",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task demo",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "b1",
+        "type": "done",
+        "origin": "owner"
+      }
+    },
+    {
+      "id": "bad-ts",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27 09:00",
+        "id": "b2",
+        "type": "done",
+        "origin": "owner"
+      }
+    },
+    {
+      "id": "bad-version",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "1.0",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "b3",
+        "type": "done",
+        "origin": "owner"
+      }
+    },
+    {
+      "id": "bad-due",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "b4",
+        "type": "registered",
+        "origin": "registrar",
+        "text": "x",
+        "due": "soon"
+      }
+    },
+    {
+      "id": "missing-project",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "b5",
+        "type": "done",
+        "origin": "owner"
+      }
+    },
+    {
+      "id": "unknown-type",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "hth": "0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "b6",
+        "type": "snoozed",
+        "origin": "owner"
+      }
+    }
+  ]
+}

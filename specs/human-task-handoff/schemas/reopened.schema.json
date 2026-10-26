@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reopened.schema.json",
+  "title": "HTH v0.1 reopened",
+  "description": "Owner side -> registrar: the task is open again. The registrar re-adds the line if it is missing.",
+  "$ref": "envelope.schema.json",
+  "required": ["text"],
+  "properties": {
+    "type": {"const": "reopened"},
+    "origin": {"const": "owner"},
+    "inferred": {"const": false}
+  }
+}

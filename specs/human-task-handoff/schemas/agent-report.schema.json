@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agent-report.schema.json",
+  "title": "HTH v0.1 agent report",
+  "description": "Agent -> owner side: while working with the owner in a session, the agent saw the task done or no longer needed. Not a resolution until the owner side emits one.",
+  "$ref": "envelope.schema.json",
+  "properties": {
+    "type": {"enum": ["done", "dropped"]},
+    "origin": {"const": "agent"},
+    "inferred": {"const": false}
+  }
+}
