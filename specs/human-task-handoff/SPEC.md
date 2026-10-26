@@ -553,18 +553,43 @@ claims conformance for a profile when it passes every case for that profile (and
 
 ## 11. Relation to other specifications
 
-HTH reuses existing standards for everything outside its gap and is meant to be carried by them.
+*Non-normative. The detailed comparison, with versions and citations, is in [RELATED-WORK.md](RELATED-WORK.md).*
 
-- **Model Context Protocol (MCP)** connects agents to tools and data sources. A registrar or owner side can expose
-  HTH as MCP tools (for example `report_task_done(key)`) or the open owner tasks as an MCP resource; HTH defines the
-  data and lifecycle such tools would implement, not the tool interface.
+Existing protocols that involve a person place the request inside a live unit of work, such as one call, one task an
+agent server runs, or one run on a thread. In each of them, the system that created the unit decides when it is
+complete. HTH covers work that only the owner can do: it outlives every agent run, and the owner side, not the agent,
+decides when it is resolved. HTH reuses the protocols below for transport and exposure and borrows their vocabulary,
+rather than redefining what they cover.
+
+- **Agent2Agent (A2A)** standardises how agents delegate long-running tasks to other agents: server-generated task
+  ids, `input-required`/`auth-required` states, `ListTasks`, at-least-once webhooks and extensions identified by URI.
+  It is the closest fit at the wire level, and HTH events can travel as an A2A extension. A2A terminal tasks accept
+  no further messages, and task ids are minted by the server. So a binding that maps each HTH task to one A2A task
+  cannot express `reopened` directly, and HTH's key has to travel in metadata (§12).
+- **Model Context Protocol (MCP)** connects agents to tools and data. Its elicitation asks the client's user for
+  input during one request. Its Tasks extension lets a server turn a `tools/call` into a task, which the server
+  owns; tasks have an optional TTL and cannot be listed. A registrar or owner side can expose HTH as MCP tools (for
+  example `report_task_done(key)`) or the open owner tasks as an MCP resource. HTH defines the data and lifecycle
+  such tools would implement, not the tool interface.
+- **AG-UI** and agent frameworks (LangGraph interrupts, the OpenAI and Microsoft agent SDKs, Temporal) pause one run
+  or workflow for a person's answer. AG-UI's rule that an unanswered interrupt is not an abandoned one is the same
+  principle as §4.6: an inferred `done` is not a resolution.
+- **Collaborative Human-Agent Protocol (CHAP)** specifies a coordinator-hosted workspace in which several people and
+  agents assign, review, override, escalate and hand off work, with an audit log as the record. HTH is narrower: it
+  has a single owner and no coordinator, the state document is the record, and only the owner side resolves a task.
+  HTH events can be carried over CHAP. HTH is not a CHAP profile, because it treats the document, not a coordinator
+  log, as the record.
+- **iCalendar VTODO, JSCalendar and JMAP Tasks** model tasks assigned to people with persistent ids and statuses. An
+  owner side MAY store HTH tasks as VTODOs or JSCalendar tasks, for example in the owner's existing task app. As an
+  exchange protocol, iTIP gives the organizer control of the master copy and does not let an attendee reopen or
+  withdraw a task, which is the opposite of HTH's authority model. HTH's owner-side states correspond to JSCalendar
+  `progress`: an open task is `needs-action`; `done` and `already_done` are `completed`; `dropped` is `cancelled`.
 - **AGENTS.md** tells agents how to work in a repository. A project that uses HTH SHOULD say so there, naming the
   profile and the state document path, for example: *"Tasks only the owner can do go into `STATE.md` under
   `## Tasks` as `- [ ] [owner] …`. Never edit a line that ends with `(waiting on owner: …)`."*
-- **Agent2Agent (A2A)** standardises how agents delegate tasks to other agents and track their state. HTH covers the
-  case where the assignee is a human and the request must persist in a document across sessions. An A2A task that
-  needs the human (for example, one waiting for user input) can be surfaced as an HTH owner task, and HTH events can
-  travel as A2A messages between a registrar agent and an owner-side agent.
+- **Plain-text task formats** (GFM task lists, todo.txt, TASKS.md) put tasks in files without a round trip from the
+  person's tool. TASKS.md, a queue for agents, deletes completed lines. HTH treats a deleted keyed line only as
+  evidence for an inferred `done` that the owner confirms (§4.6).
 - **W3C community work on agent memory** addresses the format, encryption and deletion of what agents remember. The
   state document is not agent memory in that sense; HTH defines only the tasks section of a shared, human-readable
   document.
@@ -578,6 +603,25 @@ HTH reuses existing standards for everything outside its gap and is meant to be 
   and registrars SHOULD warn when a new line derives a key that has already been resolved.
 - **Due dates in Markdown.** `due` exists in the message binding but has no Markdown syntax yet.
 - **Multiple owners.** HTH 0.1 assumes one owner per registrar.
+- **A2A binding.** Two shapes are possible (RELATED-WORK.md §4):
+  - one long-lived A2A task per project that carries HTH events unchanged;
+  - one A2A task per HTH task.
+
+  The second cannot express `reopened`, because terminal tasks accept no messages and a server cannot open a task
+  unprompted, and it has to choose between `TASK_STATE_CANCELED` and `TASK_STATE_REJECTED` for `dropped`. A later
+  version should pick one shape and define the extension URI.
+- **Vocabulary alignment.** Owner-side state names could follow JSCalendar `progress` (`needs-action`, `completed`,
+  `cancelled`), and a profile could let a CalDAV or JMAP task list act as the owner side.
+- **Proposed for 0.2: explicit-decision rules.** These are the rules of the AAIF workflows working group's
+  approval-gate pattern, adapted:
+  - silence or a timeout never resolves a task;
+  - every resolution records who made it and when;
+  - a duplicate resolution has no further effect.
+
+  HTH 0.1 implies the first and the last (§4.6, I4) without stating them as rules.
+- **Content-derived keys.** Every identifier in the surveyed protocols is opaque. HTH derives its key from the project
+  and the text, so a stateless registrar can register idempotently. The cost is that the text of a keyed line is
+  frozen (I1), and a re-declared text collides with a resolved one (above).
 
 ## 13. Implementations
 
@@ -586,7 +630,7 @@ HTH reuses existing standards for everything outside its gap and is meant to be 
 | Implementation | Roles | Profiles | Status |
 |---|---|---|---|
 | [`reference/`](reference/) in this repository | reader, registrar logic (no transport) | `en`, `zh-hant` | passes the conformance suite |
-| agent-hub (to be published) | registrar, agents; its personal assistant is the owner side | `zh-hant` | the reference deployment this document is generalised from; conformance adapter in progress |
+| agent-hub (to be published) | registrar, agents; its personal assistant is the owner side | `zh-hant` | the reference deployment this document is generalised from; passes the `zh-hant` parse, key and apply cases |
 
 Appendix B maps the reference deployment's internal message names to HTH.
 
@@ -652,3 +696,8 @@ bus. Adapters map them as follows:
 - Model Context Protocol, <https://modelcontextprotocol.io>.
 - AGENTS.md, <https://agents.md>.
 - Agent2Agent (A2A) Protocol, <https://a2a-protocol.org>.
+- [RFC 5545] Desruisseaux, B., Ed., "Internet Calendaring and Scheduling Core Object Specification (iCalendar)", RFC 5545, September 2009.
+- [RFC 5546] Daboo, C., Ed., "iCalendar Transport-Independent Interoperability Protocol (iTIP)", RFC 5546, December 2009.
+- [RFC 8984] Jenkins, N. and R. Stepanek, "JSCalendar: A JSON Representation of Calendar Data", RFC 8984, July 2021.
+- AG-UI, <https://docs.ag-ui.com>.
+- Collaborative Human-Agent Protocol (CHAP), <https://github.com/BrightbeamAI/chap>.
