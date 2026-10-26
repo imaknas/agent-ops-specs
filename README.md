@@ -18,4 +18,6 @@ Each spec is generalised from a working system that already runs it (called "the
 specs). Each spec's `reference/` directory holds a small, standard-library-only reference parser that passes the
 suite: `cd specs/human-task-handoff/reference && python3 -m unittest` (Python 3.10 or later).
 
+Reference implementation: agent-hub (to be published).
+
 Licensed under Apache-2.0.

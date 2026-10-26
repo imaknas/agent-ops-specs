@@ -33,6 +33,7 @@ parameterised profiles, a JSON message binding with JSON Schemas, and a conforma
 10. [Versioning](#10-versioning)
 11. [Relation to other specifications](#11-relation-to-other-specifications)
 12. [Open issues](#12-open-issues)
+13. [Implementations](#13-implementations)
 
 Appendix A: [Worked example](#appendix-a-worked-example) ·
 Appendix B: [Mapping notes for the reference deployment](#appendix-b-mapping-notes-for-the-reference-deployment)
@@ -577,6 +578,17 @@ HTH reuses existing standards for everything outside its gap and is meant to be 
   and registrars SHOULD warn when a new line derives a key that has already been resolved.
 - **Due dates in Markdown.** `due` exists in the message binding but has no Markdown syntax yet.
 - **Multiple owners.** HTH 0.1 assumes one owner per registrar.
+
+## 13. Implementations
+
+*Non-normative.*
+
+| Implementation | Roles | Profiles | Status |
+|---|---|---|---|
+| [`reference/`](reference/) in this repository | reader, registrar logic (no transport) | `en`, `zh-hant` | passes the conformance suite |
+| agent-hub (to be published) | registrar, agents; its personal assistant is the owner side | `zh-hant` | the reference deployment this document is generalised from; conformance adapter in progress |
+
+Appendix B maps the reference deployment's internal message names to HTH.
 
 ---
 
