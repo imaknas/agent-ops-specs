@@ -10,7 +10,7 @@ cover what those leave open.
 
 | Spec | Status | What it covers | Artifacts |
 |---|---|---|---|
-| [Principal Handoff](specs/principal-handoff/README.md) | draft: Core 0.2, Tasks 0.2, Questions 0.1 | How work and answers only the principal (the person the agents work for) can give leave the agents, reach the principal's own tool, and come back resolved | [core](specs/principal-handoff/core/SPEC.md) · [tasks](specs/principal-handoff/tasks/SPEC.md) · [questions](specs/principal-handoff/questions/SPEC.md) · [reference](specs/principal-handoff/reference/) |
+| [Principal Handoff](specs/principal-handoff/README.md) | draft: Core 0.3, Acts 0.3, Decisions 0.3 | How work and choices only the principal (the person or organisation the agents act for) can settle leave the agents, reach the principal's own tool, and come back settled, with who decided and under what authority | [core](specs/principal-handoff/core/SPEC.md) · [acts](specs/principal-handoff/acts/SPEC.md) · [decisions](specs/principal-handoff/decisions/SPEC.md) · [reference](specs/principal-handoff/reference/) |
 
 Each spec ships with a JSON Schema for its messages and a conformance suite (`conformance/`) that any implementation
 can run. A spec is only promoted past draft once two independent implementations pass the same suite.

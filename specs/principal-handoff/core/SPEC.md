@@ -1,40 +1,46 @@
-# Principal Handoff Core 0.2
+# Principal Handoff Core 0.3
 
 | | |
 |---|---|
 | Status | Draft |
-| Version | 0.2 (2026-10-27) |
+| Version | 0.3 (2026-10-27) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) |
-| Extensions | [Tasks](../tasks/SPEC.md) · [Questions](../questions/SPEC.md) |
+| Extensions | [Acts](../acts/SPEC.md) · [Decisions](../decisions/SPEC.md) |
 
 ## Abstract
 
-AI agents that work for a person regularly hit things only that person can settle. Some are work: pay an invoice,
-sign up for an account, buy a part. Some are answers: which design, which vendor, yes or no. The person is the agents'
-**principal**: the party they act for. Principal Handoff specifies how such items leave the agents, reach the
-principal's own tool (the **principal side**), and come back resolved, when the items outlive every agent session and
-the principal side, not the agents, decides when they are resolved.
+AI agents working for someone keep reaching things only that someone may settle: work only they can do (pay, sign,
+buy) and choices only they may make (which design, whether to spend). That someone is the agents' **principal**.
+Principal Handoff specifies how such items leave the agents, reach the principal's own tool (the **principal side**),
+and come back settled, when the items outlive every agent session.
 
-This document is the **core**. It defines the roles, the event envelope, identifiers, delivery and the authority rule
-shared by every extension. Each kind of item is an **extension** with its own document:
-
-- [**Tasks**](../tasks/SPEC.md): work only the principal can do, declared as lines in a project's state document.
-- [**Questions**](../questions/SPEC.md): answers or decisions only the principal can give, asked as messages.
-
-An implementation may support one extension without the other.
+The core defines one model for every kind of item. Each item has two **registers** with different owners: the
+**need**, owned by the agent that raised it, and the **settlement**, owned by the principal side. Every change is an
+append-only, attributable **record** that names who made it, under what **authority**, with what **evidence**.
+Assertions by anyone else are **claims**, which change nothing until the owner of the register records something. The
+**extensions** define the two kinds of item: [Acts](../acts/SPEC.md) (work only the principal can do, with a Markdown
+binding for a project's state document) and [Decisions](../decisions/SPEC.md) (answers and choices only the principal
+may make).
 
 ## Table of contents
 
 1. [Conventions and terminology](#1-conventions-and-terminology)
-2. [Authority](#2-authority)
-3. [Event envelope](#3-event-envelope)
-4. [Identifiers, deduplication and delivery](#4-identifiers-deduplication-and-delivery)
-5. [Extensions](#5-extensions)
-6. [Conformance](#6-conformance)
-7. [Security and privacy considerations](#7-security-and-privacy-considerations)
-8. [Versioning](#8-versioning)
-9. [Relation to other specifications](#9-relation-to-other-specifications)
+2. [Model](#2-model)
+3. [Ownership](#3-ownership)
+4. [Records](#4-records)
+5. [Authority and evidence](#5-authority-and-evidence)
+6. [Current state](#6-current-state)
+7. [Claims, relations and notes](#7-claims-relations-and-notes)
+8. [Delivery and application](#8-delivery-and-application)
+9. [When a person decides](#9-when-a-person-decides)
+10. [Identifiers, deduplication and ordering](#10-identifiers-deduplication-and-ordering)
+11. [Extensions](#11-extensions)
+12. [Conformance](#12-conformance)
+13. [Security and privacy considerations](#13-security-and-privacy-considerations)
+14. [Versioning](#14-versioning)
+15. [Scope](#15-scope)
+16. [Relation to other specifications](#16-relation-to-other-specifications)
 
 ## 1. Conventions and terminology
 
@@ -43,179 +49,384 @@ RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as de
 [RFC 8174] when, and only when, they appear in all capitals, as shown here. Sections marked *non-normative*, examples
 and notes are informative.
 
+**Party identifier**
+: A string that identifies one party (a person, an organisation, an agent, a system) within a deployment, no
+whitespace, 1–256 characters. This family does not define how parties are authenticated (§13).
+
 **Principal**
-: The party the agents act for: usually one person. Only the principal can settle the items this family hands off.
+: The single party at the root of every delegation chain in a deployment, on whose behalf its agents and delegates
+act. The principal is identified by the **principal identifier**, which is configured as in §3 (R6). The principal
+MUST be a natural person, or a legal person or public body that a natural person is able to act for. A deployment
+MUST NOT designate a software agent or system as the principal, whatever legal form wraps it.
+*Note (informative): in practice the principal is the party that bears responsibility, under the law or rules that
+apply, for what is decided in its name. This specification does not determine who that is; §15 says how a future
+version may revisit the type constraint.*
 
 **Principal side**
-: The system where the principal sees and settles those items: a personal assistant, a to-do app, an issue tracker.
-It may act for the principal in ways the extension allows (for example, an assistant answering in the principal's
-words), but it is accountable for what it emits as the principal's.
+: The system through which the principal sees and settles items: a personal assistant, a to-do app, an issue
+tracker. It is an instrument, not a party with authority of its own: when it settles without the principal it does so
+as a delegate (§5). It is configured with exactly one principal identifier.
 
-**Agent**
-: Any automated worker acting for the principal: a coding agent in a session, a background job, an assistant.
+**Requester**
+: The agent, acting for a project, that raised an item. It owns the item's need register (§3).
+
+**Delegate**
+: Any agent or system that decides on the principal's behalf without the principal deciding or confirming,
+including the principal side itself and agents further up a delegation chain. A delegate is never the principal.
+
+**Decider**
+: The party a settlement record names as having made the settlement (§5).
 
 **Project**
 : A unit of work the agents work on, identified by a project name unique within one deployment.
 
 **Item**
-: One thing handed to the principal side: a task (Tasks extension) or a question (Questions extension).
+: One thing only the principal may settle. An item has a **kind** (defined by an extension: `act` or `decide`), a
+**key**, a project, terms, and two registers.
 
 **Key**
-: The opaque identifier of an item within its project and extension. Each extension says who assigns it and how.
-An item is identified by the triple (extension name, `project`, `key`): a task and a question may share a key, and
-two projects may use the same key, without referring to the same item.
+: The opaque identifier of an item within its project and extension. An item is identified by the triple (extension
+name, `project`, `key`). Extensions say who assigns keys and how.
 
-**Event**
-: A JSON message about one item, exchanged between the roles an extension defines.
+**Terms**
+: What the item asks: its text, and as the extension defines, a due date, options and a working assumption.
 
-**Origin**
-: The role that emitted an event. Roles are defined by each extension; `principal` (the principal side) and `agent`
-are common to all.
+**Register**
+: One of an item's two sequences of records: the **need** register and the **settlement** register (§2).
 
-## 2. Authority
+**Record**
+: An append-only, attributable JSON message about one item (§4).
 
-The rule every extension builds on:
+**Claim**
+: A record asserting something about an item's settlement by a party that does not own the settlement register (§7).
 
-- **Only the principal side resolves an item.** A **resolution** is an event that settles an item for the principal
-  (done, answered, dropped, dismissed…). Resolutions, and events that undo one (reopening a task), are valid only with
-  `origin: "principal"`.
-- **Anything else that says an item is settled is a claim.** An agent that saw the principal settle it in a session,
-  or a component that infers it from evidence, MAY say so, but receivers MUST NOT treat a claim as a resolution. The
-  principal side decides whether to accept a claim; accepting it produces a principal-origin event.
-- **Silence never resolves.** No timeout, deadline or default turns into a resolution by itself. An extension MAY let
-  an item carry a default, but only as a working assumption while the item stays open.
-- **Each resolution is recorded with who made it and when** (`origin`, `ts`, and `decided_by`, §3), and a duplicate of
-  a resolution has no further effect (§4).
+**Relation**
+: A record linking an item to another item, inside or outside this family (§7).
 
-An extension MAY add roles and claims, but MUST NOT let any role other than the principal side emit a resolution.
+**Note**
+: A record that carries information without changing any register (§7).
 
-## 3. Event envelope
+## 2. Model
 
-Every event is a JSON object (RFC 8259) that validates against
-[`schemas/envelope.schema.json`](schemas/envelope.schema.json) and against the schema its extension assigns to its
+```
+                     need register (owner: requester)          settlement register (owner: principal side)
+                     ─────────────────────────────────          ───────────────────────────────────────────
+  requester ──────▶  raised · amended(terms_rev) · withdrawn    settled(outcome, authority, evidence) · reopened  ◀── principal side
+                                    │                                               ▲
+                                    └──── terms the settlement saw (terms_rev) ─────┘
+       anyone ─────▶  claim · note  (change no register)
+  principal side ──▶  relation (same_as)        requester ──▶ relation (derived_from)
+```
+
+Each item has two registers because the two questions they answer have different owners:
+
+- The **need** register says whether the requester still asks, and what it asks. Only the requester changes it.
+- The **settlement** register says whether, how, by whom and under what authority the item was settled. Only the
+  principal side changes it.
+
+An item's **current state** (§6) is computed from both registers. Neither register can overwrite the other: a late
+answer does not undo a withdrawal, and a withdrawal does not settle anything.
+
+## 3. Ownership
+
+These rules replace any notion that an item is "resolved" by whoever last spoke.
+
+- **R1 — The need belongs to the requester.** Only the requester emits `raised`, `amended` and `withdrawn` for its
+  item.
+- **R2 — The settlement belongs to the principal side.** Only the principal side emits `settled` and `reopened`. Each
+  carries a decider and an authority kind (§5).
+- **R3 — Everything else is a claim or a note.** A record by any other party that asserts a settlement is a claim
+  (§7). It changes no register, and receivers MUST NOT treat it as a settlement.
+- **R4 — Silence never settles.** No timeout, due date, default or working assumption produces a settlement. If the
+  principal side cannot reach the principal, the item stays open and visible; the principal side MUST NOT settle it
+  except as a delegate within a mandate (§5).
+- **R5 — Authority never grows down a chain.** A delegate MUST NOT settle an item that needs authority it does not
+  hold. It raises its own item upstream, `derived_from` the first (§7), and settles the first only from that item's
+  settlement.
+- **R6 — The principal is configured, not asserted.** The principal identifier is configured on the principal side
+  out of band by whoever operates the deployment. No record, claim, relation or mandate establishes or changes it, and
+  receivers MUST reject any that tries. The principal identifier MUST NOT equal the party identifier of any agent,
+  delegate or principal side in the deployment.
+
+## 4. Records
+
+Every record is a JSON object (RFC 8259) that validates against
+[`schemas/record.schema.json`](schemas/record.schema.json) and against the schema its extension assigns to its
 (`type`, `origin`) pair.
 
 | Member | Type | Req. | Meaning |
 |---|---|---|---|
-| `ph` | string | yes | Core version; `"0.2"` for this document. |
-| `ext` | string | yes | The extension and version that defines `type`, e.g. `"tasks/0.2"`, `"questions/0.1"`. |
-| `id` | string | yes | Event id, no whitespace, 1–256 characters. Stable across retransmissions (§4). |
-| `type` | string | yes | Event type, defined by the extension. |
-| `origin` | string | yes | Role that emitted the event, defined by the extension. |
-| `key` | string | yes | Key of the item the event is about. |
-| `project` | string | yes | Project name, no whitespace. |
-| `ts` | string | yes | RFC 3339 date-time at which the event was created. |
-| `text` | string | per extension | The item's text: a task as declared, a question as asked. |
-| `due` | string | no | `YYYY-MM-DD` by which the principal should act. |
-| `context` | string | no | Free-form tag for why the item was sent (for example `bulk-import`). |
-| `decided_by` | string | per extension | On a resolution: `principal` when the principal gave or confirmed it; `assistant` when the principal side made it on the principal's behalf without confirmation. A principal side MUST NOT send `principal` for a resolution the principal did not make or confirm. |
-| `note` | string | no | Free text from the emitting role. Extensions say where it must be delivered. |
+| `ph` | string | yes | Core version; `"0.3"` for this document. |
+| `ext` | string | yes | Extension name and version, e.g. `"acts/0.3"`, `"decisions/0.3"`. |
+| `id` | string | yes | Record id, no whitespace, 1–256 characters (§10). |
+| `type` | string | yes | One of the record types below. |
+| `origin` | string | yes | The role that emitted it: `requester`, `principal` (the principal side), `agent` (any other agent), or a role the extension defines. |
+| `by` | string | yes | Party identifier of the emitter. |
+| `key` | string | yes | Key of the item. |
+| `project` | string | yes | Project of the item. |
+| `ts` | string | yes | RFC 3339 date-time at which the record was created. |
+| `supersedes` | array of strings | no | Ids of records in the same register that this one replaces (§6). |
+| `terms` | object | on `raised`, `amended` | The item's terms; the members are defined by the extension. `text` is always present. |
+| `terms_rev` | integer ≥ 1 | on `raised`, `amended`, `settled` | On need records, the terms version (1 on `raised`, increasing by one on each `amended`). On a settlement, the terms version it was made against. |
+| `outcome` | string | on `settled`, `claimed` | What the settlement says or the claim asserts; values defined by the extension. |
+| `authority` | object | on `settled` | §5. |
+| `evidence` | object | no | §5. |
+| `relation` | object | on `related` | §7. |
+| `reason` | string | on `withdrawn` | Why the requester withdrew; values defined by the extension. |
+| `adopts` | array of strings | no | On `settled`: ids of claims this settlement accepts (§7). |
+| `about` | object | on `note` | §7. |
+| `note` | string | no | Free text from the emitter (§8). |
+| `context` | string | no | Free-form tag for why the record was sent, e.g. `bulk-import`. |
 
 Receivers MUST ignore members they do not recognise. Senders MAY add members; names beginning with `x_` are reserved
-for private extensions and will never be defined by this family.
+for private extensions.
 
-**Validation.** A receiver selects the schema by the event's `ext` and its (`type`, `origin`) pair, using the table in
-that extension, and MUST reject an event whose pair the extension does not list. A receiver that does not implement
-the extension named in `ext` (or that version of it, §8) MUST NOT act on the event; it SHOULD consume it without
-error, so that one transport can carry several extensions, and MAY report it. The schemas use JSON Schema draft
-2020-12 restricted to the keywords `type`, `required`, `properties`, `enum`, `const`, `pattern`, `items` and `$ref`
-(a relative path to another schema file), so that a small validator suffices; the reference implementation includes
-one.
+| `type` | Register | Allowed `origin` |
+|---|---|---|
+| `raised` | need | `requester` |
+| `amended` | need | `requester` |
+| `withdrawn` | need | `requester` |
+| `settled` | settlement | `principal` |
+| `reopened` | settlement | `principal` |
+| `claimed` | (claim) | any origin except `principal` |
+| `related` | (relation) | per relation kind (§7) |
+| `note` | (note) | any |
 
-## 4. Identifiers, deduplication and delivery
+Extensions MAY restrict this table further, and MUST NOT widen it. A receiver selects the schema by `ext` and the
+(`type`, `origin`) pair as the extension's table lists, and MUST reject a record whose pair is not listed. A receiver
+that does not implement the extension or version named in `ext` MUST NOT act on the record; it SHOULD consume it
+without error and MAY report it. The schemas use JSON Schema draft 2020-12 restricted to `type`, `required`,
+`properties`, `enum`, `const`, `pattern`, `items` and `$ref` (a relative path), so that a small validator suffices.
 
-- An event id MUST be unique per logical event within its (`ext` name, `project`), and MUST be the same on every
-  retransmission of that event. Extensions say how ids of particular events are derived when a sender must be able to
-  re-create them after a crash. A sender MUST NOT reuse an id for a different event.
-- Receivers MUST discard an event whose (`ext` name, `project`, `id`) they have already processed. A receiver that
-  sees an id reused with different content keeps the first and SHOULD report it: that is a sender error.
-- Senders MUST retry until the transport accepts the event. Every role MUST tolerate duplicates (at-least-once
-  delivery).
-- Ordering is not guaranteed. A receiver that gets an event for a key it has never seen MUST consume it without
-  error and act as its extension says.
-- Principal Handoff does not define a transport. Any transport with at-least-once delivery and authenticated senders
-  (§7) will do: an HTTPS webhook, a message bus, a shared append-only log, an MCP tool call, an A2A message.
+## 5. Authority and evidence
 
-## 5. Extensions
+Every `settled` record carries `authority`:
+
+| Member | Req. | Meaning |
+|---|---|---|
+| `kind` | yes | `principal`, `confirmed`, `delegated` or `attested`. |
+| `decider` | yes | Party identifier of whoever made the settlement. |
+| `under` | for `delegated` | Opaque reference to the mandate or standing instruction relied on. The principal side MUST be able to produce what it refers to. |
+| `chain` | for `delegated` | Party identifiers from the principal to the decider, in order. |
+| `representative` | no | For an organisation principal: the natural person who acted for it. |
+
+The four kinds:
+
+- **`principal`**: the principal decided. `decider` MUST be the principal identifier. For an organisation, the
+  natural person who acted for it is named in `representative`, and `evidence.proof` SHOULD include evidence of their
+  power to represent it.
+- **`confirmed`**: the principal confirmed a proposal made by a delegate. `decider` MUST be the principal identifier.
+  `evidence.proposal` identifies what was confirmed.
+- **`delegated`**: a delegate decided under a mandate, without the principal deciding or confirming. `decider` MUST
+  NOT be the principal identifier. The mandate's format, scope and revocation belong to its own system (§16); this
+  family only records the reference. A settlement whose mandate the principal side cannot produce MUST NOT be sent.
+- **`attested`**: the principal side or a delegate settled from evidence that the item was done or decided (for
+  example a payment record), without the principal confirming. `evidence.basis` is REQUIRED.
+
+`evidence`, when present, is an object:
+
+| Member | Meaning |
+|---|---|
+| `presented` | Digest (`sha-256:` + lowercase hex) of exactly what was shown to the person who decided or confirmed: the terms at `terms_rev` and any options or consequences the principal side displayed (§9). |
+| `proposal` | For `confirmed`: id of the record, or digest of the content, that was confirmed. |
+| `basis` | For `attested`: what the evidence was. |
+| `proof` | An opaque, independently verifiable proof: a detached signature or verifiable credential over the record without `evidence.proof`. |
+
+A settlement of kind `principal` or `confirmed` SHOULD carry `evidence.proof` made with the principal's own credential
+on a surface no agent controls. A **verifiable** principal side (§12) MUST.
+
+## 6. Current state
+
+Each register is folded separately, over all its records a receiver holds, regardless of arrival order:
+
+- A **head** is a record in the register that no other held record of the same register names in `supersedes`.
+- The **current** record is the head with the latest `ts`. Equal `ts` are broken by the greater `id` in code-point
+  order. If there is no head (`supersedes` links form a cycle), the same rule applies to all records of the register.
+- There is a **conflict** in the register when there is more than one head, or a cycle. Receivers MUST use the current
+  record and SHOULD report the conflict to a person.
+
+Records of the need register that do not name the record they replace still form one sequence: a requester's
+`amended` and `withdrawn` SHOULD supersede its previous need record, and a receiver that holds several heads uses the
+rule above.
+
+From the two current records, the item's state is:
+
+| Settlement (current) | Need (current) | State |
+|---|---|---|
+| `settled` | any | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the latest `terms_rev` in the need register. |
+| none, or `reopened` | `raised` or `amended` | **open** |
+| none, or `reopened` | `withdrawn` | per extension (§11): the principal side either keeps the item open and asks the principal, or stops presenting it |
+| none | none | **unknown** (no valid record held) |
+
+A stale settlement stays settled. The principal side SHOULD present it to the principal again, and the requester
+SHOULD treat it as made against outdated terms.
+
+## 7. Claims, relations and notes
+
+**Claims.** A `claimed` record asserts an `outcome` that the claimant has no authority to record: an agent that heard
+the principal say "I paid it", or a registrar that saw a declared line disappear. It SHOULD carry `evidence.basis`. A
+claim changes no register. The principal side MAY accept it by recording a settlement that lists the claim's id in
+`adopts`, with kind `confirmed` if the principal confirmed it and `attested` otherwise. A claim never removes an item
+from the principal's view.
+
+**Relations.** A `related` record carries `relation`:
+
+| Member | Meaning |
+|---|---|
+| `kind` | `same_as` or `derived_from`. |
+| `target` | The other item: `{"ext", "project", "key"}` for an item of this family, or `{"uri"}` for anything else (an A2A task, a bus message, an issue). |
+| `active` | `true`, or `false` to retract an earlier relation of the same kind and target. |
+
+- `same_as` is emitted by the principal side (`origin: "principal"`) when it treats two items as one, for example the
+  same request raised by two projects, or a request repeating one already settled. Settling one settles both for the
+  principal side. Each requester's need register is unaffected: one requester withdrawing leaves the other item open.
+  A requester that disagrees sends a `note` about its item saying why the two differ; the principal side SHOULD then
+  retract the relation.
+- `derived_from` is emitted by the requester when its item arises from another item, inside or outside this family
+  (§3 R5; a question asked while answering an inquiry from the principal; a task that an answer created).
+
+**Notes.** A `note` record carries information that changes no register: progress, a fact the principal mentioned, a
+premise that changed. It carries `about`, either `{"key": …}` for a keyed item or `{"quote": …}` with text in the
+recipient's own words for something that was never keyed. A note never settles anything. In particular, a note from
+the principal side saying a premise changed (a moved date) is not an amendment: the requester decides whether to amend
+its terms.
+
+## 8. Delivery and application
+
+- The principal side MUST deliver every settlement, relation it emits, and note it addresses to a project to that
+  project, where its agents will read it next (an inbox, notes, a decision log), not only to a session that may no
+  longer exist.
+- **Mechanical versus judgement.** Only an extension's binding applies records mechanically, and only to keyed items
+  (for example, striking a line in a state document). Everything else, including every note and every `quote`, is
+  applied by judgement: the recipient decides what changes. Implementations MUST NOT apply a `quote` reference
+  mechanically.
+- A `note` on any record is for the other party: on need records and claims, for the principal side, which SHOULD show
+  it with the item; on settlements and notes from the principal side, for the project.
+
+## 9. When a person decides
+
+These rules apply to every settlement of kind `principal` or `confirmed`, that is, whenever a natural person decides
+or confirms, whether the principal or an organisation's representative.
+
+- The principal side MUST present the terms at the `terms_rev` it records, and SHOULD record `evidence.presented`. If
+  the terms change before the person decides, the principal side MUST present them again.
+- The principal side SHOULD show the requester's working assumption as such, and SHOULD NOT pre-select it.
+- The principal side SHOULD batch and rate-limit items per project and SHOULD NOT present an item it can settle under
+  an existing mandate. A person's attention is the scarce resource this family protects.
+- *Note (informative):* a person who confirms everything they are shown is deciding only in name. Recording
+  `presented`, the authority kind and the decider makes that visible, and is a precondition for the human oversight
+  that rules such as the EU AI Act Article 14 require of high-risk systems.
+
+## 10. Identifiers, deduplication and ordering
+
+- A record id MUST be unique per logical record within its (`ext` name, `project`), and MUST be the same on every
+  retransmission. Extensions say how ids are derived when a sender must re-create them after a crash. A sender MUST
+  NOT reuse an id for a different record.
+- Receivers MUST discard a record whose (`ext` name, `project`, `id`) they have already processed. A receiver that sees
+  an id reused with different content keeps the first and SHOULD report it.
+- Senders MUST retry until the transport accepts the record (at-least-once delivery). Ordering is not guaranteed;
+  §6 makes the current state independent of arrival order.
+- A record that was never sent MAY be retracted by its sender without trace (for example, a settlement held for an
+  undo window). Once sent, a record is changed only by a later record that supersedes it.
+- This family does not define a transport. Any transport with at-least-once delivery and authenticated senders will
+  do: an HTTPS webhook, a message bus, a shared append-only log, an MCP tool call, an A2A message.
+
+## 11. Extensions
 
 An extension document MUST define:
 
-1. its name (lowercase, `[a-z][a-z0-9-]*`) and version, which together form the `ext` value;
-2. its roles, beyond `principal` and `agent`;
-3. its item model and how keys are assigned;
-4. its event types, and for each one the allowed origins and the schema (a table of (`type`, `origin`) → schema);
-5. which events are resolutions and which are claims, consistent with §2;
-6. where `note` and any other free text must be delivered, for every event type that may carry it;
+1. its name and version (the `ext` value) and the item kind it covers;
+2. the members of `terms`, and how keys are assigned;
+3. its `outcome` values for settlements and claims, and its `reason` values for withdrawals;
+4. its table of (`type`, `origin`) pairs with schemas, restricting §4;
+5. its policy for an item whose need is withdrawn and whose settlement is open (§6);
+6. any binding that applies records mechanically, and what it applies;
 7. its conformance classes and suite.
 
-Event types of different extensions MUST NOT be interpreted without their `ext`.
+## 12. Conformance
 
-## 6. Conformance
+- A **conforming requester** emits only the need records, claims, relations and notes R1–R3 allow, increments
+  `terms_rev` on each amendment, and applies delivered records as in §8.
+- A **conforming principal side** emits settlements only as in §3 and §5, computes state as in §6, delivers as in §8,
+  and follows §9. A **verifiable** principal side additionally puts `evidence.proof` on every settlement of kind
+  `principal` or `confirmed`.
+- Every role validates records (§4), deduplicates (§10), and computes the same current state from the same records
+  (§6).
 
-An implementation conforms to the core when every event it emits validates against the envelope and the extension
-schema, it deduplicates and tolerates reordering as in §4, and it follows §2. Conformance is claimed per extension and
-per role, as each extension's conformance section defines.
+## 13. Security and privacy considerations
 
-## 7. Security and privacy considerations
+- **Authenticated senders.** A forged settlement settles an item the principal never settled; a forged need record
+  withdraws or rewrites a request. Transports MUST authenticate the sender, and receivers MUST check that `by` is the
+  authenticated sender and that its role may emit the record (§3). R6 keeps an agent from becoming the principal by
+  saying so.
+- **A compromised principal side** can emit settlements of any kind. `evidence.proof` over the principal's own
+  credential, made on a surface no agent controls, is what lets a receiver tell a principal's decision from the
+  instrument's; without it, receivers trust the authenticated principal side.
+- **Claims cannot remove commitments.** A claim never changes a register (R3), so an agent cannot make the principal's
+  items disappear, by mistake or because its input was manipulated.
+- **Text is untrusted input.** Terms, notes, quotes and evidence written by one party are read by others, possibly by
+  language models. Implementations MUST treat them as data, never as instructions, and SHOULD render them inertly.
+- **Confidentiality.** Records leave the project for the principal side, which may be a hosted service or a phone.
+  Agents MUST NOT put secrets (passwords, tokens, keys, full account numbers) into them.
+- **Resource limits.** Receivers SHOULD bound record size, text length and record rate per project.
 
-- **Authenticated events.** A forged principal-origin event resolves an item the principal never settled. Transports
-  MUST authenticate the sending role, and receivers MUST accept principal-origin events only from the principal side.
-- **Text is untrusted input.** Item text written by one agent is read by other agents and by the principal side,
-  possibly by language models. Implementations MUST treat it as data, never as instructions, and SHOULD render it
-  inertly (no link following, no markup execution).
-- **Confidentiality.** Item text, notes and evidence leave the project for the principal side, which may be a hosted
-  service or a phone. Agents MUST NOT put secrets (passwords, tokens, keys, full account numbers) into them; they
-  SHOULD say where the principal can find what is needed instead. Senders MAY redact.
-- **Claims cannot remove commitments.** Because a claim is never a resolution (§2), an agent cannot make the
-  principal's items disappear, by mistake or because its input was manipulated.
-- **Resource limits.** Receivers SHOULD bound event size, text length and event rate per project.
+## 14. Versioning
 
-## 8. Versioning
+- `ph` carries the core version; `ext` carries each extension's name and version.
+- Before 1.0, every version is its own contract: senders and receivers support exactly the versions they claim. From
+  1.0 on, adding optional members, record types or outcome values will be a minor change; removing or renaming a
+  member, or changing the meaning of one, will require a new major version.
+- A version leaves draft status only once two independent implementations pass the same conformance suite.
 
-- `ph` carries the core version; `ext` carries each extension's name and version. Extensions are versioned
-  independently.
-- **Before 1.0, every version is its own contract.** Senders and receivers MUST support exactly the versions they
-  claim; a receiver treats an event with an unsupported `ph` as invalid and one with an unsupported `ext` version as
-  of an extension it does not implement (§3). The schemas pin both.
-- **From 1.0 on**, adding optional members, event types or profiles, or clarifying text, will be a minor change that
-  receivers of the same major version accept (ignoring what they do not know); removing or renaming a member, or
-  changing the meaning of a member or event, will require a new major version.
-- Breaking changes are listed in the change log below. A version leaves draft status only once two independent
-  implementations pass the same conformance suite.
+**Change log.** 0.3 (2026-10-27): the event model of 0.2 is replaced by two registers with owners, claims, relations
+and notes; resolutions carry an authority kind, a decider and evidence; the principal is defined structurally and
+configured (R6); Tasks and Questions become the Acts and Decisions extensions. A mapping from every 0.2 event to 0.3
+records is in each extension. 0.2 (2026-10-27): split from Human Task Handoff 0.1.
 
-**Change log.** 0.2 (2026-10-27): split from Human Task Handoff 0.1 into this core plus the Tasks extension, and added
-the Questions extension. The `hth` member became `ph` plus `ext`; the role and origin `owner` became `principal`.
+## 15. Scope
 
-## 9. Relation to other specifications
+Out of scope, deliberately:
 
-*Non-normative. The detailed comparison, with versions and citations, is in [RELATED-WORK.md](../RELATED-WORK.md).*
+- **Mandate formats and lifecycle.** Issuing, scoping, revoking and verifying mandates belong to their own systems
+  (§16); this family only records the reference (`under`) and the chain.
+- **Group decision procedures.** An organisation or body may be the principal if it presents one principal side; how
+  its members decide (quorum, separation of duties) is internal to that side. Each settlement names the representative
+  who acted.
+- **Inquiries from the principal to a project** ("how far has this got?"). These are requests the project answers, so
+  this family's rules about who may settle do not apply to them. They travel on the deployment's transport (for
+  example as an A2A task or a message); an item a project raises while answering one carries `derived_from` with the
+  inquiry's `uri`.
+- **Transport and authentication.**
+- **Software agents as principals.** The type constraint in §1 reflects that no legal regime gives software agents
+  the standing and oversight a principal implies. A future version MAY revisit it if such a regime exists, together
+  with whatever oversight it brings; the rest of this model does not depend on the principal being a person.
 
-Existing protocols that involve a person place the request inside a live unit of work: one call, one task an agent
-server runs, one run on a thread. In each of them, the system that created the unit decides when it is complete.
-Principal Handoff covers items that outlive every agent run and that only the principal side resolves. It is meant to
-be carried by these protocols, not to replace them.
+## 16. Relation to other specifications
 
-- **Agent Client Protocol (ACP)** connects a client (an editor, an assistant) to a coding agent's sessions. A
-  principal's assistant that borrows a project's agent session can use ACP for the session itself; Principal Handoff
-  covers what is left for the principal after the session ends.
-- **Model Context Protocol (MCP)** connects agents to tools and data. A principal side can be exposed as an MCP
-  server (for example, tools to report a task done or ask a question, and the open items as a resource); this family
-  defines the data and lifecycle such tools implement. MCP's elicitation asks the client's user for input inside one
-  request, and its Tasks extension lets a server turn a tool call into a task it owns.
-- **Agent2Agent (A2A)** standardises delegation of long-running tasks between agents. Events of this family can travel
-  as an A2A extension; A2A terminal tasks accept no further messages, so a reopened item is not an A2A task returning
-  to life (see the Tasks extension's open issues).
-- **AG-UI** and agent frameworks (LangGraph interrupts, agent SDK approvals, Temporal) pause one run or workflow for a
-  person's answer. AG-UI's rule that an unanswered interrupt is not an abandoned one is the same principle as §2's
-  "silence never resolves".
-- **Collaborative Human-Agent Protocol (CHAP)** specifies a coordinator-hosted workspace in which several people and
-  agents assign, review, override and hand off work, with an audit log as the record. Principal Handoff is narrower:
-  no coordinator, and only the principal side resolves.
-- **iCalendar VTODO, JSCalendar and JMAP Tasks** model tasks assigned to people. A principal side MAY store items as
-  VTODOs or JSCalendar tasks. As an exchange protocol, iTIP gives the organizer control of the master copy and does
-  not let an attendee reopen or withdraw a task, which is the opposite of §2.
-- **AGENTS.md** tells agents how to work in a repository; a project using an extension of this family SHOULD say so
-  there (each extension gives an example).
+*Non-normative. The detailed comparison is in [RELATED-WORK.md](../RELATED-WORK.md).*
+
+Existing protocols that involve a person place the request inside a live unit of work (a call, a task an agent
+server runs, a run on a thread), and the system that created the unit decides when it is complete. Principal Handoff
+covers items that outlive every agent run and that only the principal side settles. It is meant to be carried by
+those protocols and to reference their mandates, not to replace them.
+
+- **ACP** connects a client to a coding agent's sessions; a principal's assistant borrowing a project's session uses
+  ACP for the session. **MCP** connects agents to tools and data; a principal side can be exposed as an MCP server.
+  **A2A** carries delegation between agents, including inquiries from the principal's assistant to a project (§15).
+- **AP2, OAuth (RFC 8693 token exchange, RAR) and UCAN** define mandates and delegation. `under` references their
+  mandates; `chain` records the actors in the way RFC 8693's nested `act` claims do, except that here the whole chain
+  matters for accountability, not only the current actor. AP2's Trusted Surface is the model for `evidence.proof`.
+- **W3C PROV** supplies the vocabulary this model follows: attribution (`by`, `decider`), acting on behalf of
+  (`chain`, `under`), revision (`supersedes`) and derivation (`derived_from`).
+- **CHAP** specifies a coordinator-hosted workspace in which several people and agents assign, review and override
+  work. Principal Handoff has no coordinator, a single principal per deployment, and owner-based registers.
+- **AG-UI** and agent SDK interrupts pause one run for a person's answer; AG-UI's "omission is not abandonment" is the
+  same principle as R4.
+- **iCalendar VTODO, JSCalendar and JMAP Tasks** model tasks assigned to people; a principal side MAY store items as
+  them.
+- **EU AI Act Article 14** requires that high-risk systems can be effectively overseen by natural persons; §9's
+  records are what such oversight needs to be checkable.
+- **AGENTS.md** tells agents how to work in a repository; a project using this family SHOULD say so there.
 
 ## References
 
@@ -223,13 +434,12 @@ be carried by these protocols, not to replace them.
 - [RFC 8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017.
 - [RFC 3339] Klyne, G. and C. Newman, "Date and Time on the Internet: Timestamps", RFC 3339, July 2002.
 - [RFC 8259] Bray, T., Ed., "The JavaScript Object Notation (JSON) Data Interchange Format", RFC 8259, December 2017.
-- [RFC 5545] Desruisseaux, B., Ed., "Internet Calendaring and Scheduling Core Object Specification (iCalendar)", RFC 5545, September 2009.
-- [RFC 5546] Daboo, C., Ed., "iCalendar Transport-Independent Interoperability Protocol (iTIP)", RFC 5546, December 2009.
-- [RFC 8984] Jenkins, N. and R. Stepanek, "JSCalendar: A JSON Representation of Calendar Data", RFC 8984, July 2021.
+- [RFC 8693] Jones, M., et al., "OAuth 2.0 Token Exchange", RFC 8693, January 2020.
 - JSON Schema: A Media Type for Describing JSON Documents, draft 2020-12.
-- Agent Client Protocol, <https://agentclientprotocol.com>.
-- Model Context Protocol, <https://modelcontextprotocol.io>.
-- Agent2Agent (A2A) Protocol, <https://a2a-protocol.org>.
-- AG-UI, <https://docs.ag-ui.com>.
+- W3C PROV-O: The PROV Ontology, <https://www.w3.org/TR/prov-o/>.
+- Agent Payments Protocol (AP2), <https://ap2-protocol.org>.
+- Agent Client Protocol, <https://agentclientprotocol.com>; Model Context Protocol, <https://modelcontextprotocol.io>;
+  Agent2Agent (A2A) Protocol, <https://a2a-protocol.org>; AG-UI, <https://docs.ag-ui.com>.
 - Collaborative Human-Agent Protocol (CHAP), <https://github.com/BrightbeamAI/chap>.
+- Regulation (EU) 2024/1689 (AI Act), Article 14.
 - AGENTS.md, <https://agents.md>.

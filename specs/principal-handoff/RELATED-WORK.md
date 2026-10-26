@@ -1,6 +1,6 @@
 # Principal Handoff: related work
 
-*Non-normative companion to [core §9](core/SPEC.md#9-relation-to-other-specifications) and the extensions' relation
+*Non-normative companion to [core §16](core/SPEC.md#16-relation-to-other-specifications) and the extensions' relation
 sections. Sources were read on 2026-10-27; versions are given for each.
 Statements of fact cite the source. Paragraphs headed **Assessment** are the authors' reading and are not taken from
 those sources.*
@@ -15,8 +15,8 @@ people that outlive any program run. But there the organizer owns the master cop
 reopen a task nor withdraw it.
 
 Principal Handoff covers a narrower case: items only the principal can settle that outlive every agent run, where the
-principal side is authoritative and an agent's "done" or "the principal said…" is only a claim. Its Tasks extension
-declares work in the project's own state document; its Questions extension asks for answers as messages. At the wire
+principal side is authoritative and an agent's "done" or "the principal said…" is only a claim. Its Acts extension
+declares work in the project's own state document; its Decisions extension asks for answers as messages. At the wire
 level most of what it needs already exists: borrowing a project's agent session is ACP's job, and long-lived tasks,
 listing and webhooks exist in A2A. What Principal Handoff adds is small:
 - a principal-authoritative lifecycle, with reopening (tasks) and revision (questions) under the same identity;
@@ -38,8 +38,8 @@ The aim is for Principal Handoff to be carried by these protocols and to borrow 
 | iCalendar VTODO + iTIP | a to-do the organizer sends to attendees | indefinite | `UID` | the organizer owns the master | not by the attendee | text, not line-oriented |
 | JSCalendar / JMAP Tasks | a task object on a server | indefinite | `uid` (+ JMAP `id`) | roles and rights | via `progress` | no |
 | TASKS.md | a line in a repository file | until deleted | kebab-case `**ID**` | the agent that deletes the line | — | yes |
-| **Principal Handoff: Tasks** | a line in the project's state document, mirrored on the principal side | days to weeks, outlives every run | key derived from project and text | **the principal side** | yes, same key | yes |
-| **Principal Handoff: Questions** | a message to the principal side; the answer goes to the project | until answered, dismissed or withdrawn | asker's key | **the principal side**; the asker may withdraw | revised by a superseding answer | no |
+| **Principal Handoff: Acts** | a line in the project's state document, mirrored on the principal side | days to weeks, outlives every run | key derived from project and text | **the principal side** | yes, same key | yes |
+| **Principal Handoff: Decisions** | a message to the principal side; the answer goes to the project | until answered, dismissed or withdrawn | asker's key | **the principal side**; the asker may withdraw | revised by a superseding answer | no |
 
 ## 1. Agent protocols
 
@@ -119,7 +119,7 @@ Principal Handoff the human sits behind the principal side, which is the receive
   producer must not act on an interrupt that has no entry.
 
 **Assessment.** AG-UI covers one thread at a time, and a producer that keeps no state between runs still conforms. Its
-coverage rule is the same principle as Principal Handoff's: an inferred `done` is not a resolution (Tasks §4.6). It is worth stating
+coverage rule is the same principle as Principal Handoff's: a claim is not a settlement (core R3). It is worth stating
 that way in a future version.
 
 ### 1.4 Collaborative Human-Agent Protocol (CHAP)
@@ -257,14 +257,40 @@ The key travels in metadata, not as the task id, and the registrar keeps a map f
   deletion as completion with no confirmation, and nothing else infers completion.
 - **Reopening under the same identity.** Terminal states are final in MCP, A2A and CHAP, and iTIP attendees cannot
   reopen.
-- **Content-derived keys (Tasks).** Every identifier surveyed is opaque and minted by a server or a caller. The Tasks
-  extension's key lets a stateless registrar register idempotently. The cost is that editing a line's text changes its key, which Tasks §4.7
-  I1 forbids and §4.6 step 1 detects. See also the re-declaration issue in Tasks §12.
-- **The Markdown binding (Tasks)**: tasks are declared in the document the project's agents already read, which stays
+- **Content-derived keys (Acts).** Every identifier surveyed is opaque and minted by a server or a caller. The Acts
+  extension's key lets a stateless registrar register idempotently. Since 0.3 the key is derived once, at stamping, and then
+  kept when the text is amended (Acts §6.1); the remaining cost is the re-declaration issue in Acts §11.
+- **The Markdown binding (Acts)**: tasks are declared in the document the project's agents already read, which stays
   the record.
-- **Answers that reach the project (Questions)**, not the session that asked, which may be gone; a default that stays
+- **Answers that reach the project (Decisions)**, not the session that asked, which may be gone; a default that stays
   a working assumption (CHAP's whisper applies it on timeout instead); and a record of whether the principal or
   their assistant answered.
+
+## 6. Drafts on approval, delegation and audit for agents (checked 2026-10-27)
+
+*Read in their primary sources unless marked (secondary). None covers the whole design: none has two registers with
+different owners, durable items that can be amended, withdrawn and reopened, claims that change nothing, or authority
+kinds with a decider. Each covers a piece this family should align with rather than redefine.*
+
+| Work | Status | What it covers | Where it differs |
+|---|---|---|---|
+| OpenID AuthZEN Access Request and Approval Profile | Working Group Draft 1, 2026-10-13 | Durable approval tasks (`pending`, `approved`, `denied`, `expired`, `cancelled`, `failed`); approver eligibility including no self-approval and separation of duties; audit records | Shaped around access decisions; "terminal states do not transition further" (no reopen); no amended terms, no ownership split. Its treatment of automated approvers was not verified |
+| draft-ietf-wimse-aims | WIMSE WG draft -00, 2026-09-15 | Agent identity and authorization; §10.7: the agent "MUST NOT treat local UI confirmation alone as sufficient authorization"; notes CIBA's mid-execution gap | No items or settlements |
+| draft-singla-agent-identity-protocol | individual -03, 2026-06-10 | Principal as "the human or organisational entity on whose authority an agent acts", `principal.type` limited to human or organisation; root-to-leaf delegation chain; approval envelopes signed by the principal | Delegation and identity, not items |
+| draft-nelson-agent-delegation-receipts | individual -15, 2026-10-21 | Root receipt signed by a key under the principal's sole control, gated on user verification; narrowing sub-receipt chains (secondary for -15 details) | No items or settlements |
+| EMILIA receipts and human-authorization binding (draft-schrock-…) | individual drafts, 2026-07 / 2026-09 | WebAuthn-backed approval signatures; a host field asserting human approval without verifiable evidence is not human-authorization evidence (secondary for the binding draft) | Terminal states final; no authority kinds |
+| draft-gilda-audit-agent-audit-record | individual -00, 2026-10-16 | Reported versus observed effects, fields marked producer-asserted or substrate-covered, records never amended | No approver identity, no supersession |
+| draft-sharif-agent-audit-trail | individual -09, 2026-10-26 (secondary) | `principal` with an authority reference; escalation and human-override records | Allows an agent as `principal_type` |
+| AAuth (draft-hardt-oauth-aauth-protocol) | individual -11, 2026-09-25 (secondary) | A person server standing in for the person; missions proposed by agents and approved by the person | Supervision may be done by an AI; no record of who decided |
+| IETF agentproto WG | chartered; first milestone 2026-12 (secondary) | Covers user-to-agent dialogs and the identities of agents and the users they act for | A venue, not a spec |
+
+**Alignment, concretely.** Where a decision is shaped like an access request, its settlement outcomes map onto
+AuthZEN's `approved`/`denied`. `authority.chain` and `under` point to delegation receipts of the kind the singla and
+nelson drafts define. `evidence.proof` can carry a WebAuthn-backed approval of the kind EMILIA defines, and its rule
+matches core §13: an assertion of human approval without verifiable evidence is not evidence of one. A claim here is
+the "reported" side of the gilda draft's reported-versus-observed split. Where this family differs on purpose: no
+software agent may be the principal (unlike sharif and AAuth), and no timeout or default ever settles (unlike CHAP's
+whisper).
 
 ## Sources
 
@@ -279,6 +305,9 @@ The key travels in metadata, not as the task id, and the registrar keeps a map f
 - AAIF projects: <https://aaif.io/projects/>; workflows working group reference architectures:
   <https://github.com/aaif/wg-workflows-and-process-integration/tree/main/workstreams/reference-architectures>.
 - RFC 5545, RFC 5546, RFC 4791, RFC 6638, RFC 8984; draft-ietf-jmap-tasks-06.
+- AuthZEN ARAP: <https://openid.github.io/authzen/authzen-access-request-approval-profile-1_0.html>;
+  draft-ietf-wimse-aims: <https://datatracker.ietf.org/doc/draft-ietf-wimse-aims/>;
+  draft-singla-agent-identity-protocol: <https://datatracker.ietf.org/doc/draft-singla-agent-identity-protocol/>.
 - todo.txt: <https://github.com/todotxt/todo.txt>; GFM task lists: GitHub Flavored Markdown Spec §5.3;
   Obsidian Tasks: <https://publish.obsidian.md/tasks/>; TASKS.md: <https://github.com/tasksmd/tasks.md>.
 - LangGraph interrupts: <https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/>; OpenAI Agents SDK

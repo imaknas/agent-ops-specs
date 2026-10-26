@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "note.schema.json",
+  "title": "Principal Handoff Decisions 0.3: note",
+  "description": "Information about an item or a project; changes no register.",
+  "$ref": "../../core/schemas/record.schema.json",
+  "required": [
+    "about"
+  ],
+  "properties": {
+    "ext": {
+      "const": "decisions/0.3"
+    },
+    "type": {
+      "const": "note"
+    }
+  }
+}
