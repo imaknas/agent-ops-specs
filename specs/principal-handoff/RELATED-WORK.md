@@ -107,7 +107,7 @@ Sources: the Tasks extension `io.modelcontextprotocol/tasks` (specification/2026
 
 **Assessment.** The direction is reversed. In MCP the human sits behind the client and the server owns the task. In
 Principal Handoff the human sits behind the principal side, which is the receiver. A registrar could call a principal-side MCP tool such as
-`declare_owner_task`, but MCP Tasks adds little over an idempotent tool call plus polling. It also cannot express
+`declare_principal_task`, but MCP Tasks adds little over an idempotent tool call plus polling. It also cannot express
 `dropped` versus `already_done` (both are `completed`), `reopened`, or an agent claim. MCP remains a good way to
 *expose* Principal Handoff: tools that report a key done, or a resource listing open principal tasks.
 
@@ -183,7 +183,7 @@ each method implemented, specified only, or reserved.
 
 **Assessment.** These are approval gates for one pending action, or durable waits inside one workflow. None of them
 models a task the person does in the world that outlives the run and can be dropped or reopened later. Temporal or
-Power Automate could *implement* an principal side. None of them defines the exchange.
+Power Automate could *implement* a principal side. None of them defines the exchange.
 
 ## 3. Task standards and plain-text formats
 

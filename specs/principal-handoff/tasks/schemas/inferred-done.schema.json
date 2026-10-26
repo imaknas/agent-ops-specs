@@ -2,13 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "inferred-done.schema.json",
   "title": "Principal Handoff Tasks 0.2 inferred done",
-  "description": "Registrar -> principal side: a registered key vanished from the document without an principal resolution. The owner must confirm; this is not a resolution.",
+  "description": "Registrar -> principal side: a registered key vanished from the document without a principal resolution. The principal must confirm; this is a claim, not a resolution.",
   "$ref": "../../core/schemas/envelope.schema.json",
   "required": ["inferred", "evidence"],
   "properties": {
     "ext": {"const": "tasks/0.2"},
     "type": {"const": "done"},
     "origin": {"const": "registrar"},
-    "inferred": {"const": true}
+    "inferred": {"const": true},
+    "evidence": {"type": "string", "pattern": "\\S"}
   }
 }

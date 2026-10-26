@@ -8,6 +8,6 @@
     "ext": {"const": "tasks/0.2"},
     "type": {"enum": ["done", "dropped", "already_done"]},
     "origin": {"const": "principal"},
-    "inferred": {"const": false}
+    "inferred": {"type": "boolean", "const": false}
   }
 }

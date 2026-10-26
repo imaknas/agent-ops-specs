@@ -121,14 +121,14 @@ events to the state document, and reconciles keys that vanish. One registrar may
        └──────────────────────────── agent report: done, dropped ────────────────────────────────────┘
 ```
 
-- **Agents** declare tasks by writing lines into the tasks section. They MAY report that an principal task is done or no
+- **Agents** declare tasks by writing lines into the tasks section. They MAY report that a principal task is done or no
   longer needed (§4.5).
 - The **registrar** is the only role that writes key markers, strikes keyed lines and re-adds reopened lines.
 - The **principal side** holds the authoritative status of every registered principal task and is the only role that emits
   resolutions (`done`, `dropped`, `already_done`, `reopened` with `origin: "principal"`).
 
 A single program MAY play several roles (for example, an assistant that is both principal side and agent), but it MUST
-keep the role semantics: an event's `origin` (§6.1) names the role that emitted it, not the program.
+keep the role semantics: an event's `origin` ([core §3](../core/SPEC.md#3-event-envelope)) names the role that emitted it, not the program.
 
 ### 3.2 Tasks
 
@@ -163,7 +163,7 @@ Seen from the principal side, a registered principal task is in one of these sta
 
 ### 4.2 Declaration and registration
 
-1. An agent declares an principal task by adding an principal task line without a key marker to the tasks section (§5).
+1. An agent declares a principal task by adding a principal task line without a key marker to the tasks section (§5).
 2. The registrar periodically parses the tasks section. For every principal task without a key it:
    1. derives the key from the project name and the task text (§7);
    2. sends a `registered` event (§6) to the principal side;
@@ -190,16 +190,16 @@ On receiving any of these with `origin: "principal"`, the registrar MUST remove 
 key marker carries the event's key (§5.5.2). If no line carries the key, the event is still consumed and the
 document is unchanged.
 
-A resolution MAY carry a `note`: the principal's words about it, such as what was decided when a reserved decision
+A resolution or a `reopened` MAY carry a `note`: the principal's words about it, such as what was decided when a reserved decision
 was the task ("approved, but use the blue variant"), or why it was dropped ("rejected" versus "no longer needed"). The
-registrar MUST deliver a resolution's `note` to the project where its agents will read it, for example in the
+registrar MUST deliver such a `note` to the project where its agents will read it, for example in the
 project's notes or decision log, or as a message to the project. It MUST NOT apply the note to the tasks section and
 MUST NOT drop it. The mechanism is implementation-defined.
 
 ### 4.4 Reopening
 
 When the principal reopens a resolved task, the principal side sends `reopened` with the task's original `text`. If no task
-line carries the key, the registrar MUST add an principal task line with that text and the key marker (§5.5.3). If a line
+line carries the key, the registrar MUST add a principal task line with that text and the key marker (§5.5.3). If a line
 with the key already exists, the event is consumed and the document is unchanged.
 
 ### 4.5 Agent reports
@@ -208,12 +208,13 @@ An agent working with the principal (for example, in an interactive session wher
 `done` or `dropped` event with `origin: "agent"` for a key to the principal side. An agent report is a claim:
 
 - The registrar MUST NOT change the document because of an agent report.
-- The principal side MAY accept it without asking the principal (the principal was present when it was made) or MAY ask the principal
-  first. Either way, closing the task produces an principal-origin resolution (§4.3), which is what changes the document.
+- The principal side MAY accept it without asking the principal (the principal was present when it was made), in
+  which case its resolution carries `decided_by: "assistant"`, or MAY ask the principal first. Either way, closing the
+  task produces a principal-origin resolution (§4.3), which is what changes the document.
 
 ### 4.6 Vanished keys and inferred done
 
-Agents sometimes delete an principal task line themselves, for example a summarising job that concludes the work is
+Agents sometimes delete a principal task line themselves, for example a summarising job that concludes the work is
 finished. A registered key that is still open on the principal side but no longer appears in the tasks section is a
 **vanished key**. On each run the registrar SHOULD check the keys it has registered that have not been resolved by an
 principal-origin event, and for each vanished key:
@@ -227,11 +228,13 @@ principal-origin event, and for each vanished key:
    reason).
 
 An inferred `done` is **not** a resolution. The principal side MUST present it to the principal for confirmation and MUST NOT
-close the task on it alone. If the principal confirms, the principal side emits an principal-origin `done` (the registrar then
+close the task on it alone. If the principal confirms, the principal side emits a principal-origin `done` (the registrar then
 finds no line, which is fine). If the principal says the task is still open, the principal side emits `reopened` and the
 registrar re-adds the line.
 
-The registrar MUST send at most one inferred `done` per key (its event id is derived from the key, §6.4) and SHOULD
+The registrar MUST send at most one inferred `done` per key per open period: before the first `reopened` it has
+applied for the key, and between one `reopened` and the next. Its event id is derived from the key and that count (§6),
+so a crashed registrar re-creates the same id and a task that vanishes again after a reopen gets a new one. It SHOULD
 remember which vanished keys it has already handled.
 
 ### 4.7 Invariants
@@ -244,7 +247,7 @@ remember which vanished keys it has already handled.
   inferred events when applying events to the document.
 - **I4 — Idempotence.** Applying the same event twice MUST leave the document as applying it once. Running
   registration twice on the same document MUST stamp nothing and send nothing the second time.
-- **I5 — At-least-once delivery.** Every role MUST tolerate duplicate events and MUST deduplicate by event id (§6.4).
+- **I5 — At-least-once delivery.** Every role MUST tolerate duplicate events and MUST deduplicate by event id ([core §4](../core/SPEC.md#4-identifiers-deduplication-and-delivery)).
   Senders MUST retry until the transport accepts the event.
 - **I6 — Keys are opaque.** Consumers MUST NOT parse meaning out of a key; only the registrar that derived it may.
 - **I7 — Lines outside the protocol are preserved.** The registrar MUST NOT change any line other than the ones this
@@ -401,7 +404,8 @@ The reference deployment writes its state documents in Traditional Chinese. Its 
 ## 6. Event types
 
 Events use the [core envelope](../core/SPEC.md#3-event-envelope) with `ext: "tasks/0.2"`, and follow the core's
-rules for validation, deduplication and delivery ([core §3–§4](../core/SPEC.md#4-identifiers-deduplication-and-delivery)).
+rules for validation ([core §3](../core/SPEC.md#3-event-envelope)) and for deduplication and delivery
+([core §4](../core/SPEC.md#4-identifiers-deduplication-and-delivery)).
 `key` is the task key (§7) and `text` the task text as parsed (§5.3), not normalised. This extension adds two members:
 
 | Member | Type | Meaning |
@@ -419,12 +423,21 @@ Roles: `registrar`, `principal` (the principal side) and `agent`.
 | `done`, `dropped` | `agent` | agent → principal side | [`agent-report`](schemas/agent-report.schema.json) | `inferred` absent or `false` |
 | `done` | `registrar` | registrar → principal side | [`inferred-done`](schemas/inferred-done.schema.json) | `inferred: true` and `evidence` required |
 
-Any other combination of `type` and `origin` is invalid and MUST be rejected. The principal-origin events are the
-resolutions in the sense of [core §2](../core/SPEC.md#2-authority); agent reports and the inferred `done` are claims.
+Any other combination of `type` and `origin` is invalid and MUST be rejected. In the sense of
+[core §2](../core/SPEC.md#2-authority), principal-origin `done`, `dropped` and `already_done` are **resolutions**, and
+`reopened` undoes one; all four are principal-only. Agent reports and the inferred `done` are claims. A resolution MAY
+carry `decided_by` (core §3); a principal side that closes a task on an agent report without asking the principal
+(§4.5) MUST send `decided_by: "assistant"`.
 
-**Event ids.** The id of a `registered` event and of an inferred `done` MUST be derived deterministically from the
-key, so that a registrar that crashed and re-runs produces the same ids. (The reference deployment uses the key
-itself for `registered` and `done-<key>` for an inferred `done`.) A receiver that gets a resolution for a key it has
+**Where notes go.** Any event may carry a `note`.
+- On `registered`, an agent report or an inferred `done`, it is for the principal side, which SHOULD show it with the
+  task or the claim (together with `evidence` on an inferred `done`).
+- On a resolution or `reopened`, the registrar MUST deliver it to the project (§4.3).
+
+**Event ids.** The id of a `registered` event MUST be derived deterministically from the key, and the id of an inferred
+`done` from the key and the number of `reopened` events the registrar has applied for it (§4.6), so that a registrar
+that crashed and re-runs produces the same ids. (The reference deployment uses the key itself for `registered` and
+`done-<key>` for an inferred `done`; after the *n*-th reopen it would use `done-<key>-r<n>`.) A receiver that gets a resolution for a key it has
 never seen consumes it without error, which for the registrar follows from §4.3 and §4.4.
 
 ## 7. Key derivation

@@ -61,7 +61,9 @@ words), but it is accountable for what it emits as the principal's.
 : One thing handed to the principal side: a task (Tasks extension) or a question (Questions extension).
 
 **Key**
-: The opaque identifier of an item. Each extension says who assigns it and how.
+: The opaque identifier of an item within its project and extension. Each extension says who assigns it and how.
+An item is identified by the triple (extension name, `project`, `key`): a task and a question may share a key, and
+two projects may use the same key, without referring to the same item.
 
 **Event**
 : A JSON message about one item, exchanged between the roles an extension defines.
@@ -74,15 +76,16 @@ are common to all.
 
 The rule every extension builds on:
 
-- **Only the principal side resolves an item.** An event that settles an item for the principal (done, answered,
-  dropped, dismissed…) is valid only with `origin: "principal"`.
+- **Only the principal side resolves an item.** A **resolution** is an event that settles an item for the principal
+  (done, answered, dropped, dismissed…). Resolutions, and events that undo one (reopening a task), are valid only with
+  `origin: "principal"`.
 - **Anything else that says an item is settled is a claim.** An agent that saw the principal settle it in a session,
   or a component that infers it from evidence, MAY say so, but receivers MUST NOT treat a claim as a resolution. The
   principal side decides whether to accept a claim; accepting it produces a principal-origin event.
 - **Silence never resolves.** No timeout, deadline or default turns into a resolution by itself. An extension MAY let
   an item carry a default, but only as a working assumption while the item stays open.
-- **Each resolution is recorded with who made it and when** (`origin`, `ts`, and `decided_by` where an extension
-  defines it), and a duplicate of a resolution has no further effect (§4).
+- **Each resolution is recorded with who made it and when** (`origin`, `ts`, and `decided_by`, §3), and a duplicate of
+  a resolution has no further effect (§4).
 
 An extension MAY add roles and claims, but MUST NOT let any role other than the principal side emit a resolution.
 
@@ -105,22 +108,27 @@ Every event is a JSON object (RFC 8259) that validates against
 | `text` | string | per extension | The item's text: a task as declared, a question as asked. |
 | `due` | string | no | `YYYY-MM-DD` by which the principal should act. |
 | `context` | string | no | Free-form tag for why the item was sent (for example `bulk-import`). |
+| `decided_by` | string | per extension | On a resolution: `principal` when the principal gave or confirmed it; `assistant` when the principal side made it on the principal's behalf without confirmation. A principal side MUST NOT send `principal` for a resolution the principal did not make or confirm. |
 | `note` | string | no | Free text from the emitting role. Extensions say where it must be delivered. |
 
 Receivers MUST ignore members they do not recognise. Senders MAY add members; names beginning with `x_` are reserved
 for private extensions and will never be defined by this family.
 
 **Validation.** A receiver selects the schema by the event's `ext` and its (`type`, `origin`) pair, using the table in
-that extension, and MUST reject an event whose pair the extension does not list. The schemas use JSON Schema draft
+that extension, and MUST reject an event whose pair the extension does not list. A receiver that does not implement
+the extension named in `ext` (or that version of it, §8) MUST NOT act on the event; it SHOULD consume it without
+error, so that one transport can carry several extensions, and MAY report it. The schemas use JSON Schema draft
 2020-12 restricted to the keywords `type`, `required`, `properties`, `enum`, `const`, `pattern`, `items` and `$ref`
 (a relative path to another schema file), so that a small validator suffices; the reference implementation includes
 one.
 
 ## 4. Identifiers, deduplication and delivery
 
-- An event id MUST be unique per logical event and MUST be the same on every retransmission of that event.
-  Extensions say how ids of particular events are derived when a sender must be able to re-create them after a crash.
-- Receivers MUST discard an event whose id they have already processed.
+- An event id MUST be unique per logical event within its (`ext` name, `project`), and MUST be the same on every
+  retransmission of that event. Extensions say how ids of particular events are derived when a sender must be able to
+  re-create them after a crash. A sender MUST NOT reuse an id for a different event.
+- Receivers MUST discard an event whose (`ext` name, `project`, `id`) they have already processed. A receiver that
+  sees an id reused with different content keeps the first and SHOULD report it: that is a sender error.
 - Senders MUST retry until the transport accepts the event. Every role MUST tolerate duplicates (at-least-once
   delivery).
 - Ordering is not guaranteed. A receiver that gets an event for a key it has never seen MUST consume it without
@@ -137,7 +145,7 @@ An extension document MUST define:
 3. its item model and how keys are assigned;
 4. its event types, and for each one the allowed origins and the schema (a table of (`type`, `origin`) → schema);
 5. which events are resolutions and which are claims, consistent with §2;
-6. where `note` and any other free text must be delivered;
+6. where `note` and any other free text must be delivered, for every event type that may carry it;
 7. its conformance classes and suite.
 
 Event types of different extensions MUST NOT be interpreted without their `ext`.
@@ -164,11 +172,16 @@ per role, as each extension's conformance section defines.
 
 ## 8. Versioning
 
-- `ph` carries the core version; `ext` carries each extension's version. Extensions are versioned independently.
-- Adding optional members, event types or profiles, or clarifying text, is a minor change. Removing or renaming a
-  member, or changing the meaning of a member or event, is a breaking change and requires a new version.
-- Before 1.0, any minor version may also contain breaking changes, listed in the change log below. A version leaves
-  draft status only once two independent implementations pass the same conformance suite.
+- `ph` carries the core version; `ext` carries each extension's name and version. Extensions are versioned
+  independently.
+- **Before 1.0, every version is its own contract.** Senders and receivers MUST support exactly the versions they
+  claim; a receiver treats an event with an unsupported `ph` as invalid and one with an unsupported `ext` version as
+  of an extension it does not implement (§3). The schemas pin both.
+- **From 1.0 on**, adding optional members, event types or profiles, or clarifying text, will be a minor change that
+  receivers of the same major version accept (ignoring what they do not know); removing or renaming a member, or
+  changing the meaning of a member or event, will require a new major version.
+- Breaking changes are listed in the change log below. A version leaves draft status only once two independent
+  implementations pass the same conformance suite.
 
 **Change log.** 0.2 (2026-10-27): split from Human Task Handoff 0.1 into this core plus the Tasks extension, and added
 the Questions extension. The `hth` member became `ph` plus `ext`; the role and origin `owner` became `principal`.

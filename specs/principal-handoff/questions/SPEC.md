@@ -83,20 +83,23 @@ Seen from the principal side and from the asker:
             └──── withdrawn (asker) ───┴──▶ withdrawn
 ```
 
-1. **Asking.** The asker sends `asked`. The principal side MUST treat `asked` idempotently by key: an `asked` for a key
-   it already knows MUST NOT create a second question.
+1. **Asking.** The asker sends `asked`. The principal side MUST treat `asked` idempotently by (`project`, `key`): an
+   `asked` for a question it already knows MUST NOT create a second question. If a later `asked` for the same question
+   differs in content, the first one stands and the principal side SHOULD report the mismatch.
 2. **Answering.** The principal side sends `answered` with an `answer` and `decided_by` (§4).
 3. **Dismissing.** The principal side sends `dismissed` when the principal decides no answer is needed. A dismissal is
    a resolution. The asker MUST NOT keep waiting for an answer and SHOULD ask a new question if the need returns.
 4. **Revising.** The principal side MAY replace an earlier resolution, for example when the principal changes their
    mind, or answers a question they had dismissed. The new `answered` or `dismissed` MUST name the id of the
-   resolution it replaces in `supersedes`. The latest resolution of the chain is the **current** one.
+   resolution it replaces in `supersedes`. Which resolution is **current** is defined in §4 (Ordering).
 5. **Withdrawing.** The asker sends `withdrawn` when it no longer needs an answer: the question was settled where it
    was asked (`reason: "settled"`, for example the principal answered in the asker's own session), or the need went
    away (`reason: "not_needed"`). A withdrawal is not a resolution and needs no confirmation from the principal: it
    closes the asker's request, not a commitment of the principal. The principal side MUST stop presenting a withdrawn
-   question as waiting. Resolutions that arrive after a withdrawal are still delivered (§5), and the asker MAY
-   ignore them.
+   question as waiting. The principal side MAY still resolve a withdrawn question (for example, to record what the
+   principal said). Such resolutions are delivered (§5), and the asker MAY ignore them. Once a `withdrawn` is held for
+   a question, its state is *withdrawn* whatever order the events arrived in; the current resolution, if any, is
+   still determined as in §4.
 
 Rules:
 
@@ -107,24 +110,23 @@ Rules:
 - **Q3 — Silence never resolves** (core §2). A `due` date or a `default` passing MUST NOT produce an `answered`. While
   the question is open, the asker MAY proceed on its default, and MUST be ready to revise its work when an answer
   differs.
-- **Q4 — Who answered is recorded.** `decided_by` is `principal` when the principal gave or confirmed the answer, and
-  `assistant` when the principal side composed it on the principal's behalf without confirmation (for example, from
-  standing preferences). The principal side MUST NOT send `decided_by: "principal"` for an answer the principal did not
-  give or confirm.
+- **Q4 — Who answered is recorded.** Every resolution carries `decided_by` ([core §3](../core/SPEC.md#3-event-envelope)):
+  `principal` when the principal gave or confirmed it, `assistant` when the principal side composed it on the
+  principal's behalf without confirmation (for example, from standing preferences).
 - **Q5 — Idempotence.** Every event is deduplicated by id (core §4). Applying the same event twice MUST leave the state
   as applying it once.
 
 ## 4. Event types
 
 Events use the [core envelope](../core/SPEC.md#3-event-envelope) with `ext: "questions/0.1"`. `key` is the question
-key. This extension adds these members:
+key. `decided_by` (core §3) is required on
+resolutions. This extension adds these members:
 
 | Member | Type | Used on | Meaning |
 |---|---|---|---|
 | `options` | array of `{id, label}` | `asked` | Choices the principal may pick from. Option ids are unique within the question. |
 | `default` | string | `asked` | The asker's working assumption: an option id or text. Never an answer (Q3). |
 | `answer` | object `{text, option?}` | `answered` | The answer text, and the chosen option id if the question had options. |
-| `decided_by` | `principal` or `assistant` | `answered`, `dismissed` | Who made the resolution (Q4). |
 | `supersedes` | string | `answered`, `dismissed` | Id of the resolution this one replaces. |
 | `reason` | `settled` or `not_needed` | `withdrawn` | Why the asker withdrew. |
 
@@ -135,12 +137,26 @@ key. This extension adds these members:
 | `dismissed` | `principal` | principal side → asker's project | [`dismissed`](schemas/dismissed.schema.json) | `decided_by` required; `note` SHOULD say why |
 | `withdrawn` | `agent` | asker → principal side | [`withdrawn`](schemas/withdrawn.schema.json) | `reason` required |
 
-Any other combination of `type` and `origin` is invalid and MUST be rejected. If `answer.option` is present, it MUST
-be one of the question's option ids; a receiver that cannot check (it never saw the `asked`) accepts it.
+Any other combination of `type` and `origin` is invalid and MUST be rejected. If `answer.option` is present, the
+principal side MUST make it one of the question's option ids. A receiver that finds it is not (or cannot check,
+because it never saw the `asked`) MUST still accept the answer, treat `answer.text` as authoritative, and SHOULD report
+the mismatch: the principal's answer must not be lost to a validation error.
 
-**Ordering.** Events may arrive in any order (core §4). The current resolution is determined by the `supersedes`
-chain, not by `ts`. If a receiver holds two resolutions for one key and neither supersedes the other (a fork), it
-MUST treat the one with the later `ts` as current and SHOULD flag the conflict to a person.
+**Where notes go.** A `note` on a resolution is delivered to the project with it (§5); on `dismissed` it SHOULD say
+why no answer is needed. A `note` on `asked` or `withdrawn` is for the principal side, which SHOULD show it with the
+question.
+
+**Ordering.** Events may arrive in any order (core §4), so the current resolution is defined over all the
+resolutions a receiver holds for the question, not by arrival:
+
+- A **head** is a held resolution that no other held resolution names in `supersedes`.
+- The **current** resolution is the head with the latest `ts`; equal `ts` are broken by the greater `id` in
+  code-point order. If there is no head (every resolution is superseded, which takes a cycle), the same rule applies to
+  all held resolutions.
+- There is a **conflict** when there is more than one head, or when `supersedes` links form a cycle. A receiver MUST
+  still use the current resolution and SHOULD flag the conflict to a person.
+
+A linear chain (a2 supersedes a1, a3 supersedes a2) has one head, a3, and no conflict.
 
 ## 5. Receiving answers
 
@@ -158,10 +174,11 @@ MUST treat the one with the later `ts` as current and SHOULD flag the conflict t
 
 ### 6.1 Conformance classes
 
-- A **conforming asker** sends `asked` and `withdrawn` as in §3–§4, assigns unique keys, and delivers resolutions to
-  its project as in §5.
+- A **conforming asker** sends `asked` and `withdrawn` as in §3–§4, assigns keys unique within its project, and
+  applies resolutions by judgement as in §5.
 - A **conforming principal side** treats `asked` idempotently, emits resolutions only as in §3–§4 (Q1, Q3, Q4), names
-  the replaced resolution in `supersedes`, and stops presenting withdrawn questions.
+  the replaced resolution in `supersedes`, delivers every resolution to the asker's project as in §5, and stops
+  presenting withdrawn questions.
 - Both determine the current state of a question from its events as in §3–§4.
 
 ### 6.2 Conformance suite
@@ -172,7 +189,7 @@ file formats.
 | File | Exercises |
 |---|---|
 | `events.json` | §4: event → schema it validates against, or invalid. |
-| `lifecycle.json` | §3–§4: a sequence of events (with duplicates, reordering, forks and invalid events) → the question's state, current resolution and answer. |
+| `lifecycle.json` | §3–§4: a sequence of events (with duplicates, reordering, forks, ties, cycles and invalid events) → the question's state, current resolution and answer. |
 
 ## 7. Security and privacy considerations
 

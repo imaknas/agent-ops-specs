@@ -40,28 +40,37 @@ def _when(event: dict) -> datetime:
     return datetime.fromisoformat(event["ts"].replace("Z", "+00:00").replace("z", "+00:00"))
 
 
+def _cycle(resolutions: list[dict]) -> bool:
+    """True when supersedes links among the held resolutions loop back on themselves."""
+    by_id = {e["id"]: e for e in resolutions}
+    for start in resolutions:
+        seen, e = set(), start
+        while e is not None and "supersedes" in e:
+            if e["id"] in seen:
+                return True
+            seen.add(e["id"])
+            e = by_id.get(e["supersedes"])
+    return False
+
+
 def fold(events: list[dict]) -> dict:
-    """State of one question. Invalid events are ignored (their ids listed); duplicates count once (Q5)."""
+    """State of one question (SPEC section 3, and Ordering in section 4). Invalid events are ignored and listed;
+    an id counts once (core section 4)."""
     seen: dict[str, dict] = {}
-    ignored: list[str] = []
+    ignored: set[str] = set()
     for e in events:
         if e.get("id") in seen:
             continue
         if validate(e)[1]:
-            if e.get("id") not in ignored:
-                ignored.append(e.get("id"))
+            ignored.add(e.get("id"))
             continue
         seen[e["id"]] = e
     valid = list(seen.values())
     resolutions = [e for e in valid if e["type"] in RESOLUTIONS]
     replaced = {e["supersedes"] for e in resolutions if "supersedes" in e}
-    heads = [e for e in resolutions if e["id"] not in replaced]
-    current, conflict = None, False
-    if heads:
-        current = max(heads, key=_when)
-        conflict = len(heads) > 1
-    elif resolutions:  # every resolution is replaced by another: a cycle, which only a person can sort out
-        current, conflict = max(resolutions, key=_when), True
+    heads = [e for e in resolutions if e["id"] not in replaced] or resolutions
+    current = max(heads, key=lambda e: (_when(e), e["id"])) if heads else None
+    conflict = len(heads) > 1 or _cycle(resolutions)
     if any(e["type"] == "withdrawn" for e in valid):
         state = "withdrawn"
     elif current:
@@ -76,5 +85,5 @@ def fold(events: list[dict]) -> dict:
         "answer": current.get("answer") if current and current["type"] == "answered" else None,
         "decided_by": current.get("decided_by") if current else None,
         "conflict": conflict,
-        "ignored": ignored,
+        "ignored": sorted(i for i in ignored if i is not None),
     }

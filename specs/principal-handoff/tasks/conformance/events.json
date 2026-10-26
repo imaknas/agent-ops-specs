@@ -36,7 +36,7 @@
       }
     },
     {
-      "id": "registered-from-owner",
+      "id": "registered-from-principal",
       "schema": null,
       "valid": false,
       "event": {
@@ -52,7 +52,7 @@
       }
     },
     {
-      "id": "owner-done",
+      "id": "principal-done",
       "schema": "resolution",
       "valid": true,
       "event": {
@@ -68,7 +68,7 @@
       }
     },
     {
-      "id": "owner-dropped",
+      "id": "principal-dropped",
       "schema": "resolution",
       "valid": true,
       "event": {
@@ -83,7 +83,7 @@
       }
     },
     {
-      "id": "owner-already-done",
+      "id": "principal-already-done",
       "schema": "resolution",
       "valid": true,
       "event": {
@@ -98,7 +98,7 @@
       }
     },
     {
-      "id": "owner-done-inferred",
+      "id": "principal-done-inferred",
       "schema": null,
       "valid": false,
       "event": {

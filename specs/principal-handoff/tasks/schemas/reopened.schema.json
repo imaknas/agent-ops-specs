@@ -9,6 +9,6 @@
     "ext": {"const": "tasks/0.2"},
     "type": {"const": "reopened"},
     "origin": {"const": "principal"},
-    "inferred": {"const": false}
+    "inferred": {"type": "boolean", "const": false}
   }
 }

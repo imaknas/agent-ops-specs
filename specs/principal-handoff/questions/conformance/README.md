@@ -21,16 +21,15 @@ or the event fails the schema it selects.
 ### `lifecycle.json` (SPEC §3–§4)
 
 `{id, spec, events, expect}`: `events` are all the events one receiver holds for one question, in arrival order.
-They may contain duplicates, revisions in any order, forks and invalid events. `expect` is the question's state as
+They may contain duplicates, revisions in any order, forks, ties, cycles and invalid events. `expect` is the question's state as
 SPEC §3–§4 defines it:
 
 - `state`: `open`, `answered`, `dismissed`, `withdrawn`, or `unknown` (no valid event at all);
-- `current`: id of the current resolution, or `null`;
+- `current`: id of the current resolution (SPEC §4, Ordering), or `null`;
 - `answer`: the current resolution's `answer` if it is an `answered`, otherwise `null`;
 - `decided_by`: the current resolution's `decided_by`, or `null`;
-- `conflict`: `true` when two resolutions neither of which supersedes the other (or a cycle) leave the current one
-  decided by `ts`;
-- `ignored`: ids of invalid events, in arrival order. An event that fails validation is not a question event and has
+- `conflict`: `true` when there is more than one head or a `supersedes` cycle (SPEC §4, Ordering);
+- `ignored`: ids of invalid events, sorted in code-point order. An event that fails validation is not a question event and has
   no effect (Q1, core §3).
 
 `expect` does not depend on arrival order. The reference runner checks this by also folding each case reversed.
