@@ -1,5 +1,5 @@
 {
-  "hth": "0.1",
+  "suite": "tasks/0.2",
   "description": "Message vectors: event -> which schema it must validate against (dispatch on type+origin), or invalid.",
   "cases": [
     {
@@ -7,7 +7,8 @@
       "schema": "registered",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -24,7 +25,8 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -38,13 +40,14 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "task-demo-aaaaaaaaaa",
         "type": "registered",
-        "origin": "owner",
+        "origin": "principal",
         "text": "x"
       }
     },
@@ -53,13 +56,14 @@
       "schema": "resolution",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "r1",
         "type": "done",
-        "origin": "owner",
+        "origin": "principal",
         "note": "paid"
       }
     },
@@ -68,13 +72,14 @@
       "schema": "resolution",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "r2",
         "type": "dropped",
-        "origin": "owner"
+        "origin": "principal"
       }
     },
     {
@@ -82,13 +87,14 @@
       "schema": "resolution",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "r3",
         "type": "already_done",
-        "origin": "owner"
+        "origin": "principal"
       }
     },
     {
@@ -96,13 +102,14 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "r4",
         "type": "done",
-        "origin": "owner",
+        "origin": "principal",
         "inferred": true,
         "evidence": "x"
       }
@@ -112,13 +119,14 @@
       "schema": "reopened",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "r5",
         "type": "reopened",
-        "origin": "owner",
+        "origin": "principal",
         "text": "Renew the domain"
       }
     },
@@ -127,13 +135,14 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "r6",
         "type": "reopened",
-        "origin": "owner"
+        "origin": "principal"
       }
     },
     {
@@ -141,7 +150,8 @@
       "schema": "agent-report",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -156,7 +166,8 @@
       "schema": "agent-report",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -170,7 +181,8 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -184,7 +196,8 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -199,7 +212,8 @@
       "schema": "inferred-done",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -215,7 +229,8 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -230,7 +245,8 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -245,7 +261,8 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -261,13 +278,14 @@
       "schema": "resolution",
       "valid": true,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "u1",
         "type": "done",
-        "origin": "owner",
+        "origin": "principal",
         "x_vendor": {
           "a": 1
         }
@@ -278,13 +296,14 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task demo",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "b1",
         "type": "done",
-        "origin": "owner"
+        "origin": "principal"
       }
     },
     {
@@ -292,13 +311,29 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27 09:00",
         "id": "b2",
         "type": "done",
-        "origin": "owner"
+        "origin": "principal"
+      }
+    },
+    {
+      "id": "wrong-extension",
+      "schema": null,
+      "valid": false,
+      "event": {
+        "ph": "0.2",
+        "ext": "questions/0.1",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00+08:00",
+        "id": "b4",
+        "type": "done",
+        "origin": "principal"
       }
     },
     {
@@ -306,13 +341,14 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "1.0",
+        "ph": "1.0",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "b3",
         "type": "done",
-        "origin": "owner"
+        "origin": "principal"
       }
     },
     {
@@ -320,7 +356,8 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
@@ -336,12 +373,13 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "b5",
         "type": "done",
-        "origin": "owner"
+        "origin": "principal"
       }
     },
     {
@@ -349,13 +387,14 @@
       "schema": null,
       "valid": false,
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00+08:00",
         "id": "b6",
         "type": "snoozed",
-        "origin": "owner"
+        "origin": "principal"
       }
     }
   ]

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "answered.schema.json",
+  "title": "Principal Handoff Questions 0.1: answered",
+  "description": "Principal side -> asker's project: the principal's answer, or a revision of an earlier resolution.",
+  "$ref": "../../core/schemas/envelope.schema.json",
+  "required": [
+    "answer",
+    "decided_by"
+  ],
+  "properties": {
+    "ext": {
+      "const": "questions/0.1"
+    },
+    "type": {
+      "const": "answered"
+    },
+    "origin": {
+      "const": "principal"
+    },
+    "answer": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "option": {
+          "type": "string",
+          "pattern": "^\\S{1,64}$"
+        }
+      }
+    },
+    "decided_by": {
+      "type": "string",
+      "enum": [
+        "principal",
+        "assistant"
+      ]
+    },
+    "supersedes": {
+      "type": "string",
+      "pattern": "^\\S{1,256}$"
+    }
+  }
+}

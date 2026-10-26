@@ -1,10 +1,10 @@
-"""Reference parser and applier for Human Task Handoff (HTH) v0.1, Markdown binding.
+"""Reference parser and applier for Principal Handoff Tasks 0.2, Markdown binding.
 
-Standard library only, Python >= 3.10. This module is the executable reading of SPEC.md sections 4 and 5:
+Standard library only, Python >= 3.10. This module is the executable reading of tasks/SPEC.md sections 4 and 5:
 
   parse(doc, profile)                  -> {"section", "tasks", "problems"}
-  register(doc, project, profile)      -> (doc, [{"key", "text"}])       stamp unkeyed owner tasks
-  apply(doc, event, profile)           -> (doc, changed)                 apply one event from the owner side
+  register(doc, project, profile)      -> (doc, [{"key", "text"}])       stamp unkeyed principal tasks
+  apply(doc, event, profile)           -> (doc, changed)                 apply one event from the principal side
   reconcile(doc, open_keys, profile)   -> [{"key", "action"}]            find registered keys that vanished
   recipe_key(project, text)            -> key                            the example key recipe (non-normative)
 
@@ -18,7 +18,7 @@ import hashlib
 import re
 from dataclasses import dataclass
 
-ASSIGNEES = ("owner", "agent", "undecided")
+ASSIGNEES = ("principal", "agent", "undecided")
 STRIKE = ("done", "dropped", "already_done")
 KEY_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 CHECKBOX = re.compile(r"^- \[[ xX]\](\s|$)")
@@ -38,7 +38,7 @@ class Profile:
 
     @classmethod
     def from_json(cls, d: dict, **params: str) -> "Profile":
-        """Build a profile from its JSON description, substituting parameters such as owner_tag."""
+        """Build a profile from its JSON description, substituting parameters such as principal_tag."""
         values = {**d.get("parameters", {}), **params}
 
         def fill(s: str, escape: bool = False) -> str:
@@ -78,8 +78,8 @@ class Profile:
     def render_marker(self, key: str) -> str:
         return self.marker_render.replace("{key}", key)
 
-    def owner_line(self, text: str, key: str) -> str:
-        return f"- [ ] {self.label_open}{self.labels['owner']}{self.label_close}{self.label_separator}{text}" \
+    def principal_line(self, text: str, key: str) -> str:
+        return f"- [ ] {self.label_open}{self.labels['principal']}{self.label_close}{self.label_separator}{text}" \
                + self.render_marker(key)
 
 
@@ -150,14 +150,14 @@ def parse(doc: str, p: Profile) -> dict:
 
 
 def register(doc: str, project: str, p: Profile, derive=recipe_key) -> tuple[str, list[dict]]:
-    """Stamp every unkeyed owner task; return the new document and the `registered` events to send.
+    """Stamp every unkeyed principal task; return the new document and the `registered` events to send.
 
     A real registrar sends each event before writing the stamp (SPEC.md 4.2); here both are returned together.
     """
     lines = _lines(doc)
     events = []
     for t in parse(doc, p)["tasks"]:
-        if t["assignee"] != "owner" or t["key"] is not None:
+        if t["assignee"] != "principal" or t["key"] is not None:
             continue
         key = derive(project, t["text"])
         events.append({"key": key, "text": t["text"]})
@@ -170,8 +170,8 @@ def _hits(lines: list[str], b: tuple[int, int], key: str, p: Profile) -> list[in
 
 
 def apply(doc: str, event: dict, p: Profile) -> tuple[str, bool]:
-    """Apply one owner-side event to the document. Returns (document, changed)."""
-    if event.get("origin") != "owner" or event.get("type") not in (*STRIKE, "reopened"):
+    """Apply one principal-side event to the document. Returns (document, changed)."""
+    if event.get("origin") != "principal" or event.get("type") not in (*STRIKE, "reopened"):
         return doc, False
     key, lines = event["key"], _lines(doc)
     b = _bounds(lines, p)
@@ -187,7 +187,7 @@ def apply(doc: str, event: dict, p: Profile) -> tuple[str, bool]:
         return _join(lines), True
     if b and _hits(lines, b, key, p):
         return doc, False  # reopened, and the task is still there
-    new = p.owner_line(norm(event["text"]), key)
+    new = p.principal_line(norm(event["text"]), key)
     if b is None:
         lines += ["", p.heading, "", new]
         return _join(lines), True
@@ -200,7 +200,7 @@ def apply(doc: str, event: dict, p: Profile) -> tuple[str, bool]:
 
 
 def reconcile(doc: str, open_keys: dict, p: Profile) -> list[dict]:
-    """For registered keys with no owner resolution yet (key -> registered text) that no longer appear in the
+    """For registered keys with no principal resolution yet (key -> registered text) that no longer appear in the
     document: "warn" when a task line looks like a rewrite of the same text, else "infer_done"."""
     parsed = parse(doc, p)
     present = {t["key"] for t in parsed["tasks"] if t["key"]}

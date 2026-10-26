@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asked.schema.json",
+  "title": "Principal Handoff Questions 0.1: asked",
+  "description": "Asker -> principal side: a new question. Idempotent by key.",
+  "$ref": "../../core/schemas/envelope.schema.json",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "ext": {
+      "const": "questions/0.1"
+    },
+    "type": {
+      "const": "asked"
+    },
+    "origin": {
+      "const": "agent"
+    },
+    "text": {
+      "type": "string",
+      "pattern": "\\S"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\S{1,64}$"
+          },
+          "label": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        }
+      }
+    },
+    "default": {
+      "type": "string",
+      "pattern": "\\S"
+    }
+  }
+}

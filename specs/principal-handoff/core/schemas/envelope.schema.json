@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "envelope.schema.json",
+  "title": "Principal Handoff 0.2 event envelope",
+  "description": "Fields shared by every Principal Handoff event, whatever its extension. Receivers MUST ignore properties they do not know.",
+  "type": "object",
+  "required": ["ph", "ext", "id", "type", "origin", "key", "project", "ts"],
+  "properties": {
+    "ph": {"description": "Core version of this event.", "const": "0.2"},
+    "ext": {"description": "Extension and version that defines this event type, e.g. tasks/0.2.", "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*/[0-9]+\\.[0-9]+$"},
+    "id": {"description": "Event id; stable across retransmissions of the same event. Receivers deduplicate on it.",
+           "type": "string", "pattern": "^\\S{1,256}$"},
+    "type": {"description": "Event type, defined by the extension named in ext.", "type": "string", "pattern": "^[a-z][a-z_]*$"},
+    "origin": {"description": "Which role emitted the event; the extension defines the roles.", "type": "string",
+               "pattern": "^[a-z][a-z_]*$"},
+    "key": {"description": "Opaque identifier of the item (task or question) the event is about.", "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "project": {"description": "Project the item belongs to.", "type": "string",
+                "pattern": "^\\S{1,128}$"},
+    "ts": {"description": "RFC 3339 timestamp at which the event was created.", "type": "string",
+           "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?([Zz]|[+-][0-9]{2}:[0-9]{2})$"},
+    "text": {"description": "The item's text: a task as declared, or a question as asked.", "type": "string",
+             "pattern": "\\S"},
+    "due": {"description": "Calendar date by which the principal should act.", "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "context": {"description": "Free-form tag for why the task was registered (e.g. a bulk import).", "type": "string"},
+    "inferred": {"description": "True only on a registrar's inferred done.", "type": "boolean"},
+    "evidence": {"description": "Why the registrar believes the task is done.", "type": "string", "pattern": "\\S"},
+    "note": {"description": "Human-readable remark.", "type": "string"}
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "withdrawn.schema.json",
+  "title": "Principal Handoff Questions 0.1: withdrawn",
+  "description": "Asker -> principal side: the asker no longer needs an answer. Not a resolution.",
+  "$ref": "../../core/schemas/envelope.schema.json",
+  "required": [
+    "reason"
+  ],
+  "properties": {
+    "ext": {
+      "const": "questions/0.1"
+    },
+    "type": {
+      "const": "withdrawn"
+    },
+    "origin": {
+      "const": "agent"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "settled",
+        "not_needed"
+      ]
+    }
+  }
+}

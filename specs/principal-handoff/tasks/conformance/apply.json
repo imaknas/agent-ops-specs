@@ -1,5 +1,5 @@
 {
-  "hth": "0.1",
+  "suite": "tasks/0.2",
   "description": "Apply vectors: document + one event -> document, changed.",
   "cases": [
     {
@@ -16,10 +16,11 @@
         "## 參考"
       ],
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "done-task-demo-aaaaaaaaaa",
         "type": "done",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z"
@@ -41,10 +42,11 @@
       "id": "zh-dropped-last-writes-placeholder",
       "profile": "zh-hant",
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "dropped-task-demo-aaaaaaaaaa",
         "type": "dropped",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z"
@@ -74,10 +76,11 @@
       "id": "zh-already-done-strikes-duplicates",
       "profile": "zh-hant",
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "already_done-task-demo-aaaaaaaaaa",
         "type": "already_done",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z"
@@ -100,10 +103,11 @@
       "id": "zh-done-full-width-marker",
       "profile": "zh-hant",
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "done-task-demo-aaaaaaaaaa",
         "type": "done",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z"
@@ -135,10 +139,11 @@
         "## 參考"
       ],
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "done-task-demo-bbbbbbbbbb",
         "type": "done",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-bbbbbbbbbb",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z"
@@ -171,7 +176,8 @@
         "## 參考"
       ],
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "done-task-demo-aaaaaaaaaa",
         "type": "done",
         "origin": "agent",
@@ -207,7 +213,8 @@
         "## 參考"
       ],
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "done-task-demo-aaaaaaaaaa",
         "type": "done",
         "origin": "registrar",
@@ -245,10 +252,11 @@
         "## 參考"
       ],
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "type": "reopened",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z",
@@ -281,10 +289,11 @@
         "## 參考"
       ],
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "type": "reopened",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z",
@@ -314,10 +323,11 @@
         "## 參考"
       ],
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "reopened-task-demo-bbbbbbbbbb",
         "type": "reopened",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-bbbbbbbbbb",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z",
@@ -344,10 +354,11 @@
         "說明。"
       ],
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "type": "reopened",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z",
@@ -370,10 +381,11 @@
       "id": "en-done-in-group",
       "profile": "en",
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "done-task-demo-aaaaaaaaaa",
         "type": "done",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z"
@@ -397,10 +409,11 @@
       "id": "en-done-last-in-group-keeps-heading",
       "profile": "en",
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "done-task-demo-aaaaaaaaaa",
         "type": "done",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z"
@@ -422,10 +435,11 @@
       "id": "en-dropped-last-writes-placeholder",
       "profile": "en",
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "dropped-task-demo-aaaaaaaaaa",
         "type": "dropped",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z"
@@ -451,10 +465,11 @@
       "id": "en-reopened-appends",
       "profile": "en",
       "event": {
-        "hth": "0.1",
+        "ph": "0.2",
+        "ext": "tasks/0.2",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "type": "reopened",
-        "origin": "owner",
+        "origin": "principal",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z",

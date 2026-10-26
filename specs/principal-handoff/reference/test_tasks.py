@@ -1,6 +1,6 @@
-"""Runs the HTH v0.1 conformance suite against the reference implementation.
+"""Runs the Principal Handoff Tasks 0.2 conformance suite against the reference implementation.
 
-    cd specs/human-task-handoff/reference && python3 -m unittest -v
+    cd specs/principal-handoff/reference && python3 -m unittest -v
 """
 from __future__ import annotations
 
@@ -8,21 +8,22 @@ import json
 import pathlib
 import unittest
 
-import hth
+import ph_tasks as tasks
 import schema_subset
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SCHEMAS = ROOT / "schemas"
-CONF = ROOT / "conformance"
+SCHEMAS = ROOT / "tasks" / "schemas"
+CORE_SCHEMAS = ROOT / "core" / "schemas"
+CONF = ROOT / "tasks" / "conformance"
 PROFILES = json.loads((CONF / "profiles.json").read_text())["profiles"]
 
-# SPEC.md 6.2: which schema an event must validate against, by (type, origin)
+# tasks/SPEC.md: which schema an event must validate against, by (type, origin)
 DISPATCH = {
     ("registered", "registrar"): "registered",
-    ("done", "owner"): "resolution",
-    ("dropped", "owner"): "resolution",
-    ("already_done", "owner"): "resolution",
-    ("reopened", "owner"): "reopened",
+    ("done", "principal"): "resolution",
+    ("dropped", "principal"): "resolution",
+    ("already_done", "principal"): "resolution",
+    ("reopened", "principal"): "reopened",
     ("done", "agent"): "agent-report",
     ("dropped", "agent"): "agent-report",
     ("done", "registrar"): "inferred-done",
@@ -42,8 +43,8 @@ def nonblank(text: str) -> list[str]:
     return [l.rstrip() for l in text.split("\n") if l.strip()]
 
 
-def profile(name: str) -> hth.Profile:
-    return hth.Profile.from_json(PROFILES[name])
+def profile(name: str) -> tasks.Profile:
+    return tasks.Profile.from_json(PROFILES[name])
 
 
 def validate(event: dict) -> tuple[str | None, list[str]]:
@@ -58,17 +59,17 @@ class Conformance(unittest.TestCase):
     def test_parse(self):
         for c in cases("parse.json"):
             with self.subTest(c["id"]):
-                self.assertEqual(hth.parse(doc(c["document"]), profile(c["profile"])), c["expect"])
+                self.assertEqual(tasks.parse(doc(c["document"]), profile(c["profile"])), c["expect"])
 
     def test_keys(self):
         for c in cases("keys.json"):
             with self.subTest(c["id"]):
-                self.assertEqual(hth.recipe_key(c["project"], c["text"]), c["key"])
+                self.assertEqual(tasks.recipe_key(c["project"], c["text"]), c["key"])
 
     def test_register(self):
         for c in cases("register.json"):
             with self.subTest(c["id"]):
-                out, events = hth.register(doc(c["document"]), c["project"], profile(c["profile"]))
+                out, events = tasks.register(doc(c["document"]), c["project"], profile(c["profile"]))
                 self.assertEqual(events, c["expect"]["registered"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
@@ -76,13 +77,13 @@ class Conformance(unittest.TestCase):
         for c in cases("register.json"):
             with self.subTest(c["id"]):
                 p = profile(c["profile"])
-                once, _ = hth.register(doc(c["document"]), c["project"], p)
-                self.assertEqual(hth.register(once, c["project"], p), (once, []))
+                once, _ = tasks.register(doc(c["document"]), c["project"], p)
+                self.assertEqual(tasks.register(once, c["project"], p), (once, []))
 
     def test_apply(self):
         for c in cases("apply.json"):
             with self.subTest(c["id"]):
-                out, changed = hth.apply(doc(c["document"]), c["event"], profile(c["profile"]))
+                out, changed = tasks.apply(doc(c["document"]), c["event"], profile(c["profile"]))
                 self.assertEqual(changed, c["expect"]["changed"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
@@ -94,7 +95,7 @@ class Conformance(unittest.TestCase):
     def test_reconcile(self):
         for c in cases("reconcile.json"):
             with self.subTest(c["id"]):
-                self.assertEqual(hth.reconcile(doc(c["document"]), c["open"], profile(c["profile"])), c["expect"])
+                self.assertEqual(tasks.reconcile(doc(c["document"]), c["open"], profile(c["profile"])), c["expect"])
 
     def test_events(self):
         for c in cases("events.json"):
@@ -116,7 +117,7 @@ class Conformance(unittest.TestCase):
             if "items" in s:
                 walk(s["items"], f"{where}[]")
 
-        for f in sorted(SCHEMAS.glob("*.json")):
+        for f in sorted([*SCHEMAS.glob("*.json"), *CORE_SCHEMAS.glob("*.json")]):
             walk(json.loads(f.read_text()), f.name)
 
 

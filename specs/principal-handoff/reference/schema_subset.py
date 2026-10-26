@@ -1,5 +1,5 @@
-"""Minimal JSON Schema (draft 2020-12) validator for the keyword subset HTH schemas use:
-type, required, properties, enum, const, pattern, items, $ref (to a sibling schema file). Standard library only.
+"""Minimal JSON Schema (draft 2020-12) validator for the keyword subset the Principal Handoff schemas use:
+type, required, properties, enum, const, pattern, items, $ref (a relative path to another schema file). Standard library only.
 
 Other keywords (title, description, $id, $schema) are annotations and ignored. Properties not listed under
 `properties` are allowed, as in JSON Schema.
@@ -28,7 +28,8 @@ def _same(a, b) -> bool:
 def errors(instance, schema: dict, base: pathlib.Path, path: str = "$") -> list[str]:
     out = []
     if "$ref" in schema:
-        out += errors(instance, json.loads((base / schema["$ref"]).read_text()), base, path)
+        target = base / schema["$ref"]
+        out += errors(instance, json.loads(target.read_text()), target.parent, path)
     if "type" in schema and not TYPES[schema["type"]](instance):
         return out + [f"{path}: not {schema['type']}"]
     if "const" in schema and not _same(instance, schema["const"]):

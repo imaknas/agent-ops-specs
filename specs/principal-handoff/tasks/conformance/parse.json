@@ -1,5 +1,5 @@
 {
-  "hth": "0.1",
+  "suite": "tasks/0.2",
   "description": "Parse vectors: document -> tasks in the tasks section and malformed checkbox lines.",
   "cases": [
     {
@@ -28,7 +28,7 @@
         "tasks": [
           {
             "line": 6,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "Renew the domain",
             "key": null
           },
@@ -46,13 +46,13 @@
           },
           {
             "line": 9,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "Sign the contract",
             "key": "task-demo-0123456789"
           },
           {
             "line": 10,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "Pay  the invoice",
             "key": null
           }
@@ -78,13 +78,13 @@
         "tasks": [
           {
             "line": 3,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "Renew the domain",
             "key": null
           },
           {
             "line": 4,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "Call the bank",
             "key": "task-demo-aaaaaaaaaa"
           },
@@ -174,7 +174,7 @@
         "tasks": [
           {
             "line": 1,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "Ship it (waiting on owner: task-demo-aaaaaaaaaa) and more",
             "key": null
           }
@@ -207,7 +207,7 @@
         "tasks": [
           {
             "line": 8,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "續約網域",
             "key": null
           },
@@ -225,13 +225,13 @@
           },
           {
             "line": 11,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "簽合約",
             "key": "task-demo-0123456789"
           },
           {
             "line": 12,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "付款",
             "key": "task-demo-bbbbbbbbbb"
           }
@@ -255,31 +255,31 @@
         "tasks": [
           {
             "line": 1,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "甲",
             "key": "task-demo-aaaaaaaaaa"
           },
           {
             "line": 2,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "乙",
             "key": "task-demo-bbbbbbbbbb"
           },
           {
             "line": 3,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "丙",
             "key": "task-demo-cccccccccc"
           },
           {
             "line": 4,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "丁",
             "key": "task-demo-dddddddddd"
           },
           {
             "line": 5,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "戊(等 Owner:task-demo-eeeeeeeeee) 之後還有字",
             "key": null
           }
@@ -307,13 +307,13 @@
         "tasks": [
           {
             "line": 3,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "續約網域",
             "key": null
           },
           {
             "line": 4,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "打給銀行",
             "key": "task-demo-aaaaaaaaaa"
           },
@@ -325,7 +325,7 @@
           },
           {
             "line": 7,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "群組裡明確標籤優先",
             "key": null
           },
@@ -363,7 +363,7 @@
         "tasks": [
           {
             "line": 6,
-            "assignee": "owner",
+            "assignee": "principal",
             "text": "這是 owner 的",
             "key": null
           }

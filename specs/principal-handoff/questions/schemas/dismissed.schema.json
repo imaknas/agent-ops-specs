@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dismissed.schema.json",
+  "title": "Principal Handoff Questions 0.1: dismissed",
+  "description": "Principal side -> asker's project: no answer is needed.",
+  "$ref": "../../core/schemas/envelope.schema.json",
+  "required": [
+    "decided_by"
+  ],
+  "properties": {
+    "ext": {
+      "const": "questions/0.1"
+    },
+    "type": {
+      "const": "dismissed"
+    },
+    "origin": {
+      "const": "principal"
+    },
+    "decided_by": {
+      "type": "string",
+      "enum": [
+        "principal",
+        "assistant"
+      ]
+    },
+    "supersedes": {
+      "type": "string",
+      "pattern": "^\\S{1,256}$"
+    }
+  }
+}

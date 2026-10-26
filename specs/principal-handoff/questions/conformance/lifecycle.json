@@ -1,0 +1,911 @@
+{
+  "suite": "questions/0.1",
+  "description": "Event sequences for one question -> its state, current resolution and answer.",
+  "cases": [
+    {
+      "id": "open",
+      "spec": "§3.1",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        }
+      ],
+      "expect": {
+        "state": "open",
+        "current": null,
+        "answer": null,
+        "decided_by": null,
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "default-is-not-an-answer",
+      "spec": "Q3: a default or due date passing never resolves",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        }
+      ],
+      "expect": {
+        "state": "open",
+        "current": null,
+        "answer": null,
+        "decided_by": null,
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "answered",
+      "spec": "§3.2",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "a1",
+        "answer": {
+          "text": "SQLite is fine for now",
+          "option": "sqlite"
+        },
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "duplicate-answer",
+      "spec": "Q5: same id twice counts once",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "a1",
+        "answer": {
+          "text": "SQLite is fine for now",
+          "option": "sqlite"
+        },
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "revised",
+      "spec": "§3.4: the superseding resolution is current",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a2",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-29T08:00:00Z",
+          "answer": {
+            "text": "Use Postgres after all",
+            "option": "pg"
+          },
+          "decided_by": "principal",
+          "supersedes": "a1"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "a2",
+        "answer": {
+          "text": "Use Postgres after all",
+          "option": "pg"
+        },
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "revised-out-of-order",
+      "spec": "§4 ordering: supersedes, not arrival order",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a2",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-29T08:00:00Z",
+          "answer": {
+            "text": "Use Postgres after all",
+            "option": "pg"
+          },
+          "decided_by": "principal",
+          "supersedes": "a1"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "a2",
+        "answer": {
+          "text": "Use Postgres after all",
+          "option": "pg"
+        },
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "revision-older-ts",
+      "spec": "§4 ordering: supersedes wins over ts",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a2",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T08:00:00Z",
+          "answer": {
+            "text": "Use Postgres after all",
+            "option": "pg"
+          },
+          "decided_by": "principal",
+          "supersedes": "a1"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "a2",
+        "answer": {
+          "text": "Use Postgres after all",
+          "option": "pg"
+        },
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "dismissed",
+      "spec": "§3.3",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "d1",
+          "type": "dismissed",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "dismissed",
+        "current": "d1",
+        "answer": null,
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "answered-after-dismissal",
+      "spec": "§3.4: answering a dismissed question",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "d1",
+          "type": "dismissed",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "decided_by": "principal"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a3",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-29T08:00:00Z",
+          "answer": {
+            "text": "Go with SQLite",
+            "option": "sqlite"
+          },
+          "decided_by": "principal",
+          "supersedes": "d1"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "a3",
+        "answer": {
+          "text": "Go with SQLite",
+          "option": "sqlite"
+        },
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "withdrawn",
+      "spec": "§3.5",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "w1",
+          "type": "withdrawn",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T10:00:00Z",
+          "reason": "settled"
+        }
+      ],
+      "expect": {
+        "state": "withdrawn",
+        "current": null,
+        "answer": null,
+        "decided_by": null,
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "answer-after-withdrawal",
+      "spec": "§3.5: still delivered, state stays withdrawn",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "w1",
+          "type": "withdrawn",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T10:00:00Z",
+          "reason": "settled"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "withdrawn",
+        "current": "a1",
+        "answer": {
+          "text": "SQLite is fine for now",
+          "option": "sqlite"
+        },
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "fork",
+      "spec": "§4 ordering: two heads, later ts is current and flagged",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "b1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T09:00:00Z",
+          "answer": {
+            "text": "Postgres",
+            "option": "pg"
+          },
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "b1",
+        "answer": {
+          "text": "Postgres",
+          "option": "pg"
+        },
+        "decided_by": "principal",
+        "conflict": true,
+        "ignored": []
+      }
+    },
+    {
+      "id": "agent-cannot-answer",
+      "spec": "Q1: an agent-origin answer is ignored",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "x9",
+          "type": "answered",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite"
+          },
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "open",
+        "current": null,
+        "answer": null,
+        "decided_by": null,
+        "conflict": false,
+        "ignored": [
+          "x9"
+        ]
+      }
+    },
+    {
+      "id": "assistant-answer",
+      "spec": "Q4",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a4",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite, per your standing preference",
+            "option": "sqlite"
+          },
+          "decided_by": "assistant"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "a4",
+        "answer": {
+          "text": "SQLite, per your standing preference",
+          "option": "sqlite"
+        },
+        "decided_by": "assistant",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "resolution-before-ask",
+      "spec": "§4 ordering: the asked event was lost or is late",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "a1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "answered",
+        "current": "a1",
+        "answer": {
+          "text": "SQLite is fine for now",
+          "option": "sqlite"
+        },
+        "decided_by": "principal",
+        "conflict": false,
+        "ignored": []
+      }
+    },
+    {
+      "id": "other-extension-ignored",
+      "spec": "core §3: an event of another extension is not a question event",
+      "events": [
+        {
+          "ph": "0.2",
+          "ext": "questions/0.1",
+          "id": "q-demo-1",
+          "type": "asked",
+          "origin": "agent",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "text": "Postgres or SQLite for the cache?",
+          "options": [
+            {
+              "id": "pg",
+              "label": "Postgres"
+            },
+            {
+              "id": "sqlite",
+              "label": "SQLite"
+            }
+          ],
+          "default": "sqlite",
+          "due": "2026-10-30"
+        },
+        {
+          "ph": "0.2",
+          "ext": "tasks/0.2",
+          "id": "t1",
+          "type": "answered",
+          "origin": "principal",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "answer": {
+            "text": "SQLite is fine for now",
+            "option": "sqlite"
+          },
+          "decided_by": "principal"
+        }
+      ],
+      "expect": {
+        "state": "open",
+        "current": null,
+        "answer": null,
+        "decided_by": null,
+        "conflict": false,
+        "ignored": [
+          "t1"
+        ]
+      }
+    }
+  ]
+}

@@ -1,6 +1,7 @@
-# HTH 0.1: related work
+# Principal Handoff: related work
 
-*Non-normative companion to [SPEC.md](SPEC.md) §11. Sources were read on 2026-10-27; versions are given for each.
+*Non-normative companion to [core §9](core/SPEC.md#9-relation-to-other-specifications) and the extensions' relation
+sections. Sources were read on 2026-10-27; versions are given for each.
 Statements of fact cite the source. Paragraphs headed **Assessment** are the authors' reading and are not taken from
 those sources.*
 
@@ -13,16 +14,18 @@ complete. The general-purpose task standards (iCalendar VTODO, JSCalendar, JMAP 
 people that outlive any program run. But there the organizer owns the master copy, and an assignee can neither
 reopen a task nor withdraw it.
 
-HTH covers a narrower case. A task that only the owner can do is declared by an agent in the project's own state
-document. It outlives every agent run. The **assignee** is authoritative: an agent's "done" is a claim, and only the
-owner side's resolution changes the document. At the wire level most of what HTH needs already exists, most
-completely in A2A. What HTH adds is small:
-- an owner-authoritative lifecycle with reopening under the same identity;
-- inferred completion that the owner must confirm;
-- keys derived from content;
-- a Markdown binding for an in-repository document.
+Principal Handoff covers a narrower case: items only the principal can settle that outlive every agent run, where the
+principal side is authoritative and an agent's "done" or "the principal said…" is only a claim. Its Tasks extension
+declares work in the project's own state document; its Questions extension asks for answers as messages. At the wire
+level most of what it needs already exists: borrowing a project's agent session is ACP's job, and long-lived tasks,
+listing and webhooks exist in A2A. What Principal Handoff adds is small:
+- a principal-authoritative lifecycle, with reopening (tasks) and revision (questions) under the same identity;
+- inferred completion that the principal must confirm;
+- for tasks, keys derived from content and a Markdown binding for an in-repository document;
+- for questions, answers delivered to the project rather than to a session that may be gone, defaults that never
+  become answers, and a record of whether the principal or their assistant answered.
 
-The aim is for HTH to be carried by these protocols and to borrow their vocabulary, not to compete with them.
+The aim is for Principal Handoff to be carried by these protocols and to borrow their vocabulary, not to compete with them.
 
 | | Where the human request lives | Lifetime | Identifier | Who decides completion | Reopen | Plain-text form |
 |---|---|---|---|---|---|---|
@@ -35,9 +38,29 @@ The aim is for HTH to be carried by these protocols and to borrow their vocabula
 | iCalendar VTODO + iTIP | a to-do the organizer sends to attendees | indefinite | `UID` | the organizer owns the master | not by the attendee | text, not line-oriented |
 | JSCalendar / JMAP Tasks | a task object on a server | indefinite | `uid` (+ JMAP `id`) | roles and rights | via `progress` | no |
 | TASKS.md | a line in a repository file | until deleted | kebab-case `**ID**` | the agent that deletes the line | — | yes |
-| **HTH 0.1** | a line in the project's state document, mirrored on the owner side | days to weeks, outlives every run | key derived from project and text | **the owner side** | yes, same key | yes |
+| **Principal Handoff: Tasks** | a line in the project's state document, mirrored on the principal side | days to weeks, outlives every run | key derived from project and text | **the principal side** | yes, same key | yes |
+| **Principal Handoff: Questions** | a message to the principal side; the answer goes to the project | until answered, dismissed or withdrawn | asker's key | **the principal side**; the asker may withdraw | revised by a superseding answer | no |
 
 ## 1. Agent protocols
+
+### 1.0 Agent Client Protocol (ACP)
+
+Sources: <https://agentclientprotocol.com/protocol/overview>; OpenClaw's ACP and MCP documentation
+(<https://docs.openclaw.ai/tools/acp-agents.md>, <https://docs.openclaw.ai/cli/mcp>), read 2026-10-27.
+
+- **Methods:** JSON-RPC 2.0 between a client (an editor, an assistant) and a coding agent. The agent side has
+  `initialize`, `authenticate`, `session/new` and `session/prompt`, plus optional `session/load` and
+  `session/set_mode`, and the `session/cancel` notification. The client side has `session/request_permission`, file
+  and terminal methods, and elicitation; `session/update` is a notification to the client.
+- **Transport:** the overview defines none; agents "typically run as subprocesses of the Client".
+- **Adoption:** OpenClaw, a personal assistant, runs Claude Code, Gemini CLI and OpenCode as ACP sessions that can be
+  bound to a chat thread and resumed. `openclaw mcp serve` also exposes OpenClaw's conversations to coding agents as
+  MCP tools, including `permissions_list_open` and `permissions_respond`.
+
+**Assessment.** ACP already covers *borrowing a project's agent session* from an assistant: its methods match a
+session lease almost one to one. That part of an assistant–platform boundary should ride ACP (with an HTTP or bridge
+transport where the two run apart), not a new protocol. What is left after the session ends, the work and answers
+only the principal can give, is what Principal Handoff covers.
 
 ### 1.1 Agent2Agent (A2A) 1.0
 
@@ -60,10 +83,10 @@ Source: specification at tag `v1.0.1` (the document banner says 1.0.0); `a2a.pro
 **Assessment.** A2A is the closest fit at the wire level. It has durable tasks, a way to list them, at-least-once
 webhooks and extension metadata. Three things do not map:
 - **Reopening under one identity.** Terminal tasks are immutable, and a server cannot create a task without a client
-  message, so the owner side has no native way to emit `reopened`.
+  message, so the principal side has no native way to emit `reopened`.
 - **Content-derived keys.** Task ids are minted by the server, and a client-supplied `contextId` works only if the
   server accepts it.
-- **Authority.** `role` distinguishes client from server, not agent claim from owner decision.
+- **Authority.** `role` distinguishes client from server, not agent claim from principal decision.
 
 §4 sketches two possible bindings.
 
@@ -83,10 +106,10 @@ Sources: the Tasks extension `io.modelcontextprotocol/tasks` (specification/2026
   - The state diagram has no transitions out of a terminal state.
 
 **Assessment.** The direction is reversed. In MCP the human sits behind the client and the server owns the task. In
-HTH the human sits behind the owner side, which is the receiver. A registrar could call an owner-side MCP tool such as
+Principal Handoff the human sits behind the principal side, which is the receiver. A registrar could call a principal-side MCP tool such as
 `declare_owner_task`, but MCP Tasks adds little over an idempotent tool call plus polling. It also cannot express
 `dropped` versus `already_done` (both are `completed`), `reopened`, or an agent claim. MCP remains a good way to
-*expose* HTH: tools that report a key done, or a resource listing open owner tasks.
+*expose* Principal Handoff: tools that report a key done, or a resource listing open principal tasks.
 
 ### 1.3 AG-UI 1.0 (interrupt and resume)
 
@@ -96,7 +119,7 @@ HTH the human sits behind the owner side, which is the receiver. A registrar cou
   producer must not act on an interrupt that has no entry.
 
 **Assessment.** AG-UI covers one thread at a time, and a producer that keeps no state between runs still conforms. Its
-coverage rule is the same principle as HTH's: an inferred `done` is not a resolution (SPEC §4.6). It is worth stating
+coverage rule is the same principle as Principal Handoff's: an inferred `done` is not a resolution (Tasks §4.6). It is worth stating
 that way in a future version.
 
 ### 1.4 Collaborative Human-Agent Protocol (CHAP)
@@ -125,11 +148,11 @@ not implemented, in 0.3.3 (SPECIFICATION.md §12.3).
 - **Maturity:** two coordinators (TypeScript, Python), both labelled "Beta" and both from the same organisation.
   Code is Apache-2.0, specification text CC-BY-4.0.
 
-**Assessment.** CHAP and HTH overlap only at the point where a task is assigned to a person. CHAP has no plain-text or
+**Assessment.** CHAP and Principal Handoff overlap only at the point where a task is assigned to a person. CHAP has no plain-text or
 in-repository representation, no content-derived identity, no path for "done in the world, inferred, confirm", and
-no rule that only the assignee can resolve a task. HTH has no multi-party review, signatures or audit chain. A CHAP
-*profile* is a poor fit, because profiles must not redefine Core and HTH treats the document, not a coordinator log,
-as the record. HTH events could travel over CHAP, with a registrar acting as a member that keeps its own map from key
+no rule that only the assignee can resolve a task. Principal Handoff has no multi-party review, signatures or audit chain. A CHAP
+*profile* is a poor fit, because profiles must not redefine Core and Principal Handoff treats the document, not a coordinator log,
+as the record. its events could travel over CHAP, with a registrar acting as a member that keeps its own map from key
 to `tsk_` id. Two CHAP practices worth adopting are recording refused attempts, and a method catalogue that marks
 each method implemented, specified only, or reserved.
 
@@ -139,7 +162,7 @@ each method implemented, specified only, or reserved.
 - **No working group on human tasks.** The closest work is the Workflows & Process Integration working group's
   reference architectures, such as `human-approval-gate`, `durable-wait` and `single-agent-human-approval` (a draft
   for working-group review). These are patterns, not a protocol.
-- **Invariants in the approval-gate pattern** that apply to HTH:
+- **Invariants in the approval-gate pattern** that apply to Principal Handoff:
   - a uniquely identified human decides;
   - silence or a timeout is never approval;
   - every decision is recorded;
@@ -160,7 +183,7 @@ each method implemented, specified only, or reserved.
 
 **Assessment.** These are approval gates for one pending action, or durable waits inside one workflow. None of them
 models a task the person does in the world that outlives the run and can be dropped or reopened later. Temporal or
-Power Automate could *implement* an owner side. None of them defines the exchange.
+Power Automate could *implement* an principal side. None of them defines the exchange.
 
 ## 3. Task standards and plain-text formats
 
@@ -173,10 +196,10 @@ Power Automate could *implement* an owner side. None of them defines the exchang
   (§3.4.5), and "the Organizer has complete control over the master" (§2.1). RFC 6638 supports scheduling to-dos
   through a CalDAV server.
 
-**Assessment.** A VTODO is a good *owner-side store*: the owner's existing task or calendar app could be the owner
-side. As the *protocol*, iTIP inverts HTH's authority. An attendee cannot reply NEEDS-ACTION (reopen) or cancel
+**Assessment.** A VTODO is a good *principal-side store*: the principal's existing task or calendar app could be the principal
+side. As the *protocol*, iTIP inverts Principal Handoff's authority. An attendee cannot reply NEEDS-ACTION (reopen) or cancel
 (dropped). DECLINED means "will not do", not "no longer needed". A workable profile might write the VTODO into a list
-the owner organizes (CalDAV, no scheduling) and read back the owner's STATUS changes. This has not been tried.
+the principal organizes (CalDAV, no scheduling) and read back the principal's STATUS changes. This has not been tried.
 
 ### 3.2 JSCalendar (RFC 8984) and JMAP Tasks
 
@@ -186,7 +209,7 @@ the owner organizes (CalDAV, no scheduling) and read back the owner's STATUS cha
 - **JMAP Tasks** (draft-ietf-jmap-tasks-06) adds a server `id` alongside `uid`, an `assignee` role and per-list
   workflow states.
 
-**Assessment.** This is the vocabulary HTH should borrow. An open owner task corresponds to `needs-action`; `done`
+**Assessment.** This is the vocabulary Principal Handoff should borrow. An open principal task corresponds to `needs-action`; `done`
 and `already_done` to `completed` (with a completion time before registration for the latter); `dropped` to
 `cancelled`; `reopened` returns the task to `needs-action`.
 
@@ -194,7 +217,7 @@ and `already_done` to `completed` (with a completion time before registration fo
 
 - **GFM task lists:** `[ ]` / `[x]` with no defined meaning beyond the checkbox, and no ids.
 - **todo.txt:** a leading `x` plus a completion date marks a task done, with no ids. Tool developers may define
-  `key:value` extensions, the same idea as HTH's line-end marker.
+  `key:value` extensions, the same idea as Principal Handoff's line-end marker.
 - **Obsidian Tasks:** optional ids that are not enforced as unique, a richer status set, and dependencies. It is local
   only.
 - **TASKS.md:** a task queue *for agents* in a repository file.
@@ -204,44 +227,49 @@ and `already_done` to `completed` (with a completion time before registration fo
   - It has no human assignee and nothing round-trips from an external tool.
 
 **Assessment.** None of these formats round-trips status from the person's own tool. TASKS.md is the closest relative
-of HTH's Markdown binding. Its rule that a deleted line means done is the behaviour HTH deliberately does *not* trust:
-HTH treats a deleted line as an inferred `done` that the owner must confirm.
+of Principal Handoff's Markdown binding. Its rule that a deleted line means done is the behaviour Principal Handoff deliberately does *not* trust:
+Principal Handoff treats a deleted line as an inferred `done` that the principal must confirm.
 
 ## 4. Possible A2A bindings (sketch, for discussion)
 
 **(a) A2A as a transport.** Each project has one long-lived A2A task, whose `contextId` is server-assigned or
-server-accepted, that carries HTH events unchanged as messages and artifacts under an extension URI.
-- HTH's semantics stay intact, including reopening.
+server-accepted, that carries its events unchanged as messages and artifacts under an extension URI.
+- Principal Handoff's semantics stay intact, including reopening.
 - It gains little beyond a standard envelope, authentication and webhooks.
 
-**(b) A2A-native.** Each HTH task becomes one A2A task on an owner-side A2A server.
+**(b) A2A-native.** Each Principal Handoff task becomes one A2A task on a principal-side A2A server.
 
-| HTH | A2A | Fit |
+| Principal Handoff | A2A | Fit |
 |---|---|---|
-| `registered` | `SendMessage`; `messageId` = HTH event id; key, project, text and origin in message metadata under the extension URI; the task stays `working` | good |
+| `registered` | `SendMessage`; `messageId` = Principal Handoff event id; key, project, text and origin in message metadata under the extension URI; the task stays `working` | good |
 | `done`, `already_done` | `TASK_STATE_COMPLETED`, with the resolution in metadata | good |
 | `dropped` | `TASK_STATE_CANCELED` or `TASK_STATE_REJECTED` | to decide: neither means "no longer needed" |
 | agent claim, inferred `done` | a message to the open task, with origin and evidence in metadata | good; the server must not complete on it |
-| owner → registrar | push webhook (at least once) or `ListTasks` with `status_timestamp_after` | good |
+| principal side → registrar | push webhook (at least once) or `ListTasks` with `status_timestamp_after` | good |
 | `reopened` | no mapping: terminal tasks accept no messages, and a server cannot open a task without a client message | **gap** |
 
 The key travels in metadata, not as the task id, and the registrar keeps a map from key to the latest task id.
 
-## 5. What HTH keeps as its own
+## 5. What Principal Handoff keeps as its own
 
-- **The owner side is authoritative**, and an agent's `done` is a claim. No surveyed system separates the two.
-- **Inferred completion from a vanished line**, sent with evidence and confirmed by the owner. TASKS.md treats
+- **The principal side is authoritative**, and an agent's `done` is a claim. No surveyed system separates the two.
+- **Inferred completion from a vanished line**, sent with evidence and confirmed by the principal. TASKS.md treats
   deletion as completion with no confirmation, and nothing else infers completion.
 - **Reopening under the same identity.** Terminal states are final in MCP, A2A and CHAP, and iTIP attendees cannot
   reopen.
-- **Content-derived keys.** Every identifier surveyed is opaque and minted by a server or a caller. HTH's key lets a
-  stateless registrar register idempotently. The cost is that editing a line's text changes its key, which SPEC §4.7
-  I1 forbids and §4.6 step 1 detects. See also the re-declaration issue in SPEC §12.
-- **The Markdown binding**: tasks are declared in the document the project's agents already read, which stays the
-  record.
+- **Content-derived keys (Tasks).** Every identifier surveyed is opaque and minted by a server or a caller. The Tasks
+  extension's key lets a stateless registrar register idempotently. The cost is that editing a line's text changes its key, which Tasks §4.7
+  I1 forbids and §4.6 step 1 detects. See also the re-declaration issue in Tasks §12.
+- **The Markdown binding (Tasks)**: tasks are declared in the document the project's agents already read, which stays
+  the record.
+- **Answers that reach the project (Questions)**, not the session that asked, which may be gone; a default that stays
+  a working assumption (CHAP's whisper applies it on timeout instead); and a record of whether the principal or
+  their assistant answered.
 
 ## Sources
 
+- ACP: <https://agentclientprotocol.com/protocol/overview>; OpenClaw: <https://docs.openclaw.ai/tools/acp-agents.md>,
+  <https://docs.openclaw.ai/cli/mcp>.
 - A2A: <https://github.com/a2aproject/A2A/blob/v1.0.1/docs/specification.md>, `specification/a2a.proto` at the same tag.
 - MCP Tasks extension: <https://github.com/modelcontextprotocol/ext-tasks/blob/main/specification/2026-07-28/tasks.md>;
   elicitation: <https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation>;
