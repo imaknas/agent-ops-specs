@@ -1,5 +1,7 @@
 # agent-ops-specs
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23680064.svg)](https://doi.org/10.5281/zenodo.23680064)
+
 Open, implementation-neutral specifications for **operating AI agents alongside the person they work for**: the conventions that
 let many agents (coding agents, assistants, background jobs) share state with a person and with each other.
 
@@ -22,3 +24,10 @@ suite: `cd specs/principal-handoff/reference && python3 -m unittest` (Python 3.1
 Reference implementation: agent-hub (to be published).
 
 Licensed under Apache-2.0.
+
+## Citation
+
+Cite the specifications with the Zenodo concept DOI, which always resolves to the latest release:
+[10.5281/zenodo.23680064](https://doi.org/10.5281/zenodo.23680064). Each GitHub Release has its own DOI; the first,
+`release-2026-10-27` (Principal Handoff 0.3 draft), is [10.5281/zenodo.23680065](https://doi.org/10.5281/zenodo.23680065).
+GitHub's "Cite this repository" uses [`CITATION.cff`](CITATION.cff).

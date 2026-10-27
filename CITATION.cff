@@ -14,6 +14,14 @@ authors:
   - family-names: Xiao
     given-names: Knas
     orcid: "https://orcid.org/0009-0007-0414-2355"
+doi: 10.5281/zenodo.23680064
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23680064
+    description: All versions (Zenodo concept DOI)
+  - type: doi
+    value: 10.5281/zenodo.23680065
+    description: Release release-2026-10-27 (Principal Handoff 0.3 draft)
 repository-code: "https://github.com/imaknas/agent-ops-specs"
 url: "https://imaknas.github.io/agent-ops-specs/"
 license: Apache-2.0
