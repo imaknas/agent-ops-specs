@@ -9,6 +9,7 @@ import pathlib
 import unittest
 
 import ph_acts as acts
+from ph_core import Config
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONF = ROOT / "acts" / "conformance"
@@ -64,6 +65,13 @@ class Binding(unittest.TestCase):
                 once, _ = acts.register(doc(c["document"]), c["project"], p)
                 self.assertEqual(acts.register(once, c["project"], p), (once, []))
 
+    def test_relink(self):
+        for c in cases("relink.json"):
+            with self.subTest(c["id"]):
+                out, relinked = acts.relink(doc(c["document"]), c["vanished"], profile(c["profile"]))
+                self.assertEqual(relinked, c["expect"]["relinked"])
+                self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
+
     def test_amend(self):
         for c in cases("amend.json"):
             with self.subTest(c["id"]):
@@ -79,7 +87,7 @@ class Binding(unittest.TestCase):
     def test_apply_records_are_valid(self):
         for c in cases("apply.json"):
             with self.subTest(c["id"]):
-                self.assertEqual(acts.validate(c["record"], "p:owner")[1], [])
+                self.assertEqual(acts.validate(c["record"], Config("p:owner"))[1], [])
 
     def test_reconcile(self):
         for c in cases("reconcile.json"):
@@ -92,7 +100,8 @@ class Records(unittest.TestCase):
         s = suite("records.json")
         for c in s["cases"]:
             with self.subTest(c["id"]):
-                name, errs = acts.validate(c["record"], s["principal"])
+                cfg = Config(s["principal"], c.get("principal_type", s.get("principal_type")) == "legal")
+                name, errs = acts.validate(c["record"], cfg)
                 if c["valid"]:
                     self.assertEqual((name, errs), (c["schema"], []))
                 else:
@@ -102,13 +111,13 @@ class Records(unittest.TestCase):
         s = suite("lifecycle.json")
         for c in s["cases"]:
             with self.subTest(c["id"]):
-                self.assertEqual(acts.fold(c["records"], s["principal"]), c["expect"])
+                self.assertEqual(acts.fold(c["records"], Config(s["principal"])), c["expect"])
 
     def test_lifecycle_does_not_depend_on_arrival_order(self):
         s = suite("lifecycle.json")
         for c in s["cases"]:
             with self.subTest(c["id"]):
-                self.assertEqual(acts.fold(list(reversed(c["records"])), s["principal"]), c["expect"])
+                self.assertEqual(acts.fold(list(reversed(c["records"])), Config(s["principal"])), c["expect"])
 
     def test_schemas_use_only_the_subset(self):
         def walk(x, where):

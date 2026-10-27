@@ -1,5 +1,5 @@
 {
-  "description": "Principal Handoff Tasks 0.2 Markdown profiles. {principal_tag} is a profile parameter; the value under `parameters` is the one the fixtures use. marker_pattern is a regular expression (Python/PCRE/ECMAScript-compatible subset) whose group 1 is the key, searched against a whole task line; parameters substituted into it are regex-escaped.",
+  "description": "Principal Handoff Acts 0.3 Markdown profiles. {principal_tag} is a profile parameter; the value under `parameters` is the one the fixtures use. marker_pattern is a regular expression (Python/PCRE/ECMAScript-compatible subset) whose group 1 is the key, searched against a whole task line; parameters substituted into it are regex-escaped.",
   "profiles": {
     "en": {
       "title": "Default English profile",

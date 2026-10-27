@@ -417,7 +417,8 @@
         "ts": "2026-10-27T09:00:00Z",
         "supersedes": [
           "s1"
-        ]
+        ],
+        "restore_text": "Renew the domain"
       }
     },
     {
@@ -692,6 +693,268 @@
           "decider": "p:owner"
         }
       }
+    },
+    {
+      "id": "reopened-without-restore-text",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "o9",
+        "type": "reopened",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "supersedes": [
+          "s1"
+        ]
+      }
+    },
+    {
+      "id": "amended-rev-1",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "a9",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "x"
+        },
+        "terms_rev": 1,
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "settled-rev-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "s20",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 0,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      }
+    },
+    {
+      "id": "attested-by-principal",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "s21",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "attested",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "basis": "b"
+        }
+      }
+    },
+    {
+      "id": "adopts-on-principal-kind",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "s22",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-attested",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "s23",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:assistant"
+        },
+        "evidence": {
+          "basis": "the claim and a receipt"
+        },
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "chain-not-rooted",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "s24",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:assistant",
+          "under": "m",
+          "chain": [
+            "agent:x",
+            "ps:assistant"
+          ]
+        }
+      }
+    },
+    {
+      "id": "relation-target-mixed",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "l9",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": "a2a:task/1",
+            "key": "k"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "l10",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {},
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "legal-principal-without-representative",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "s25",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "principal_type": "legal"
+    },
+    {
+      "id": "legal-principal-with-representative",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.3",
+        "ext": "acts/0.3",
+        "id": "s26",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner",
+          "representative": "person:cfo"
+        }
+      },
+      "principal_type": "legal"
     }
-  ]
+  ],
+  "principal_type": "natural"
 }

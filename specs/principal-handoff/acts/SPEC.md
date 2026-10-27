@@ -92,39 +92,43 @@ Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.3"`.
 | `amended` | `requester` | as above | [`amended`](schemas/amended.schema.json) | `terms`, `terms_rev` |
 | `withdrawn` | `requester` | as above | [`withdrawn`](schemas/withdrawn.schema.json) | `reason` |
 | `settled` | `principal` | the principal side | [`settled`](schemas/settled.schema.json) | `outcome` of §2, `authority`, `terms_rev` |
-| `reopened` | `principal` | the principal side | [`reopened`](schemas/reopened.schema.json) | `supersedes`; optional `restore_text` |
+| `reopened` | `principal` | the principal side | [`reopened`](schemas/reopened.schema.json) | `supersedes`, `restore_text` |
 | `claimed` | `agent`, `registrar`, `requester` | anyone else | [`claimed`](schemas/claimed.schema.json) | `outcome` of §2; `evidence.basis` |
 | `related` | `principal` (`same_as`), `requester` (`derived_from`) | | [`related`](schemas/related.schema.json) | `relation` |
 | `note` | any | | [`note`](schemas/note.schema.json) | `about` |
 
 `restore_text` on `reopened` is a copy of the item's current terms text, so that a registrar without storage can
-re-add the line. It is not an amendment.
+re-add the line. It is not an amendment. Need records MUST list the item's current need record in `supersedes`
+(core §6).
 
 ## 4. The registrar
 
 The registrar is the binding's only writer of key markers and the only component that applies records mechanically
-(core §8). In one run over a project's document it SHOULD:
+(core §8). It holds the project's requester role (core §1) for the records it raises. In one run over a project's
+document it SHOULD, in this order:
 
 1. **Apply** pending settlement records from the principal side: for a current `settled` (any outcome), strike every
-   line carrying the key (§5.5.2); for a current `reopened`, re-add the line if no line carries the key (§5.5.3). A
-   settlement for a key that no line carries is consumed and changes nothing. Notes and relations are delivered to the
-   project (core §8), never applied to the document.
-2. **Raise** every principal line without a key marker: derive its key (§6), send `raised` with `terms_rev: 1`, and
-   after the transport accepts it, stamp the line (§5.5.1). If the send fails, it MUST NOT stamp. If stamping fails,
-   the next run re-derives the same key and re-sends the same record, which the principal side discards as a
-   duplicate.
-3. **Amend**: for every keyed line whose text, normalised (§6.1), differs from the item's latest terms, send
-   `amended` with the new text and `terms_rev` increased by one. An agent changes what it asks by editing the text and
-   keeping the marker.
-4. **Reconcile** keys it raised that are not settled and no longer appear in the section:
-   - if the section has a line whose text looks like a rewrite of the vanished item (an agent rewrote it and lost the
-     marker), the registrar MUST NOT send anything for the key and SHOULD warn its operator. A line whose normalised
-     text equals the item's latest terms MUST be treated as a rewrite;
+   line carrying the key (§5.5.2); for a current `reopened`, re-add the line from its `restore_text` if no line
+   carries the key (§5.5.3). A `settled` for a key that no line carries is consumed and changes nothing. Notes and
+   relations are delivered to the project (core §8), never applied to the document.
+2. **Relink** lines that lost their marker: for every raised key that is neither settled nor withdrawn and that no
+   line carries, if an unkeyed principal line's normalised text (§6.1) equals that key's latest terms, stamp the line
+   with that key (§5.5.1) instead of raising it. (An agent rewrote the line and dropped the marker.)
+3. **Raise** every remaining principal line without a key marker: derive its key (§6), send `raised` with
+   `terms_rev: 1`, and after the transport accepts it, stamp the line. If the send fails, it MUST NOT stamp. If
+   stamping fails, the next run re-derives the same key and re-sends the same record, which the principal side
+   discards as a duplicate.
+4. **Amend**: for every keyed line whose normalised text differs from the item's latest terms, send `amended` with the
+   new text, `terms_rev` increased by one, and the current need record in `supersedes`. An agent changes what it asks
+   by editing the text and keeping the marker.
+5. **Reconcile** raised keys that are neither settled nor withdrawn and that no line carries after step 2:
+   - if a line's text looks like a rewrite of the item's latest terms, the registrar MUST NOT send anything for the
+     key and SHOULD warn its operator. Beyond step 2's exact match, the similarity measure is implementation-defined;
    - otherwise it SHOULD send a `claimed` with `outcome: "done"` and `evidence.basis` saying why it believes the work
      is done (for example the change that removed the line and its stated reason). A vanished line is never a
      withdrawal: a deletion carries no intent the registrar can read. At most one such claim per key per open period
-     (§7).
-5. Write the document once, and acknowledge applied records only after the write is durable (for example committed).
+     (§7). A withdrawn act whose line is deleted gets no claim: its requester already said it no longer needs it.
+6. Write the document once, and acknowledge applied records only after the write is durable (for example committed).
 
 Agents that saw the principal do the work (for example in a session where the principal says "I paid it") send a
 `claimed`; an agent that no longer needs an act sends `withdrawn` through its transport, outside the document.
@@ -315,9 +319,11 @@ accidental collision within one project negligible.
 
 ## 7. Record ids
 
-- `raised`: the key itself, so that a crashed registrar re-sends the same id.
-- `amended`: `<key>-t<terms_rev>`.
-- A registrar's `claimed` for a vanished key: `claim-<key>-r<n>`, where *n* is the number of `reopened` records the
+Ids carry a type prefix and a colon, which keys cannot contain (§6.1), so ids of different records never collide.
+
+- `raised`: `r:<key>`, so that a crashed registrar re-sends the same id.
+- `amended`: `a:<key>:<terms_rev>`.
+- A registrar's `claimed` for a vanished key: `c:<key>:r<n>`, where *n* is the number of `reopened` records the
   registrar has applied for the key (0 before the first). A task that vanishes again after being reopened thus gets a
   new claim.
 - Other records: any id unique per core §10.
@@ -326,11 +332,11 @@ accidental collision within one project negligible.
 
 | Tasks 0.2 event | Acts 0.3 record |
 |---|---|
-| `registered` (registrar) | `raised`, origin `requester`, sent by the registrar, `terms_rev: 1` |
+| `registered` (registrar), id = key | `raised`, origin `requester`, sent by the registrar, id `r:<key>`, `terms_rev: 1` |
 | `done`, `dropped`, `already_done` (principal) | `settled` with that `outcome`; `authority.kind` `principal`, or `delegated`/`attested` where 0.2 had `decided_by: assistant` |
 | `reopened` (principal) | `reopened` superseding the settlement; 0.2's `text` becomes `restore_text` |
 | `done`, `dropped` (agent) | `claimed` with that `outcome` |
-| inferred `done` (registrar) | `claimed`, origin `registrar`, `outcome: "done"`, `evidence.basis` |
+| inferred `done` (registrar), id `done-<key>` | `claimed`, origin `registrar`, `outcome: "done"`, `evidence.basis`, id `c:<key>:r0` |
 | a resolution's `note` | the settlement's `note`, delivered to the project |
 
 ## 9. Conformance
@@ -350,11 +356,13 @@ accidental collision within one project negligible.
 | `profiles.json` | the `en` and `zh-hant` profiles |
 | `parse.json` | §5.2–§5.4: document → task lines and malformed lines |
 | `keys.json` | §6.2 example recipe (only for implementations that use it) |
-| `register.json` | §4 step 2 and §5.5.1: document → stamped document and `raised` records |
-| `amend.json` | §4 step 3: document with edited keyed lines + latest terms → `amended` records |
+| `relink.json` | §4 step 2: document + vanished open keys → re-stamped document |
+| `register.json` | §4 step 3 and §5.5.1: document → stamped document and `raised` records |
+| `amend.json` | §4 step 4: document with edited keyed lines + latest terms → `amended` records |
 | `apply.json` | §4 step 1, I2, §5.5.2–§5.5.3: document + record → document |
-| `reconcile.json` | §4 step 4: document + open keys → claims or warnings |
+| `reconcile.json` | §4 step 5: document + open keys → claims or warnings |
 | `records.json` | §3: record → schema it validates against, or invalid |
+| `lifecycle.json` | core §6 and §2's keep policy: the records one receiver holds for one act → its state |
 
 Documents are compared as their sequences of non-blank lines with trailing whitespace removed.
 
@@ -401,7 +409,7 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 2. That night the registrar derives `task-demo-c3d8af57d4`, sends
 
    ```json
-   {"ph": "0.3", "ext": "acts/0.3", "id": "task-demo-c3d8af57d4", "type": "raised", "origin": "requester",
+   {"ph": "0.3", "ext": "acts/0.3", "id": "r:task-demo-c3d8af57d4", "type": "raised", "origin": "requester",
     "by": "registrar:demo", "key": "task-demo-c3d8af57d4", "project": "demo", "ts": "2026-10-27T02:10:00Z",
     "terms": {"text": "Renew the domain"}, "terms_rev": 1}
    ```
@@ -428,12 +436,12 @@ anything.
 
 | Reference deployment | Acts 0.3 |
 |---|---|
-| message type `task` sent to the principal, with a fixed id equal to the key | `raised` (`id` = `key`) |
+| message type `task` sent to the principal, with a fixed id equal to the key | `raised` (`id` = `r:<key>`) |
 | principal-side handoff with `effect` `done` / `dropped` / `already_done` | `settled` with that `outcome` |
 | principal-side handoff with `effect` `reopened` | `reopened` |
 | handoff field `reply_to` | `key` |
 | handoff field `item` | `restore_text` on `reopened`, otherwise the project's own wording in a `note` |
 | agent message `done` / `drop` with a task key | `claimed` with `outcome` `done` / `dropped` |
-| `done` with `inferred: true`, id `done-<key>` | registrar `claimed`, id `claim-<key>-r0` |
+| `done` with `inferred: true`, id `done-<key>` | registrar `claimed`, id `c:<key>:r0` |
 | handoff `effect` `resolves` / `changes` / `relevant` on an unkeyed to-do | `note` with `about.quote` |
 | `context: migration` on the first run | `context` |

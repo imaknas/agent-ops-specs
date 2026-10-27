@@ -4,9 +4,10 @@ Standard library only, Python >= 3.10.
 
   parse(doc, profile)                  -> {"section", "tasks", "problems"}
   register(doc, project, profile)      -> (doc, [{"key", "text"}])       step 2: raise and stamp unkeyed principal lines
-  amend(doc, latest, profile)          -> [{"key", "text"}]              step 3: keyed lines whose text was edited
+  relink(doc, vanished, profile)       -> (doc, [key])                   step 2: re-stamp lines that lost their marker
+  amend(doc, latest, profile)          -> [{"key", "text"}]              step 4: keyed lines whose text was edited
   apply(doc, record, profile)          -> (doc, changed)                 step 1: apply one settlement record
-  reconcile(doc, open_keys, profile)   -> [{"key", "action"}]            step 4: vanished keys -> "claim" or "warn"
+  reconcile(doc, open_keys, profile)   -> [{"key", "action"}]            step 5: vanished keys -> "claim" or "warn"
   recipe_key(project, text)            -> key                            the example key recipe (non-normative)
 
 Documents are plain strings. Line numbers are 0-based indexes into doc.split("\\n") (a final empty element produced
@@ -91,7 +92,7 @@ def norm(text: str) -> str:
 
 
 def recipe_key(project: str, text: str) -> str:
-    """The reference deployment's key recipe (SPEC.md 7.2, non-normative)."""
+    """The reference deployment's key recipe (acts/SPEC.md section 6.2, non-normative)."""
     return f"task-{project}-{hashlib.sha1(norm(text).encode('utf-8')).hexdigest()[:10]}"
 
 
@@ -171,6 +172,19 @@ def _hits(lines: list[str], b: tuple[int, int], key: str, p: Profile) -> list[in
     return [i for i in range(*b) if CHECKBOX.match(lines[i]) and _key_of(lines[i].rstrip(), p)[0] == key]
 
 
+def relink(doc: str, vanished: dict, p: Profile) -> tuple[str, list[str]]:
+    """Step 2. vanished: raised keys, neither settled nor withdrawn, that no line carries (key -> latest terms text).
+    An unkeyed principal line whose normalised text equals one of them gets that key back instead of a new one."""
+    lines, done = _lines(doc), []
+    want = {norm(t): k for k, t in sorted(vanished.items())}
+    for t in parse(doc, p)["tasks"]:
+        k = want.get(norm(t["text"]))
+        if t["assignee"] == "principal" and t["key"] is None and k and k not in done:
+            lines[t["line"]] = lines[t["line"]].rstrip() + p.render_marker(k)
+            done.append(k)
+    return (_join(lines) if done else doc), done
+
+
 def amend(doc: str, latest: dict, p: Profile) -> list[dict]:
     """Keyed principal lines whose normalised text differs from the item's latest terms (key -> text)."""
     out = []
@@ -214,8 +228,8 @@ def apply(doc: str, record: dict, p: Profile) -> tuple[str, bool]:
 
 
 def reconcile(doc: str, open_keys: dict, p: Profile) -> list[dict]:
-    """For raised keys not yet settled (key -> latest terms text) that no longer appear in the document: "warn" when a
-    line looks like a rewrite of the same text, else "claim" (a registrar claimed done, acts/SPEC.md section 4)."""
+    """Step 5. open_keys: raised keys, neither settled nor withdrawn (key -> latest terms text). For those no line
+    carries: "warn" when a line looks like a rewrite of the same text, else "claim" (the registrar claims done)."""
     parsed = parse(doc, p)
     present = {t["key"] for t in parsed["tasks"] if t["key"]}
     texts = [norm(t["text"]) for t in parsed["tasks"]]
@@ -234,10 +248,10 @@ def reconcile(doc: str, open_keys: dict, p: Profile) -> list[dict]:
 EXT = ph_core.ext("acts/0.3", "keep")
 
 
-def validate(r: dict, principal: str | None = None) -> tuple[str | None, list[str]]:
-    return ph_core.validate(r, EXT, principal)
+def validate(r: dict, cfg: ph_core.Config) -> tuple[str | None, list[str]]:
+    return ph_core.validate(r, EXT, cfg)
 
 
-def fold(records: list[dict], principal: str | None = None) -> dict:
+def fold(records: list[dict], cfg: ph_core.Config) -> dict:
     """State of one act. A withdrawn need leaves it open: the principal is asked (acts/SPEC.md section 2)."""
-    return ph_core.fold(records, EXT, principal)
+    return ph_core.fold(records, EXT, cfg)

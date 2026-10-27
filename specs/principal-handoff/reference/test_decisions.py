@@ -9,6 +9,7 @@ import pathlib
 import unittest
 
 import ph_decisions as decisions
+from ph_core import Config
 
 CONF = pathlib.Path(__file__).resolve().parent.parent / "decisions" / "conformance"
 
@@ -22,7 +23,8 @@ class Conformance(unittest.TestCase):
         s = suite("records.json")
         for c in s["cases"]:
             with self.subTest(c["id"]):
-                name, errs = decisions.validate(c["record"], s["principal"])
+                cfg = Config(s["principal"], c.get("principal_type", s.get("principal_type")) == "legal")
+                name, errs = decisions.validate(c["record"], cfg)
                 if c["valid"]:
                     self.assertEqual((name, errs), (c["schema"], []))
                 else:
@@ -32,13 +34,13 @@ class Conformance(unittest.TestCase):
         s = suite("lifecycle.json")
         for c in s["cases"]:
             with self.subTest(c["id"]):
-                self.assertEqual(decisions.fold(c["records"], s["principal"]), c["expect"])
+                self.assertEqual(decisions.fold(c["records"], Config(s["principal"])), c["expect"])
 
     def test_lifecycle_does_not_depend_on_arrival_order(self):
         s = suite("lifecycle.json")
         for c in s["cases"]:
             with self.subTest(c["id"]):
-                self.assertEqual(decisions.fold(list(reversed(c["records"])), s["principal"]), c["expect"])
+                self.assertEqual(decisions.fold(list(reversed(c["records"])), Config(s["principal"])), c["expect"])
 
 
 if __name__ == "__main__":

@@ -414,7 +414,8 @@
           "ts": "2026-10-29T08:00:00Z",
           "supersedes": [
             "s1"
-          ]
+          ],
+          "restore_text": "Renew the domain"
         }
       ],
       "expect": {
@@ -806,6 +807,286 @@
         "stale": false,
         "withdrawn": false,
         "terms_rev": 0,
+        "conflict": false,
+        "claims": [],
+        "ignored": []
+      }
+    },
+    {
+      "id": "tie-broken-by-id",
+      "spec": "core §6: equal ts, the greater id is current; two heads are a conflict",
+      "records": [
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "r1",
+          "type": "raised",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "terms": {
+            "text": "Renew the domain"
+          },
+          "terms_rev": 1
+        },
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "s1",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "outcome": "done",
+          "terms_rev": 1,
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          }
+        },
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "b2",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "outcome": "dropped",
+          "terms_rev": 1,
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          }
+        }
+      ],
+      "expect": {
+        "state": "settled",
+        "outcome": "done",
+        "settlement": "s1",
+        "authority": "principal",
+        "answer": null,
+        "stale": false,
+        "withdrawn": false,
+        "terms_rev": 1,
+        "conflict": true,
+        "claims": [],
+        "ignored": []
+      }
+    },
+    {
+      "id": "cycle",
+      "spec": "core §6: no head, latest ts among all, conflict",
+      "records": [
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "r1",
+          "type": "raised",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "terms": {
+            "text": "Renew the domain"
+          },
+          "terms_rev": 1
+        },
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "y1",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "outcome": "done",
+          "terms_rev": 1,
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          },
+          "supersedes": [
+            "y2"
+          ]
+        },
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "y2",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-29T08:00:00Z",
+          "outcome": "dropped",
+          "terms_rev": 1,
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          },
+          "supersedes": [
+            "y1"
+          ]
+        }
+      ],
+      "expect": {
+        "state": "settled",
+        "outcome": "dropped",
+        "settlement": "y2",
+        "authority": "principal",
+        "answer": null,
+        "stale": false,
+        "withdrawn": false,
+        "terms_rev": 1,
+        "conflict": true,
+        "claims": [],
+        "ignored": []
+      }
+    },
+    {
+      "id": "invalid-then-valid-same-id",
+      "spec": "core §10: an invalid record does not block a valid one with the same id",
+      "records": [
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "r1",
+          "type": "raised",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "terms": {
+            "text": "Renew the domain"
+          },
+          "terms_rev": 1
+        },
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "s1",
+          "type": "settled",
+          "origin": "requester",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "outcome": "done",
+          "terms_rev": 1,
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          }
+        },
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "s1",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "outcome": "done",
+          "terms_rev": 1,
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          }
+        }
+      ],
+      "expect": {
+        "state": "settled",
+        "outcome": "done",
+        "settlement": "s1",
+        "authority": "principal",
+        "answer": null,
+        "stale": false,
+        "withdrawn": false,
+        "terms_rev": 1,
+        "conflict": false,
+        "claims": [],
+        "ignored": []
+      }
+    },
+    {
+      "id": "reused-id",
+      "spec": "core §10: an id reused with different valid content keeps the greater canonical form",
+      "records": [
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "r1",
+          "type": "raised",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "terms": {
+            "text": "Renew the domain"
+          },
+          "terms_rev": 1
+        },
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "s1",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "outcome": "done",
+          "terms_rev": 1,
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          },
+          "note": "a"
+        },
+        {
+          "ph": "0.3",
+          "ext": "acts/0.3",
+          "id": "s1",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-28T08:00:00Z",
+          "outcome": "done",
+          "terms_rev": 1,
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          },
+          "note": "b"
+        }
+      ],
+      "expect": {
+        "state": "settled",
+        "outcome": "done",
+        "settlement": "s1",
+        "authority": "principal",
+        "answer": null,
+        "stale": false,
+        "withdrawn": false,
+        "terms_rev": 1,
         "conflict": false,
         "claims": [],
         "ignored": []

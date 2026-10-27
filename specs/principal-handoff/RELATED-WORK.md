@@ -19,11 +19,13 @@ principal side is authoritative and an agent's "done" or "the principal said…"
 declares work in the project's own state document; its Decisions extension asks for answers as messages. At the wire
 level most of what it needs already exists: borrowing a project's agent session is ACP's job, and long-lived tasks,
 listing and webhooks exist in A2A. What Principal Handoff adds is small:
-- a principal-authoritative lifecycle, with reopening (tasks) and revision (questions) under the same identity;
-- inferred completion that the principal must confirm;
-- for tasks, keys derived from content and a Markdown binding for an in-repository document;
-- for questions, answers delivered to the project rather than to a session that may be gone, defaults that never
-  become answers, and a record of whether the principal or their assistant answered.
+- two registers per item with different owners: the requester's need and the principal side's settlement;
+- claims that change nothing until the owner records something, and settlements that name a decider and an
+  authority kind, with reopening and revision under the same identity;
+- the principal as a configured root that is never a participant;
+- for acts, a Markdown binding for an in-repository document;
+- for decisions, answers delivered to the project rather than to a session that may be gone, and working
+  assumptions that never become answers.
 
 The aim is for Principal Handoff to be carried by these protocols and to borrow their vocabulary, not to compete with them.
 
@@ -228,27 +230,20 @@ and `already_done` to `completed` (with a completion time before registration fo
 
 **Assessment.** None of these formats round-trips status from the person's own tool. TASKS.md is the closest relative
 of Principal Handoff's Markdown binding. Its rule that a deleted line means done is the behaviour Principal Handoff deliberately does *not* trust:
-Principal Handoff treats a deleted line as an inferred `done` that the principal must confirm.
+Principal Handoff treats a deleted line as a claim that the principal side must confirm before anything is settled.
 
-## 4. Possible A2A bindings (sketch, for discussion)
+## 4. Carrying records over A2A (assessment)
 
-**(a) A2A as a transport.** Each project has one long-lived A2A task, whose `contextId` is server-assigned or
-server-accepted, that carries its events unchanged as messages and artifacts under an extension URI.
-- Principal Handoff's semantics stay intact, including reopening.
-- It gains little beyond a standard envelope, authentication and webhooks.
+No transport binding is defined (core §10). Two A2A shapes were considered and neither is recommended:
 
-**(b) A2A-native.** Each Principal Handoff task becomes one A2A task on a principal-side A2A server.
+- **One A2A task per item** maps `settled` onto `TASK_STATE_COMPLETED`, but cannot express `reopened` (terminal tasks
+  accept no further messages, and a server cannot open a task without a client message), and `dropped` fits neither
+  `CANCELED` nor `REJECTED`.
+- **One long-lived A2A task per project as a channel** keeps every record intact, but uses a task, which A2A defines as
+  a unit of work, as a mailbox, and depends on the server retaining it ("SHOULD implement retention policies").
 
-| Principal Handoff | A2A | Fit |
-|---|---|---|
-| `registered` | `SendMessage`; `messageId` = Principal Handoff event id; key, project, text and origin in message metadata under the extension URI; the task stays `working` | good |
-| `done`, `already_done` | `TASK_STATE_COMPLETED`, with the resolution in metadata | good |
-| `dropped` | `TASK_STATE_CANCELED` or `TASK_STATE_REJECTED` | to decide: neither means "no longer needed" |
-| agent claim, inferred `done` | a message to the open task, with origin and evidence in metadata | good; the server must not complete on it |
-| principal side → registrar | push webhook (at least once) or `ListTasks` with `status_timestamp_after` | good |
-| `reopened` | no mapping: terminal tasks accept no messages, and a server cannot open a task without a client message | **gap** |
-
-The key travels in metadata, not as the task id, and the registrar keeps a map from key to the latest task id.
+Records can travel as A2A messages, with the record in metadata under an extension URI, without either shape. The key
+travels in the record, never as the A2A task id.
 
 ## 5. What Principal Handoff keeps as its own
 

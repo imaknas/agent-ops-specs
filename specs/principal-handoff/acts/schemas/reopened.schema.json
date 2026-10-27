@@ -5,7 +5,8 @@
   "description": "Principal side -> requester's project: an earlier settlement no longer stands.",
   "$ref": "../../core/schemas/record.schema.json",
   "required": [
-    "supersedes"
+    "supersedes",
+    "restore_text"
   ],
   "properties": {
     "ext": {

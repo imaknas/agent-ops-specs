@@ -84,11 +84,11 @@ error.
 
 ## 4. Lifecycle
 
-1. **Raising.** The requester sends `raised`. The principal side treats it idempotently by (`project`, `key`): a
-   repeated `raised` for a known decision creates nothing; if its content differs, the first stands and the principal
-   side SHOULD report the mismatch.
-2. **Amending.** The requester changes the question, its options or its working assumption with `amended`,
-   superseding its previous need record. A settlement made against older terms is stale (core §6).
+1. **Raising.** The requester sends `raised` with id `r:<key>`, so that a repeated `raised` is a duplicate of the
+   first (core §10). A second `raised` for the same key under another id is a need-register conflict (core §6), which
+   the principal side SHOULD report. Other record ids are any ids unique per core §10.
+2. **Amending.** The requester changes the question, its options or its working assumption with `amended`, listing
+   its current need record in `supersedes` and increasing `terms_rev` by one. A settlement made against older terms is stale (core §6).
 3. **Deciding.** The principal side records `settled` with `outcome: "decided"` and an `answer`, naming the decider
    and authority kind (core §5):
    - `principal`: the principal answered.

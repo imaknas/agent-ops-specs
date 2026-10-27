@@ -68,7 +68,9 @@ tracker. It is an instrument, not a party with authority of its own: when it set
 as a delegate (§5). It is configured with exactly one principal identifier.
 
 **Requester**
-: The agent, acting for a project, that raised an item. It owns the item's need register (§3).
+: The role of the agents acting for a project, including a registrar acting on their behalf (Acts). Any party the
+deployment authenticates as holding a project's requester role may emit need records for that project's items (§3).
+Which parties hold which roles is configured per deployment, like the principal identifier.
 
 **Delegate**
 : Any agent or system that decides on the principal's behalf without the principal deciding or confirming,
@@ -143,10 +145,12 @@ These rules replace any notion that an item is "resolved" by whoever last spoke.
 - **R5 — Authority never grows down a chain.** A delegate MUST NOT settle an item that needs authority it does not
   hold. It raises its own item upstream, `derived_from` the first (§7), and settles the first only from that item's
   settlement.
-- **R6 — The principal is configured, not asserted.** The principal identifier is configured on the principal side
-  out of band by whoever operates the deployment. No record, claim, relation or mandate establishes or changes it, and
+- **R6 — The principal is configured, not asserted.** The principal identifier, and whether the principal is a
+  natural or a legal person, are configured out of band by whoever operates the deployment, on the principal side and
+  on every other role that validates records. No record, claim, relation or mandate establishes or changes them, and
   receivers MUST reject any that tries. The principal identifier MUST NOT equal the party identifier of any agent,
-  delegate or principal side in the deployment.
+  delegate or principal side, and the principal never emits records itself: its decisions are recorded by the
+  principal side, so a record whose `by` is the principal identifier is invalid.
 
 ## 4. Records
 
@@ -212,16 +216,19 @@ Every `settled` record carries `authority`:
 
 The four kinds:
 
-- **`principal`**: the principal decided. `decider` MUST be the principal identifier. For an organisation, the
-  natural person who acted for it is named in `representative`, and `evidence.proof` SHOULD include evidence of their
-  power to represent it.
+- **`principal`**: the principal decided. `decider` MUST be the principal identifier.
 - **`confirmed`**: the principal confirmed a proposal made by a delegate. `decider` MUST be the principal identifier.
-  `evidence.proposal` identifies what was confirmed.
+  `evidence.proposal`, identifying what was confirmed, is REQUIRED.
 - **`delegated`**: a delegate decided under a mandate, without the principal deciding or confirming. `decider` MUST
-  NOT be the principal identifier. The mandate's format, scope and revocation belong to its own system (§16); this
+  NOT be the principal identifier, and `chain` MUST begin with the principal identifier and end with `decider`. The mandate's format, scope and revocation belong to its own system (§16); this
   family only records the reference. A settlement whose mandate the principal side cannot produce MUST NOT be sent.
 - **`attested`**: the principal side or a delegate settled from evidence that the item was done or decided (for
-  example a payment record), without the principal confirming. `evidence.basis` is REQUIRED.
+  example a payment record), without the principal confirming. `decider` MUST NOT be the principal identifier, and
+  `evidence.basis` is REQUIRED.
+
+When the principal is a legal person, a settlement of kind `principal` or `confirmed` MUST carry `representative`,
+naming the natural person who acted for it, and `evidence.proof` SHOULD include evidence of their power to represent
+it.
 
 `evidence`, when present, is an object:
 
@@ -230,7 +237,7 @@ The four kinds:
 | `presented` | Digest (`sha-256:` + lowercase hex) of exactly what was shown to the person who decided or confirmed: the terms at `terms_rev` and any options or consequences the principal side displayed (§9). |
 | `proposal` | For `confirmed`: id of the record, or digest of the content, that was confirmed. |
 | `basis` | For `attested`: what the evidence was. |
-| `proof` | An opaque, independently verifiable proof: a detached signature or verifiable credential over the record without `evidence.proof`. |
+| `proof` | An independently verifiable proof, such as a detached JWS or a verifiable credential, over the record with `evidence.proof` removed, serialised with the JSON Canonicalization Scheme [RFC 8785]. |
 
 A settlement of kind `principal` or `confirmed` SHOULD carry `evidence.proof` made with the principal's own credential
 on a surface no agent controls. A **verifiable** principal side (§12) MUST.
@@ -245,18 +252,26 @@ Each register is folded separately, over all its records a receiver holds, regar
 - There is a **conflict** in the register when there is more than one head, or a cycle. Receivers MUST use the current
   record and SHOULD report the conflict to a person.
 
-Records of the need register that do not name the record they replace still form one sequence: a requester's
-`amended` and `withdrawn` SHOULD supersede its previous need record, and a receiver that holds several heads uses the
-rule above.
+A requester's `amended` and `withdrawn` MUST list the item's current need record in `supersedes`, and a
+principal-side `settled` that replaces an earlier settlement, and every `reopened`, MUST list it. A receiver that
+nonetheless holds several heads uses the rule above and reports the conflict.
 
 From the two current records, the item's state is:
 
 | Settlement (current) | Need (current) | State |
 |---|---|---|
-| `settled` | any | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the latest `terms_rev` in the need register. |
+| `settled` | any, or none | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the highest `terms_rev` held in the need register. |
 | none, or `reopened` | `raised` or `amended` | **open** |
-| none, or `reopened` | `withdrawn` | per extension (§11): the principal side either keeps the item open and asks the principal, or stops presenting it |
-| none | none | **unknown** (no valid record held) |
+| none, or `reopened` | `withdrawn` | by the extension's policy (§11): **open** under the *keep* policy (the principal side keeps presenting it and asks the principal), **withdrawn** under the *stop* policy (it is no longer presented) |
+| none, or `reopened` | none | **unknown**: no need record is held yet |
+
+In every state the item also reports whether its current need is `withdrawn`, so that a principal side under the
+keep policy knows to ask.
+
+Receivers MUST reject an `amended` whose `terms_rev` is lower than 2 and a `settled` whose `terms_rev` is lower than
+1. Because records may be missing or late, a receiver MUST accept a skipped `terms_rev`, and a settlement whose
+`terms_rev` is higher than any need record it holds (it is not stale). The current terms are those of the current
+need record.
 
 A stale settlement stays settled. The principal side SHOULD present it to the principal again, and the requester
 SHOULD treat it as made against outdated terms.
@@ -266,7 +281,8 @@ SHOULD treat it as made against outdated terms.
 **Claims.** A `claimed` record asserts an `outcome` that the claimant has no authority to record: an agent that heard
 the principal say "I paid it", or a registrar that saw a declared line disappear. It SHOULD carry `evidence.basis`. A
 claim changes no register. The principal side MAY accept it by recording a settlement that lists the claim's id in
-`adopts`, with kind `confirmed` if the principal confirmed it and `attested` otherwise. A claim never removes an item
+`adopts`, with kind `confirmed` if the principal confirmed it and `attested` otherwise; `adopts` MUST NOT appear on a
+settlement of any other kind. A claim never removes an item
 from the principal's view.
 
 **Relations.** A `related` record carries `relation`:
@@ -274,12 +290,13 @@ from the principal's view.
 | Member | Meaning |
 |---|---|
 | `kind` | `same_as` or `derived_from`. |
-| `target` | The other item: `{"ext", "project", "key"}` for an item of this family, or `{"uri"}` for anything else (an A2A task, a bus message, an issue). |
+| `target` | The other item: `{"ext", "project", "key"}` (all three) for an item of this family, or `{"uri"}` for anything else (an A2A task, a bus message, an issue). Exactly one of the two forms MUST be used. |
 | `active` | `true`, or `false` to retract an earlier relation of the same kind and target. |
 
 - `same_as` is emitted by the principal side (`origin: "principal"`) when it treats two items as one, for example the
-  same request raised by two projects, or a request repeating one already settled. Settling one settles both for the
-  principal side. Each requester's need register is unaffected: one requester withdrawing leaves the other item open.
+  same request raised by two projects, or a request repeating one already settled. Relations never change any item's
+  state (§6): when the principal side settles a group of related items, it MUST emit a `settled` for each item, so
+  that every requester computes the same state. One requester withdrawing leaves the other items open.
   A requester that disagrees sends a `note` about its item saying why the two differ; the principal side SHOULD then
   retract the relation.
 - `derived_from` is emitted by the requester when its item arises from another item, inside or outside this family
@@ -322,8 +339,10 @@ or confirms, whether the principal or an organisation's representative.
 - A record id MUST be unique per logical record within its (`ext` name, `project`), and MUST be the same on every
   retransmission. Extensions say how ids are derived when a sender must re-create them after a crash. A sender MUST
   NOT reuse an id for a different record.
-- Receivers MUST discard a record whose (`ext` name, `project`, `id`) they have already processed. A receiver that sees
-  an id reused with different content keeps the first and SHOULD report it.
+- Receivers MUST discard a record whose (`ext` name, `project`, `id`) they have already processed. A record that fails
+  validation is not processed: it is ignored, and does not block a valid record with the same id. A receiver that sees
+  an id reused with different valid content SHOULD report it, and keeps the one whose RFC 8785 serialisation is
+  greater in code-point order, so that the result does not depend on arrival order.
 - Senders MUST retry until the transport accepts the record (at-least-once delivery). Ordering is not guaranteed;
   §6 makes the current state independent of arrival order.
 - A record that was never sent MAY be retracted by its sender without trace (for example, a settlement held for an
@@ -350,8 +369,8 @@ An extension document MUST define:
 - A **conforming principal side** emits settlements only as in §3 and §5, computes state as in §6, delivers as in §8,
   and follows §9. A **verifiable** principal side additionally puts `evidence.proof` on every settlement of kind
   `principal` or `confirmed`.
-- Every role validates records (§4), deduplicates (§10), and computes the same current state from the same records
-  (§6).
+- Every role is configured as R6 requires, validates records (§4, §5), deduplicates (§10), and computes the same
+  current state from the same records (§6).
 
 ## 13. Security and privacy considerations
 
@@ -390,8 +409,8 @@ Out of scope, deliberately:
 - **Mandate formats and lifecycle.** Issuing, scoping, revoking and verifying mandates belong to their own systems
   (§16); this family only records the reference (`under`) and the chain.
 - **Group decision procedures.** An organisation or body may be the principal if it presents one principal side; how
-  its members decide (quorum, separation of duties) is internal to that side. Each settlement names the representative
-  who acted.
+  its members decide (quorum, separation of duties) is internal to that side. Settlements name the representative who
+  acted (§5).
 - **Inquiries from the principal to a project** ("how far has this got?"). These are requests the project answers, so
   this family's rules about who may settle do not apply to them. They travel on the deployment's transport (for
   example as an A2A task or a message); an item a project raises while answering one carries `derived_from` with the
@@ -435,6 +454,7 @@ those protocols and to reference their mandates, not to replace them.
 - [RFC 3339] Klyne, G. and C. Newman, "Date and Time on the Internet: Timestamps", RFC 3339, July 2002.
 - [RFC 8259] Bray, T., Ed., "The JavaScript Object Notation (JSON) Data Interchange Format", RFC 8259, December 2017.
 - [RFC 8693] Jones, M., et al., "OAuth 2.0 Token Exchange", RFC 8693, January 2020.
+- [RFC 8785] Rundgren, A., Jordan, B., and S. Erdtman, "JSON Canonicalization Scheme (JCS)", RFC 8785, June 2020.
 - JSON Schema: A Media Type for Describing JSON Documents, draft 2020-12.
 - W3C PROV-O: The PROV Ontology, <https://www.w3.org/TR/prov-o/>.
 - Agent Payments Protocol (AP2), <https://ap2-protocol.org>.

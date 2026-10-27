@@ -641,37 +641,6 @@
           "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
         ]
       }
-    },
-    {
-      "id": "reopened-without-restore-text",
-      "profile": "en",
-      "document": [
-        "## Tasks",
-        "",
-        "- (none)"
-      ],
-      "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
-        "id": "r2",
-        "type": "reopened",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "supersedes": [
-          "s1"
-        ]
-      },
-      "expect": {
-        "changed": false,
-        "document": [
-          "## Tasks",
-          "",
-          "- (none)"
-        ]
-      }
     }
   ]
 }

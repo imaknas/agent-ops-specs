@@ -813,6 +813,277 @@
         },
         "note": "The cache is going away"
       }
+    },
+    {
+      "id": "amended-rev-1",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "a9",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "x"
+        },
+        "terms_rev": 1,
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "settled-rev-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "s20",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 0,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "SQLite",
+          "option": "sqlite"
+        }
+      }
+    },
+    {
+      "id": "attested-by-principal",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "s21",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "attested",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "basis": "b"
+        },
+        "answer": {
+          "text": "SQLite",
+          "option": "sqlite"
+        }
+      }
+    },
+    {
+      "id": "adopts-on-principal-kind",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "s22",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "adopts": [
+          "c1"
+        ],
+        "answer": {
+          "text": "SQLite",
+          "option": "sqlite"
+        }
+      }
+    },
+    {
+      "id": "adopts-on-attested",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "s23",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:assistant"
+        },
+        "evidence": {
+          "basis": "the claim and a receipt"
+        },
+        "adopts": [
+          "c1"
+        ],
+        "answer": {
+          "text": "SQLite",
+          "option": "sqlite"
+        }
+      }
+    },
+    {
+      "id": "chain-not-rooted",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "s24",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:assistant",
+          "under": "m",
+          "chain": [
+            "agent:x",
+            "ps:assistant"
+          ]
+        },
+        "answer": {
+          "text": "SQLite",
+          "option": "sqlite"
+        }
+      }
+    },
+    {
+      "id": "relation-target-mixed",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "l9",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": "a2a:task/1",
+            "key": "k"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "l10",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {},
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "legal-principal-without-representative",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "s25",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "SQLite",
+          "option": "sqlite"
+        }
+      },
+      "principal_type": "legal"
+    },
+    {
+      "id": "legal-principal-with-representative",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.3",
+        "ext": "decisions/0.3",
+        "id": "s26",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner",
+          "representative": "person:cfo"
+        },
+        "answer": {
+          "text": "SQLite",
+          "option": "sqlite"
+        }
+      },
+      "principal_type": "legal"
     }
-  ]
+  ],
+  "principal_type": "natural"
 }
