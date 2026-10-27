@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: >-
+  If you implement or cite these specifications, please cite them as below.
+  For a specific version, cite the GitHub Release (and its Zenodo DOI) you used.
+title: "Principal Handoff (agent-ops-specs)"
+abstract: >-
+  Open, implementation-neutral specifications for operating AI agents alongside
+  the person or organisation they act for. Principal Handoff covers work and
+  choices that only the principal may settle and that outlive every agent
+  session, with owned registers, claims, and settlements that record who
+  decided and under what authority.
+type: software
+authors:
+  - family-names: Xiao
+    given-names: Knas
+    orcid: "https://orcid.org/0009-0007-0414-2355"
+repository-code: "https://github.com/imaknas/agent-ops-specs"
+url: "https://imaknas.github.io/agent-ops-specs/"
+license: Apache-2.0
+keywords:
+  - AI agents
+  - human oversight
+  - delegation
+  - protocol specification

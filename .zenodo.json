@@ -1,0 +1,20 @@
+{
+  "title": "Principal Handoff: a protocol for items only the principal can settle (agent-ops-specs)",
+  "upload_type": "software",
+  "description": "Open, implementation-neutral specifications for operating AI agents alongside the person or organisation they act for. This archive contains Principal Handoff, a draft protocol family for work and choices that only the principal may settle and that outlive every agent session: a core model with a need register owned by the requester and a settlement register owned by the principal side, claims that change nothing, and settlements that record the decider and an authority kind (principal, confirmed, delegated, attested); and two extensions, Acts (with a Markdown binding for a project's state document) and Decisions. It includes JSON Schemas, conformance suites and a standard-library Python reference implementation. Website: https://imaknas.github.io/agent-ops-specs/. Licensed under Apache-2.0.",
+  "creators": [
+    {
+      "name": "Xiao, Knas",
+      "orcid": "0009-0007-0414-2355"
+    }
+  ],
+  "license": "apache-2.0",
+  "keywords": [
+    "AI agents",
+    "human oversight",
+    "delegation",
+    "protocol specification",
+    "human-in-the-loop",
+    "principal"
+  ]
+}
