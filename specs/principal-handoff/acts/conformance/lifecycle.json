@@ -692,7 +692,7 @@
     },
     {
       "id": "requester-cannot-settle",
-      "spec": "core R2: an invalid record is ignored",
+      "spec": "core R2, §10: an invalid record is ignored",
       "records": [
         {
           "ph": "0.4",

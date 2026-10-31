@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "settled.schema.json",
+  "$id": "decisions/schemas/settled.schema.json",
   "title": "Principal Handoff Decisions 0.4: settled",
   "description": "Principal side -> requester's project: the item is settled, with the decider and authority kind.",
   "$ref": "../../core/schemas/record.schema.json",

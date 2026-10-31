@@ -21,6 +21,11 @@ TYPES = {
 }
 
 
+def _ecma(pattern: str) -> str:
+    """ECMAScript's $ matches only at the very end of the string; Python's also before a final newline."""
+    return re.sub(r"(?<!\\)\$", r"\\Z", pattern)
+
+
 def _same(a, b) -> bool:
     return type(a) is type(b) and a == b
 
@@ -36,7 +41,7 @@ def errors(instance, schema: dict, base: pathlib.Path, path: str = "$") -> list[
         out.append(f"{path}: must be {schema['const']!r}")
     if "enum" in schema and not any(_same(instance, v) for v in schema["enum"]):
         out.append(f"{path}: not one of {schema['enum']}")
-    if "pattern" in schema and isinstance(instance, str) and not re.search(schema["pattern"], instance):
+    if "pattern" in schema and isinstance(instance, str) and not re.search(_ecma(schema["pattern"]), instance):
         out.append(f"{path}: does not match {schema['pattern']}")
     if isinstance(instance, dict):
         out += [f"{path}: missing {k}" for k in schema.get("required", []) if k not in instance]

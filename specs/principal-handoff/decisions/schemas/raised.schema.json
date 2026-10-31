@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "raised.schema.json",
+  "$id": "decisions/schemas/raised.schema.json",
   "title": "Principal Handoff Decisions 0.4: raised",
   "description": "Requester -> principal side: a new item.",
   "$ref": "../../core/schemas/record.schema.json",

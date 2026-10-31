@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "related.schema.json",
+  "$id": "decisions/schemas/related.schema.json",
   "title": "Principal Handoff Decisions 0.4: related",
-  "description": "A relation: same_as from the principal side, derived_from from the requester.",
+  "description": "A relation: same_as from the principal side, derived_from and replaced_by from the requester.",
   "$ref": "../../core/schemas/record.schema.json",
   "required": [
     "relation"

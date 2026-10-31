@@ -27,7 +27,8 @@ listing and webhooks exist in A2A. What Principal Handoff adds is small:
 - for decisions, answers delivered to the project rather than to a session that may be gone, and working
   assumptions that never become answers.
 
-The aim is for Principal Handoff to be carried by these protocols and to borrow their vocabulary, not to compete with them.
+The aim is for Principal Handoff to be carried by these protocols and to borrow their vocabulary, not to compete with
+them.
 
 | | Where the human request lives | Lifetime | Identifier | Who decides completion | Reopen | Plain-text form |
 |---|---|---|---|---|---|---|
@@ -108,10 +109,11 @@ Sources: the Tasks extension `io.modelcontextprotocol/tasks` (specification/2026
   - The state diagram has no transitions out of a terminal state.
 
 **Assessment.** The direction is reversed. In MCP the human sits behind the client and the server owns the task. In
-Principal Handoff the human sits behind the principal side, which is the receiver. A registrar could call a principal-side MCP tool such as
-`declare_principal_task`, but MCP Tasks adds little over an idempotent tool call plus polling. It also cannot express
-`dropped` versus `already_done` (both are `completed`), `reopened`, or an agent claim. MCP remains a good way to
-*expose* Principal Handoff: tools that report a key done, or a resource listing open principal tasks.
+Principal Handoff the human sits behind the principal side, which is the receiver. A registrar could call a
+principal-side MCP tool such as `declare_principal_task`, but MCP Tasks adds little over an idempotent tool call plus
+polling. It also cannot express `dropped` versus `already_done` (both are `completed`), `reopened`, or an agent claim.
+MCP remains a good way to *expose* Principal Handoff: tools that report a key done, or a resource listing open
+principal tasks.
 
 ### 1.3 AG-UI 1.0 (interrupt and resume)
 
@@ -150,13 +152,13 @@ not implemented, in 0.3.3 (SPECIFICATION.md §12.3).
 - **Maturity:** two coordinators (TypeScript, Python), both labelled "Beta" and both from the same organisation.
   Code is Apache-2.0, specification text CC-BY-4.0.
 
-**Assessment.** CHAP and Principal Handoff overlap only at the point where a task is assigned to a person. CHAP has no plain-text or
-in-repository representation, no content-derived identity, no path for "done in the world, inferred, confirm", and
-no rule that only the assignee can resolve a task. Principal Handoff has no multi-party review, signatures or audit chain. A CHAP
-*profile* is a poor fit, because profiles must not redefine Core and Principal Handoff treats the document, not a coordinator log,
-as the record. its events could travel over CHAP, with a registrar acting as a member that keeps its own map from key
-to `tsk_` id. Two CHAP practices worth adopting are recording refused attempts, and a method catalogue that marks
-each method implemented, specified only, or reserved.
+**Assessment.** CHAP and Principal Handoff overlap only at the point where a task is assigned to a person. CHAP has no
+plain-text or in-repository representation, no content-derived identity, no path for "done in the world, inferred,
+confirm", and no rule that only the assignee can resolve a task. Principal Handoff has no multi-party review,
+signatures or audit chain. A CHAP *profile* is a poor fit, because profiles must not redefine Core and Principal
+Handoff treats the document, not a coordinator log, as the record. its events could travel over CHAP, with a registrar
+acting as a member that keeps its own map from key to `tsk_` id. Two CHAP practices worth adopting are recording
+refused attempts, and a method catalogue that marks each method implemented, specified only, or reserved.
 
 ### 1.5 Agentic AI Foundation (AAIF)
 
@@ -198,10 +200,11 @@ Power Automate could *implement* a principal side. None of them defines the exch
   (§3.4.5), and "the Organizer has complete control over the master" (§2.1). RFC 6638 supports scheduling to-dos
   through a CalDAV server.
 
-**Assessment.** A VTODO is a good *principal-side store*: the principal's existing task or calendar app could be the principal
-side. As the *protocol*, iTIP inverts Principal Handoff's authority. An attendee cannot reply NEEDS-ACTION (reopen) or cancel
-(dropped). DECLINED means "will not do", not "no longer needed". A workable profile might write the VTODO into a list
-the principal organizes (CalDAV, no scheduling) and read back the principal's STATUS changes. This has not been tried.
+**Assessment.** A VTODO is a good *principal-side store*: the principal's existing task or calendar app could be the
+principal side. As the *protocol*, iTIP inverts Principal Handoff's authority. An attendee cannot reply NEEDS-ACTION
+(reopen) or cancel (dropped). DECLINED means "will not do", not "no longer needed". A workable profile might write the
+VTODO into a list the principal organizes (CalDAV, no scheduling) and read back the principal's STATUS changes. This
+has not been tried.
 
 ### 3.2 JSCalendar (RFC 8984) and JMAP Tasks
 
@@ -211,9 +214,9 @@ the principal organizes (CalDAV, no scheduling) and read back the principal's ST
 - **JMAP Tasks** (draft-ietf-jmap-tasks-06) adds a server `id` alongside `uid`, an `assignee` role and per-list
   workflow states.
 
-**Assessment.** This is the vocabulary Principal Handoff should borrow. An open principal task corresponds to `needs-action`; `done`
-and `already_done` to `completed` (with a completion time before registration for the latter); `dropped` to
-`cancelled`; `reopened` returns the task to `needs-action`.
+**Assessment.** This is the vocabulary Principal Handoff should borrow. An open principal task corresponds to
+`needs-action`; `done` and `already_done` to `completed` (with a completion time before registration for the latter);
+`dropped` to `cancelled`; `reopened` returns the task to `needs-action`.
 
 ### 3.3 Plain-text formats
 
@@ -229,8 +232,9 @@ and `already_done` to `completed` (with a completion time before registration fo
   - It has no human assignee and nothing round-trips from an external tool.
 
 **Assessment.** None of these formats round-trips status from the person's own tool. TASKS.md is the closest relative
-of Principal Handoff's Markdown binding. Its rule that a deleted line means done is the behaviour Principal Handoff deliberately does *not* trust:
-Principal Handoff treats a deleted line as a claim that the principal side must confirm before anything is settled.
+of Principal Handoff's Markdown binding. Its rule that a deleted line means done is the behaviour Principal Handoff
+deliberately does *not* trust: Principal Handoff treats a deleted line as a claim that the principal side must confirm
+before anything is settled.
 
 ## 4. Carrying records over A2A (assessment)
 
@@ -239,8 +243,8 @@ No transport binding is defined (core §10). Two A2A shapes were considered and 
 - **One A2A task per item** maps `settled` onto `TASK_STATE_COMPLETED`, but cannot express `reopened` (terminal tasks
   accept no further messages, and a server cannot open a task without a client message), and `dropped` fits neither
   `CANCELED` nor `REJECTED`.
-- **One long-lived A2A task per project as a channel** keeps every record intact, but uses a task, which A2A defines as
-  a unit of work, as a mailbox, and depends on the server retaining it ("SHOULD implement retention policies").
+- **One long-lived A2A task per project as a channel** keeps every record intact, but uses a task, which A2A defines
+  as a unit of work, as a mailbox, and depends on the server retaining it ("SHOULD implement retention policies").
 
 Records can travel as A2A messages, with the record in metadata under an extension URI, without either shape. The key
 travels in the record, never as the A2A task id.
@@ -253,8 +257,8 @@ travels in the record, never as the A2A task id.
 - **Reopening under the same identity.** Terminal states are final in MCP, A2A and CHAP, and iTIP attendees cannot
   reopen.
 - **Content-derived keys (Acts).** Every identifier surveyed is opaque and minted by a server or a caller. The Acts
-  extension's key lets a stateless registrar register idempotently. Since 0.3 the key is derived once, at stamping, and then
-  kept when the text is amended (Acts §6.1); the remaining cost is the re-declaration issue in Acts §11.
+  extension's key lets a stateless registrar register idempotently. Since 0.3 the key is derived once, at stamping,
+  and then kept when the text is amended (Acts §6.1); the remaining cost is the re-declaration issue in Acts §11.
 - **The Markdown binding (Acts)**: tasks are declared in the document the project's agents already read, which stays
   the record.
 - **Answers that reach the project (Decisions)**, not the session that asked, which may be gone; a default that stays
@@ -297,8 +301,8 @@ criteria so that a verifier settles a decision without the principal reviewing t
 - **TLS-based web proofs ("zkTLS").** DECO (Zhang, Maram, Malvai, Goldfeder and Juels, ACM CCS 2020; extended version
   arXiv:1909.00938) lets a user prove that data obtained over TLS came from a given website, and optionally prove
   statements about that data in zero knowledge, without trusted hardware or changes to the server. It builds on the
-  TLSNotary approach of a notary that takes part in the TLS session (secondary: the DIDO paper, IACR ePrint 2023/1056).
-  Several later systems are marketed as "zkTLS".
+  TLSNotary approach of a notary that takes part in the TLS session (secondary: the DIDO paper, IACR ePrint
+  2023/1056). Several later systems are marketed as "zkTLS".
 - **Selective disclosure.** SD-JWT (RFC 9901, Fett, Yasuda and Campbell, November 2025, Proposed Standard) is a signed
   JWS plus optional disclosures, so a holder can reveal some claims of a credential and not others. BBS signatures
   (draft-irtf-cfrg-bbs-signatures; -09, July 2025, is the latest revision found) allow unlinkable selective-disclosure
@@ -310,9 +314,9 @@ criteria so that a verifier settles a decision without the principal reviewing t
 whether the statement is the one that matters for an item. Principal Handoff therefore records the statement next to
 the proof, keeps "what the proof establishes" (V2) apart from "which item it is about" (V4, the emitter's judgement
 unless an extension requires binding), and makes "valid" relative to the principal side's own trust roots (V3). The
-privacy properties of SD-JWT, BBS and zkTLS are why proofs about the principal stay with the principal side (core §5.2,
-§13). A web proof over the principal's own bank or mailbox requires that account's session, which is why core §13 has
-such proofs made by the principal side rather than by agents.
+privacy properties of SD-JWT, BBS and zkTLS are why proofs about the principal stay with the principal side (core
+§5.2, §13). A web proof over the principal's own bank or mailbox requires that account's session, which is why core
+§13 has such proofs made by the principal side rather than by agents.
 
 ### 7.2 Checking instead of reviewing
 
@@ -331,20 +335,23 @@ such proofs made by the principal side rather than by agents.
 **Assessment.** Approvals (core §5.3) apply this idea to items that only the principal may settle: the person decides
 *what counts as done* (the criteria, their implementations and trust roots), which is short, and a verifier checks the
 proofs, which is cheap. As in proof-carrying code, this does not remove trust; it moves it to the criteria, the check
-implementations, the trust roots and the verifier (core §13). Three choices follow: the approval binds one item's exact terms, so a requester cannot reuse it; one failed
-check sends the decision back to the person, so a flaky check cannot be retried until it passes; and a sample of
-verifier-settled decisions is audited by the person (Decisions §4.2), which is the only measure of how often the
-checks are gamed. None of the surveyed protocols (§1–§6) records an approval of acceptance criteria as a mandate bound
-to an item, or settles on proofs checked against the principal's own trust roots.
+implementations, the trust roots and the verifier (core §13). Three choices follow: the approval binds one item's
+exact terms, so a requester cannot reuse it; one failed check sends the decision back to the person, so a flaky check
+cannot be retried until it passes; and a sample of verifier-settled decisions is audited by the person (Decisions
+§4.2), which is the only measure of how often the checks are gamed. None of the surveyed protocols (§1–§6) records an
+approval of acceptance criteria as a mandate bound to an item, or settles on proofs checked against the principal's
+own trust roots.
 
 ## Sources
 
 - ACP: <https://agentclientprotocol.com/protocol/overview>; OpenClaw: <https://docs.openclaw.ai/tools/acp-agents.md>,
   <https://docs.openclaw.ai/cli/mcp>.
-- A2A: <https://github.com/a2aproject/A2A/blob/v1.0.1/docs/specification.md>, `specification/a2a.proto` at the same tag.
-- MCP Tasks extension: <https://github.com/modelcontextprotocol/ext-tasks/blob/main/specification/2026-07-28/tasks.md>;
-  elicitation: <https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation>;
-  multi round-trip requests: <https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr>.
+- A2A: <https://github.com/a2aproject/A2A/blob/v1.0.1/docs/specification.md>, `specification/a2a.proto` at the same
+  tag.
+- MCP Tasks extension:
+  <https://github.com/modelcontextprotocol/ext-tasks/blob/main/specification/2026-07-28/tasks.md>; elicitation:
+  <https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation>; multi round-trip requests:
+  <https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr>.
 - AG-UI interrupt and resume: <https://docs.ag-ui.com/spec/1.0/basic/patterns/interrupt-resume>.
 - CHAP: <https://arxiv.org/abs/2606.09751>; <https://github.com/BrightbeamAI/chap>.
 - AAIF projects: <https://aaif.io/projects/>; workflows working group reference architectures:
@@ -357,7 +364,8 @@ to an item, or settles on proofs checked against the principal's own trust roots
   Obsidian Tasks: <https://publish.obsidian.md/tasks/>; TASKS.md: <https://github.com/tasksmd/tasks.md>.
 - LangGraph interrupts: <https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/>; OpenAI Agents SDK
   human-in-the-loop: <https://openai.github.io/openai-agents-python/human_in_the_loop/>; Temporal message passing:
-  <https://docs.temporal.io/encyclopedia/workflow-message-passing>; HumanLayer: <https://pypi.org/project/humanlayer/>.
+  <https://docs.temporal.io/encyclopedia/workflow-message-passing>; HumanLayer:
+  <https://pypi.org/project/humanlayer/>.
 - DECO: <https://arxiv.org/abs/1909.00938>; DIDO (on TLSNotary and DECO): <https://eprint.iacr.org/2023/1056>.
 - RFC 9901 (SD-JWT): <https://www.rfc-editor.org/rfc/rfc9901>; BBS signatures:
   <https://datatracker.ietf.org/doc/draft-irtf-cfrg-bbs-signatures/>.

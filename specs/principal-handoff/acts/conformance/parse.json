@@ -1,6 +1,6 @@
 {
   "suite": "acts/0.4",
-  "description": "Parse vectors: document -> tasks in the tasks section and malformed checkbox lines.",
+  "description": "Parse vectors: document -> tasks sections, tasks, lines to report (malformed checkbox lines, task-like lines, extra tasks headings) and where an unclosed block opens.",
   "cases": [
     {
       "id": "en-flat",
@@ -793,6 +793,82 @@
         "problems": [
           4
         ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-crlf-with-fence",
+      "profile": "en",
+      "document": [
+        "## Tasks\r",
+        "```\r",
+        "code\r",
+        "```\r",
+        "- [ ] [owner] Pay the invoice\r"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 4,
+            "assignee": "principal",
+            "text": "Pay the invoice",
+            "key": null
+          }
+        ],
+        "problems": [],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-comment-closing-on-its-own-line",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "<!-->",
+        "- [ ] [owner] Pay the invoice"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 2,
+            "assignee": "principal",
+            "text": "Pay the invoice",
+            "key": null
+          }
+        ],
+        "problems": [],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-fence-closed-with-ideographic-space",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "```",
+        "code",
+        "```　",
+        "- [ ] [owner] Pay the invoice"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 4,
+            "assignee": "principal",
+            "text": "Pay the invoice",
+            "key": null
+          }
+        ],
+        "problems": [],
         "unclosed": null
       }
     }

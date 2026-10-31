@@ -16,10 +16,10 @@ Agents working for someone often reach a choice only that someone may make: whic
 money, what a customer was promised. The agent's session may end long before the answer comes. This extension of
 Principal Handoff covers such **decisions**: how an agent raises one with options and a working assumption, how the
 principal side records the principal's answer (or that no answer is needed) with the authority it was made under, how
-an answer is revised, and how the answer reaches the project rather than a session that may be gone. When agents produce
-more than the principal can review, a decision can also carry **acceptance criteria**: machine-checkable checks on a
-pinned result. The principal approves the criteria, and a verifier on the principal side settles the decision when
-every check is proven to pass, without the principal reviewing the work itself. It builds on the
+an answer is revised, and how the answer reaches the project rather than a session that may be gone. When agents
+produce more than the principal can review, a decision can also carry **acceptance criteria**: machine-checkable
+checks on a pinned result. The principal approves the criteria, and a verifier on the principal side settles the
+decision when every check is proven to pass, without the principal reviewing the work itself. It builds on the
 [core](../core/SPEC.md) registers; work only the principal can do is the [Acts](../acts/SPEC.md) extension.
 
 ## Table of contents
@@ -32,7 +32,8 @@ every check is proven to pass, without the principal reviewing the work itself. 
 6. [Mapping from Questions 0.1 and changes from 0.3](#6-mapping-from-questions-01-and-changes-from-03)
 7. [Conformance](#7-conformance)
 8. [Security considerations](#8-security-considerations)
-9. [Relation to the Acts extension and other specifications](#9-relation-to-the-acts-extension-and-other-specifications)
+9. [Relation to the Acts extension and other
+   specifications](#9-relation-to-the-acts-extension-and-other-specifications)
 10. [Open issues](#10-open-issues)
 
 ## 1. Conventions and terminology
@@ -86,8 +87,9 @@ the answer to record when it passes them all.
   Approvals, answers and check results of the old decision do not carry over: the replacement has its own terms.
 - **Approvals:** decisions take approvals (core §5.3) only of terms that carry `criteria`. Such an approval authorises
   one settlement of the decision with `criteria.answer`, made by a verifier when §4.1's conditions hold, and nothing
-  else. The principal side MUST NOT record an approval of terms without criteria; one that exists is never in force (core §6).
-  An approval is not an answer: the requester MUST NOT proceed on `criteria.answer` before the decision is settled.
+  else. The principal side MUST NOT record an approval of terms without criteria; one that exists is never in force
+  (core §6). An approval is not an answer: the requester MUST NOT proceed on `criteria.answer` before the decision is
+  settled.
 
 ### 2.1 Criteria
 
@@ -131,13 +133,13 @@ Criteria change only by amendment, which lapses any approval (core §5.3).
 ### 2.2 Submissions
 
 A requester submits check results with a `note` (`origin: "requester"`, from a party holding the project's requester
-role) about the decision (`about.key`) that carries `terms_rev`, the terms version whose criteria it answers, and `evidence.verifiable`, one entry per check it
-answers:
+role) about the decision (`about.key`) that carries `terms_rev`, the terms version whose criteria it answers, and
+`evidence.verifiable`, one entry per check it answers:
 
 - the entry's `id` is the check's `id`, and its `format` is the check's `format`;
 - the proof's verified content MUST name the subject's digest and the check's implementation digest and show that the
-  check passed; a proof that does not is `invalid` for the check. It SHOULD also name the terms digest (core §5.3), but
-  a proof that does not is not `invalid` for that reason.
+  check passed; a proof that does not is `invalid` for the check. It SHOULD also name the terms digest (core §5.3),
+  but a proof that does not is not `invalid` for that reason.
 
 Submissions are notes, not claims: they change no register and assert no outcome. Only notes from the project's
 requester role are submissions; the verifier never checks verifiable entries in other parties' notes against the
@@ -154,12 +156,12 @@ Records use the [core record](../core/SPEC.md#4-records) with `ext: "decisions/0
 | `raised` | `requester` | [`raised`](schemas/raised.schema.json) | `terms.text`, `terms_rev: 1`; terms per [`terms`](schemas/terms.schema.json) and §2.1 |
 | `amended` | `requester` | [`amended`](schemas/amended.schema.json) | `terms`, `terms_rev`; terms as for `raised` |
 | `withdrawn` | `requester` | [`withdrawn`](schemas/withdrawn.schema.json) | `reason` |
-| `settled` | `principal` | [`settled`](schemas/settled.schema.json) | `outcome`; `answer` when `decided`; `authority`; `terms_rev`; under an approval, §4.1 |
+| `settled` | `principal` | [`settled`](schemas/settled.schema.json) | `outcome`; `answer` when `decided`; `authority`; `terms_rev`; `terms_digest`; under an approval, §4.1 |
 | `reopened` | `principal` | [`reopened`](schemas/reopened.schema.json) | `supersedes` |
 | `approved` | `principal` | [`approved`](schemas/approved.schema.json) | `approval`; when granting, `terms_rev`, `authority` and `evidence.presented`; when retracting, `supersedes` (core §5.3) |
 | `claimed` | `agent`, `requester` | [`claimed`](schemas/claimed.schema.json) | `outcome: "decided"`, `answer`, `evidence.basis` |
 | `related` | `principal` (`same_as`), `requester` (`derived_from`, `replaced_by`) | [`related`](schemas/related.schema.json) | `relation` |
-| `note` | any | [`note`](schemas/note.schema.json) | `about`; a submission (§2.2) also `terms_rev` and `evidence.verifiable` |
+| `note` | `requester`, `principal`, `agent` | [`note`](schemas/note.schema.json) | `about`; a submission (§2.2) also `terms_rev` and `evidence.verifiable` |
 
 Validity rules beyond the schemas: option ids are unique within the terms; criteria hold at least one check, check
 ids are unique and every `trust` is non-empty, and `criteria.answer.option`, if present, is one of the options (§2.1);
@@ -172,8 +174,8 @@ report a mismatch, and a principal side that receives such a report presents the
 
 If `answer.option` is present, the principal side MUST make it one of the options at the `terms_rev` it records. A
 receiver that finds it is not, or cannot check because it never saw the terms, MUST still accept the settlement, treat
-`answer.text` as authoritative, and SHOULD report the mismatch: the principal's answer must not be lost to a validation
-error.
+`answer.text` as authoritative, and SHOULD report the mismatch: the principal's answer must not be lost to a
+validation error.
 
 ## 4. Lifecycle
 
@@ -181,7 +183,8 @@ error.
    first (core §10). A second `raised` for the same key under another id is a need-register conflict (core §6), which
    the principal side SHOULD report. Other record ids are any ids unique per core §10.
 2. **Amending.** The requester changes the question, its options or its working assumption with `amended`, listing
-   its current need record in `supersedes` and increasing `terms_rev` by one. A settlement made against older terms is stale (core §6).
+   its current need record in `supersedes` and increasing `terms_rev` by one. A settlement made against older terms is
+   stale (core §6).
 3. **Deciding.** The principal side records `settled` with `outcome: "decided"` and an `answer`, naming the decider
    and authority kind (core §5):
    - `principal`: the principal answered.
@@ -189,17 +192,17 @@ error.
    - `delegated`: the assistant answered under a standing instruction or mandate (`under`), without the principal,
      or a verifier settled under an approval of the decision's criteria (§4.1).
    - `attested`: the answer is taken from evidence, for example something the principal wrote elsewhere.
-4. **Dismissing.** `settled` with `outcome: "dismissed"`: the principal decided no answer is needed. The requester MUST
-   NOT keep waiting and SHOULD raise a new decision if the need returns.
+4. **Dismissing.** `settled` with `outcome: "dismissed"`: the principal decided no answer is needed. The requester
+   MUST NOT keep waiting and SHOULD raise a new decision if the need returns.
 5. **Revising.** The principal side MAY replace an earlier settlement (the principal changed their mind, or answers a
    decision they had dismissed) with a new `settled` that lists it in `supersedes`, or reopen it with `reopened`.
    Which settlement is current is defined by core §6.
-6. **Withdrawing.** The requester sends `withdrawn` when it no longer needs an answer. If the principal answered in the
-   requester's own session, the requester SHOULD first send a `claimed` with that answer and `evidence.basis`, so that
-   the principal side can record who decided, and then withdraw with `reason: "settled"`. The principal side MAY adopt
-   the claim (core §7); until it has, it SHOULD present the claim to the principal once for confirmation, even though
-   the decision itself is no longer presented as waiting. A requester that replaces the decision with another sends `replaced_by` (core §7) and then
-   withdraws with `reason: "replaced"`.
+6. **Withdrawing.** The requester sends `withdrawn` when it no longer needs an answer. If the principal answered in
+   the requester's own session, the requester SHOULD first send a `claimed` with that answer and `evidence.basis`, so
+   that the principal side can record who decided, and then withdraw with `reason: "settled"`. The principal side MAY
+   adopt the claim (core §7); until it has, it SHOULD present the claim to the principal once for confirmation, even
+   though the decision itself is no longer presented as waiting. A requester that replaces the decision with another
+   sends `replaced_by` (core §7) and then withdraws with `reason: "replaced"`.
 
 ### 4.1 Settling by criteria
 
@@ -227,12 +230,12 @@ The principal side MAY settle a decision under an approval only when all of thes
    check's `id`, in the check's `format`, in a submission (§2.2) or its own run whose `terms_rev` is the approval's,
    whose verified content names the subject's digest and the check's implementation digest and shows that the check
    passed, under a root acceptable for the check (§2.1), and fresh under its trust policy when it settles;
-4. no `invalid` result has been recorded for any check of the criteria at that `terms_rev`, nor, at any `terms_rev` and
-   in any decision of the project, for a check with the same subject digest and implementation digest: one submitted
-   failure sends the decision to the principal, so that a requester cannot re-run a flaky check until it passes, nor
-   start again by amending the terms, renaming the check or replacing the decision. Failures the requester never
-   submits are not caught (core §13). (An `unsupported` result does not block: it says the verifier could not check, not that
-   the check failed.)
+4. no `invalid` result has been recorded for any check of the criteria at that `terms_rev`, nor, at any `terms_rev`
+   and in any decision of the project, for a check with the same subject digest and implementation digest: one
+   submitted failure sends the decision to the principal, so that a requester cannot re-run a flaky check until it
+   passes, nor start again by amending the terms, renaming the check or replacing the decision. Failures the requester
+   never submits are not caught (core §13). (An `unsupported` result does not block: it says the verifier could not
+   check, not that the check failed.)
 
 A proof that has served another decision does not stop this one (core V4) when both decisions' approved criteria pin
 the same subject and implementation for that check.
@@ -297,9 +300,11 @@ under approvals. A requester that receives a superseding settlement with the sam
 | `withdrawn`, `reason: settled` | `claimed` with the answer, then `withdrawn`, `reason: "settled"` |
 | `withdrawn`, `reason: not_needed` | `withdrawn`, `reason: "not_needed"` |
 
-Changes from 0.3: `ext` is `decisions/0.4` and records carry `ph: "0.4"`; terms may carry `criteria` (§2.1); the
-`approved` record (core §5.3) and settlement under an approval (§4.1) with audits (§4.2); submissions (§2.2); the
-withdrawal reason `replaced`. A 0.3 record is converted by changing `ph` and `ext`; nothing else changes meaning.
+Changes from 0.3: `ext` is `decisions/0.4` and records carry `ph: "0.4"`; settlements carry `terms_digest`; terms may
+carry `criteria` (§2.1); the `approved` record (core §5.3) and settlement under an approval (§4.1) with audits (§4.2);
+submissions (§2.2); the withdrawal reason `replaced`. A 0.3 record is converted by changing `ph` and `ext` and, on
+`settled`, adding `terms_digest` computed over the converted need record at the settlement's `terms_rev`; nothing else
+changes meaning.
 
 ## 7. Conformance
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "record.schema.json",
+  "$id": "core/schemas/record.schema.json",
   "title": "Principal Handoff Core 0.4 record",
   "description": "Members shared by every record, whatever its extension. Receivers MUST ignore members they do not know.",
   "type": "object",
@@ -285,7 +285,8 @@
               "type": "string"
             },
             "key": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
             },
             "uri": {
               "type": "string",
@@ -329,7 +330,8 @@
       "type": "object",
       "properties": {
         "key": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
         },
         "quote": {
           "type": "string",

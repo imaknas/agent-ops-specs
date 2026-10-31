@@ -1116,6 +1116,44 @@
           "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
         ]
       }
+    },
+    {
+      "id": "settled-on-other-terms-not-struck",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expect": {
+        "changed": false,
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
+        ]
+      }
     }
   ]
 }

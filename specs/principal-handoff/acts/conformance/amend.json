@@ -1,6 +1,6 @@
 {
   "suite": "acts/0.4",
-  "description": "Registrar step 3: keyed lines whose normalised text differs from the latest terms -> amended items.",
+  "description": "Registrar step 4: holding lines whose normalised text differs from the latest terms -> amended items; holding lines that disagree -> warnings.",
   "cases": [
     {
       "id": "edited-keyed-line",

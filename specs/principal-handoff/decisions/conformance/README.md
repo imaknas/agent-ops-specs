@@ -6,7 +6,8 @@ JSON fixtures that any implementation of [Principal Handoff Decisions](../SPEC.m
 Both files are `{"suite": "decisions/0.4", "principal": …, "description": …, "cases": [ … ]}`; `principal` is the
 configured principal identifier (core R6).
 
-- `records.json` (SPEC §3, core §4–§5): `{id, record, valid, schema}`. Valid records name the schema they validate
+- `records.json` (SPEC §3, core §4–§5): `{id, record, valid, schema, principal_type?}`, with a top-level
+  `principal_type` (`natural` or `legal`, core R6) that a case may override. Valid records name the schema they validate
   against; invalid ones fail the schema or a validity rule: ownership (core R1–R3, R6), authority (core §5.1), verifiable
   entries and results (core §5.2), approvals (core §5.3), criteria (SPEC §2.1), settlements under an approval (SPEC
   §3), and that `decided` carries an `answer`.

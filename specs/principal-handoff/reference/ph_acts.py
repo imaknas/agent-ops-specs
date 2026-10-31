@@ -1,6 +1,6 @@
 """Reference registrar for Principal Handoff Acts 0.4, Markdown binding (acts/SPEC.md sections 4 to 6).
 
-Standard library only, Python >= 3.10.
+Standard library only, Python >= 3.11.
 
   parse(doc, profile)                        -> {"sections", "tasks", "problems", "unclosed"}
   relink(doc, active, profile, bound)        -> (doc, [key])                    step 2: re-stamp lines that lost their marker
@@ -136,15 +136,20 @@ def recipe_key(project: str, text: str) -> str:
     return f"task-{project}-{hashlib.sha1(norm(text).encode('utf-8')).hexdigest()[:10]}"
 
 
+def _eol(doc: str) -> str:
+    """Section 5.2: lines end with LF or CR LF; the registrar writes back the ending the document uses."""
+    return "\r\n" if "\r\n" in doc else "\n"
+
+
 def _lines(doc: str) -> list[str]:
-    lines = doc.split("\n")
+    lines = doc.split(_eol(doc))
     if lines and lines[-1] == "":
         lines.pop()
     return lines
 
 
-def _join(lines: list[str]) -> str:
-    return "\n".join(lines) + "\n"
+def _join(lines: list[str], eol: str = "\n") -> str:
+    return eol.join(lines) + eol
 
 
 def _ignored(lines: list[str]) -> tuple[set[int], int | None]:
@@ -158,11 +163,9 @@ def _ignored(lines: list[str]) -> tuple[set[int], int | None]:
         if f and not (f.group(1)[0] == "`" and "`" in f.group(2)):
             fence = f.group(1)
             close = re.compile(rf"^ {{0,3}}{re.escape(fence[0])}{{{len(fence)},}}[ \t]*$")
-            end = next((j for j in range(i + 1, len(lines)) if close.match(lines[j])), None)
+            end = next((j for j in range(i + 1, len(lines)) if close.match(lines[j].rstrip())), None)
         elif COMMENT.match(line):
-            start = line.index("<!--") + 4
-            end = i if "-->" in line[start:] else next((j for j in range(i + 1, len(lines)) if "-->" in lines[j]),
-                                                       None)
+            end = next((j for j in range(i, len(lines)) if "-->" in lines[j]), None)
         else:
             i += 1
             continue
@@ -178,7 +181,8 @@ def _sections(lines: list[str], ignored: set[int], p: Profile) -> list[tuple[int
     out = []
     for start, line in enumerate(lines):
         if start not in ignored and line.rstrip() == p.heading:
-            end = next((i for i in range(start + 1, len(lines)) if i not in ignored and SECTION_END.match(lines[i])),
+            end = next((i for i in range(start + 1, len(lines))
+                        if i not in ignored and SECTION_END.match(lines[i].rstrip())),
                        len(lines))
             out.append((start + 1, end))
     return out
@@ -198,7 +202,7 @@ class _Doc:
     """One reading of a document: ignored regions, tasks sections and the classified lines of their bodies."""
 
     def __init__(self, doc: str, p: Profile):
-        self.p, self.lines = p, _lines(doc)
+        self.p, self.lines, self.eol = p, _lines(doc), _eol(doc)
         self.ignored, self.unclosed = _ignored(self.lines)
         self.sections = _sections(self.lines, self.ignored, p)
         self.entries: list[_Line] = []
@@ -279,7 +283,7 @@ class _Doc:
         self.lines[i] = line + self.p.render_marker(key)
 
     def text(self) -> str:
-        return _join(self.lines)
+        return _join(self.lines, self.eol)
 
 
 def parse(doc: str, p: Profile) -> dict:
@@ -356,7 +360,7 @@ def amend(doc: str, latest: dict, p: Profile) -> dict:
 
 def apply(doc: str, record: dict, p: Profile, latest: dict | None = None) -> tuple[str, bool]:
     """Step 1: apply one record. Only principal-side settlement records change the document (invariant I2). latest is
-    the registrar's {"text", "terms_rev"} for a bound key, or None for a key it did not raise."""
+    the registrar's {"text", "terms_rev", "terms_digest"?} for the key, or None when it holds no terms for it."""
     if record.get("origin") != "principal" or record.get("type") not in ("settled", "reopened"):
         return doc, False
     d = _Doc(doc, p)
@@ -364,8 +368,10 @@ def apply(doc: str, record: dict, p: Profile, latest: dict | None = None) -> tup
         return doc, False
     key = record["key"]
     if record["type"] == "settled":
-        if latest is not None and (record.get("terms_rev", 0) < latest["terms_rev"]
-                                   or any(norm(e.text) != norm(latest["text"]) for e in d.holding(key))):
+        stale = latest is not None and (record.get("terms_rev", 0) < latest["terms_rev"] or (
+            record.get("terms_rev") == latest["terms_rev"] and "terms_digest" in latest
+            and record.get("terms_digest") != latest["terms_digest"]))
+        if stale or (latest is not None and any(norm(e.text) != norm(latest["text"]) for e in d.holding(key))):
             return doc, False  # stale, or the line was edited: amend first and warn, never strike (step 1)
         hits = [e for e in d.entries if e.owner == "principal" and d.carries(e.i) == key
                 and (latest is None or norm(e.text) == norm(latest["text"]))]
@@ -378,7 +384,7 @@ def apply(doc: str, record: dict, p: Profile, latest: dict | None = None) -> tup
             start, end = _Doc(_join(kept), p).sections[n]
             if not any(kept[i].strip() for i in range(start, end)):
                 kept.insert(start, p.placeholder)
-        return _join(kept), True
+        return _join(kept, d.eol), True
     if d.holding(key):
         return doc, False  # reopened, and the line is still there
     text = latest["text"] if latest is not None else record.get("restore_text")
@@ -386,14 +392,14 @@ def apply(doc: str, record: dict, p: Profile, latest: dict | None = None) -> tup
         return doc, False
     new, lines = p.principal_line(norm(text), key), d.lines
     if not d.sections:
-        return _join(lines + ["", p.heading, "", new]), True
+        return _join(lines + ["", p.heading, "", new], d.eol), True
     start, end = d.sections[0]  # re-adding uses the first tasks section
     body = [i for i in range(start, end) if lines[i].strip()]
     if len(body) == 1 and lines[body[0]].strip() == p.placeholder:
         lines[body[0]] = new
     else:
         lines.insert(body[-1] + 1 if body else start, new)
-    return _join(lines), True
+    return _join(lines, d.eol), True
 
 
 def reconcile(doc: str, active: dict, p: Profile, bound: set | None = None) -> list[dict]:
@@ -426,7 +432,12 @@ def reconcile(doc: str, active: dict, p: Profile, bound: set | None = None) -> l
 
 # --- records (acts/SPEC.md section 3), on ph_core
 
-EXT = ph_core.ext("acts/0.4", "keep")
+def _check(r: dict) -> list[str]:
+    text = (r.get("terms") or {}).get("text") if isinstance(r.get("terms"), dict) else None
+    return ["terms.text is a single line"] if isinstance(text, str) and ("\n" in text or "\r" in text) else []
+
+
+EXT = ph_core.ext("acts/0.4", "keep", _check)
 
 
 def validate(r: dict, cfg: ph_core.Config) -> tuple[str | None, list[str]]:

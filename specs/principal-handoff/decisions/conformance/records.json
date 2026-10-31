@@ -613,6 +613,29 @@
         "relation": {
           "kind": "same_as",
           "target": {
+            "uri": "ph:item/opaque-7f3a"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "same-as-other-project-by-key",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "decisions/0.4",
+        "id": "l1",
+        "type": "related",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "same_as",
+          "target": {
             "ext": "decisions/0.4",
             "project": "other",
             "key": "k-9"
@@ -703,7 +726,7 @@
         "type": "note",
         "origin": "principal",
         "by": "ps:assistant",
-        "key": "q-demo-1",
+        "key": "note-q-1",
         "project": "demo",
         "ts": "2026-10-27T09:00:00Z",
         "about": {
@@ -2891,6 +2914,117 @@
             "key": "q-demo-8"
           },
           "active": true
+        }
+      }
+    },
+    {
+      "id": "approved-legal-principal-without-representative",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "decisions/0.4",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": "sha-256:b9710209c79eeeaca991c8e55bbed2f9e42f563c4f7d5a5b6026f5641d675e5a",
+          "active": true
+        },
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "principal_type": "legal"
+    },
+    {
+      "id": "approved-confirmed-without-proposal",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "decisions/0.4",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": "sha-256:b9710209c79eeeaca991c8e55bbed2f9e42f563c4f7d5a5b6026f5641d675e5a",
+          "active": true
+        },
+        "authority": {
+          "kind": "confirmed",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      }
+    },
+    {
+      "id": "settled-under-empty-approval",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "decisions/0.4",
+        "id": "s:q-demo-7:1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T11:05:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:b9710209c79eeeaca991c8e55bbed2f9e42f563c4f7d5a5b6026f5641d675e5a",
+        "answer": {
+          "text": "Merge the export feature",
+          "option": "merge"
+        },
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:verifier",
+          "under": "approval:",
+          "chain": [
+            "p:owner",
+            "ps:verifier"
+          ]
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "n:q-demo-7:1",
+                "entry": "tests"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-27T11:05:00Z"
+            },
+            {
+              "of": {
+                "record": "n:q-demo-7:1",
+                "entry": "licence"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-27T11:05:00Z"
+            }
+          ]
         }
       }
     }

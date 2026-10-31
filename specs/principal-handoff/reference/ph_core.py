@@ -1,6 +1,6 @@
 """Reference reading of Principal Handoff Core 0.4 (core/SPEC.md sections 3 to 7).
 
-Standard library only, Python >= 3.10. Extensions plug in through an Ext description:
+Standard library only, Python >= 3.11. Extensions plug in through an Ext description:
 
   Ext(name, schemas_dir, withdrawn_policy, check)   withdrawn_policy is "keep" (Acts) or "stop" (Decisions);
                                                    check(record) -> [errors] adds the extension's own rules
@@ -14,8 +14,9 @@ from __future__ import annotations
 import hashlib
 import json
 import pathlib
+import re
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import date, datetime, timedelta, timezone
 from typing import Callable
 
 import schema_subset
@@ -61,6 +62,18 @@ def validate(r: dict, e: Ext, cfg: Config) -> tuple[str | None, list[str]]:
     if t not in TYPES or not path.exists():
         return None, ["no schema for this type"]
     errs = schema_subset.errors(r, json.loads(path.read_text()), e.schemas)
+    if not _bounded(r):
+        errs.append("numbers are integers within 2^53 - 1")
+    times = [r.get("ts")] + [v.get("at") for v in ((r.get("evidence") or {}).get("verified") or [])
+                             if isinstance(v, dict)]
+    if any(isinstance(x, str) and _instant(x) is None for x in times):
+        errs.append("a time that is not an RFC 3339 date-time")
+    due = (r.get("terms") or {}).get("due") if isinstance(r.get("terms"), dict) else None
+    if isinstance(due, str) and re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", due):
+        try:
+            date.fromisoformat(due)
+        except ValueError:
+            errs.append("terms.due is not a calendar date")
     if t in OWNER and r.get("origin") not in OWNER[t]:  # R1, R2
         errs.append(f"origin {r.get('origin')!r} may not emit {t}")
     if r.get("by") == cfg.principal:  # R6: the principal never emits records itself
@@ -81,23 +94,23 @@ def validate(r: dict, e: Ext, cfg: Config) -> tuple[str | None, list[str]]:
             errs.append("a settlement under an approval is delegated")
         if under.startswith(APPROVAL_PREFIX) and not (e.schemas / "approved.schema.json").exists():
             errs.append("this extension has no approvals")
+        if under == APPROVAL_PREFIX:
+            errs.append("approval: names no record")
     if t == "approved":
         errs += _approval(r, cfg)
     if r.get("adopts") and (t != "settled" or (r.get("authority") or {}).get("kind") not in ("confirmed", "attested")):
         errs.append("adopts only on confirmed or attested settlements")
     errs += _evidence(r)
     errs += e.check(r)
-    if t == "note" and not (r.get("about") or {}).keys() & {"key", "quote"}:
-        errs.append("about needs key or quote")
+    if t == "note" and len((r.get("about") or {}).keys() & {"key", "quote"}) != 1:
+        errs.append("about has exactly one of key and quote")
     if t == "note" and "key" in (r.get("about") or {}) and r["about"]["key"] != r.get("key"):
         errs.append("a note about a key carries that key")
-    if isinstance(r.get("terms"), dict) and not _bounded(r["terms"]):
-        errs.append("numbers in terms are integers within 2^53 - 1")
     return t, errs
 
 
 def _bounded(v) -> bool:
-    """core section 4: numbers in terms are integers every receiver serialises alike."""
+    """core section 4: every number in a record is an integer every receiver serialises alike."""
     if isinstance(v, bool) or isinstance(v, str) or v is None:
         return True
     if isinstance(v, int):
@@ -119,6 +132,8 @@ def _relation(r: dict) -> list[str]:
     item = all(k in tg for k in ("ext", "project", "key"))
     if item == ("uri" in tg) or (not item and tg.keys() - {"uri"}):  # exactly one form
         out.append("relation target must be an item {ext, project, key} or a {uri}")
+    if r.get("origin") == "principal" and item and tg["project"] != r.get("project"):
+        out.append("the principal side names another project's item only by uri")
     if rel.get("kind") == "replaced_by" and not (
             item and tg["ext"] == r.get("ext") and tg["project"] == r.get("project") and tg["key"] != r.get("key")):
         out.append("replaced_by targets another item of the same extension and project")
@@ -190,9 +205,30 @@ def _evidence(r: dict) -> list[str]:
     return out
 
 
+TS = re.compile(r"([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.([0-9]{1,6}))?"
+                r"(?:([Zz])|([+-])([0-9]{2}):([0-9]{2}))")
+
+
+def _instant(ts: str) -> datetime | None:
+    """core section 4: an instant, offsets applied, every fractional digit kept; a leap second (:60) compares as the
+    last microsecond of its minute. None if ts is not an RFC 3339 date-time."""
+    m = TS.fullmatch(ts)
+    if not m:
+        return None
+    y, mo, d, h, mi, sec = (int(x) for x in m.groups()[:6])
+    frac = int((m.group(7) or "0").ljust(6, "0"))
+    if sec == 60:
+        sec, frac = 59, 999999
+    try:
+        off = timedelta(0) if m.group(8) else (1 if m.group(9) == "+" else -1) * timedelta(
+            hours=int(m.group(10)), minutes=int(m.group(11)))
+        return datetime(y, mo, d, h, mi, sec, frac, tzinfo=timezone(off))
+    except ValueError:
+        return None
+
+
 def _when(ts: str) -> datetime:
-    """core section 4: an instant, offsets applied, every fractional digit (at most six) kept."""
-    return datetime.fromisoformat(ts.replace("Z", "+00:00").replace("z", "+00:00").replace("t", "T"))
+    return _instant(ts)
 
 
 def _latest(records: list[dict]) -> dict:
@@ -226,10 +262,14 @@ def _cycle(by_id: dict) -> bool:
 
 
 def _canon(v) -> str:
-    """RFC 8785 for these records (strings, integers, booleans, arrays, objects): sorted keys, no whitespace.
-    JCS sorts member names by UTF-16 code units; for names in the Basic Multilingual Plane, as all names in this
-    family are, that is the code-point order Python sorts by."""
-    return json.dumps(v, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    """RFC 8785 for these records (strings, integers, booleans, null, arrays, objects): member names sorted by their
+    UTF-16 code units, no whitespace, strings escaped as JSON.stringify does."""
+    if isinstance(v, dict):
+        keys = sorted(v, key=lambda k: k.encode("utf-16-be"))
+        return "{" + ",".join(json.dumps(k, ensure_ascii=False) + ":" + _canon(v[k]) for k in keys) + "}"
+    if isinstance(v, list):
+        return "[" + ",".join(_canon(x) for x in v) + "]"
+    return json.dumps(v, ensure_ascii=False)
 
 
 def terms_digest(need: dict) -> str:
