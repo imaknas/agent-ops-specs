@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.3",
+  "suite": "acts/0.4",
   "description": "Parse vectors: document -> tasks in the tasks section and malformed checkbox lines.",
   "cases": [
     {
@@ -23,8 +23,9 @@
         "- [ ] [owner] Outside the section, not a task"
       ],
       "expect": {
-        "section": true,
-        "problems": [],
+        "sections": [
+          4
+        ],
         "tasks": [
           {
             "line": 6,
@@ -56,7 +57,9 @@
             "text": "Pay  the invoice",
             "key": null
           }
-        ]
+        ],
+        "problems": [],
+        "unclosed": null
       }
     },
     {
@@ -73,8 +76,9 @@
         "- [ ] Add retry to the uploader"
       ],
       "expect": {
-        "section": true,
-        "problems": [],
+        "sections": [
+          0
+        ],
         "tasks": [
           {
             "line": 3,
@@ -100,7 +104,9 @@
             "text": "Add retry to the uploader",
             "key": null
           }
-        ]
+        ],
+        "problems": [],
+        "unclosed": null
       }
     },
     {
@@ -120,7 +126,9 @@
         "- [ ] A bare item under an unknown group"
       ],
       "expect": {
-        "section": true,
+        "sections": [
+          0
+        ],
         "tasks": [],
         "problems": [
           1,
@@ -128,7 +136,8 @@
           3,
           4,
           10
-        ]
+        ],
+        "unclosed": null
       }
     },
     {
@@ -140,9 +149,10 @@
         "- [ ] [owner] No tasks section, so not a task"
       ],
       "expect": {
-        "section": false,
+        "sections": [],
         "tasks": [],
-        "problems": []
+        "problems": [],
+        "unclosed": null
       }
     },
     {
@@ -156,9 +166,12 @@
         "## Next"
       ],
       "expect": {
-        "section": true,
+        "sections": [
+          0
+        ],
         "tasks": [],
-        "problems": []
+        "problems": [],
+        "unclosed": null
       }
     },
     {
@@ -169,8 +182,9 @@
         "- [ ] [owner] Ship it (waiting on owner: task-demo-aaaaaaaaaa) and more"
       ],
       "expect": {
-        "section": true,
-        "problems": [],
+        "sections": [
+          0
+        ],
         "tasks": [
           {
             "line": 1,
@@ -178,7 +192,9 @@
             "text": "Ship it (waiting on owner: task-demo-aaaaaaaaaa) and more",
             "key": null
           }
-        ]
+        ],
+        "problems": [],
+        "unclosed": null
       }
     },
     {
@@ -202,8 +218,9 @@
         "## 參考"
       ],
       "expect": {
-        "section": true,
-        "problems": [],
+        "sections": [
+          6
+        ],
         "tasks": [
           {
             "line": 8,
@@ -235,7 +252,9 @@
             "text": "付款",
             "key": "task-demo-bbbbbbbbbb"
           }
-        ]
+        ],
+        "problems": [],
+        "unclosed": null
       }
     },
     {
@@ -250,8 +269,9 @@
         "- [ ] 〔Owner〕戊(等 Owner:task-demo-eeeeeeeeee) 之後還有字"
       ],
       "expect": {
-        "section": true,
-        "problems": [],
+        "sections": [
+          0
+        ],
         "tasks": [
           {
             "line": 1,
@@ -283,7 +303,9 @@
             "text": "戊(等 Owner:task-demo-eeeeeeeeee) 之後還有字",
             "key": null
           }
-        ]
+        ],
+        "problems": [],
+        "unclosed": null
       }
     },
     {
@@ -302,8 +324,9 @@
         "- [ ] 選資料庫"
       ],
       "expect": {
-        "section": true,
-        "problems": [],
+        "sections": [
+          0
+        ],
         "tasks": [
           {
             "line": 3,
@@ -335,7 +358,9 @@
             "text": "選資料庫",
             "key": null
           }
-        ]
+        ],
+        "problems": [],
+        "unclosed": null
       }
     },
     {
@@ -353,12 +378,8 @@
         "- [ ] 不認得的群組底下"
       ],
       "expect": {
-        "section": true,
-        "problems": [
-          1,
-          2,
-          3,
-          8
+        "sections": [
+          0
         ],
         "tasks": [
           {
@@ -367,7 +388,412 @@
             "text": "這是 owner 的",
             "key": null
           }
-        ]
+        ],
+        "problems": [
+          1,
+          2,
+          3,
+          8
+        ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-two-sections",
+      "profile": "en",
+      "document": [
+        "# Demo",
+        "## Tasks",
+        "- [ ] [owner] Renew the domain",
+        "## Notes",
+        "Some prose.",
+        "## Tasks",
+        "- [ ] [owner] Sign the contract (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "expect": {
+        "sections": [
+          1,
+          5
+        ],
+        "tasks": [
+          {
+            "line": 2,
+            "assignee": "principal",
+            "text": "Renew the domain",
+            "key": null
+          },
+          {
+            "line": 6,
+            "assignee": "principal",
+            "text": "Sign the contract",
+            "key": "task-demo-aaaaaaaaaa"
+          }
+        ],
+        "problems": [
+          5
+        ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-two-sections-groups-reset",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "### [owner]",
+        "- [ ] Renew the domain",
+        "## Tasks",
+        "- [ ] Sign the contract"
+      ],
+      "expect": {
+        "sections": [
+          0,
+          3
+        ],
+        "tasks": [
+          {
+            "line": 2,
+            "assignee": "principal",
+            "text": "Renew the domain",
+            "key": null
+          }
+        ],
+        "problems": [
+          3,
+          4
+        ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-markdown-links",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner](https://example.com/people/owner) is not a label",
+        "- [ ] [owner] Read [the contract](https://example.com/c) and sign it",
+        "### [owner]",
+        "- [ ] [Pay the invoice](https://example.com/inv/42)",
+        "- [ ] [owner](https://example.com/o) Approve the logo",
+        "- [ ] [misc] Not a known label"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 2,
+            "assignee": "principal",
+            "text": "Read [the contract](https://example.com/c) and sign it",
+            "key": null
+          },
+          {
+            "line": 4,
+            "assignee": "principal",
+            "text": "[Pay the invoice](https://example.com/inv/42)",
+            "key": null
+          },
+          {
+            "line": 5,
+            "assignee": "principal",
+            "text": "[owner](https://example.com/o) Approve the logo",
+            "key": null
+          }
+        ],
+        "problems": [
+          1,
+          6
+        ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-labelled-without-checkbox",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [owner] Renew the domain",
+        "* [ ] [owner] Sign the contract",
+        "+ [agent] Add retries",
+        "- [owner](https://example.com) is a link in prose",
+        "- plain prose bullet",
+        "  - [owner] indented continuation",
+        "- [ ] [owner] Pay the invoice"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 7,
+            "assignee": "principal",
+            "text": "Pay the invoice",
+            "key": null
+          }
+        ],
+        "problems": [
+          1,
+          2,
+          3
+        ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "zh-labelled-without-checkbox",
+      "profile": "zh-hant",
+      "document": [
+        "## 待辦",
+        "- 〔Owner〕續約網域",
+        "- [ ] 〔Owner〕簽合約",
+        "- 一般說明"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 2,
+            "assignee": "principal",
+            "text": "簽合約",
+            "key": null
+          }
+        ],
+        "problems": [
+          1
+        ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "zh-text-starting-with-parenthesis",
+      "profile": "zh-hant",
+      "document": [
+        "## 待辦",
+        "- [ ] 〔Owner〕(急)續約網域",
+        "### 〔Owner〕",
+        "- [ ] (急)簽合約"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 1,
+            "assignee": "principal",
+            "text": "(急)續約網域",
+            "key": null
+          },
+          {
+            "line": 3,
+            "assignee": "principal",
+            "text": "(急)簽合約",
+            "key": null
+          }
+        ],
+        "problems": [],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-ignored-regions",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Real task",
+        "```markdown",
+        "## Tasks",
+        "- [ ] [owner] Example only",
+        "```",
+        "<!--",
+        "- [ ] [owner] Commented out",
+        "-->",
+        "<!-- one line --> trailing",
+        "~~~~",
+        "- [ ] [owner] Tilde fenced",
+        "~~~~",
+        "- [ ] [agent] After the blocks"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 1,
+            "assignee": "principal",
+            "text": "Real task",
+            "key": null
+          },
+          {
+            "line": 13,
+            "assignee": "agent",
+            "text": "After the blocks",
+            "key": null
+          }
+        ],
+        "problems": [],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-incomplete",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain",
+        "```",
+        "- [ ] [owner] Inside an open fence"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 1,
+            "assignee": "principal",
+            "text": "Renew the domain",
+            "key": null
+          }
+        ],
+        "problems": [],
+        "unclosed": 2
+      }
+    },
+    {
+      "id": "en-backtick-info-with-backtick-is-not-a-fence",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "``` a`b",
+        "- [ ] [owner] Still a task"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 2,
+            "assignee": "principal",
+            "text": "Still a task",
+            "key": null
+          }
+        ],
+        "problems": [],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-heading-ends-group",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "### [owner]",
+        "- [ ] Sign the hosting contract",
+        "### Refactoring notes",
+        "- [ ] Add retries to the uploader"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 2,
+            "assignee": "principal",
+            "text": "Sign the hosting contract",
+            "key": null
+          }
+        ],
+        "problems": [
+          4
+        ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-task-like-lines",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "### [owner]",
+        "* [ ] Sign the contract",
+        "-  [ ] Sign the contract",
+        "1. [ ] Sign the contract",
+        "- [ ][owner] Pay the invoice",
+        "1. [owner] Pay the invoice",
+        "- [ ]  [owner] Two spaces after the box",
+        "- [ ]\t[owner] A tab after the box"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 7,
+            "assignee": "principal",
+            "text": "Two spaces after the box",
+            "key": null
+          },
+          {
+            "line": 8,
+            "assignee": "principal",
+            "text": "A tab after the box",
+            "key": null
+          }
+        ],
+        "problems": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "unclosed": null
+      }
+    },
+    {
+      "id": "en-section-ends-at-level-1-or-2",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] In the section",
+        "##\tNotes",
+        "- [ ] [owner] After a tab heading",
+        "## Tasks",
+        "#hashtag is not a heading",
+        "- [ ] [owner] Second section"
+      ],
+      "expect": {
+        "sections": [
+          0,
+          4
+        ],
+        "tasks": [
+          {
+            "line": 1,
+            "assignee": "principal",
+            "text": "In the section",
+            "key": null
+          },
+          {
+            "line": 6,
+            "assignee": "principal",
+            "text": "Second section",
+            "key": null
+          }
+        ],
+        "problems": [
+          4
+        ],
+        "unclosed": null
       }
     }
   ]

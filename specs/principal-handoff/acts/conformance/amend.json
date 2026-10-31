@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.3",
+  "suite": "acts/0.4",
   "description": "Registrar step 3: keyed lines whose normalised text differs from the latest terms -> amended items.",
   "cases": [
     {
@@ -12,12 +12,15 @@
       "latest": {
         "task-demo-aaaaaaaaaa": "Renew the domain"
       },
-      "expect": [
-        {
-          "key": "task-demo-aaaaaaaaaa",
-          "text": "Renew the domain for two years"
-        }
-      ]
+      "expect": {
+        "amended": [
+          {
+            "key": "task-demo-aaaaaaaaaa",
+            "text": "Renew the domain for two years"
+          }
+        ],
+        "warn": []
+      }
     },
     {
       "id": "whitespace-only-change",
@@ -29,7 +32,10 @@
       "latest": {
         "task-demo-aaaaaaaaaa": "Renew the domain"
       },
-      "expect": []
+      "expect": {
+        "amended": [],
+        "warn": []
+      }
     },
     {
       "id": "unknown-key-ignored",
@@ -41,7 +47,10 @@
       "latest": {
         "task-demo-aaaaaaaaaa": "Renew the domain"
       },
-      "expect": []
+      "expect": {
+        "amended": [],
+        "warn": []
+      }
     },
     {
       "id": "zh-edited",
@@ -53,12 +62,85 @@
       "latest": {
         "task-demo-aaaaaaaaaa": "續約網域"
       },
-      "expect": [
-        {
-          "key": "task-demo-aaaaaaaaaa",
-          "text": "續約網域兩年"
-        }
-      ]
+      "expect": {
+        "amended": [
+          {
+            "key": "task-demo-aaaaaaaaaa",
+            "text": "續約網域兩年"
+          }
+        ],
+        "warn": []
+      }
+    },
+    {
+      "id": "relabelled-line-not-amended",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [agent] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "latest": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "expect": {
+        "amended": [],
+        "warn": []
+      }
+    },
+    {
+      "id": "copied-marker-warns",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "- [ ] [owner] Sign the contract (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "latest": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "expect": {
+        "amended": [],
+        "warn": [
+          "task-demo-aaaaaaaaaa"
+        ]
+      }
+    },
+    {
+      "id": "second-section-not-amended",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [agent] Other",
+        "## Tasks",
+        "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "latest": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "expect": {
+        "amended": [],
+        "warn": []
+      }
+    },
+    {
+      "id": "amended-text-is-normalised",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew   the domain  now (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "latest": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "expect": {
+        "amended": [
+          {
+            "key": "task-demo-aaaaaaaaaa",
+            "text": "Renew the domain now"
+          }
+        ],
+        "warn": []
+      }
     }
   ]
 }

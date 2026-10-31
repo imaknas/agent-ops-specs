@@ -1,4 +1,4 @@
-"""Runs the Principal Handoff Decisions 0.3 conformance suite against the reference implementation.
+"""Runs the Principal Handoff Decisions 0.4 conformance suite against the reference implementation.
 
     cd specs/principal-handoff/reference && python3 -m unittest -v
 """

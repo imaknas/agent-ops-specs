@@ -7,10 +7,10 @@ decided and under what authority, when the items outlive every agent session.
 
 | Document | Version | What it covers |
 |---|---|---|
-| [Core](core/SPEC.md) | 0.3 draft | One model for every item: a need register owned by the requester, a settlement register owned by the principal side, claims, relations and notes; authority kinds, deciders and evidence; the principal as a configured root |
-| [Acts](acts/SPEC.md) | 0.3 draft | Work only the principal can do, with a Markdown binding for a project's state document (formerly Tasks 0.2 / Human Task Handoff 0.1) |
-| [Decisions](decisions/SPEC.md) | 0.3 draft | Answers and choices only the principal may make (formerly Questions 0.1) |
-| [Related work](RELATED-WORK.md) | | How this compares with ACP, MCP, A2A, AG-UI, CHAP, AuthZEN, IETF agent drafts, iCalendar/JSCalendar and agent SDKs |
+| [Core](core/SPEC.md) | 0.4 draft | One model for every item: a need register owned by the requester, a settlement register owned by the principal side, claims, relations and notes; authority kinds, deciders and evidence; verifiable proofs of facts; approvals bound to an item's terms; the principal as a configured root |
+| [Acts](acts/SPEC.md) | 0.4 draft | Work only the principal can do, with a Markdown binding for a project's state document (formerly Tasks 0.2 / Human Task Handoff 0.1) |
+| [Decisions](decisions/SPEC.md) | 0.4 draft | Answers and choices only the principal may make, including settlement by a verifier against criteria the principal approved (formerly Questions 0.1) |
+| [Related work](RELATED-WORK.md) | | How this compares with ACP, MCP, A2A, AG-UI, CHAP, AuthZEN, IETF agent drafts, iCalendar/JSCalendar, agent SDKs, and proof systems and scalable-oversight research |
 
 An implementation may support one extension without the other.
 
@@ -23,7 +23,7 @@ Principal's assistant (Muninn, OpenClaw, …)  ⇄  Project platform (agent-hub,
   work and choices only the principal can →  Principal Handoff (this family)
 ```
 
-The reference code in [`reference/`](reference/) is standard-library Python and passes the Acts and Decisions conformance suites:
+The reference code in [`reference/`](reference/) is standard-library Python and passes the core vectors and the Acts and Decisions conformance suites:
 
 ```
 cd reference && python3 -m unittest

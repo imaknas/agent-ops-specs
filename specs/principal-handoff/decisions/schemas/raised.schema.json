@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "raised.schema.json",
-  "title": "Principal Handoff Decisions 0.3: raised",
+  "title": "Principal Handoff Decisions 0.4: raised",
   "description": "Requester -> principal side: a new item.",
   "$ref": "../../core/schemas/record.schema.json",
   "required": [
@@ -10,7 +10,7 @@
   ],
   "properties": {
     "ext": {
-      "const": "decisions/0.3"
+      "const": "decisions/0.4"
     },
     "type": {
       "const": "raised"
@@ -19,44 +19,7 @@
       "const": "requester"
     },
     "terms": {
-      "type": "object",
-      "required": [
-        "text"
-      ],
-      "properties": {
-        "text": {
-          "type": "string",
-          "pattern": "\\S"
-        },
-        "options": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "id",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^\\S{1,64}$"
-              },
-              "label": {
-                "type": "string",
-                "pattern": "\\S"
-              }
-            }
-          }
-        },
-        "default": {
-          "type": "string",
-          "pattern": "\\S"
-        },
-        "due": {
-          "type": "string",
-          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
-        }
-      }
+      "$ref": "terms.schema.json"
     },
     "terms_rev": {
       "const": 1

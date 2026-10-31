@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.3",
+  "suite": "acts/0.4",
   "description": "Registration vectors: document -> stamped document + registered events (key, text).",
   "cases": [
     {
@@ -16,15 +16,6 @@
         "- [ ] Call the bank   "
       ],
       "expect": {
-        "document": [
-          "## Tasks",
-          "",
-          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-c3d8af57d4)",
-          "- [ ] [owner] Sign the contract (waiting on owner: task-demo-0123456789)",
-          "- [ ] [agent] Add retry to the uploader",
-          "### [owner]",
-          "- [ ] Call the bank (waiting on owner: task-demo-d5264e8e5b)"
-        ],
         "raised": [
           {
             "key": "task-demo-c3d8af57d4",
@@ -34,6 +25,16 @@
             "key": "task-demo-d5264e8e5b",
             "text": "Call the bank"
           }
+        ],
+        "reported": [],
+        "document": [
+          "## Tasks",
+          "",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-c3d8af57d4)",
+          "- [ ] [owner] Sign the contract (waiting on owner: task-demo-0123456789)",
+          "- [ ] [agent] Add retry to the uploader",
+          "### [owner]",
+          "- [ ] Call the bank (waiting on owner: task-demo-d5264e8e5b)"
         ]
       }
     },
@@ -50,14 +51,6 @@
         "- [ ] 打給  銀行"
       ],
       "expect": {
-        "document": [
-          "## 待辦",
-          "",
-          "- [ ] 〔Owner〕續約網域(等 Owner:task-demo-544fefce49)",
-          "- [ ] 〔待定〕選資料庫",
-          "### 〔Owner〕",
-          "- [ ] 打給  銀行(等 Owner:task-demo-35d67bcf74)"
-        ],
         "raised": [
           {
             "key": "task-demo-544fefce49",
@@ -65,8 +58,17 @@
           },
           {
             "key": "task-demo-35d67bcf74",
-            "text": "打給  銀行"
+            "text": "打給 銀行"
           }
+        ],
+        "reported": [],
+        "document": [
+          "## 待辦",
+          "",
+          "- [ ] 〔Owner〕續約網域(等 Owner:task-demo-544fefce49)",
+          "- [ ] 〔待定〕選資料庫",
+          "### 〔Owner〕",
+          "- [ ] 打給  銀行(等 Owner:task-demo-35d67bcf74)"
         ]
       }
     },
@@ -80,12 +82,183 @@
         "- [ ] 〔agent〕上傳加重試"
       ],
       "expect": {
+        "raised": [],
+        "reported": [],
         "document": [
           "## 待辦",
           "- [ ] 〔Owner〕簽合約(等 Owner:task-demo-0123456789)",
           "- [ ] 〔agent〕上傳加重試"
+        ]
+      }
+    },
+    {
+      "id": "unbound-marker-restamped",
+      "profile": "en",
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-zzzzzzzzzz)"
+      ],
+      "bound": [],
+      "expect": {
+        "raised": [
+          {
+            "key": "task-demo-c3d8af57d4",
+            "text": "Renew the domain"
+          }
         ],
-        "raised": []
+        "reported": [],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-c3d8af57d4)"
+        ]
+      }
+    },
+    {
+      "id": "text-after-marker-reported",
+      "profile": "en",
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)."
+      ],
+      "bound": [
+        "task-demo-aaaaaaaaaa"
+      ],
+      "expect": {
+        "raised": [],
+        "reported": [
+          1
+        ],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)."
+        ]
+      }
+    },
+    {
+      "id": "already-bound-reported",
+      "profile": "en",
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain"
+      ],
+      "bound": [
+        "task-demo-c3d8af57d4"
+      ],
+      "expect": {
+        "raised": [],
+        "reported": [
+          1
+        ],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain"
+        ]
+      }
+    },
+    {
+      "id": "duplicate-lines",
+      "profile": "en",
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain",
+        "- [ ] [owner] Renew  the domain"
+      ],
+      "bound": [],
+      "expect": {
+        "raised": [
+          {
+            "key": "task-demo-c3d8af57d4",
+            "text": "Renew the domain"
+          }
+        ],
+        "reported": [
+          2
+        ],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-c3d8af57d4)",
+          "- [ ] [owner] Renew  the domain"
+        ]
+      }
+    },
+    {
+      "id": "only-first-section-raised",
+      "profile": "en",
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain",
+        "## Tasks",
+        "- [ ] [owner] Archived request"
+      ],
+      "bound": [],
+      "expect": {
+        "raised": [
+          {
+            "key": "task-demo-c3d8af57d4",
+            "text": "Renew the domain"
+          }
+        ],
+        "reported": [],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-c3d8af57d4)",
+          "## Tasks",
+          "- [ ] [owner] Archived request"
+        ]
+      }
+    },
+    {
+      "id": "fenced-not-raised",
+      "profile": "en",
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "```",
+        "- [ ] [owner] Example only",
+        "```",
+        "- [ ] [owner] Renew the domain"
+      ],
+      "bound": [],
+      "expect": {
+        "raised": [
+          {
+            "key": "task-demo-c3d8af57d4",
+            "text": "Renew the domain"
+          }
+        ],
+        "reported": [],
+        "document": [
+          "## Tasks",
+          "```",
+          "- [ ] [owner] Example only",
+          "```",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-c3d8af57d4)"
+        ]
+      }
+    },
+    {
+      "id": "incomplete-nothing",
+      "profile": "en",
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain",
+        "<!--"
+      ],
+      "bound": [],
+      "expect": {
+        "raised": [],
+        "reported": [],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain",
+          "<!--"
+        ]
       }
     }
   ]

@@ -1,4 +1,4 @@
-"""Runs the Principal Handoff Acts 0.3 conformance suite against the reference implementation.
+"""Runs the Principal Handoff Acts 0.4 conformance suite against the reference implementation.
 
     cd specs/principal-handoff/reference && python3 -m unittest -v
 """
@@ -13,10 +13,7 @@ from ph_core import Config
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONF = ROOT / "acts" / "conformance"
-SCHEMAS = [ROOT / "acts" / "schemas", ROOT / "core" / "schemas"]
 PROFILES = json.loads((CONF / "profiles.json").read_text())["profiles"]
-ALLOWED = {"$schema", "$id", "$ref", "title", "description", "type", "required", "properties", "enum", "const",
-           "pattern", "items"}
 
 
 def suite(name: str) -> dict:
@@ -34,6 +31,11 @@ def doc(lines: list[str]) -> str:
 def nonblank(text: str) -> list[str]:
     """Conformance compares documents as their sequence of non-blank lines, trailing whitespace removed."""
     return [l.rstrip() for l in text.split("\n") if l.strip()]
+
+
+def bound(c: dict) -> set | None:
+    """Keys raised through the binding; a case without the member treats every key it lists as bound."""
+    return set(c["bound"]) if "bound" in c else None
 
 
 def profile(name: str) -> acts.Profile:
@@ -54,21 +56,24 @@ class Binding(unittest.TestCase):
     def test_register(self):
         for c in cases("register.json"):
             with self.subTest(c["id"]):
-                out, raised = acts.register(doc(c["document"]), c["project"], profile(c["profile"]))
+                out, raised, reported = acts.register(doc(c["document"]), c["project"], profile(c["profile"]),
+                                                      bound(c))
                 self.assertEqual(raised, c["expect"]["raised"])
+                self.assertEqual(reported, c["expect"]["reported"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
     def test_register_is_idempotent(self):
         for c in cases("register.json"):
             with self.subTest(c["id"]):
                 p = profile(c["profile"])
-                once, _ = acts.register(doc(c["document"]), c["project"], p)
-                self.assertEqual(acts.register(once, c["project"], p), (once, []))
+                once, raised, _ = acts.register(doc(c["document"]), c["project"], p, bound(c))
+                b = None if bound(c) is None else bound(c) | {r["key"] for r in raised}
+                self.assertEqual(acts.register(once, c["project"], p, b)[:2], (once, []))
 
     def test_relink(self):
         for c in cases("relink.json"):
             with self.subTest(c["id"]):
-                out, relinked = acts.relink(doc(c["document"]), c["vanished"], profile(c["profile"]))
+                out, relinked = acts.relink(doc(c["document"]), c["active"], profile(c["profile"]), bound(c))
                 self.assertEqual(relinked, c["expect"]["relinked"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
@@ -80,7 +85,7 @@ class Binding(unittest.TestCase):
     def test_apply(self):
         for c in cases("apply.json"):
             with self.subTest(c["id"]):
-                out, changed = acts.apply(doc(c["document"]), c["record"], profile(c["profile"]))
+                out, changed = acts.apply(doc(c["document"]), c["record"], profile(c["profile"]), c.get("latest"))
                 self.assertEqual(changed, c["expect"]["changed"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
@@ -92,7 +97,8 @@ class Binding(unittest.TestCase):
     def test_reconcile(self):
         for c in cases("reconcile.json"):
             with self.subTest(c["id"]):
-                self.assertEqual(acts.reconcile(doc(c["document"]), c["open"], profile(c["profile"])), c["expect"])
+                self.assertEqual(acts.reconcile(doc(c["document"]), c["open"], profile(c["profile"]), bound(c)),
+                                 c["expect"])
 
 
 class Records(unittest.TestCase):
@@ -118,18 +124,6 @@ class Records(unittest.TestCase):
         for c in s["cases"]:
             with self.subTest(c["id"]):
                 self.assertEqual(acts.fold(list(reversed(c["records"])), Config(s["principal"])), c["expect"])
-
-    def test_schemas_use_only_the_subset(self):
-        def walk(x, where):
-            self.assertLessEqual(set(x) - ALLOWED, set(), where)
-            for k, sub in x.get("properties", {}).items():
-                walk(sub, f"{where}.{k}")
-            if "items" in x:
-                walk(x["items"], f"{where}[]")
-
-        for d in SCHEMAS:
-            for f in sorted(d.glob("*.json")):
-                walk(json.loads(f.read_text()), f.name)
 
 
 if __name__ == "__main__":

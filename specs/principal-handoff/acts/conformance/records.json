@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.3",
+  "suite": "acts/0.4",
   "principal": "p:owner",
   "description": "Record vectors: record -> the schema it validates against, or invalid (schema, ownership R1-R3/R6, authority core section 5).",
   "cases": [
@@ -8,8 +8,8 @@
       "valid": true,
       "schema": "raised",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "r1",
         "type": "raised",
         "origin": "requester",
@@ -29,8 +29,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "r2",
         "type": "raised",
         "origin": "requester",
@@ -46,8 +46,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "r3",
         "type": "raised",
         "origin": "principal",
@@ -67,8 +67,8 @@
       "valid": true,
       "schema": "amended",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "a1",
         "type": "amended",
         "origin": "requester",
@@ -91,8 +91,8 @@
       "valid": true,
       "schema": "withdrawn",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "w1",
         "type": "withdrawn",
         "origin": "requester",
@@ -111,8 +111,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "w2",
         "type": "withdrawn",
         "origin": "requester",
@@ -128,8 +128,8 @@
       "valid": true,
       "schema": "settled",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s1",
         "type": "settled",
         "origin": "principal",
@@ -139,6 +139,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -150,8 +151,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s2",
         "type": "settled",
         "origin": "requester",
@@ -161,6 +162,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -172,8 +174,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s3",
         "type": "settled",
         "origin": "principal",
@@ -183,6 +185,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "agent:demo"
@@ -194,8 +197,8 @@
       "valid": true,
       "schema": "settled",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s4",
         "type": "settled",
         "origin": "principal",
@@ -205,6 +208,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "confirmed",
           "decider": "p:owner"
@@ -219,8 +223,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s5",
         "type": "settled",
         "origin": "principal",
@@ -230,6 +234,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "confirmed",
           "decider": "p:owner"
@@ -241,8 +246,8 @@
       "valid": true,
       "schema": "settled",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s6",
         "type": "settled",
         "origin": "principal",
@@ -252,6 +257,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "delegated",
           "decider": "ps:assistant",
@@ -268,8 +274,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s7",
         "type": "settled",
         "origin": "principal",
@@ -279,6 +285,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "delegated",
           "decider": "ps:assistant"
@@ -290,8 +297,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s8",
         "type": "settled",
         "origin": "principal",
@@ -301,6 +308,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "delegated",
           "decider": "p:owner",
@@ -316,8 +324,8 @@
       "valid": true,
       "schema": "settled",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s9",
         "type": "settled",
         "origin": "principal",
@@ -327,6 +335,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "attested",
           "decider": "ps:assistant"
@@ -341,8 +350,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s10",
         "type": "settled",
         "origin": "principal",
@@ -352,6 +361,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "attested",
           "decider": "ps:assistant"
@@ -363,8 +373,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s11",
         "type": "settled",
         "origin": "principal",
@@ -376,7 +386,8 @@
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
-        }
+        },
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000"
       }
     },
     {
@@ -384,8 +395,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s12",
         "type": "settled",
         "origin": "principal",
@@ -395,6 +406,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -406,8 +418,8 @@
       "valid": true,
       "schema": "reopened",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "o1",
         "type": "reopened",
         "origin": "principal",
@@ -426,8 +438,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "o2",
         "type": "reopened",
         "origin": "principal",
@@ -442,8 +454,8 @@
       "valid": true,
       "schema": "claimed",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "c1",
         "type": "claimed",
         "origin": "agent",
@@ -462,8 +474,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "c2",
         "type": "claimed",
         "origin": "principal",
@@ -482,8 +494,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "c3",
         "type": "claimed",
         "origin": "agent",
@@ -500,8 +512,8 @@
       "valid": true,
       "schema": "related",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "l1",
         "type": "related",
         "origin": "principal",
@@ -512,7 +524,7 @@
         "relation": {
           "kind": "same_as",
           "target": {
-            "ext": "acts/0.3",
+            "ext": "acts/0.4",
             "project": "other",
             "key": "k-9"
           },
@@ -525,8 +537,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "l2",
         "type": "related",
         "origin": "requester",
@@ -537,7 +549,7 @@
         "relation": {
           "kind": "same_as",
           "target": {
-            "ext": "acts/0.3",
+            "ext": "acts/0.4",
             "project": "other",
             "key": "k-9"
           },
@@ -550,8 +562,8 @@
       "valid": true,
       "schema": "related",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "l3",
         "type": "related",
         "origin": "requester",
@@ -573,8 +585,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "l4",
         "type": "related",
         "origin": "principal",
@@ -596,8 +608,8 @@
       "valid": true,
       "schema": "note",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "n1",
         "type": "note",
         "origin": "principal",
@@ -616,8 +628,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "n2",
         "type": "note",
         "origin": "principal",
@@ -633,7 +645,7 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
+        "ph": "0.4",
         "ext": "other/0.3",
         "id": "s13",
         "type": "settled",
@@ -644,6 +656,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -656,7 +669,7 @@
       "schema": null,
       "record": {
         "ph": "0.2",
-        "ext": "acts/0.3",
+        "ext": "acts/0.4",
         "id": "s14",
         "type": "settled",
         "origin": "principal",
@@ -666,6 +679,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -677,8 +691,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s15",
         "type": "settled",
         "origin": "principal",
@@ -688,6 +702,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "decided",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -699,8 +714,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "o9",
         "type": "reopened",
         "origin": "principal",
@@ -718,8 +733,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "a9",
         "type": "amended",
         "origin": "requester",
@@ -741,8 +756,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s20",
         "type": "settled",
         "origin": "principal",
@@ -752,6 +767,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 0,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -763,8 +779,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s21",
         "type": "settled",
         "origin": "principal",
@@ -774,6 +790,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "attested",
           "decider": "p:owner"
@@ -788,8 +805,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s22",
         "type": "settled",
         "origin": "principal",
@@ -799,6 +816,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -813,8 +831,8 @@
       "valid": true,
       "schema": "settled",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s23",
         "type": "settled",
         "origin": "principal",
@@ -824,6 +842,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "attested",
           "decider": "ps:assistant"
@@ -841,8 +860,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s24",
         "type": "settled",
         "origin": "principal",
@@ -852,6 +871,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "delegated",
           "decider": "ps:assistant",
@@ -868,8 +888,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "l9",
         "type": "related",
         "origin": "requester",
@@ -892,8 +912,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "l10",
         "type": "related",
         "origin": "requester",
@@ -913,8 +933,8 @@
       "valid": false,
       "schema": null,
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s25",
         "type": "settled",
         "origin": "principal",
@@ -924,6 +944,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -936,8 +957,8 @@
       "valid": true,
       "schema": "settled",
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "s26",
         "type": "settled",
         "origin": "principal",
@@ -947,6 +968,7 @@
         "ts": "2026-10-27T09:00:00Z",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner",
@@ -954,6 +976,662 @@
         }
       },
       "principal_type": "legal"
+    },
+    {
+      "id": "claimed-verifiable",
+      "valid": true,
+      "schema": "claimed",
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "claimed-verifiable-without-terms-rev",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "claimed-verifiable-both-proof-forms",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              },
+              "proof": "eyJhbGciOi..."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "claimed-verifiable-without-proof",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "claimed-verifiable-duplicate-ids",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            },
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "claimed-verifiable-bad-digest",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha256:abc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "claimed-with-verified",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ],
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "raised-with-verifiable",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "r9",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Renew the domain"
+        },
+        "terms_rev": 1,
+        "evidence": {
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "settled-attested-verified",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:verifier"
+        },
+        "adopts": [
+          "c1"
+        ],
+        "evidence": {
+          "basis": "claim c1, its TLSNotary proof verified",
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "settled-verified-bad-result",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:verifier"
+        },
+        "adopts": [
+          "c1"
+        ],
+        "evidence": {
+          "basis": "claim c1, its TLSNotary proof verified",
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "ok",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "settled-verified-without-entry",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:verifier"
+        },
+        "adopts": [
+          "c1"
+        ],
+        "evidence": {
+          "basis": "claim c1, its TLSNotary proof verified",
+          "verified": [
+            {
+              "of": {
+                "record": "c1"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "note-principal-verified",
+      "valid": true,
+      "schema": "note",
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      }
+    },
+    {
+      "id": "note-requester-verified",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "n6",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "withdrawn-replaced",
+      "valid": true,
+      "schema": "withdrawn",
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "w2",
+        "type": "withdrawn",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "reason": "replaced",
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "replaced-by",
+      "valid": true,
+      "schema": "related",
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "l9",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "acts/0.4",
+            "project": "demo",
+            "key": "task-demo-bbbbbbbbbb"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "replaced-by-from-principal",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "l9",
+        "type": "related",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "acts/0.4",
+            "project": "demo",
+            "key": "task-demo-bbbbbbbbbb"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "replaced-by-other-project",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "l9",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "acts/0.4",
+            "project": "other",
+            "key": "task-demo-bbbbbbbbbb"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "replaced-by-uri",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "l9",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "uri": "a2a:task/9"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "replaced-by-itself",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "l9",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "acts/0.4",
+            "project": "demo",
+            "key": "task-demo-aaaaaaaaaa"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "settled-under-approval-in-acts",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s7",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:verifier",
+          "under": "approval:ap1",
+          "chain": [
+            "p:owner",
+            "ps:verifier"
+          ]
+        }
+      }
+    },
+    {
+      "id": "approved-not-in-acts",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+          "active": true
+        },
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      }
     }
   ],
   "principal_type": "natural"

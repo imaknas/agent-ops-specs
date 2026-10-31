@@ -1,7 +1,7 @@
 # Principal Handoff: related work
 
 *Non-normative companion to [core §16](core/SPEC.md#16-relation-to-other-specifications) and the extensions' relation
-sections. Sources were read on 2026-10-27; versions are given for each.
+sections. Sources for §1–§6 were read on 2026-10-27, and for §7 on 2026-11-01; versions are given for each.
 Statements of fact cite the source. Paragraphs headed **Assessment** are the authors' reading and are not taken from
 those sources.*
 
@@ -287,6 +287,56 @@ the "reported" side of the gilda draft's reported-versus-observed split. Where t
 software agent may be the principal (unlike sharif and AAuth), and no timeout or default ever settles (unlike CHAP's
 whisper).
 
+## 7. Verifiable evidence and scalable oversight (checked 2026-11-01)
+
+*Added for 0.4, which lets records carry proofs of facts (core §5.2) and lets the principal approve acceptance
+criteria so that a verifier settles a decision without the principal reviewing the work (core §5.3, Decisions §4.1).*
+
+### 7.1 Proofs of facts
+
+- **TLS-based web proofs ("zkTLS").** DECO (Zhang, Maram, Malvai, Goldfeder and Juels, ACM CCS 2020; extended version
+  arXiv:1909.00938) lets a user prove that data obtained over TLS came from a given website, and optionally prove
+  statements about that data in zero knowledge, without trusted hardware or changes to the server. It builds on the
+  TLSNotary approach of a notary that takes part in the TLS session (secondary: the DIDO paper, IACR ePrint 2023/1056).
+  Several later systems are marketed as "zkTLS".
+- **Selective disclosure.** SD-JWT (RFC 9901, Fett, Yasuda and Campbell, November 2025, Proposed Standard) is a signed
+  JWS plus optional disclosures, so a holder can reveal some claims of a credential and not others. BBS signatures
+  (draft-irtf-cfrg-bbs-signatures; -09, July 2025, is the latest revision found) allow unlinkable selective-disclosure
+  proofs.
+- **Signed build and test attestations.** The in-toto Attestation Framework (v1.2 per its specification README) layers
+  a predicate, a statement naming the subject by digest, an envelope and a bundle; SLSA provenance is one predicate.
+
+**Assessment.** These systems prove *that a statement holds*, signed or notarised by someone. None of them says
+whether the statement is the one that matters for an item. Principal Handoff therefore records the statement next to
+the proof, keeps "what the proof establishes" (V2) apart from "which item it is about" (V4, the emitter's judgement
+unless an extension requires binding), and makes "valid" relative to the principal side's own trust roots (V3). The
+privacy properties of SD-JWT, BBS and zkTLS are why proofs about the principal stay with the principal side (core §5.2,
+§13). A web proof over the principal's own bank or mailbox requires that account's session, which is why core §13 has
+such proofs made by the principal side rather than by agents.
+
+### 7.2 Checking instead of reviewing
+
+- **Proof-carrying code** (Necula, POPL 1997): the code consumer sets a safety policy, the producer ships code with a
+  proof that it complies, and the consumer checks the proof, which is much cheaper than checking the code. Trust moves
+  to the policy and the proof checker.
+- **AI safety via debate** (Irving, Christiano and Amodei, arXiv:1805.00899, 2018): a judge who cannot answer a
+  question directly can still judge a debate between two agents, so that a weak checker supervises strong ones.
+- **Prover-verifier games** (Anil, Zhang, Wu and Grosse, arXiv:2108.12099, 2021; secondary, not re-read): a prover is
+  trained to give answers a verifier can check. Kirchner et al. (OpenAI, arXiv:2407.13692, 2024) train small verifiers
+  against "helpful" and "sneaky" provers on grade-school mathematics and report that the legibility gains transfer to
+  time-limited human checkers.
+- **Reward hacking** (Skalse et al., "Defining and Characterizing Reward Hacking", NeurIPS 2022; not re-read): an
+  optimiser pointed at a proxy it can check tends to satisfy the proxy rather than the intent behind it.
+
+**Assessment.** Approvals (core §5.3) apply this idea to items that only the principal may settle: the person decides
+*what counts as done* (the criteria, their implementations and trust roots), which is short, and a verifier checks the
+proofs, which is cheap. As in proof-carrying code, this does not remove trust; it moves it to the criteria, the check
+implementations, the trust roots and the verifier (core §13). Three choices follow: the approval binds one item's exact terms, so a requester cannot reuse it; one failed
+check sends the decision back to the person, so a flaky check cannot be retried until it passes; and a sample of
+verifier-settled decisions is audited by the person (Decisions §4.2), which is the only measure of how often the
+checks are gamed. None of the surveyed protocols (§1–§6) records an approval of acceptance criteria as a mandate bound
+to an item, or settles on proofs checked against the principal's own trust roots.
+
 ## Sources
 
 - ACP: <https://agentclientprotocol.com/protocol/overview>; OpenClaw: <https://docs.openclaw.ai/tools/acp-agents.md>,
@@ -308,3 +358,9 @@ whisper).
 - LangGraph interrupts: <https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/>; OpenAI Agents SDK
   human-in-the-loop: <https://openai.github.io/openai-agents-python/human_in_the_loop/>; Temporal message passing:
   <https://docs.temporal.io/encyclopedia/workflow-message-passing>; HumanLayer: <https://pypi.org/project/humanlayer/>.
+- DECO: <https://arxiv.org/abs/1909.00938>; DIDO (on TLSNotary and DECO): <https://eprint.iacr.org/2023/1056>.
+- RFC 9901 (SD-JWT): <https://www.rfc-editor.org/rfc/rfc9901>; BBS signatures:
+  <https://datatracker.ietf.org/doc/draft-irtf-cfrg-bbs-signatures/>.
+- in-toto Attestation Framework: <https://github.com/in-toto/attestation/blob/main/spec/README.md>.
+- Proof-carrying code: Necula, G. C., POPL 1997. AI safety via debate: <https://arxiv.org/abs/1805.00899>.
+  Prover-verifier games: <https://arxiv.org/abs/2108.12099>, <https://arxiv.org/abs/2407.13692>.

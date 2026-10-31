@@ -1,10 +1,10 @@
-# Principal Handoff: Acts 0.3
+# Principal Handoff: Acts 0.4
 
 | | |
 |---|---|
 | Status | Draft |
-| Version | 0.3 (2026-10-27); formerly Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
-| Extension | `acts/0.3`, an extension of [Principal Handoff Core 0.3](../core/SPEC.md) |
+| Version | 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
+| Extension | `acts/0.4`, an extension of [Principal Handoff Core 0.4](../core/SPEC.md) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) (record schema in [`../core/schemas/`](../core/schemas/)) |
 | Conformance suite | [`conformance/`](conformance/) |
@@ -27,7 +27,7 @@ applies the principal side's settlements back to the document.
 5. [Markdown binding](#5-markdown-binding)
 6. [Key derivation](#6-key-derivation)
 7. [Record ids](#7-record-ids)
-8. [Mapping from 0.2](#8-mapping-from-02)
+8. [Mapping from 0.2 and changes from 0.3](#8-mapping-from-02-and-changes-from-03)
 9. [Conformance](#9-conformance)
 10. [Security considerations](#10-security-considerations)
 11. [Open issues](#11-open-issues)
@@ -76,15 +76,36 @@ stamps key markers, applies the principal side's settlements to the document, an
   been done before it was raised, or repeats an item already settled; the settlement SHOULD be accompanied by a
   `same_as` relation to that item).
 - **Claim outcomes:** `done`, `dropped`.
-- **Withdrawal reasons:** `not_needed`.
+- **Withdrawal reasons:** `not_needed`, and `replaced` (the requester raised the same act again under another key and
+  sent `replaced_by` to it, core §7).
 - **Withdrawn need, open settlement:** an act may be a commitment the principal has made to someone else, so a
   withdrawal never ends it. The principal side MUST keep the item open and SHOULD ask the principal whether to drop
   it; it ends only with a settlement. (Core §6.)
+- **Replaced acts:** an act withdrawn as `replaced`, whose single active `replaced_by` (core §7) targets an act the
+  principal side holds open (raised, not settled, not withdrawn), stays open but is shown together with its
+  replacement instead of being asked about separately. Once the replacement is settled, the principal side shows the
+  replaced act, its text beside the replacement's, with that settlement, and asks the principal to settle it, without
+  pre-selecting an outcome (core §9). In every other case the withdrawal is treated like any other. A replaced act is settled
+  only by the principal (kind `principal` or `confirmed`), never from the replacement's settlement.
+- **Approvals:** acts take none (core §5.3); `approved` is not in §3's table.
+- **Settling on proofs:** a claim of `done` MAY carry verifiable entries (core §5.2), for example a web proof from the
+  payee's invoice portal that invoice 2026-114 was paid. The principal side MAY adopt such a claim as `attested`
+  (core §7) with the results in `verified`, only for the outcomes `done` and `already_done`, and only if each entry it
+  relies on is `valid` and bound to the act: its verified content contains the act's `key`, its terms digest, or an
+  identifier (an invoice number, an order or payment reference) named in terms of the act that the principal has been
+  shown, since later terms are the requester's alone (core V4). The settlement's `terms_rev` is the claim's. Where the
+  format exposes the underlying fact (a transaction id), the principal side MUST NOT settle a second act on the same
+  fact without the principal (core V4). A proof never settles an act `dropped`. Proofs over the principal's own accounts (their bank, their mailbox) come only from
+  the principal side, never from an agent (core §13); an agent's proofs are over the other party's side or public
+  facts.
+- **Claims from the registrar** (§4 step 5: a vanished line, a ticked box) are never adopted as `attested` on that
+  basis alone: what happened to a line is not evidence that the work was done (core R4). The principal side settles such an act with the principal
+  (kind `principal` or `confirmed`), or `attested` on independent evidence.
 - **Keys** are assigned by the registrar (§6) or, outside the binding, by the requester.
 
 ## 3. Records
 
-Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.3"`.
+Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.4"`.
 
 | `type` | `origin` | Emitted by | Schema | Additional requirements |
 |---|---|---|---|---|
@@ -93,45 +114,93 @@ Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.3"`.
 | `withdrawn` | `requester` | as above | [`withdrawn`](schemas/withdrawn.schema.json) | `reason` |
 | `settled` | `principal` | the principal side | [`settled`](schemas/settled.schema.json) | `outcome` of §2, `authority`, `terms_rev` |
 | `reopened` | `principal` | the principal side | [`reopened`](schemas/reopened.schema.json) | `supersedes`, `restore_text` |
-| `claimed` | `agent`, `registrar`, `requester` | anyone else | [`claimed`](schemas/claimed.schema.json) | `outcome` of §2; `evidence.basis` |
-| `related` | `principal` (`same_as`), `requester` (`derived_from`) | | [`related`](schemas/related.schema.json) | `relation` |
+| `claimed` | `agent`, `registrar`, `requester` | anyone else | [`claimed`](schemas/claimed.schema.json) | `outcome` of §2; `evidence.basis`; `terms_rev` when it carries verifiable entries |
+| `related` | `principal` (`same_as`), `requester` (`derived_from`, `replaced_by`) | | [`related`](schemas/related.schema.json) | `relation` |
 | `note` | any | | [`note`](schemas/note.schema.json) | `about` |
 
 `restore_text` on `reopened` is a copy of the item's current terms text, so that a registrar without storage can
-re-add the line. It is not an amendment. Need records MUST list the item's current need record in `supersedes`
+re-add the line. It is not an amendment. `amended` and `withdrawn` MUST list the item's current need record in `supersedes`
 (core §6).
 
 ## 4. The registrar
 
 The registrar is the binding's only writer of key markers and the only component that applies records mechanically
-(core §8). It holds the project's requester role (core §1) for the records it raises. In one run over a project's
-document it SHOULD, in this order:
+(core §8). It holds the project's requester role (core §1) for the records it raises. It keeps, per project, the set
+of keys it raised from lines of the project's document, its **bound keys**, with each one's latest terms. A key
+becomes bound when the transport accepts its `raised`, and the registrar persists the set before it writes the
+document. Items a requester raised outside the binding are never bound, and steps 1 to 5 never touch them except to
+strike a line after a settlement the deployment delivered. A bound key is **active** when its item is neither settled
+nor withdrawn. The deployment MUST deliver to the registrar every need record and settlement-register record about a
+bound key, so that it knows which keys are active and their latest terms. The terms of a bound key change only
+through the document: agents MUST NOT send `amended` for it (they edit the line), and withdraw it through their
+transport; a withdrawn act is never amended again.
 
-1. **Apply** pending settlement records from the principal side: for a current `settled` (any outcome), strike every
-   line carrying the key (§5.5.2); for a current `reopened`, re-add the line from its `restore_text` if no line
-   carries the key (§5.5.3). A `settled` for a key that no line carries is consumed and changes nothing. Notes and
-   relations are delivered to the project (core §8), never applied to the document.
-2. **Relink** lines that lost their marker: for every raised key that is neither settled nor withdrawn and that no
-   line carries, if an unkeyed principal line's normalised text (§6.1) equals that key's latest terms, stamp the line
-   with that key (§5.5.1) instead of raising it. (An agent rewrote the line and dropped the marker.)
-3. **Raise** every remaining principal line without a key marker: derive its key (§6), send `raised` with
-   `terms_rev: 1`, and after the transport accepts it, stamp the line. If the send fails, it MUST NOT stamp. If
-   stamping fails, the next run re-derives the same key and re-sends the same record, which the principal side
-   discards as a duplicate.
-4. **Amend**: for every keyed line whose normalised text differs from the item's latest terms, send `amended` with the
-   new text, `terms_rev` increased by one, and the current need record in `supersedes`. An agent changes what it asks
-   by editing the text and keeping the marker.
-5. **Reconcile** raised keys that are neither settled nor withdrawn and that no line carries after step 2:
-   - if a line's text looks like a rewrite of the item's latest terms, the registrar MUST NOT send anything for the
-     key and SHOULD warn its operator. Beyond step 2's exact match, the similarity measure is implementation-defined;
+Terms used below (§5.4 defines *carries*):
+
+- A line **mentions** key `k` when `marker_pattern`, without its final `\s*$`, matches anywhere in the line with `k`
+  as group 1.
+- A key is **present** when some line of the document mentions it: a task line of any class, a malformed or task-like
+  line, an indented line, prose, a line in another section or in an ignored region (§5.2), or a line where text
+  follows the marker. A key that no line mentions has **vanished**.
+- A key's **holding lines** are the principal task lines of the first tasks section that carry it.
+
+In one run over a project's document a conforming registrar MUST do the following, in this order:
+
+0. **Read.** If the document is incomplete (an unclosed fence or comment, §5.2), the registrar sends nothing, writes
+   nothing and warns its operator.
+1. **Apply** pending settlement records from the principal side, notes and relations excepted (they are delivered to
+   the project, core §8, never applied to the document):
+   - for a current `settled` (any outcome): if the key is bound and the settlement is stale against the registrar's
+     latest terms, or a holding line's normalised text differs from them, the registrar does not strike; it sends the
+     `amended` of step 4 if the line's text differs and the act is not withdrawn (the settlement becomes stale, core
+     §6, and the principal side presents it again), and SHOULD warn its operator. Otherwise it strikes the key
+     (§5.5.2). A `settled` for a key no line carries is consumed and changes nothing;
+   - for a current `reopened` of a bound key that has no holding line: re-add the line (§5.5.3) from the latest terms
+     the registrar holds, or from the record's `restore_text` only if it holds none.
+2. **Relink** lines that lost their marker: for every active bound key that has vanished, if exactly one principal task
+   line of the first tasks section that carries no key, or carries a key that is not bound, has a normalised text
+   (§6.1) equal to that key's latest terms, and that text matches no other vanished key, stamp the line with that key
+   (§5.5.1) instead of raising it. (An agent rewrote the line and dropped or broke the marker.) If the match is not one
+   to one, the registrar relinks none of those lines and keys, and SHOULD warn its operator.
+3. **Raise** every remaining principal task line of the first tasks section that carries no key, or carries a key that
+   is not bound (copied from elsewhere, or mistyped), and mentions no key: derive its key (§6) from the text, send
+   `raised` with `terms_rev: 1` and the normalised text (§6.1) as `terms.text`, and after the transport accepts it,
+   stamp the line, replacing any marker it had. If the send fails, it MUST NOT stamp. If stamping fails, the next run
+   re-derives the same key and re-sends the same record, which the principal side discards as a duplicate. The
+   registrar does not raise, and SHOULD report: a line that mentions a key without carrying it (text after the marker);
+   a line whose derived key is already bound (the text repeats a settled or withdrawn act, or an active act's earlier
+   text, §11), for which it MUST warn its operator; and a line whose normalised text equals that of an earlier line in
+   the same run, which it leaves for the next run. Principal task lines in later tasks sections are not raised.
+4. **Amend**: for every active bound key, if its holding lines all have one normalised text and it differs from the
+   item's latest terms, send `amended` with that text, `terms_rev` increased by one, and the current need record in
+   `supersedes`. An agent changes what it asks by editing the text and keeping the marker. If the holding lines have
+   different normalised texts (the marker may have been copied), the registrar sends nothing for the key and SHOULD
+   warn its operator.
+5. **Reconcile** every active bound key that has no holding line, in this order:
+   - if a ticked line (`- [x]` or `- [X]`) of a tasks section, outside ignored regions, carries the key and its label
+     (§5.5.2), or without a label its group, is the principal's, the registrar SHOULD send a `claimed` with
+     `outcome: "done"` and `evidence.basis` saying the box was ticked (agents remove lines instead of ticking them,
+     §5.3, so a ticked box most likely means done);
+   - else, if the key is present (it is **displaced**: relabelled to another class, moved to another section,
+     reformatted, archived), the registrar MUST NOT send a claim and MUST NOT relink, and SHOULD warn its operator and
+     send a `note` about the item, once per open period (§7), saying where the marker now is, so that the principal
+     side shows it. A relabelled line is not a withdrawal: the registrar reads no intent from it, and an agent that no
+     longer needs an act withdraws it through its transport;
+   - else (the key has vanished), if a line's text looks like a rewrite of the item's latest terms, the registrar
+     SHOULD NOT send anything for the key and SHOULD warn its operator. The similarity measure is
+     implementation-defined, but at least covers equal normalised texts;
    - otherwise it SHOULD send a `claimed` with `outcome: "done"` and `evidence.basis` saying why it believes the work
      is done (for example the change that removed the line and its stated reason). A vanished line is never a
-     withdrawal: a deletion carries no intent the registrar can read. At most one such claim per key per open period
-     (§7). A withdrawn act whose line is deleted gets no claim: its requester already said it no longer needs it.
+     withdrawal: a deletion carries no intent the registrar can read.
+
+   At most one claim per key per open period (§7). A withdrawn act gets no claim: its requester already said it no
+   longer needs it. A principal task line carrying a bound key that is not active SHOULD be reported.
 6. Write the document once, and acknowledge applied records only after the write is durable (for example committed).
 
 Agents that saw the principal do the work (for example in a session where the principal says "I paid it") send a
-`claimed`; an agent that no longer needs an act sends `withdrawn` through its transport, outside the document.
+`claimed`; an agent that no longer needs an act sends `withdrawn` through its transport, outside the document; an
+agent that raises the same act again under another key sends `replaced_by` and then `withdrawn` with
+`reason: "replaced"`.
 
 Invariants:
 
@@ -141,7 +210,7 @@ Invariants:
 - **I3 — Idempotence.** Running the registrar twice over the same document and records MUST change nothing and send
   nothing the second time.
 - **I4 — Lines outside the protocol are preserved.** The registrar changes only the lines §5.5 tells it to stamp,
-  strike or add, and the placeholder.
+  strike or add, and the placeholder, and never a line inside an ignored region.
 - **I5 — Keys are opaque** to everyone but the registrar that derived them.
 
 ## 5. Markdown binding
@@ -168,29 +237,63 @@ A profile MAY itself have parameters (for example, the principal's tag in §5.7)
 configuration. Machine-readable definitions of both profiles below are in
 [`conformance/profiles.json`](conformance/profiles.json).
 
-Notation used below: `O` and `C` are `label_open` and `label_close`; `L` is any of the three labels; regex fragments
-use the common subset of PCRE, Python `re` and ECMAScript.
+Notation used below: `O` and `C` are `label_open` and `label_close`, and `L` is any of the three labels, each
+regex-escaped where it appears in a pattern; `[^C]` is a character class excluding `C`, written with `C` escaped
+(`[^\]]` in the `en` profile). Regex fragments use the common subset of PCRE, Python `re` and ECMAScript.
 
-### 5.2 The tasks section
+### 5.2 Ignored regions and tasks sections
 
-The tasks section is the body following the first line that equals `heading` (ignoring trailing whitespace), up to
-but not including the next line that begins with `# ` or `## `, or the end of the document. A document without such
-a line has no tasks section and therefore no tasks.
+Before anything else, readers find the document's **ignored regions** in one pass from the top, following a subset of
+CommonMark's rules; while one region is open, the opening of the other kind is not recognised:
+
+- A **fenced code block** opens with a line of zero to three spaces followed by at least three backticks or at least
+  three tildes (a line of backticks is an opening fence only if the rest of the line contains no backtick), and closes
+  with the next line of zero to three spaces followed by at least as many of the same character and then only
+  whitespace. The opening and closing
+  lines and everything between them are ignored.
+- An **HTML comment block** opens with a line of zero to three spaces followed by `<!--`, and closes with the first line,
+  from that one on, that contains `-->`. Those lines are ignored.
+- A document that ends inside an open block is **incomplete**. Readers MUST report it, and the registrar does nothing
+  with it (§4 step 0).
+
+Ignored lines are never headings, tasks or problems, and nothing writes to them; a key marker in one still counts as
+present (§4), so that a line a 0.3 registrar stamped inside what 0.4 ignores does not read as vanished.
+
+Every line outside ignored regions that equals `heading` (ignoring trailing whitespace) starts a **tasks section**: the
+body following it, up to but not including the next line outside ignored regions that is an ATX heading of level 1 or
+2 (`#` or `##` followed by a space, a tab or the end of the line; it may itself start another tasks section), or the
+end of the document. Setext headings are not recognised. A document without such a line has no
+tasks section and therefore no tasks. Readers MUST read every tasks section, and SHOULD report every tasks heading
+after the first as a format problem: the registrar raises new acts only from the first (§4 step 3), so that sections
+kept as an archive do not become new requests.
 
 ### 5.3 Line classification
 
-Readers MUST classify each line of the tasks section, in order, with trailing whitespace removed, as follows. A
-*current group* starts empty at the top of the section.
+Readers MUST classify each line of each tasks section that is outside ignored regions, in order, with trailing
+whitespace removed, as follows. A *current group* starts empty at the top of each section. In this binding,
+*whitespace* and `\s` mean the characters with the Unicode property White_Space (which includes U+3000); an engine
+whose `\s` differs uses that class instead.
+
+*Links.* When `label_open` is `[` and `label_close` is `]`, a bracketed span immediately followed by `(` is the text of
+an inline Markdown link, never a label: `[owner](https://…)` is not the label `owner`. Below, `X` stands for `(?!\()`
+in such a profile and for nothing in any other. Only inline links are recognised: `[owner][ref]` and a bare `[owner]`
+are read as labels even where a reference definition exists.
 
 1. **Group heading**: matches `^#{3,4}\s*O([^C]+)C\s*$`. If the captured text is one of the labels, the current group
-   becomes that assignee class; otherwise the current group becomes *unknown*. Group headings are not tasks.
-2. Lines that do not begin with `- [ ]`, `- [x]` or `- [X]` followed by whitespace or end of line are **ignored**:
-   blank lines, the placeholder, prose, block quotes, other headings, and indented lines (continuations, sub-lists).
-   Ignored lines do not change the current group.
-3. **Labelled item**: matches `^- \[ \] O(L)C\s*(.+)$`. Assignee class from the label; body = group 2. A labelled
+   becomes that assignee class; otherwise the current group becomes *unknown*. Group headings are not tasks. Any other
+   heading line (`#` to `######` followed by whitespace or the end of the line) also makes the current group
+   *unknown*, so that tasks under an unrelated heading are not read as a group's.
+2. Lines that do not begin with `- [ ]`, `- [x]` or `- [X]` followed by whitespace or end of line are not task lines.
+   Among them, a **task-like line** looks like a task but is not one: a list line with a checkbox,
+   `^([-*+]|[0-9]{1,9}[.)])[ \t]+\[[ xX]\]` (`* [ ] Sign`, `-  [ ] Sign`, `1. [ ] Sign`, `- [ ][owner] Pay`), or a
+   list line with a label, `^([-*+]|[0-9]{1,9}[.)])[ \t]+O(L)CX` (`- [owner] Pay`, `1. [owner] Pay`, `- 〔Owner〕續約`).
+   Readers MUST NOT treat it as a task and SHOULD report it. All other such lines are **ignored**: blank lines, the placeholder,
+   prose, block quotes, and indented lines (continuations, sub-lists). Ignored lines do not change the current group.
+3. **Labelled item**: matches `^- \[ \][ \t]+O(L)CX\s*(.+)$`. Assignee class from the label; body = group 2. A labelled
    item's own label wins over the current group.
-4. **Grouped item**: matches `^- \[ \] (?!O)(.+)$` while the current group is an assignee class. Assignee class
-   from the group; body = group 1.
+4. **Grouped item**, while the current group is an assignee class: matches `^- \[ \][ \t]+(?!O[^C]*CX)(.+)$` in a
+   profile whose brackets are `[` and `]`, and `^- \[ \][ \t]+(?!O)(.+)$` in any other. Assignee class from the group;
+   body = group 1.
 5. Any other checkbox line is **malformed**: a checked box (`- [x]`, which agents MUST remove instead of ticking), an
    unknown label, an empty body, or an unlabelled item outside a known group. Readers MUST NOT treat a malformed line
    as a task and SHOULD report it so a person or agent can fix it.
@@ -207,20 +310,29 @@ and models naturally write it.
 
 The key marker is `marker_render` with `{key}` replaced by the key, appended to the end of the task line. Because
 `marker_pattern` is anchored at the end of the line, a marker-like string elsewhere in the text is part of the text,
-not a key.
+not a key. A line of any kind *carries* a key when `marker_pattern`, searched in the line with trailing whitespace
+removed, matches with that key as group 1.
 
 ### 5.5 Writing rules for the registrar
 
 #### 5.5.1 Stamping
 
-To stamp a line with key `k`, the registrar removes trailing whitespace from the line and appends the rendered marker
-for `k`. Nothing else on the line changes.
+To stamp a line with key `k`, the registrar removes trailing whitespace from the line, removes the key marker it
+carries if any, removes trailing whitespace again, and appends the rendered marker for `k`. Nothing else on the line
+changes.
 
 #### 5.5.2 Striking
 
-To strike key `k`, the registrar deletes every checkbox line in the tasks section whose key is `k`. If at least one
-line was deleted and the section body then contains only blank lines, the registrar MUST insert `placeholder` as the
-first line of the body. (A body that still holds, say, an empty group heading is not empty.)
+A line's **label** is the first `O(L)C` that follows its list marker and optional checkbox, with only whitespace in
+between (`X` applying); a line without one takes its group (§5.3). A line's **text** is what remains after the list
+marker, the checkbox, the label and the key marker are removed, trimmed.
+
+To strike key `k`, the registrar deletes every line of every tasks section, outside ignored regions, that carries
+`k`, is the principal's (a principal task line, or a malformed or task-like line whose label is the principal's), and
+whose normalised text equals `k`'s latest terms (for a key that is not bound, whatever its text). Other lines that carry `k` (an agent took the work over, the marker
+was copied onto another task) are kept and SHOULD be reported. For each section in which it deleted a line and whose body then contains only blank lines, it
+MUST insert `placeholder` as the first line of that body. (A body that still holds, say, an empty group heading or a
+fenced block is not empty.) A line carrying `k` outside the tasks sections is left alone and SHOULD be reported.
 
 #### 5.5.3 Re-adding
 
@@ -229,8 +341,8 @@ To re-add key `k` with text `t`, the registrar builds the line
 (normalisation as in §6.1), and:
 
 - if there is no tasks section, appends a blank line, `heading`, a blank line and the new line to the document;
-- else if the only non-blank line of the body is `placeholder`, replaces it with the new line;
-- else inserts the new line after the last non-blank line of the body (or as the first body line if the body is
+- else, in the first tasks section: if the only non-blank line of its body is `placeholder`, replaces it with the new
+  line; else inserts the new line after the last non-blank line of the body (or as the first body line if the body is
   blank).
 
 Blank lines are not significant: conformance compares documents as their sequences of non-blank lines (§9).
@@ -251,7 +363,7 @@ Blank lines are not significant: conformance compares documents as their sequenc
 ## Tasks
 
 - [ ] [owner] Renew the domain before it expires (waiting on owner: task-demo-37863bc42c)
-- [ ] [owner] Approve the logo direction
+- [ ] [owner] Pay the logo designer's invoice
 - [ ] [agent] Add retries to the uploader
 - [ ] [undecided] Postgres or SQLite for the cache?
 
@@ -259,13 +371,15 @@ Blank lines are not significant: conformance compares documents as their sequenc
 - [ ] Sign the hosting contract
 ```
 
-In the grouped form, a task text cannot begin with `[` (it would read as a label); use the labelled form for such
-text.
+In the grouped form, a task text cannot begin with a bracketed span `[…]` (it would read as a label) unless the span is
+an inline link `[…](…)`; use the labelled form for such text.
 
 ### 5.7 Reference deployment profile (`zh-hant`)
 
 The reference deployment writes its state documents in Traditional Chinese. Its profile has one parameter,
-`principal_tag`, the short name the principal is known by in task lines (the conformance suite uses `Owner`).
+`principal_tag`, the short name the principal is known by in task lines (the conformance suite uses `Owner`). It
+contains no whitespace, parentheses of either width, colons of either width, or `〔` and `〕`, so that rendered
+markers and labels parse back.
 
 | Parameter | Value |
 |---|---|
@@ -301,6 +415,9 @@ The reference deployment writes its state documents in Traditional Chinese. Its 
   whitespace.
 - Keys MUST be unique among all items a registrar raises for one principal side; including the project name in the
   derivation is the simplest way to achieve this across projects.
+- A deployment fixes a prefix for the keys its registrar derives (the recipe in §6.2 uses `task-`) and tells its
+  requesters. Keys a requester assigns outside the binding MUST NOT begin with it, so that they never collide with a
+  registrar's keys.
 - A registrar MUST NOT change its derivation while keys derived the old way are still open, or MUST keep recognising
   the old keys until they are resolved.
 
@@ -312,7 +429,8 @@ The reference deployment derives
 key = "task-" + project + "-" + hex(sha1(utf8(normalise(text))))[0:10]
 ```
 
-with lowercase hex. In Python, `" ".join(text.split())` performs the normalisation of §6.1 for all practical text.
+with lowercase hex, for project names that match `^[A-Za-z0-9._-]{1,100}$`; a deployment with other project names
+uses another recipe (for example a hash of the project name). In Python, `" ".join(text.split())` performs the normalisation of §6.1 for all practical text.
 [`conformance/keys.json`](conformance/keys.json) holds vectors for this recipe; implementations that use another
 recipe skip that file. SHA-1 is used only as a cheap, stable fingerprint, not for security; ten hex digits make an
 accidental collision within one project negligible.
@@ -323,21 +441,34 @@ Ids carry a type prefix and a colon, which keys cannot contain (§6.1), so ids o
 
 - `raised`: `r:<key>`, so that a crashed registrar re-sends the same id.
 - `amended`: `a:<key>:<terms_rev>`.
-- A registrar's `claimed` for a vanished key: `c:<key>:r<n>`, where *n* is the number of `reopened` records the
-  registrar has applied for the key (0 before the first). A task that vanishes again after being reopened thus gets a
-  new claim.
+- A registrar's `claimed` for a vanished key or a ticked box: `c:<key>:r<n>`, where *n* is the number of distinct
+  `reopened` records the registrar holds for the key (0 before the first). A task that vanishes again after being
+  reopened thus gets a new claim. An *open period* (§4) is the time from the raise, or from a reopening, to the next
+  reopening.
+- A registrar's `note` for a displaced key (§4 step 5): `d:<key>:r<n>`, with *n* as above.
 - Other records: any id unique per core §10.
 
-## 8. Mapping from 0.2
+## 8. Mapping from 0.2 and changes from 0.3
 
-| Tasks 0.2 event | Acts 0.3 record |
+| Tasks 0.2 event | Acts 0.4 record |
 |---|---|
 | `registered` (registrar), id = key | `raised`, origin `requester`, sent by the registrar, id `r:<key>`, `terms_rev: 1` |
-| `done`, `dropped`, `already_done` (principal) | `settled` with that `outcome`; `authority.kind` `principal`, or `delegated`/`attested` where 0.2 had `decided_by: assistant` |
+| `done`, `dropped`, `already_done` (principal) | `settled` with that `outcome`; `authority.kind` `principal`, or, where 0.2 had `decided_by: assistant`, `attested` with `evidence.basis` naming the 0.2 event (`delegated` only where the mandate is known, with `under` and `chain`) |
 | `reopened` (principal) | `reopened` superseding the settlement; 0.2's `text` becomes `restore_text` |
 | `done`, `dropped` (agent) | `claimed` with that `outcome` |
 | inferred `done` (registrar), id `done-<key>` | `claimed`, origin `registrar`, `outcome: "done"`, `evidence.basis`, id `c:<key>:r0` |
 | a resolution's `note` | the settlement's `note`, delivered to the project |
+
+Changes from 0.3 (a 0.3 record is converted by changing `ph` and `ext`; nothing else changes meaning):
+
+- records carry `ph: "0.4"` and `ext: "acts/0.4"`; claims may carry verifiable entries, adopted only as §2 allows;
+- the withdrawal reason `replaced` and the `replaced_by` relation, with §2's policy;
+- the registrar works only on bound keys (§4), counts a key as present wherever its marker is (§4), claims a ticked
+  principal box, notes a displaced key, and raises only from the first tasks section;
+- the binding ignores fenced code and HTML comments, reads every tasks section (§5.2), recognises inline Markdown links
+  and reports labelled lines without a checkbox (§5.3), and accepts any run of spaces or tabs after the checkbox.
+
+The 0.4 rules keep every line a 0.3 registrar stamped present, whatever 0.4's classification of it (§4).
 
 ## 9. Conformance
 
@@ -345,7 +476,8 @@ Ids carry a type prefix and a colon, which keys cannot contain (§6.1), so ids o
 
 - A **conforming reader** parses tasks sections as in §5.2–§5.4 for the profiles it claims.
 - A **conforming registrar** is a conforming reader and implements §4–§7.
-- A **conforming principal side** for acts follows core §12 and the withdrawn-need policy of §2.
+- A **conforming principal side** for acts follows core §12 and §2: the withdrawn-need and replaced-act policies, and
+  the limits on settling from proofs and from registrar claims.
 
 ### 9.2 Conformance suite
 
@@ -354,13 +486,13 @@ Ids carry a type prefix and a colon, which keys cannot contain (§6.1), so ids o
 | File | Exercises |
 |---|---|
 | `profiles.json` | the `en` and `zh-hant` profiles |
-| `parse.json` | §5.2–§5.4: document → task lines and malformed lines |
+| `parse.json` | §5.2–§5.4: document → tasks sections, task lines, lines to report, and whether it is incomplete |
 | `keys.json` | §6.2 example recipe (only for implementations that use it) |
-| `relink.json` | §4 step 2: document + vanished open keys → re-stamped document |
-| `register.json` | §4 step 3 and §5.5.1: document → stamped document and `raised` records |
-| `amend.json` | §4 step 4: document with edited keyed lines + latest terms → `amended` records |
+| `relink.json` | §4 step 2: document + vanished active keys + bound keys → re-stamped document |
+| `register.json` | §4 step 3 and §5.5.1: document + bound keys → stamped document and `raised` records |
+| `amend.json` | §4 step 4: document with edited keyed lines + latest terms → `amended` records, or keys to warn about |
 | `apply.json` | §4 step 1, I2, §5.5.2–§5.5.3: document + record → document |
-| `reconcile.json` | §4 step 5: document + open keys → claims or warnings |
+| `reconcile.json` | §4 step 5: document + active keys + bound keys → claims, notes or warnings |
 | `records.json` | §3: record → schema it validates against, or invalid |
 | `lifecycle.json` | core §6 and §2's keep policy: the records one receiver holds for one act → its state |
 
@@ -373,15 +505,19 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 - **Forged settlements change documents.** A forged `settled` makes the registrar delete a line; a forged `reopened`
   makes it add one with attacker-chosen `restore_text` that agents will later read. Registrars MUST accept settlements
   only from the principal side. Keeping state documents under version control makes any wrong strike recoverable.
+- **Proofs of payment** can disclose the principal's accounts and spending. §2 limits who makes them and what they may
+  settle; core §5.2 and §13 keep proofs about the principal with the principal side.
 - **Keys leak a little.** A key derived as in §6.2 reveals the project name and a short hash of the text. Use a keyed
   hash (HMAC with a registrar secret) if keys are visible to parties that must not learn task contents.
 
 ## 11. Open issues
 
-- **Re-declaring a settled act.** A new line whose text equals that of an already-settled act derives the same key,
-  and its `raised` is discarded as a duplicate. Until a later version addresses this (for example with a
-  registrar-held generation in the derivation), agents SHOULD make re-declared texts distinct, and registrars SHOULD
-  warn when a new line derives a key that is already settled.
+- **Re-declaring a settled act.** A new line whose text equals that of an already-settled act derives the same key.
+  Until a later version addresses this (for example with a registrar-held generation in the derivation), agents
+  SHOULD make re-declared texts distinct, and the registrar neither raises nor stamps such a line and MUST warn its
+  operator (§4 step 3).
+- **A `principal_tag` for the `en` profile.** The `zh-hant` profile names the principal by a parameter; the `en`
+  profile's label and marker are fixed (`owner`). Whether `en` should take the same parameter is undecided.
 - **Due dates in Markdown.** `terms.due` has no Markdown syntax yet.
 - **Transport bindings.** No binding to a specific transport (HTTPS webhooks, A2A, MCP) is defined yet.
 
@@ -391,8 +527,12 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 
 | Implementation | Roles | Profiles | Status |
 |---|---|---|---|
-| [`../reference/`](../reference/) in this repository | reader, registrar logic (no transport) | `en`, `zh-hant` | passes the conformance suite |
-| agent-hub (to be published) | registrar, requesters; its personal assistant is the principal side | `zh-hant` | the reference deployment this document is generalised from; implements HTH 0.1, not yet 0.3 |
+| [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state (no transport) | `en`, `zh-hant` | passes the 0.4 conformance suites |
+| agent-hub (to be published) | registrar and requesters for Acts; requesters for Decisions | `zh-hant` | the reference deployment this document is generalised from; implements Acts 0.3 and Decisions 0.3, and runs the 0.3 binding fixtures (`parse`, `keys`, `register`, `relink`, `amend`, `apply`, `reconcile`), not `records` or `lifecycle` |
+| Muninn, with agent-hub's built-in owner side | principal side | | implements the principal side of 0.3 |
+
+The reference deployment has two implementations acting as its principal side; core §5.3 requires them to share one
+approval store, or to leave approvals to one of them, before either relies on approvals.
 
 ## Appendix A: Worked example
 
@@ -409,7 +549,7 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 2. That night the registrar derives `task-demo-c3d8af57d4`, sends
 
    ```json
-   {"ph": "0.3", "ext": "acts/0.3", "id": "r:task-demo-c3d8af57d4", "type": "raised", "origin": "requester",
+   {"ph": "0.4", "ext": "acts/0.4", "id": "r:task-demo-c3d8af57d4", "type": "raised", "origin": "requester",
     "by": "registrar:demo", "key": "task-demo-c3d8af57d4", "project": "demo", "ts": "2026-10-27T02:10:00Z",
     "terms": {"text": "Renew the domain"}, "terms_rev": 1}
    ```
@@ -419,7 +559,7 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 3. The principal renews the domain and ticks it off in their assistant, which sends
 
    ```json
-   {"ph": "0.3", "ext": "acts/0.3", "id": "s-81f2", "type": "settled", "origin": "principal", "by": "ps:assistant",
+   {"ph": "0.4", "ext": "acts/0.4", "id": "s-81f2", "type": "settled", "origin": "principal", "by": "ps:assistant",
     "key": "task-demo-c3d8af57d4", "project": "demo", "ts": "2026-10-28T08:30:00Z", "terms_rev": 1,
     "outcome": "done", "authority": {"kind": "principal", "decider": "p:owner"}}
    ```
@@ -434,7 +574,7 @@ anything.
 
 *Non-normative.* The reference deployment uses its own message names on an internal event bus:
 
-| Reference deployment | Acts 0.3 |
+| Reference deployment | Acts 0.4 |
 |---|---|
 | message type `task` sent to the principal, with a fixed id equal to the key | `raised` (`id` = `r:<key>`) |
 | principal-side handoff with `effect` `done` / `dropped` / `already_done` | `settled` with that `outcome` |

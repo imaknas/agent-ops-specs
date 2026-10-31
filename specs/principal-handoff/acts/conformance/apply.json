@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.3",
+  "suite": "acts/0.4",
   "description": "Registrar step 1: document + one record -> document. Only principal-side settled/reopened change it (I2).",
   "cases": [
     {
@@ -28,8 +28,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -39,6 +39,7 @@
         "by": "ps:assistant",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -69,8 +70,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "dropped-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -80,6 +81,7 @@
         "by": "ps:assistant",
         "outcome": "dropped",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -103,8 +105,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "already_done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -114,6 +116,7 @@
         "by": "ps:assistant",
         "outcome": "already_done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -136,8 +139,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -147,6 +150,7 @@
         "by": "ps:assistant",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -180,8 +184,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "done-task-demo-bbbbbbbbbb",
         "key": "task-demo-bbbbbbbbbb",
         "project": "demo",
@@ -191,6 +195,7 @@
         "by": "ps:assistant",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -224,8 +229,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -266,8 +271,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -308,8 +313,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -348,8 +353,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -385,8 +390,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "reopened-task-demo-bbbbbbbbbb",
         "key": "task-demo-bbbbbbbbbb",
         "project": "demo",
@@ -421,8 +426,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -454,8 +459,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -465,6 +470,7 @@
         "by": "ps:assistant",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -487,8 +493,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -498,6 +504,7 @@
         "by": "ps:assistant",
         "outcome": "done",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -524,8 +531,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "dropped-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -535,6 +542,7 @@
         "by": "ps:assistant",
         "outcome": "dropped",
         "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
         "authority": {
           "kind": "principal",
           "decider": "p:owner"
@@ -563,8 +571,8 @@
         ]
       },
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -587,8 +595,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "w1",
         "type": "withdrawn",
         "origin": "requester",
@@ -619,8 +627,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.3",
-        "ext": "acts/0.3",
+        "ph": "0.4",
+        "ext": "acts/0.4",
         "id": "n1",
         "type": "note",
         "origin": "principal",
@@ -638,6 +646,473 @@
         "document": [
           "## Tasks",
           "",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
+        ]
+      }
+    },
+    {
+      "id": "en-done-strikes-in-every-section",
+      "profile": "en",
+      "document": [
+        "# Demo",
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "## Notes",
+        "Prose.",
+        "## Tasks",
+        "- [ ] [agent] Add retries",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "expect": {
+        "changed": true,
+        "document": [
+          "# Demo",
+          "## Tasks",
+          "- (none)",
+          "## Notes",
+          "Prose.",
+          "## Tasks",
+          "- [ ] [agent] Add retries"
+        ]
+      }
+    },
+    {
+      "id": "en-done-two-sections-emptied",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "expect": {
+        "changed": true,
+        "document": [
+          "## Tasks",
+          "- (none)",
+          "## Tasks",
+          "- (none)"
+        ]
+      }
+    },
+    {
+      "id": "en-reopened-uses-first-section",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [agent] Add retries",
+        "## Notes",
+        "Prose.",
+        "## Tasks",
+        "- [ ] [agent] Write docs"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "o-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-29T08:30:00Z",
+        "type": "reopened",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "supersedes": [
+          "s-81f2"
+        ],
+        "restore_text": "Renew the domain"
+      },
+      "expect": {
+        "changed": true,
+        "document": [
+          "## Tasks",
+          "- [ ] [agent] Add retries",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+          "## Notes",
+          "Prose.",
+          "## Tasks",
+          "- [ ] [agent] Write docs"
+        ]
+      }
+    },
+    {
+      "id": "stale-settlement-not-struck",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "latest": {
+        "text": "Renew the domain for two years",
+        "terms_rev": 2
+      },
+      "expect": {
+        "changed": false,
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
+        ]
+      }
+    },
+    {
+      "id": "edited-line-not-struck",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1
+      },
+      "expect": {
+        "changed": false,
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
+        ]
+      }
+    },
+    {
+      "id": "copied-marker-not-struck",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "- [ ] [agent] Write docs",
+        "### [owner]",
+        "- [ ] Sign the contract (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1
+      },
+      "expect": {
+        "changed": false,
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+          "- [ ] [agent] Write docs",
+          "### [owner]",
+          "- [ ] Sign the contract (waiting on owner: task-demo-aaaaaaaaaa)"
+        ]
+      }
+    },
+    {
+      "id": "agent-line-kept",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "- [ ] [agent] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1
+      },
+      "expect": {
+        "changed": true,
+        "document": [
+          "## Tasks",
+          "- [ ] [agent] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
+        ]
+      }
+    },
+    {
+      "id": "ticked-principal-line-struck",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [x] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "- [ ] [agent] Other"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1
+      },
+      "expect": {
+        "changed": true,
+        "document": [
+          "## Tasks",
+          "- [ ] [agent] Other"
+        ]
+      }
+    },
+    {
+      "id": "fenced-line-untouched",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "```",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "```"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1
+      },
+      "expect": {
+        "changed": true,
+        "document": [
+          "## Tasks",
+          "```",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+          "```"
+        ]
+      }
+    },
+    {
+      "id": "incomplete-untouched",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+        "```"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "s-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T08:30:00Z",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1
+      },
+      "expect": {
+        "changed": false,
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+          "```"
+        ]
+      }
+    },
+    {
+      "id": "reopened-from-latest-terms",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- (none)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "o-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-29T08:30:00Z",
+        "type": "reopened",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "supersedes": [
+          "s-81f2"
+        ],
+        "restore_text": "Renew the domain"
+      },
+      "latest": {
+        "text": "Renew the domain for two years",
+        "terms_rev": 2
+      },
+      "expect": {
+        "changed": true,
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
+        ]
+      }
+    },
+    {
+      "id": "reopened-archived-readded",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [agent] Other",
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "record": {
+        "ph": "0.4",
+        "ext": "acts/0.4",
+        "id": "o-81f2",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-29T08:30:00Z",
+        "type": "reopened",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "supersedes": [
+          "s-81f2"
+        ],
+        "restore_text": "Renew the domain"
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1
+      },
+      "expect": {
+        "changed": true,
+        "document": [
+          "## Tasks",
+          "- [ ] [agent] Other",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+          "## Tasks",
           "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
         ]
       }
