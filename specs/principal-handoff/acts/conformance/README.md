@@ -32,8 +32,10 @@ JSON fixtures that any implementation of [Principal Handoff Acts](../SPEC.md) ca
 - `amend.json` (SPEC §4 step 4): `{id, profile, document, latest, expect: {amended, warn}}`; `latest` maps active keys
   to their latest terms text; `amended` is `[{key, text}]`, `warn` the keys whose holding lines disagree.
 - `apply.json` (SPEC §4 step 1, I2, §5.5.2–§5.5.3): `{id, profile, document, record, latest?, expect: {changed,
-  document}}`; `latest` is the registrar's `{text, terms_rev}` for a bound key, absent for a key it did not raise.
-  Only a principal-side `settled` (strike) or `reopened` (re-add) changes the document.
+  document}}`; `latest` is the registrar's `{text, terms_rev, terms_digest?}` for the key, absent when it holds no
+  terms for it (a key it did not raise, or one whose stored terms it lost). Only a principal-side `settled` (strike)
+  or `reopened` (re-add) changes the document; a settlement that is stale against `latest`, or whose holding lines
+  differ from it, strikes nothing.
 - `reconcile.json` (SPEC §4 step 5): `{id, profile, document, open, bound?, expect}`; `open` maps active keys to their
   latest terms text; `expect` is `[{key, action}]` with `action` one of `ticked` (claim done: a ticked principal box),
   `displaced` (marker still present elsewhere: note, no claim), `warn` (vanished, a line looks like a rewrite),
