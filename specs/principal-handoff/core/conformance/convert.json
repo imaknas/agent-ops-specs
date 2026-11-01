@@ -1,6 +1,6 @@
 {
   "suite": "core/0.5",
-  "description": "Core section 14 with the 0.4 <-> 0.5 conversion of Acts section 8, Decisions section 6 and Criteria section 10: record + target version + the records the converter holds about the item -> the converted record. A converter converts again at each fold, so a digest kept because its need record is not held yet is replaced once it is.",
+  "description": "Core section 14 with the 0.4 <-> 0.5 conversion of Acts section 6, Decisions section 6 and Criteria section 10: record + target version + the records the converter holds about the item -> the converted record. A converter converts again at each fold, so a digest kept because its need record is not held yet is replaced once it is.",
   "cases": [
     {
       "id": "need-record-up",

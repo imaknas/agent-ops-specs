@@ -12,7 +12,7 @@ record, ownership, authority and state rules of the core are exercised through e
   lowercase hex SHA-256 of `canonical`'s UTF-8 bytes. The cases cover member order, non-ASCII text, and characters
   JSON must escape (a newline, a quote, a tab, a backslash, U+001F) next to ones it must not (U+007F, `é`, and a
   character outside the Basic Multilingual Plane).
-- `convert.json` (SPEC §14, Acts §8, Decisions §6, Criteria §10): `{"suite": "core/0.5", "description", "cases": [{id,
+- `convert.json` (SPEC §14, Acts §6, Decisions §6, Criteria §10): `{"suite": "core/0.5", "description", "cases": [{id,
   record, to, held, expect}]}`. `record` is converted to version `to` (`"0.4"` or `"0.5"`) by a converter holding the
   records `held` about the item; `expect` is the converted record. A converter converts again at each fold, so a
   digest kept because the need record at the settlement's `terms_rev` is not held yet is replaced once it is. The

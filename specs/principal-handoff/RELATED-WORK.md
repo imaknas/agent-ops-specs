@@ -256,11 +256,12 @@ travels in the record, never as the A2A task id.
   deletion as completion with no confirmation, and nothing else infers completion.
 - **Reopening under the same identity.** Terminal states are final in MCP, A2A and CHAP, and iTIP attendees cannot
   reopen.
-- **Content-derived keys (Acts).** Every identifier surveyed is opaque and minted by a server or a caller. The Acts
-  extension's key lets a stateless registrar register idempotently. Since 0.3 the key is derived once, at stamping,
-  and then kept when the text is amended (Acts §6.1); the remaining cost is the re-declaration issue in Acts §11.
-- **The Markdown binding (Acts)**: tasks are declared in the document the project's agents already read, which stays
-  the record.
+- **Content-derived keys (Acts Markdown).** Every identifier surveyed is opaque and minted by a server or a caller.
+  The Acts Markdown binding's key lets a stateless registrar register idempotently. Since 0.3 the key is derived once,
+  at stamping, and then kept when the text is amended (Acts Markdown §4.1); the remaining cost is the re-declaration
+  issue in Acts Markdown §9.
+- **The Markdown binding (Acts Markdown)**: tasks are declared in the document the project's agents already read,
+  which stays the record.
 - **Answers that reach the project (Decisions)**, not the session that asked, which may be gone; a default that stays
   a working assumption (CHAP's whisper applies it on timeout instead); and a record of whether the principal or
   their assistant answered.

@@ -21,8 +21,8 @@ The core defines one model for every kind of item. Each item has two **registers
 **need**, owned by the agent that raised it, and the **settlement**, owned by the principal side. Every change is an
 append-only, attributable **record** that names who made it, under what **authority**, with what **evidence**.
 Assertions by anyone else are **claims**, which change nothing until the owner of the register records something. The
-**extensions** define the two kinds of item: [Acts](../acts/SPEC.md) (work only the principal can do, with a Markdown
-binding for a project's state document) and [Decisions](../decisions/SPEC.md) (answers and choices only the principal
+**extensions** define the two kinds of item: [Acts](../acts/SPEC.md) (work only the principal can do, with a
+[Markdown binding](../acts-markdown/SPEC.md) for a project's state document) and [Decisions](../decisions/SPEC.md) (answers and choices only the principal
 may make). Optional **modules** add features that never change an item's state: [Evidence](../evidence/SPEC.md)
 (independently verifiable proofs of facts) and [Criteria](../criteria/SPEC.md) (the principal's approval of a
 decision's acceptance criteria, so that a verifier may settle it).
@@ -72,9 +72,9 @@ tracker. It is an instrument, not a party with authority of its own: when it set
 as a delegate (§5). It is configured with exactly one principal identifier.
 
 **Requester**
-: The role of the agents acting for a project, including a registrar acting on their behalf (Acts). Any party the
-deployment authenticates as holding a project's requester role may emit need records for that project's items (§3).
-Which parties hold which roles is configured per deployment, like the principal identifier.
+: The role of the agents acting for a project, including a registrar acting on their behalf (Acts Markdown). Any
+party the deployment authenticates as holding a project's requester role may emit need records for that project's
+items (§3). Which parties hold which roles is configured per deployment, like the principal identifier.
 
 **Delegate**
 : Any agent or system that decides on the principal's behalf without the principal deciding or confirming,

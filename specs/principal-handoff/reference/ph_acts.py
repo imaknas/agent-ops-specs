@@ -1,4 +1,5 @@
-"""Reference registrar for Principal Handoff Acts 0.5, Markdown binding (acts/SPEC.md sections 4 to 6).
+"""Reference registrar for the Principal Handoff Acts Markdown binding 0.5 (acts-markdown/SPEC.md sections 2 to 4),
+and record validation and state for Acts 0.5 (acts/SPEC.md sections 2 and 3).
 
 Standard library only, Python >= 3.11.
 
@@ -12,7 +13,7 @@ Standard library only, Python >= 3.11.
                                                                                  closed for lines of inactive bound keys
   recipe_key(project, text)                  -> key                             the example key recipe (non-normative)
 
-`bound` is the set of keys the registrar itself raised from lines of this document (section 4); None means every key
+`bound` is the set of keys the registrar itself raised from lines of this document (section 2); None means every key
 the caller passes is bound. `known` is the set of keys outside the binding the registrar holds need records for (step 3:
 lines carrying one are neither raised nor relinked). `active` and `latest` map active bound keys to their latest terms text. Documents are plain
 strings. Line numbers are 0-based indexes into doc.split("\\n") (a final empty element produced by a trailing newline
@@ -75,7 +76,7 @@ class Profile:
 
     @property
     def _links(self) -> bool:
-        """Section 5.3: with [ and ] as brackets, a bracketed span followed by ( is a Markdown link, not a label."""
+        """Section 3.3: with [ and ] as brackets, a bracketed span followed by ( is a Markdown link, not a label."""
         return (self.label_open, self.label_close) == ("[", "]")
 
     @property
@@ -102,14 +103,14 @@ class Profile:
         return re.compile(rf"^{LIST}(?:\[[ xX]\]|{self._label})")
 
     def label_re(self) -> re.Pattern:
-        """Section 5.5.2: the label following a line's list marker and optional checkbox."""
+        """Section 3.5.2: the label following a line's list marker and optional checkbox."""
         return re.compile(rf"^{LIST}(?:\[[ xX]\][ \t]*)?{self._label}")
 
     def marker_re(self) -> re.Pattern:
         return re.compile(self.marker_pattern)
 
     def mention_re(self) -> re.Pattern:
-        """Section 4: marker_pattern without its final \\s*$, matched anywhere in a line."""
+        """Section 2: marker_pattern without its final \\s*$, matched anywhere in a line."""
         pat = self.marker_pattern
         for end in (r"\s*$", "$"):
             if pat.endswith(end):
@@ -134,12 +135,12 @@ def norm(text: str) -> str:
 
 
 def recipe_key(project: str, text: str) -> str:
-    """The reference deployment's key recipe (acts/SPEC.md section 6.2, non-normative)."""
+    """The reference deployment's key recipe (acts-markdown/SPEC.md section 4.2, non-normative)."""
     return f"task-{project}-{hashlib.sha1(norm(text).encode('utf-8')).hexdigest()[:10]}"
 
 
 def _eol(doc: str) -> str:
-    """Section 5.2: lines end with LF or CR LF; the registrar writes back the ending the document uses."""
+    """Section 3.2: lines end with LF or CR LF; the registrar writes back the ending the document uses."""
     return "\r\n" if "\r\n" in doc else "\n"
 
 
@@ -155,7 +156,7 @@ def _join(lines: list[str], eol: str = "\n") -> str:
 
 
 def _ignored(lines: list[str]) -> tuple[set[int], int | None]:
-    """Section 5.2: lines inside fenced code blocks and HTML comment blocks, found in one pass from the top, and the
+    """Section 3.2: lines inside fenced code blocks and HTML comment blocks, found in one pass from the top, and the
     line where an unclosed block opens (the document is then incomplete)."""
     out: set[int] = set()
     i = 0
@@ -179,7 +180,7 @@ def _ignored(lines: list[str]) -> tuple[set[int], int | None]:
 
 
 def _sections(lines: list[str], ignored: set[int], p: Profile) -> list[tuple[int, int]]:
-    """[start, end) of every tasks section body (heading line excluded), in document order (section 5.2)."""
+    """[start, end) of every tasks section body (heading line excluded), in document order (section 3.2)."""
     out = []
     for start, line in enumerate(lines):
         if start not in ignored and line.rstrip() == p.heading:
@@ -259,7 +260,7 @@ class _Doc:
         return self.key_of(self.lines[i].rstrip())[0]
 
     def text_of(self, line: str) -> str:
-        """Section 5.5.2: the line without list marker, checkbox, label and key marker."""
+        """Section 3.5.2: the line without list marker, checkbox, label and key marker."""
         p = self.p
         rest = re.sub(rf"^{LIST}(?:\[[ xX]\][ \t]*)?", "", line.rstrip())
         rest = re.sub(rf"^{p._label}", "", rest)
@@ -269,11 +270,11 @@ class _Doc:
         return [e for e in self.entries if e.kind == "task"]
 
     def holding(self, key: str) -> list[_Line]:
-        """Section 4: principal task lines of the first tasks section that carry the key."""
+        """Section 2: principal task lines of the first tasks section that carry the key."""
         return [e for e in self.tasks() if e.section == 0 and e.owner == "principal" and e.key == key]
 
     def mentions(self, key: str) -> bool:
-        """Section 4: some line of the document, wherever it is, mentions the key."""
+        """Section 2: some line of the document, wherever it is, mentions the key."""
         rx = self.p.mention_re()
         return any(m.group(1) == key for line in self.lines for m in rx.finditer(line))
 
@@ -321,7 +322,7 @@ def register(doc: str, project: str, p: Profile, bound: set | None = None, known
     """Step 3. Stamp every principal line of the first section that carries no key, or one neither bound nor known;
     return the new document, the items to send `raised` for, and the lines it did not raise and reports.
 
-    A real registrar sends each record before writing the stamp (acts/SPEC.md section 4); here both are returned.
+    A real registrar sends each record before writing the stamp (acts-markdown/SPEC.md section 2); here both are returned.
     """
     d = _Doc(doc, p)
     if d.unclosed is not None:

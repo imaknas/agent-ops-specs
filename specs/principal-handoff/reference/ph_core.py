@@ -314,7 +314,7 @@ def settlement_view(records: list[dict], e: Ext, cfg: Config) -> dict:
     return {k: state[k] for k in VIEW}
 
 
-# --- mixed versions (core section 14; the 0.4 <-> 0.5 conversion of Acts section 8, Decisions section 6, Criteria
+# --- mixed versions (core section 14; the 0.4 <-> 0.5 conversion of Acts section 6, Decisions section 6, Criteria
 # section 10)
 
 def convert(r: dict, version: str, records: list[dict]) -> dict:

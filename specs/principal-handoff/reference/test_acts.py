@@ -1,4 +1,5 @@
-"""Runs the Principal Handoff Acts 0.5 conformance suite against the reference implementation.
+"""Runs the Principal Handoff Acts 0.5 and Acts Markdown binding 0.5 conformance suites against the reference
+implementation.
 
     cd specs/principal-handoff/reference && python3 -m unittest -v
 """
@@ -13,15 +14,17 @@ from ph_core import VIEW, Config
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONF = ROOT / "acts" / "conformance"
-PROFILES = json.loads((CONF / "profiles.json").read_text())["profiles"]
+BINDING = ROOT / "acts-markdown" / "conformance"
+PROFILES = json.loads((BINDING / "profiles.json").read_text())["profiles"]
 
 
-def suite(name: str) -> dict:
-    return json.loads((CONF / name).read_text())
+def suite(name: str, conf: pathlib.Path = CONF) -> dict:
+    return json.loads((conf / name).read_text())
 
 
 def cases(name: str) -> list[dict]:
-    return suite(name)["cases"]
+    """The cases of a binding fixture."""
+    return suite(name, BINDING)["cases"]
 
 
 def doc(lines: list[str]) -> str:
@@ -39,7 +42,7 @@ def bound(c: dict) -> set | None:
 
 
 def known(c: dict) -> set:
-    """Keys outside the binding whose need records the registrar holds (section 4 step 3)."""
+    """Keys outside the binding whose need records the registrar holds (acts-markdown section 2 step 3)."""
     return set(c.get("known", []))
 
 

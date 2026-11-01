@@ -197,7 +197,7 @@ record's `origin`; V4's exception for reused proofs is now whatever a module lay
 the uses by Acts and Decisions (§5) moved here from those extensions. A proof whose content names a terms digest names
 it as the version it was made under computed it: a proof made under 0.4 names a 0.4 digest, which a verifier compares
 with the 0.4 digest of the need record. The members and their meaning are unchanged, so a record converts between 0.4
-and 0.5 as its extension says (Acts §8, Decisions §6).
+and 0.5 as its extension says (Acts §6, Decisions §6).
 
 ## 9. Relation to other specifications
 
