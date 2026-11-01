@@ -8,6 +8,7 @@
 | Schemas | [`schemas/`](schemas/) |
 | Conformance vectors | [`conformance/`](conformance/) |
 | Extensions | [Acts](../acts/SPEC.md) · [Decisions](../decisions/SPEC.md) |
+| Bindings | [Acts Markdown](../acts-markdown/SPEC.md) |
 | Modules | [Evidence](../evidence/SPEC.md) · [Criteria](../criteria/SPEC.md) |
 
 ## Abstract
@@ -21,11 +22,11 @@ The core defines one model for every kind of item. Each item has two **registers
 **need**, owned by the agent that raised it, and the **settlement**, owned by the principal side. Every change is an
 append-only, attributable **record** that names who made it, under what **authority**, with what **evidence**.
 Assertions by anyone else are **claims**, which change nothing until the owner of the register records something. The
-**extensions** define the two kinds of item: [Acts](../acts/SPEC.md) (work only the principal can do, with a
-[Markdown binding](../acts-markdown/SPEC.md) for a project's state document) and [Decisions](../decisions/SPEC.md) (answers and choices only the principal
-may make). Optional **modules** add features that never change an item's state: [Evidence](../evidence/SPEC.md)
-(independently verifiable proofs of facts) and [Criteria](../criteria/SPEC.md) (the principal's approval of a
-decision's acceptance criteria, so that a verifier may settle it).
+**extensions** define the two kinds of item: [Acts](../acts/SPEC.md) (work only the principal can do, with a [Markdown
+binding](../acts-markdown/SPEC.md) for a project's state document) and [Decisions](../decisions/SPEC.md) (answers and
+choices only the principal may make). Optional **modules** add features that never change an item's state:
+[Evidence](../evidence/SPEC.md) (independently verifiable proofs of facts) and [Criteria](../criteria/SPEC.md) (the
+principal's approval of a decision's acceptance criteria, so that a verifier may settle it).
 
 ## Table of contents
 
@@ -461,6 +462,9 @@ An extension document MUST define:
 7. any binding that applies records mechanically, and what it applies;
 8. its conformance classes and suite.
 
+An extension's binding MAY be a document of its own. Such a document has no `ext` value; it MUST name the
+extension it binds, define what it applies mechanically and to what, and define its conformance classes and suite.
+
 A **module** adds optional members, record types and rules to the extensions it names. It has no `ext` value: it is
 versioned with what it layers on, so a record's `ph` and `ext` also fix the version of every module whose content it
 carries. A module record type changes no register; it is valid only in an extension whose table lists its (`type`,
@@ -531,8 +535,8 @@ validates, deduplicates, folds the settlement register and finds the need regist
 ## 14. Versioning
 
 - `ph` carries the core version; `ext` carries each extension's name and version. Each extension version names the
-  core version it extends, so the pair is fixed. Before 1.0 the family is released together: core, extensions and
-  modules share one version number.
+  core version it extends, so the pair is fixed. Before 1.0 the family is released together: core, extensions,
+  bindings and modules share one version number.
 - Before 1.0, every version is its own contract: senders and receivers support exactly the versions they claim,
   except as **Mixed versions** below allows. From 1.0 on, adding optional members, record types or outcome values will
   be a minor change; removing or renaming a member, or changing the meaning of one, will require a new major version.

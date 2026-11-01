@@ -38,7 +38,9 @@ Appendix A: [Worked example](#appendix-a-worked-example)
 
 The key words in this document are to be interpreted as in the [core](../core/SPEC.md#1-conventions-and-terminology),
 which also defines *principal*, *principal side*, *requester*, *delegate*, *item*, *key*, *terms*, *record*, *claim*,
-*relation* and *note*; [Acts](../acts/SPEC.md#1-conventions-and-terminology) defines *act*. This binding adds:
+*relation* and *note*; [Acts](../acts/SPEC.md#1-conventions-and-terminology) defines *act*. This binding is normative
+for implementations that declare acts in Markdown. It has no `ext` value of its own: it is versioned and released with
+Acts (core §11, §14). It adds:
 
 **State document**
 : A Markdown file per project describing its current state. The binding only concerns its *tasks section* (§3.2).
@@ -169,8 +171,7 @@ Invariants:
 
 ## 3. Document format
 
-This binding is normative for implementations that declare acts in Markdown. Settlements, claims and notes reach
-the document only through the registrar (§2).
+Settlements, claims and notes reach the document only through the registrar (§2).
 
 ### 3.1 Profiles
 
@@ -411,9 +412,10 @@ record's.
 ## 6. Changes from 0.4
 
 In 0.4 this binding was Acts §4–§7, with its conformance classes, fixtures, security considerations, open issues and
-worked example in Acts §9–§11 and Appendix A; in 0.5 it is a document of its own. The move changes no rule; the rule
-on keys a requester assigns outside the binding (0.4 §6.1) moved to Acts §2, where requesters read it. Changes from
-0.4:
+worked example in Acts §9–§11 and Appendix A; in 0.5 it is a document of its own. The move changes no rule. The rule
+on keys a requester assigns outside the binding (0.4 §6.1) moved to Acts §2, where requesters read it, and §4.1
+states the prefix of derived keys in its place; the need-record ids of 0.4 §7 (`r:`, `a:`) stay in Acts §4. Changes
+from 0.4:
 
 - the registrar neither raises nor relinks a line carrying a known key, and the deployment delivers it every need
   record and settlement-register record of the project's acts raised outside the binding (§2);
@@ -469,7 +471,8 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 ## 10. Implementations
 
 *Non-normative.* Implementations of this binding, with the profiles each supports, are listed with those of Acts
-([Acts §10](../acts/SPEC.md#10-implementations)).
+([Acts §10](../acts/SPEC.md#10-implementations)). Neither the reader nor the registrar class has two independent
+implementations yet (core §14).
 
 ## Appendix A: Worked example
 

@@ -14,9 +14,9 @@ cover what those leave open.
 |---|---|---|---|
 | [Principal Handoff](specs/principal-handoff/README.md) | draft: Core 0.5, Acts 0.5, Acts Markdown 0.5, Decisions 0.5; experimental: Evidence 0.5, Criteria 0.5 | How work and choices only the principal (the person or organisation the agents act for) can settle leave the agents, reach the principal's own tool, and come back settled, with who decided and under what authority | [core](specs/principal-handoff/core/SPEC.md) · [acts](specs/principal-handoff/acts/SPEC.md) · [acts markdown](specs/principal-handoff/acts-markdown/SPEC.md) · [decisions](specs/principal-handoff/decisions/SPEC.md) · [evidence](specs/principal-handoff/evidence/SPEC.md) · [criteria](specs/principal-handoff/criteria/SPEC.md) · [reference](specs/principal-handoff/reference/) |
 
-Each spec ships with a JSON Schema for its messages and a conformance suite (`conformance/`) that any implementation
-can run. A spec is only promoted past draft once, for each of its conformance classes, two independent implementations
-pass that class's suite.
+Each spec ships with JSON Schemas for its messages (a binding uses its extension's) and a conformance suite
+(`conformance/`) that any implementation can run. A spec is only promoted past draft once, for each of its conformance
+classes, two independent implementations pass that class's suite.
 
 Each spec is generalised from a working system that already runs it (called "the reference deployment" in the
 specs). Each spec's `reference/` directory holds a small, standard-library-only reference parser that passes the

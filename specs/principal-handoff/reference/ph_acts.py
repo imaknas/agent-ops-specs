@@ -13,7 +13,7 @@ Standard library only, Python >= 3.11.
                                                                                  closed for lines of inactive bound keys
   recipe_key(project, text)                  -> key                             the example key recipe (non-normative)
 
-`bound` is the set of keys the registrar itself raised from lines of this document (section 2); None means every key
+`bound` is the set of keys the registrar itself raised from lines of this document (acts-markdown/SPEC.md section 2); None means every key
 the caller passes is bound. `known` is the set of keys outside the binding the registrar holds need records for (step 3:
 lines carrying one are neither raised nor relinked). `active` and `latest` map active bound keys to their latest terms text. Documents are plain
 strings. Line numbers are 0-based indexes into doc.split("\\n") (a final empty element produced by a trailing newline
@@ -76,7 +76,7 @@ class Profile:
 
     @property
     def _links(self) -> bool:
-        """Section 3.3: with [ and ] as brackets, a bracketed span followed by ( is a Markdown link, not a label."""
+        """acts-markdown/SPEC.md section 3.3: with [ and ] as brackets, a bracketed span followed by ( is a Markdown link, not a label."""
         return (self.label_open, self.label_close) == ("[", "]")
 
     @property
@@ -103,14 +103,14 @@ class Profile:
         return re.compile(rf"^{LIST}(?:\[[ xX]\]|{self._label})")
 
     def label_re(self) -> re.Pattern:
-        """Section 3.5.2: the label following a line's list marker and optional checkbox."""
+        """acts-markdown/SPEC.md section 3.5.2: the label following a line's list marker and optional checkbox."""
         return re.compile(rf"^{LIST}(?:\[[ xX]\][ \t]*)?{self._label}")
 
     def marker_re(self) -> re.Pattern:
         return re.compile(self.marker_pattern)
 
     def mention_re(self) -> re.Pattern:
-        """Section 2: marker_pattern without its final \\s*$, matched anywhere in a line."""
+        """acts-markdown/SPEC.md section 2: marker_pattern without its final \\s*$, matched anywhere in a line."""
         pat = self.marker_pattern
         for end in (r"\s*$", "$"):
             if pat.endswith(end):
@@ -140,7 +140,7 @@ def recipe_key(project: str, text: str) -> str:
 
 
 def _eol(doc: str) -> str:
-    """Section 3.2: lines end with LF or CR LF; the registrar writes back the ending the document uses."""
+    """acts-markdown/SPEC.md section 3.2: lines end with LF or CR LF; the registrar writes back the ending the document uses."""
     return "\r\n" if "\r\n" in doc else "\n"
 
 
@@ -156,7 +156,7 @@ def _join(lines: list[str], eol: str = "\n") -> str:
 
 
 def _ignored(lines: list[str]) -> tuple[set[int], int | None]:
-    """Section 3.2: lines inside fenced code blocks and HTML comment blocks, found in one pass from the top, and the
+    """acts-markdown/SPEC.md section 3.2: lines inside fenced code blocks and HTML comment blocks, found in one pass from the top, and the
     line where an unclosed block opens (the document is then incomplete)."""
     out: set[int] = set()
     i = 0
@@ -180,7 +180,7 @@ def _ignored(lines: list[str]) -> tuple[set[int], int | None]:
 
 
 def _sections(lines: list[str], ignored: set[int], p: Profile) -> list[tuple[int, int]]:
-    """[start, end) of every tasks section body (heading line excluded), in document order (section 3.2)."""
+    """[start, end) of every tasks section body (heading line excluded), in document order (acts-markdown/SPEC.md section 3.2)."""
     out = []
     for start, line in enumerate(lines):
         if start not in ignored and line.rstrip() == p.heading:
@@ -260,7 +260,7 @@ class _Doc:
         return self.key_of(self.lines[i].rstrip())[0]
 
     def text_of(self, line: str) -> str:
-        """Section 3.5.2: the line without list marker, checkbox, label and key marker."""
+        """acts-markdown/SPEC.md section 3.5.2: the line without list marker, checkbox, label and key marker."""
         p = self.p
         rest = re.sub(rf"^{LIST}(?:\[[ xX]\][ \t]*)?", "", line.rstrip())
         rest = re.sub(rf"^{p._label}", "", rest)
@@ -270,11 +270,11 @@ class _Doc:
         return [e for e in self.entries if e.kind == "task"]
 
     def holding(self, key: str) -> list[_Line]:
-        """Section 2: principal task lines of the first tasks section that carry the key."""
+        """acts-markdown/SPEC.md section 2: principal task lines of the first tasks section that carry the key."""
         return [e for e in self.tasks() if e.section == 0 and e.owner == "principal" and e.key == key]
 
     def mentions(self, key: str) -> bool:
-        """Section 2: some line of the document, wherever it is, mentions the key."""
+        """acts-markdown/SPEC.md section 2: some line of the document, wherever it is, mentions the key."""
         rx = self.p.mention_re()
         return any(m.group(1) == key for line in self.lines for m in rx.finditer(line))
 

@@ -15,10 +15,10 @@ people that outlive any program run. But there the organizer owns the master cop
 reopen a task nor withdraw it.
 
 Principal Handoff covers a narrower case: items only the principal can settle that outlive every agent run, where the
-principal side is authoritative and an agent's "done" or "the principal said…" is only a claim. Its Acts extension
-declares work in the project's own state document; its Decisions extension asks for answers as messages. At the wire
-level most of what it needs already exists: borrowing a project's agent session is ACP's job, and long-lived tasks,
-listing and webhooks exist in A2A. What Principal Handoff adds is small:
+principal side is authoritative and an agent's "done" or "the principal said…" is only a claim. Its Acts extension,
+through its Markdown binding, declares work in the project's own state document; its Decisions extension asks for
+answers as messages. At the wire level most of what it needs already exists: borrowing a project's agent session is
+ACP's job, and long-lived tasks, listing and webhooks exist in A2A. What Principal Handoff adds is small:
 - two registers per item with different owners: the requester's need and the principal side's settlement;
 - claims that change nothing until the owner records something, and settlements that name a decider and an
   authority kind, with reopening and revision under the same identity;

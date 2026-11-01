@@ -47,8 +47,7 @@ capacity or physical presence, or because they reserved it. Agents SHOULD NOT de
 with the access it has.
 
 **Registrar**
-: The component that raises acts from a project's state document on the requester's behalf and applies the principal
-side's settlements to it, as the [Acts Markdown binding](../acts-markdown/SPEC.md) defines (§5).
+: The component the [Acts Markdown binding](../acts-markdown/SPEC.md#1-conventions-and-terminology) defines (§5).
 
 ## 2. Model
 
@@ -76,8 +75,8 @@ side's settlements to it, as the [Acts Markdown binding](../acts-markdown/SPEC.m
   principal side settles such an act with the principal (kind `principal` or `confirmed`), or `attested` on
   independent evidence.
 - **Keys** are assigned by the registrar (Acts Markdown §4) or, outside the binding, by the requester. A
-  deployment fixes a prefix for the keys its registrar derives and tells its requesters. Keys a requester assigns
-  outside the binding MUST NOT begin with it, so that they never collide with a registrar's keys.
+  deployment that runs a registrar fixes a prefix for the keys it derives and tells its requesters. Keys a requester
+  assigns outside the binding MUST NOT begin with it, so that they never collide with a registrar's keys.
 
 ## 3. Records
 
@@ -103,7 +102,7 @@ duty of the requester, not a validity rule).
 
 Ids carry a type prefix and a colon, which keys cannot contain (core §1), so ids of different records never collide.
 
-- `raised`: `r:<key>`, so that a crashed registrar re-sends the same id.
+- `raised`: `r:<key>`, so that a sender re-creating it after a crash re-sends the same id (core §10).
 - `amended`: `a:<key>:<terms_rev>`.
 - A registrar's `claimed` and `note`: as the binding says (Acts Markdown §5).
 - Other records: any id unique per core §10.
