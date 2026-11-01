@@ -21,6 +21,9 @@ identifiers:
     value: 10.5281/zenodo.23680064
     description: All versions (Zenodo concept DOI)
   - type: doi
+    value: 10.5281/zenodo.23852711
+    description: Release release-2026-11-01 (Principal Handoff 0.4 draft)
+  - type: doi
     value: 10.5281/zenodo.23680065
     description: Release release-2026-10-27 (Principal Handoff 0.3 draft)
 repository-code: "https://github.com/imaknas/agent-ops-specs"

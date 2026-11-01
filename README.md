@@ -29,6 +29,10 @@ Licensed under Apache-2.0.
 ## Citation
 
 Cite the specifications with the Zenodo concept DOI, which always resolves to the latest release:
-[10.5281/zenodo.23680064](https://doi.org/10.5281/zenodo.23680064). Each GitHub Release has its own DOI; the first,
-`release-2026-10-27` (Principal Handoff 0.3 draft), is [10.5281/zenodo.23680065](https://doi.org/10.5281/zenodo.23680065).
+[10.5281/zenodo.23680064](https://doi.org/10.5281/zenodo.23680064). Each GitHub Release has its own DOI:
+
+| Release | Contents | DOI |
+|---|---|---|
+| `release-2026-11-01` | Principal Handoff 0.4 draft | [10.5281/zenodo.23852711](https://doi.org/10.5281/zenodo.23852711) |
+| `release-2026-10-27` | Principal Handoff 0.3 draft | [10.5281/zenodo.23680065](https://doi.org/10.5281/zenodo.23680065) |
 GitHub's "Cite this repository" uses [`CITATION.cff`](CITATION.cff).
