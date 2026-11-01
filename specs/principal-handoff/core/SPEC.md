@@ -682,16 +682,18 @@ An extension document MUST define:
 - Before 1.0, every version is its own contract: senders and receivers support exactly the versions they claim. From
   1.0 on, adding optional members, record types or outcome values will be a minor change; removing or renaming a
   member, or changing the meaning of one, will require a new major version.
-- A version leaves draft status only once two independent implementations pass the same conformance suite.
-  *Open issue:* whether two implementations that play different roles (for example a requester and registrar on one
-  side, a principal side on the other) count as two independent implementations is not yet decided.
+- A version leaves draft status only once, for every conformance class with a suite, two independent
+  implementations of that class pass it. Implementations that play different roles (for example a requester on one
+  side and a principal side on the other) show that the records interoperate, not that two readers of the same text
+  read it the same way, so they do not count towards each other's class. Implementations by the same author, or
+  built on the same codebase, are not independent.
 
 **Change log.** 0.4 (2026-11-01): verifiable entries (`evidence.verifiable`) and verification results
 (`evidence.verified`) with rules V1–V5; approvals, a new `approved` record and the one mandate this family defines,
 bound to an item's terms by the terms digest and referenced as `under: "approval:<id>"` (§5.3, §15); the approval in
 force is folded beside the registers (§6); the `replaced_by` relation; `terms_rev` on claims and notes; R4 covers a
-requester's listing that omits an item; §13 covers text sent to a project, proofs and approvals. Every extension is
-re-pinned to core 0.4. 0.3 (2026-10-27): the event model of 0.2 is replaced by two registers with owners, claims,
+requester's listing that omits an item; §13 covers text sent to a project, proofs and approvals; leaving draft
+needs two independent implementations per conformance class (§14). Every extension is re-pinned to core 0.4. 0.3 (2026-10-27): the event model of 0.2 is replaced by two registers with owners, claims,
 relations and notes; resolutions carry an authority kind, a decider and evidence; the principal is defined
 structurally and configured (R6); Tasks and Questions become the Acts and Decisions extensions. A mapping from every
 0.2 event to 0.3 records is in each extension. 0.2 (2026-10-27): split from Human Task Handoff 0.1.

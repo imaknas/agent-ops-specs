@@ -8,7 +8,8 @@ abstract: >-
   the person or organisation they act for. Principal Handoff covers work and
   choices that only the principal may settle and that outlive every agent
   session, with owned registers, claims, and settlements that record who
-  decided and under what authority.
+  decided and under what authority, verifiable evidence of facts, and
+  approvals of machine-checkable acceptance criteria.
 type: software
 authors:
   - family-names: Xiao

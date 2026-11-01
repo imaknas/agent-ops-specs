@@ -871,6 +871,58 @@
         "problems": [],
         "unclosed": null
       }
+    },
+    {
+      "id": "en-principal-tag",
+      "profile": "en",
+      "parameters": {
+        "principal_tag": "Acme"
+      },
+      "document": [
+        "## Tasks",
+        "",
+        "- [ ] [Acme] Renew the domain",
+        "- [ ] [Acme] Sign the contract (waiting on Acme: task-demo-0123456789)",
+        "- [ ] [agent] Add retry to the uploader",
+        "- [ ] [owner] Pay the invoice",
+        "### [Acme]",
+        "- [ ] Call the bank"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [
+          {
+            "line": 2,
+            "assignee": "principal",
+            "text": "Renew the domain",
+            "key": null
+          },
+          {
+            "line": 3,
+            "assignee": "principal",
+            "text": "Sign the contract",
+            "key": "task-demo-0123456789"
+          },
+          {
+            "line": 4,
+            "assignee": "agent",
+            "text": "Add retry to the uploader",
+            "key": null
+          },
+          {
+            "line": 7,
+            "assignee": "principal",
+            "text": "Call the bank",
+            "key": null
+          }
+        ],
+        "problems": [
+          5
+        ],
+        "unclosed": null
+      }
     }
   ]
 }

@@ -38,15 +38,15 @@ def bound(c: dict) -> set | None:
     return set(c["bound"]) if "bound" in c else None
 
 
-def profile(name: str) -> acts.Profile:
-    return acts.Profile.from_json(PROFILES[name])
+def profile(name: str, params: dict | None = None) -> acts.Profile:
+    return acts.Profile.from_json(PROFILES[name], **(params or {}))
 
 
 class Binding(unittest.TestCase):
     def test_parse(self):
         for c in cases("parse.json"):
             with self.subTest(c["id"]):
-                self.assertEqual(acts.parse(doc(c["document"]), profile(c["profile"])), c["expect"])
+                self.assertEqual(acts.parse(doc(c["document"]), profile(c["profile"], c.get("parameters"))), c["expect"])
 
     def test_keys(self):
         for c in cases("keys.json"):
@@ -56,7 +56,7 @@ class Binding(unittest.TestCase):
     def test_register(self):
         for c in cases("register.json"):
             with self.subTest(c["id"]):
-                out, raised, reported = acts.register(doc(c["document"]), c["project"], profile(c["profile"]),
+                out, raised, reported = acts.register(doc(c["document"]), c["project"], profile(c["profile"], c.get("parameters")),
                                                       bound(c))
                 self.assertEqual(raised, c["expect"]["raised"])
                 self.assertEqual(reported, c["expect"]["reported"])
@@ -65,7 +65,7 @@ class Binding(unittest.TestCase):
     def test_register_is_idempotent(self):
         for c in cases("register.json"):
             with self.subTest(c["id"]):
-                p = profile(c["profile"])
+                p = profile(c["profile"], c.get("parameters"))
                 once, raised, _ = acts.register(doc(c["document"]), c["project"], p, bound(c))
                 b = None if bound(c) is None else bound(c) | {r["key"] for r in raised}
                 self.assertEqual(acts.register(once, c["project"], p, b)[:2], (once, []))
@@ -73,19 +73,19 @@ class Binding(unittest.TestCase):
     def test_relink(self):
         for c in cases("relink.json"):
             with self.subTest(c["id"]):
-                out, relinked = acts.relink(doc(c["document"]), c["active"], profile(c["profile"]), bound(c))
+                out, relinked = acts.relink(doc(c["document"]), c["active"], profile(c["profile"], c.get("parameters")), bound(c))
                 self.assertEqual(relinked, c["expect"]["relinked"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
     def test_amend(self):
         for c in cases("amend.json"):
             with self.subTest(c["id"]):
-                self.assertEqual(acts.amend(doc(c["document"]), c["latest"], profile(c["profile"])), c["expect"])
+                self.assertEqual(acts.amend(doc(c["document"]), c["latest"], profile(c["profile"], c.get("parameters"))), c["expect"])
 
     def test_apply(self):
         for c in cases("apply.json"):
             with self.subTest(c["id"]):
-                out, changed = acts.apply(doc(c["document"]), c["record"], profile(c["profile"]), c.get("latest"))
+                out, changed = acts.apply(doc(c["document"]), c["record"], profile(c["profile"], c.get("parameters")), c.get("latest"))
                 self.assertEqual(changed, c["expect"]["changed"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
@@ -97,7 +97,7 @@ class Binding(unittest.TestCase):
     def test_reconcile(self):
         for c in cases("reconcile.json"):
             with self.subTest(c["id"]):
-                self.assertEqual(acts.reconcile(doc(c["document"]), c["open"], profile(c["profile"]), bound(c)),
+                self.assertEqual(acts.reconcile(doc(c["document"]), c["open"], profile(c["profile"], c.get("parameters")), bound(c)),
                                  c["expect"])
 
 

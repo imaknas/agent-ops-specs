@@ -355,15 +355,19 @@ Blank lines are not significant: conformance compares documents as their sequenc
 
 ### 5.6 Default profile (`en`)
 
+The default profile has one parameter, `principal_tag`, the short name the principal is known by in task lines. Its
+default, and the value the conformance suite uses, is `owner`. It contains no whitespace, square brackets,
+parentheses or colons, and is neither `agent` nor `undecided`, so that rendered markers and labels parse back.
+
 | Parameter | Value |
 |---|---|
 | `heading` | `## Tasks` |
 | `label_open` / `label_close` | `[` / `]` |
-| labels | principal: `owner`; agent: `agent`; undecided: `undecided` |
+| labels | principal: `{principal_tag}`; agent: `agent`; undecided: `undecided` |
 | `label_separator` | one space |
 | `placeholder` | `- (none)` |
-| `marker_render` | ` (waiting on owner: {key})` (leading space) |
-| `marker_pattern` | `\(waiting on owner:\s*([^\s()]+)\s*\)\s*$` |
+| `marker_render` | ` (waiting on {principal_tag}: {key})` (leading space) |
+| `marker_pattern` | `\(waiting on {principal_tag}:\s*([^\s()]+)\s*\)\s*$` with `{principal_tag}` regex-escaped |
 
 ```markdown
 ## Tasks
@@ -384,8 +388,8 @@ is an inline link `[…](…)`; use the labelled form for such text.
 
 The reference deployment writes its state documents in Traditional Chinese. Its profile has one parameter,
 `principal_tag`, the short name the principal is known by in task lines (the conformance suite uses `Owner`). It
-contains no whitespace, parentheses of either width, colons of either width, or `〔` and `〕`, so that rendered
-markers and labels parse back.
+contains no whitespace, parentheses of either width, colons of either width, or `〔` and `〕`, and is neither `agent`
+nor `待定`, so that rendered markers and labels parse back.
 
 | Parameter | Value |
 |---|---|
@@ -524,8 +528,6 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
   Until a later version addresses this (for example with a registrar-held generation in the derivation), agents
   SHOULD make re-declared texts distinct, and the registrar neither raises nor stamps such a line and MUST warn its
   operator (§4 step 3).
-- **A `principal_tag` for the `en` profile.** The `zh-hant` profile names the principal by a parameter; the `en`
-  profile's label and marker are fixed (`owner`). Whether `en` should take the same parameter is undecided.
 - **Due dates in Markdown.** `terms.due` has no Markdown syntax yet.
 - **Transport bindings.** No binding to a specific transport (HTTPS webhooks, A2A, MCP) is defined yet.
 
@@ -539,8 +541,9 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 | agent-hub (to be published) | registrar and requesters for Acts; requesters for Decisions | `zh-hant` | the reference deployment this document is generalised from; implements Acts 0.3 and Decisions 0.3, and runs the 0.3 binding fixtures (`parse`, `keys`, `register`, `relink`, `amend`, `apply`, `reconcile`), not `records` or `lifecycle` |
 | Muninn, with agent-hub's built-in owner side | principal side | | implements the principal side of 0.3 |
 
-The reference deployment has two implementations acting as its principal side; core §5.3 requires them to share one
-approval store, or to leave approvals to one of them, before either relies on approvals.
+The reference deployment has two implementations acting as its principal side. As core §5.3 allows, it leaves
+approvals to Muninn alone: agent-hub's built-in owner side records no approvals and delivers its settlements to
+Muninn. Neither implements approvals yet.
 
 ## Appendix A: Worked example
 

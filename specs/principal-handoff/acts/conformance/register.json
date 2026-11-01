@@ -260,6 +260,47 @@
           "<!--"
         ]
       }
+    },
+    {
+      "id": "en-principal-tag-register",
+      "profile": "en",
+      "parameters": {
+        "principal_tag": "Acme"
+      },
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "",
+        "- [ ] [Acme] Renew the domain",
+        "- [ ] [Acme] Sign the contract (waiting on Acme: task-demo-0123456789)",
+        "- [ ] [agent] Add retry to the uploader",
+        "- [ ] [owner] Pay the invoice",
+        "### [Acme]",
+        "- [ ] Call the bank"
+      ],
+      "expect": {
+        "raised": [
+          {
+            "key": "task-demo-c3d8af57d4",
+            "text": "Renew the domain"
+          },
+          {
+            "key": "task-demo-d5264e8e5b",
+            "text": "Call the bank"
+          }
+        ],
+        "reported": [],
+        "document": [
+          "## Tasks",
+          "",
+          "- [ ] [Acme] Renew the domain (waiting on Acme: task-demo-c3d8af57d4)",
+          "- [ ] [Acme] Sign the contract (waiting on Acme: task-demo-0123456789)",
+          "- [ ] [agent] Add retry to the uploader",
+          "- [ ] [owner] Pay the invoice",
+          "### [Acme]",
+          "- [ ] Call the bank (waiting on Acme: task-demo-d5264e8e5b)"
+        ]
+      }
     }
   ]
 }

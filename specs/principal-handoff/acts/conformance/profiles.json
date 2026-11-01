@@ -3,14 +3,17 @@
   "profiles": {
     "en": {
       "title": "Default English profile",
+   "parameters": {
+    "principal_tag": "owner"
+   },
       "heading": "## Tasks",
       "label_open": "[",
       "label_close": "]",
       "label_separator": " ",
-      "labels": {"principal": "owner", "agent": "agent", "undecided": "undecided"},
+      "labels": {"principal": "{principal_tag}", "agent": "agent", "undecided": "undecided"},
       "placeholder": "- (none)",
-      "marker_render": " (waiting on owner: {key})",
-      "marker_pattern": "\\(waiting on owner:\\s*([^\\s()]+)\\s*\\)\\s*$"
+      "marker_render": " (waiting on {principal_tag}: {key})",
+      "marker_pattern": "\\(waiting on {principal_tag}:\\s*([^\\s()]+)\\s*\\)\\s*$"
     },
     "zh-hant": {
       "title": "Traditional Chinese profile used by the reference deployment",

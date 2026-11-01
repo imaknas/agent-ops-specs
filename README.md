@@ -12,10 +12,11 @@ cover what those leave open.
 
 | Spec | Status | What it covers | Artifacts |
 |---|---|---|---|
-| [Principal Handoff](specs/principal-handoff/README.md) | draft: Core 0.3, Acts 0.3, Decisions 0.3 | How work and choices only the principal (the person or organisation the agents act for) can settle leave the agents, reach the principal's own tool, and come back settled, with who decided and under what authority | [core](specs/principal-handoff/core/SPEC.md) · [acts](specs/principal-handoff/acts/SPEC.md) · [decisions](specs/principal-handoff/decisions/SPEC.md) · [reference](specs/principal-handoff/reference/) |
+| [Principal Handoff](specs/principal-handoff/README.md) | draft: Core 0.4, Acts 0.4, Decisions 0.4 | How work and choices only the principal (the person or organisation the agents act for) can settle leave the agents, reach the principal's own tool, and come back settled, with who decided and under what authority | [core](specs/principal-handoff/core/SPEC.md) · [acts](specs/principal-handoff/acts/SPEC.md) · [decisions](specs/principal-handoff/decisions/SPEC.md) · [reference](specs/principal-handoff/reference/) |
 
 Each spec ships with a JSON Schema for its messages and a conformance suite (`conformance/`) that any implementation
-can run. A spec is only promoted past draft once two independent implementations pass the same suite.
+can run. A spec is only promoted past draft once, for each of its conformance classes, two independent implementations
+pass that class's suite.
 
 Each spec is generalised from a working system that already runs it (called "the reference deployment" in the
 specs). Each spec's `reference/` directory holds a small, standard-library-only reference parser that passes the

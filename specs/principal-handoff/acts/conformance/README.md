@@ -7,9 +7,9 @@ JSON fixtures that any implementation of [Principal Handoff Acts](../SPEC.md) ca
 
 - Every file except `profiles.json` is `{"suite": "acts/0.4", "description": …, "cases": [ … ]}`; `records.json` and
   `lifecycle.json` also carry `principal`, the configured principal identifier (core R6). Every case has a unique `id`.
-- `profile` names an entry of `profiles.json`. The `zh-hant` profile has a parameter `principal_tag`, which the
-  fixtures set to `Owner`. An implementation configured with another tag substitutes it for `Owner` in documents,
-  texts and expected outputs before running the cases.
+- `profile` names an entry of `profiles.json`. Both profiles have a parameter `principal_tag`, whose value for the
+  fixtures is under the profile's `parameters` (`owner` for `en`, `Owner` for `zh-hant`). A case MAY carry
+  `parameters`, which override the profile's for that case; such cases exercise other tags.
 - `document` is an array of lines; the text is the lines joined with `\n` plus a final `\n`. Line numbers are 0-based.
 - A line in `document` may end with `\r`, so that the joined text has CR LF line endings (SPEC §5.2).
 - Documents are **compared** as their sequences of non-blank lines with trailing whitespace removed.
