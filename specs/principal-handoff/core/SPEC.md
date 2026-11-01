@@ -1,13 +1,14 @@
-# Principal Handoff Core 0.4
+# Principal Handoff Core 0.5
 
 | | |
 |---|---|
 | Status | Draft |
-| Version | 0.4 (2026-11-01) |
+| Version | 0.5 (2026-11-01) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) |
 | Conformance vectors | [`conformance/`](conformance/) |
 | Extensions | [Acts](../acts/SPEC.md) · [Decisions](../decisions/SPEC.md) |
+| Modules | [Evidence](../evidence/SPEC.md) · [Criteria](../criteria/SPEC.md) |
 
 ## Abstract
 
@@ -19,11 +20,12 @@ and come back settled, when the items outlive every agent session.
 The core defines one model for every kind of item. Each item has two **registers** with different owners: the
 **need**, owned by the agent that raised it, and the **settlement**, owned by the principal side. Every change is an
 append-only, attributable **record** that names who made it, under what **authority**, with what **evidence**.
-Assertions by anyone else are **claims**, which change nothing until the owner of the register records something.
-Records can carry independently **verifiable** proofs of facts, and the principal can **approve** an item's terms so
-that a verifier may settle it without the principal reviewing the work. The **extensions** define the two kinds of
-item: [Acts](../acts/SPEC.md) (work only the principal can do, with a Markdown binding for a project's state document)
-and [Decisions](../decisions/SPEC.md) (answers and choices only the principal may make).
+Assertions by anyone else are **claims**, which change nothing until the owner of the register records something. The
+**extensions** define the two kinds of item: [Acts](../acts/SPEC.md) (work only the principal can do, with a Markdown
+binding for a project's state document) and [Decisions](../decisions/SPEC.md) (answers and choices only the principal
+may make). Optional **modules** add features that never change an item's state: [Evidence](../evidence/SPEC.md)
+(independently verifiable proofs of facts) and [Criteria](../criteria/SPEC.md) (the principal's approval of a
+decision's acceptance criteria, so that a verifier may settle it).
 
 ## Table of contents
 
@@ -37,11 +39,11 @@ and [Decisions](../decisions/SPEC.md) (answers and choices only the principal ma
 8. [Delivery and application](#8-delivery-and-application)
 9. [When a person decides](#9-when-a-person-decides)
 10. [Identifiers, deduplication and ordering](#10-identifiers-deduplication-and-ordering)
-11. [Extensions](#11-extensions)
+11. [Extensions and modules](#11-extensions-and-modules)
 12. [Conformance](#12-conformance)
 13. [Security and privacy considerations](#13-security-and-privacy-considerations)
 14. [Versioning](#14-versioning)
-15. [Scope](#15-scope)
+15. [Scope and open issues](#15-scope-and-open-issues)
 16. [Relation to other specifications](#16-relation-to-other-specifications)
 
 ## 1. Conventions and terminology
@@ -81,6 +83,11 @@ including the principal side itself and agents further up a delegation chain. A 
 **Decider**
 : The party a settlement record names as having made the settlement (§5).
 
+**Mandate**
+: An authorisation, given by the principal or further up a delegation chain, for a delegate to settle items without
+the principal deciding each one; a standing instruction is a mandate. Mandates are defined by their own systems (§15)
+or by a module (§11).
+
 **Project**
 : A unit of work the agents work on, identified by a project name unique within one deployment (1–128 characters, no
 whitespace).
@@ -111,29 +118,9 @@ item is identified by the triple (extension name, `project`, `key`). Extensions 
 **Note**
 : A record that carries information without changing any register (§7).
 
-**Verifiable entry**
-: A proof of a fact that a third party can check without trusting whoever reported it, carried in a record's
-`evidence` (§5.2).
-
-**Trust policy**
-: The principal side's own list, per proof format, of the signers, notaries and issuers whose proofs it accepts, and
-of the freshness bounds it applies (§5.2).
-
-**Verifier**
-: A component of the principal side that checks verifiable entries against its trust policy. A verifier that settles
-an item does so as a delegate (§5.3).
-
-**Mandate**
-: An authorisation, given by the principal or further up a delegation chain, for a delegate to settle items without
-the principal deciding each one; a standing instruction is a mandate. Mandates are defined by their own systems (§15),
-except approvals (§5.3).
-
-**Trust root**
-: A signer, notary or issuer whose proofs a trust policy accepts for a format, named as that format names it (§5.2).
-
-**Approval**
-: The principal's approval of an item's terms exactly as they stand at one `terms_rev`, recorded by the principal side
-in an `approved` record (§5.3). It is the only mandate this family defines.
+**Extension**, **module**
+: An extension defines a kind of item (§11). A module adds optional members, record types and rules to one or more
+extensions, and never changes an item's state (§11).
 
 ## 2. Model
 
@@ -142,10 +129,9 @@ in an `approved` record (§5.3). It is the only mandate this family defines.
                      ─────────────────────────────────          ───────────────────────────────────────────
   requester ──────▶  raised · amended(terms_rev) · withdrawn    settled(outcome, authority, evidence) · reopened  ◀── principal side
                                     │                                               ▲
-                                    └──── terms the settlement saw (terms_rev) ─────┘
-  anyone but the principal side ──▶ claim;   anyone ──▶ note   (change no register; may carry verifiable proofs)
-  principal side ──▶  approval (terms_rev, terms digest) · relation (same_as)   (change no register)
-       requester ──▶  relation (derived_from, replaced_by)
+                                    └──── terms the settlement saw (terms_rev, terms_digest)
+  anyone but the principal side ──▶ claim;   anyone ──▶ note        (change no register)
+  principal side ──▶  relation (same_as)        requester ──▶ relation (derived_from, replaced_by)
 ```
 
 Each item has two registers because the two questions they answer have different owners:
@@ -155,8 +141,7 @@ Each item has two registers because the two questions they answer have different
   principal side changes it.
 
 An item's **current state** (§6) is computed from both registers. Neither register can overwrite the other: a late
-answer does not undo a withdrawal, and a withdrawal does not settle anything. Approvals (§5.3) are kept beside the
-registers: they authorise a settlement but are not one.
+answer does not undo a withdrawal, and a withdrawal does not settle anything.
 
 ## 3. Ownership
 
@@ -165,7 +150,7 @@ These rules replace any notion that an item is "resolved" by whoever last spoke.
 - **R1 — The need belongs to the requester.** Only the requester emits `raised`, `amended` and `withdrawn` for its
   item.
 - **R2 — The settlement belongs to the principal side.** Only the principal side emits `settled` and `reopened`. Every
-  `settled` carries a decider and an authority kind (§5). Only the principal side emits `approved` (§5.3).
+  `settled` carries a decider and an authority kind (§5).
 - **R3 — Everything else is a claim or a note.** A record by any other party that asserts a settlement is a claim
   (§7). It changes no register, and receivers MUST NOT treat it as a settlement.
 - **R4 — Silence never settles.** No timeout, due date, default or working assumption produces a settlement. If the
@@ -179,9 +164,8 @@ These rules replace any notion that an item is "resolved" by whoever last spoke.
   settlement. To raise it, the delegate acts as a requester of the upstream deployment, in a project it holds the
   requester role for there; it settles the first item `delegated`, with `under` a URI naming the upstream item's
   settlement.
-- **R6 — The principal is configured, not asserted.** The principal identifier, whether the principal is a natural or
-  a legal person, and optionally the keys that verify the principal's own `evidence.proof` (§5.2), are configured out
-  of band by whoever operates the deployment, on the principal side and
+- **R6 — The principal is configured, not asserted.** The principal identifier, and whether the principal is a
+  natural or a legal person, are configured out of band by whoever operates the deployment, on the principal side and
   on every other role that validates records. No record, claim, relation or mandate establishes or changes them, and
   receivers MUST reject any that tries. The principal identifier MUST NOT equal the party identifier of any agent,
   delegate or principal side, and the principal never emits records itself: its decisions are recorded by the
@@ -196,24 +180,23 @@ IEEE 754 doubles) that validates against
 
 | Member | Type | Req. | Meaning |
 |---|---|---|---|
-| `ph` | string | yes | Core version; `"0.4"` for this document. |
-| `ext` | string | yes | Extension name and version, e.g. `"acts/0.4"`, `"decisions/0.4"`. |
+| `ph` | string | yes | Core version; `"0.5"` for this document. |
+| `ext` | string | yes | Extension name and version, e.g. `"acts/0.5"`, `"decisions/0.5"`. |
 | `id` | string | yes | Record id, no whitespace, 1–256 characters (§10). |
-| `type` | string | yes | One of the record types below. |
+| `type` | string | yes | One of the record types below, or a module record type the extension's table lists (§11). |
 | `origin` | string | yes | The role that emitted it: `requester`, `principal` (the principal side), `agent` (any other agent), or a role the extension defines. |
 | `by` | string | yes | Party identifier of the emitter. |
 | `key` | string | yes | Key of the item. |
 | `project` | string | yes | Project of the item. |
 | `ts` | string | yes | RFC 3339 date-time at which the record was created, with at most six fractional digits; a value that is not a valid date-time makes the record invalid. Receivers compare `ts` values as instants, offsets applied, using every fractional digit given; a leap second (`:60`) compares as the last microsecond of its minute. Senders SHOULD use UTC (`Z`). |
-| `supersedes` | array of strings | no | Ids of records in the same register that this one replaces (§6); on `approved`, ids of approvals (§5.3). |
-| `terms` | object | on `raised`, `amended` | The item's terms; the members are defined by the extension. `text` is always present. |
-| `terms_rev` | integer ≥ 1 | on `raised`, `amended`, `settled`, a granting `approved`, and any record carrying `evidence.verifiable` | On need records, the terms version (1 on `raised`, increasing by one on each `amended`). On a settlement or approval, the terms version it was made against. On a claim or note (optional unless it carries verifiable entries), the terms version it refers to. |
+| `supersedes` | array of strings | no | Ids of records in the same register that this one replaces (§6), or of the records a module says. |
+| `terms` | object | on `raised`, `amended` | The item's terms; the members are defined by the extension and its modules. `text` is always present. |
+| `terms_rev` | integer ≥ 1 | on `raised`, `amended`, `settled` | On need records, the terms version (1 on `raised`, increasing by one on each `amended`). On a settlement, the terms version it was made against. On a claim or note (optional), the terms version it refers to. |
+| `terms_digest` | string | on `settled` | The terms digest (below) of the need record the settlement was made against, so that a settlement cannot be carried over to other terms at the same `terms_rev` (§6). |
 | `outcome` | string | on `settled`, `claimed` | What the settlement says or the claim asserts; values defined by the extension. |
-| `terms_digest` | string | on `settled` | The terms digest (§5.3) of the need record the settlement was made against, so that a settlement cannot be carried over to other terms at the same `terms_rev` (§6). |
-| `authority` | object | on `settled` and a granting `approved` | §5. |
+| `authority` | object | on `settled` | §5. |
 | `evidence` | object | no | §5. |
 | `relation` | object | on `related` | §7. |
-| `approval` | object | on `approved` | §5.3. |
 | `reason` | string | on `withdrawn` | Why the requester withdrew; values defined by the extension. |
 | `adopts` | array of strings | no | On `settled`: ids of claims this settlement accepts (§7). |
 | `about` | object | on `note` | §7. |
@@ -222,15 +205,23 @@ IEEE 754 doubles) that validates against
 
 Receivers MUST ignore members they do not recognise. Senders MAY add members; names beginning with `x_` are reserved
 for private extensions. Every number in a record MUST be an integer between −(2^53 − 1) and 2^53 − 1, written
-without a fraction or an exponent, so that every receiver serialises it alike (§5.3, §10). `terms.due`, where an
-extension defines it, MUST be a calendar date.
+without a fraction or an exponent, so that every receiver serialises it alike (§10). `terms.due`, where an extension
+defines it, MUST be a calendar date.
 
-Every rule that §4–§7 state about the content of a single record (the type table, the authority rules of §5.1, the
-rules on verifiable entries and results in §5.2, approvals in §5.3, claims, relations and notes in §7), and every
-rule an extension's records section lists, is a validity rule: a record that breaks one is invalid (§10), whether or
-not a schema in the subset below can express it. Rules that need other records (that a superseded id exists, that an
-approval was in force) are never validity rules; they are duties of the emitter, and receivers that can check them
-SHOULD report a breach.
+**Terms digest.** The terms digest of a need record (`raised` or `amended`) is `sha-256:` followed by the lowercase
+hexadecimal SHA-256 of the UTF-8 bytes of the RFC 8785 serialisation of the JSON object whose members are exactly
+`ext`, with its `/` and version removed (`decisions`, not `decisions/0.5`), and `project`, `key`, `terms_rev` and
+`terms`, copied from that record as received, including members of `terms` the receiver does not recognise. Receivers
+keep `terms` as received. Because records are I-JSON and numbers are bounded integers, every receiver computes the
+same digest. The digest binds the item and its terms at one `terms_rev`, not the version of the extension: a version
+whose conversion changes the meaning of a member of `terms` keeps the old digests, so that settlements made before it
+read as stale (§14). [`conformance/terms-digest.json`](conformance/terms-digest.json) holds vectors.
+
+Every rule that §4–§7 state about the content of a single record (the type table, the authority rules of §5, claims,
+relations and notes in §7), and every rule an extension's records section lists, is a validity rule: a record that
+breaks one is invalid (§10), whether or not a schema in the subset below can express it. Rules that need other
+records (that a superseded id exists, that a mandate was in force) are never validity rules; they are duties of the
+emitter, and receivers that can check them SHOULD report a breach.
 
 Each `origin` stands for a role the deployment configures (§1): `requester` and an extension's requester-side
 origins (Acts' `registrar`, which the deployment configures as a role of its own) for a party holding that role in
@@ -245,30 +236,33 @@ writes claims or notes about a project it holds no role in.
 | `withdrawn` | need | `requester` |
 | `settled` | settlement | `principal` |
 | `reopened` | settlement | `principal` |
-| `approved` | (approval, §5.3) | `principal` |
 | `claimed` | (claim) | any origin except `principal` |
 | `related` | (relation) | per relation kind (§7) |
 | `note` | (note) | any origin the extension's table lists |
 
-Extensions MAY restrict this table further, and MUST NOT widen it. A receiver selects the schema by `ext` and the
-(`type`, `origin`) pair as the extension's table lists, and MUST reject a record whose pair is not listed. A receiver
-that does not implement the extension or version named in `ext` MUST NOT act on the record; it SHOULD consume it
-without error and MAY report it. The schemas use JSON Schema draft 2020-12 restricted to `type`, `required`,
-`properties`, `enum`, `const`, `pattern` (an ECMAScript regular expression, in which `$` matches only at the end of
-the string), `items` and `$ref` (a relative path), plus the annotations `$schema`, `$id` (the schema's path from the
-family's root, against which `$ref` resolves), `title` and `description`, so that a small validator suffices.
+Extensions MAY restrict this table further, and MUST NOT widen it, except that an extension's table MAY also list
+(`type`, `origin`) pairs that a module layered on it defines (§11); no other type is valid. The core record schema
+therefore leaves `type` open, and the extension's table decides which types are valid. A receiver selects the schema
+by `ext` and the (`type`, `origin`) pair as the extension's table lists, and MUST reject a record whose pair is not
+listed. For a module pair the extension assigns no schema of its own: receivers apply the core record schema, and the
+module's schema is one of its structural rules (§11). A record whose `ph` is not the core version its `ext` names is
+invalid. A receiver that does not implement the extension or version named in `ext` MUST NOT act on the record; it
+SHOULD consume it without error and MAY report it. The schemas use JSON Schema draft 2020-12 restricted to `type`,
+`required`, `properties`, `enum`, `const`, `pattern` (an ECMAScript regular expression, in which `$` matches only at
+the end of the string), `items` and `$ref` (a relative path), plus the annotations `$schema`, `$id` (the schema's path
+from the family's root, against which `$ref` resolves), `title` and `description`, so that a small validator suffices.
 
 ## 5. Authority and evidence
 
 ### 5.1 Authority
 
-Every `settled` record, and every `approved` record that grants an approval (§5.3), carries `authority`:
+Every `settled` record carries `authority`:
 
 | Member | Req. | Meaning |
 |---|---|---|
 | `kind` | yes | `principal`, `confirmed`, `delegated` or `attested`. |
-| `decider` | yes | Party identifier of whoever made the settlement or approval. |
-| `under` | for `delegated` | Reference to the mandate or standing instruction relied on. The prefix `approval:` is reserved: a value beginning with it names an approval of this family (§5.3). Any other value is an opaque reference to a mandate of another system (§15), which the principal side MUST be able to produce. |
+| `decider` | yes | Party identifier of whoever made the settlement. |
+| `under` | for `delegated` | Reference to the mandate or standing instruction relied on, which the principal side MUST be able to produce. It is opaque to receivers, except that a module MAY define a prefix naming a mandate recorded in this family (§11); the principal side MUST NOT begin any other reference with such a prefix (a duty, not a validity rule). |
 | `chain` | for `delegated` | Party identifiers from the principal to the decider, in order. |
 | `representative` | no | For an organisation principal: the natural person who acted for it, as a party identifier the principal side can resolve (it need not reveal the person's name to projects). |
 
@@ -284,9 +278,8 @@ The four kinds:
   example a payment record), without the principal confirming. `decider` MUST NOT be the principal identifier, and
   `evidence.basis` is REQUIRED.
 
-When the principal is a legal person, a settlement or approval of kind `principal` or `confirmed` MUST carry
-`representative`, naming the natural person who acted for it, and `evidence.proof` SHOULD include evidence of their
-power to represent it.
+When the principal is a legal person, a settlement of kind `principal` or `confirmed` MUST carry `representative`,
+naming the natural person who acted for it; this is a validity rule, evaluated under the configured principal (R6).
 
 ### 5.2 Evidence
 
@@ -297,152 +290,15 @@ power to represent it.
 | `presented` | Digest (`sha-256:` + lowercase hex), opaque to receivers, of exactly what was shown to the person who decided or confirmed: the terms at `terms_rev` and any options or consequences the principal side displayed (§9). |
 | `proposal` | For `confirmed`: id of the record, or digest of the content, that was confirmed. |
 | `basis` | For `attested`, and on claims: what the evidence was, in words. |
-| `proof` | An independently verifiable proof of **who** made the record, such as a detached JWS or a verifiable credential, over the record with `evidence.proof` removed (and `evidence` too, if it is then empty), serialised with the JSON Canonicalization Scheme [RFC 8785]. |
-| `verifiable` | Proofs of **what** is true: an array of verifiable entries (below). Only on `claimed`, `note` and `settled`. |
-| `verified` | What the principal side checked: an array of verification results (below). Only on `settled`, and on `note` with `origin: "principal"`. |
 
-A settlement or approval of kind `principal` or `confirmed` SHOULD carry `evidence.proof` made with the principal's
-own credential on a surface no agent controls. A **verifiable** principal side (§12) MUST. In a deployment configured
-with the principal's verification keys (R6), every role verifies `evidence.proof` on such records, and a record whose
-proof is missing or does not verify is invalid.
+Other members of `evidence` are defined by modules (the [Evidence](../evidence/SPEC.md) module defines proofs of
+**what** is true); receivers that do not implement them ignore them (§4). The member `proof` is reserved for a proof
+of **who** made a record, made with the principal's own credential on a surface no agent controls, which a deployment
+profile is still to specify (§15). Until one does, senders MUST NOT emit it and receivers ignore it.
 
-A **verifiable entry** is an object:
-
-| Member | Req. | Meaning |
-|---|---|---|
-| `id` | yes | Unique within the record; matches `^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$`. |
-| `format` | yes | The proof system, as that system names itself and its version (for example `tlsnotary`, `vc+sd-jwt`, `in-toto`); 1–128 characters, no whitespace. Formats are defined by their own systems, not by this family. |
-| `statement` | yes | What the proof establishes, in plain words for a person. |
-| `proof` | one of the two | The proof by value, as a string in the format's own serialisation (base64url where the format is binary). |
-| `proof_ref` | one of the two | `{"uri", "digest"}`: where the proof can be fetched, and the digest (`sha-256:` + lowercase hex) of its exact bytes. |
-
-Each entry MUST carry exactly one of `proof` and `proof_ref`. A record that carries verifiable entries MUST carry
-`terms_rev`: the terms version the evidence was produced against.
-
-A **verification result** is an object:
-
-| Member | Req. | Meaning |
-|---|---|---|
-| `of` | yes | `{"record", "entry"}`: the id of a record about the same item (same `ext` name, `project` and `key`), and the `id` of the verifiable entry in it that was checked. The record may be the one carrying the result, or one the principal side keeps and never sends (a proof about the principal, below). Receivers do not resolve `of` to decide validity or state. |
-| `verifier` | yes | Party identifier of the verifier. |
-| `result` | yes | `valid`, `invalid` or `unsupported` (V3). |
-| `at` | yes | RFC 3339 time of the check. |
-
-These rules, and the ones below that no schema in the §4 subset can express (exactly one of two members, unique ids),
-are validity rules: a record that breaks them is invalid.
-
-- **V1 — Validity and state never depend on checking a proof.** Whether a record is valid (§4, §5) and an item's state
-  and approval in force (§6) are computed from the records' own content; they never depend on anyone verifying a
-  verifiable entry. A receiver that cannot check a format, or checks nothing, computes the same state from the same
-  records. Structural rules an extension states over a record's own `verified` (for example, that every result is
-  `valid`) are part of validity like any other member rule.
-- **V2 — A proof establishes only its statement.** That a proven statement concerns this item (that this payment was
-  for this act) is the emitter's judgement, except where an extension requires binding (V4). Receivers MUST NOT
-  present a valid proof as establishing more than its `statement`, and SHOULD show the statement together with the
-  result.
-- **V3 — Valid means valid against the principal side's trust policy.** A verifier reports `valid` only when all of
-  these hold: (a) the proof verifies in its format; (b) its verified content establishes, in machine-readable form,
-  every condition the extension pins (a check's pass condition, an identifier the item names), the `statement` text
-  itself counting for nothing; (c) its signer, notary or issuer is a trust root that the principal side's trust policy
-  accepts for that format; (d) it is within the freshness bound that policy sets for the format, at the time the
-  result is relied on; (e) it is bound to the item where V4 requires. Trust roots are strings in the format's own
-  identifier form (a key fingerprint, an issuer URL, a DID), compared exactly. A root is acceptable only if the
-  requester cannot choose what it attests: a notary or builder that attests what it itself observed or ran, an issuer
-  independent of the requester, or the principal side's own runs. `unsupported` means only that the verifier does not
-  implement the format, has no trust policy for it, or could not complete the check (its own infrastructure failed, or
-  the `proof_ref` could not be fetched); a proof whose content does not let it read (b), or whose fetched bytes do not
-  match `proof_ref.digest`, is `invalid`, like everything else that fails.
-- **V4 — Binding and reuse.** Emitters SHOULD produce proofs whose proven content names the item (its `key`, the terms
-  digest of §5.3, or an identifier the terms name, such as an invoice number) wherever the format allows. Where an
-  extension requires such binding, a proof without it is `invalid`. The principal side SHOULD report to the principal,
-  never to a project, a proof offered as evidence for two different items (the same `proof`, the same
-  `proof_ref.digest`, or, where the format exposes one, the same underlying fact such as a transaction id), and MUST
-  NOT settle a second item on it without the principal, except as an extension allows (Decisions §4.1). "First" means
-  the item first settled on the proof. Where the extension does not allow the reuse, the proof fails (e) for the
-  second item; what is recorded for that item never names the other. Only proofs offered by parties holding a role in
-  an item's project count as offered for it.
-- **V5 — Results are recorded.** The principal side records every result it computes for an item, `valid` or not. A
-  settlement carries the results it was made on; every other result goes on a `note` about the item from the
-  principal side, so that a failed or unsupported check stays on record and reaches the requester.
-
-**Proofs about the principal.** A record the principal side sends to a project MUST NOT disclose, in
-`evidence.verifiable` (the `proof`, the `statement` or the `proof_ref.uri`) or in any other text, anything about the
-principal that the project may not know (§13). Such proofs stay with the principal side, in records it keeps and does
-not send; results about them refer to them through `of`. Because a sent record never changes (§10), this applies when
-the record is made. (`evidence.proof`, the signature made with the principal's own credential, is not such a proof.)
-
-### 5.3 Approvals
-
-An **approval** is the principal's approval of an item's terms exactly as they stand at one `terms_rev`. It
-authorises at most one settlement of that item, of the kind and on the conditions the item's extension defines (in
-Decisions, by a verifier when the approved criteria hold, Decisions §4.1), and nothing else. An extension whose table
-(§4) does not list `approved` has no approvals, and in it a settlement whose `under` begins with `approval:` is
-invalid. An approval is not a settlement and not an answer: requesters MUST NOT proceed on one as if the item were
-settled.
-
-**Recording.** The principal side records an approval as an `approved` record about the item:
-
-| Member | Req. | Meaning |
-|---|---|---|
-| `approval` | yes | `{"active", "terms_digest"?}`. `active`: `true` grants an approval; `false` retracts the approvals listed in `supersedes`. `terms_digest`: REQUIRED when granting, and only then: the terms digest (below) of the need record at `terms_rev`. |
-| `terms_rev` | when granting | The terms version approved. |
-| `authority` | when granting | §5.1, of kind `principal` (the person approved the terms as presented) or `confirmed` (the person confirmed a delegate's recommendation to approve; `evidence.proposal` identifies it). Never `delegated` or `attested`. |
-| `evidence` | when granting | `presented` is REQUIRED and covers the terms at `terms_rev` with everything the extension puts in them; `proof` as §5.2 says. |
-| `supersedes` | when retracting | The approvals retracted. |
-
-A grant MUST NOT carry `adopts`: an approval never comes from a claim. §9 applies to it. It approves the terms as they
-stand, without conditions: if the person attaches any condition, reservation or limit, the principal side MUST NOT
-record an approval; it MAY send a `note` asking the requester to amend the terms so that they carry it. A `note` on an
-`approved` record is never part of what was approved. A new grant for a `terms_rev` that already has a grant MUST
-list the earlier grants in `supersedes`.
-
-A retraction (`active: false`) needs no `authority`: the principal side may always narrow what it has authorised, at
-any time (for example once `terms.due` has passed). `supersedes` on an `approved` takes effect only on `approved`
-records of the same item; other ids in it are ignored and SHOULD be reported. A retracted approval is never in force
-again: re-approving is a new grant.
-
-**Terms digest.** The terms digest of a need record (`raised` or `amended`) is `sha-256:` followed by the lowercase
-hexadecimal SHA-256 of the UTF-8 bytes of the RFC 8785 serialisation of the JSON object whose members are exactly
-`ext` (its full value, such as `decisions/0.4`), `project`, `key`, `terms_rev` and `terms`, copied from that record as
-received, including members of `terms` the receiver does not recognise. Receivers keep `terms` as received. Because
-records are I-JSON and numbers in terms are bounded integers (§4), every receiver computes the same digest. The
-principal side MUST NOT approve terms containing members it does not show the person. Because the digest includes the
-item's identity, extension version and terms version, it alone binds the item (settlements and approvals stay bound to
-the extension version they were made under; a later version says how to carry them over, §14), and it can be quoted
-inside a proven statement (V4). [`conformance/terms-digest.json`](conformance/terms-digest.json) holds vectors.
-
-**Binding.** An approval binds (`ext`, `project`, `key`, `terms_rev`, terms digest). It authorises nothing for any
-other item, project or terms version, and nothing transfers it: no relation (§7), claim, note or record of another
-item.
-
-**In force.** Whether an approval is in force is computed from the records held, as §6 defines. In short: it lapses
-when the terms change in any way, when it is retracted, once a settlement names it, and once the item has any
-settlement record made after it (whether under the approval or not, and whether later reopened or not), so that an
-approval is used at most once and a principal who has settled or reopened the item by hand is never overridden by it.
-For "after" to mean what happened, the principal side MUST give each `settled`, `reopened` and `approved` it makes
-about an item a `ts` later than that of every settlement-register record and approval of the item it holds.
-
-**Settling under an approval.** A settlement made under an approval carries `authority.kind: "delegated"`, `decider`
-the verifier or other delegate that applied it, `chain` from the principal to that decider, and `under` equal to
-`approval:` followed by the `id` of the `approved` record (everything after the prefix is the id, looked up among the
-principal side's records of the settlement's own `ext` name and `project`), and `terms_digest` equal to the
-approval's. The `by` of such a settlement is still the principal side. A settlement whose `under` begins with
-`approval:` MUST be of kind `delegated`, and the id after the prefix MUST NOT be empty. The principal side MUST NOT
-send such a settlement unless the named record is a grant about the same item, in force over the records the principal
-side held when it settled, at the settlement's `terms_rev`, and the extension's conditions held. That duty is the
-principal side's: receivers do not make the settlement's validity depend on the other records they hold (V1), but a
-receiver that holds them MAY check and SHOULD report a settlement that fails it.
-
-**One approval store.** Where more than one implementation acts as the principal side (for example a personal
-assistant and a platform's built-in owner view), they MUST either share one store of approvals, retractions and
-settlements, in which using an approval is one atomic check-and-mark (so that two of them cannot both use it), or
-leave approvals to one of them alone. Either way, every implementation delivers its settlements of an item to the one
-that holds approvals before that one relies on an approval, and all of them follow the `ts` rule above.
-
-**After a retraction.** A retraction, or a lapse, never changes a settlement already made: state is computed from the
-registers (§6). When an approval is retracted, the principal side MUST present every current settlement made under it
-to the principal, who either confirms it (a `settled` that supersedes it, kind `confirmed`, `evidence.proposal` its
-id) or replaces or reopens it (§6). A lapse through amendment needs nothing further: the settlement is stale (§6).
+- **V1 — Validity and state never depend on checking evidence.** Whether a record is valid (§4, §5) and an item's
+  state (§6) are computed from the records' own content; they never depend on anyone checking a proof, or anything
+  else that `evidence` refers to. A receiver that checks nothing computes the same state from the same records.
 
 ## 6. Current state
 
@@ -453,18 +309,23 @@ Each register is folded separately, over all its records a receiver holds, regar
   greater `id` in Unicode code-point order. If there is no head (`supersedes` links form a cycle), the same rule
   applies to all records of the register.
 - There is a **conflict** in the register when there is more than one head, or a cycle (a record that lists itself
-  in `supersedes` is a cycle). Receivers MUST use the current
-  record and SHOULD report the conflict to a person.
+  in `supersedes` is a cycle). Receivers MUST use the current record and SHOULD report the conflict to a person.
 
 A requester's `amended` and `withdrawn` MUST list the item's current need record in `supersedes`, and every
 principal-side `settled` or `reopened` made while the settlement register holds records MUST list its current record.
-A receiver that nonetheless holds several heads uses the rule above and reports the conflict.
+The principal side MUST give each `settled` and `reopened` it makes a `ts` later than that of every
+settlement-register record of the item it holds, so that "later" means what happened. Where more than one
+implementation acts as the principal side (for example a personal assistant and a platform's built-in owner view),
+each SHOULD deliver every settlement-register record it makes to the others (the transport accepting it, §10) before
+it reports the record to the person as made, so that they do not fork the register. A receiver that nonetheless
+holds several heads uses the
+rule above and reports the conflict.
 
 From the two current records, the item's state is:
 
 | Settlement (current) | Need (current) | State |
 |---|---|---|
-| `settled` | any, or none | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the highest `terms_rev` held in the need register, or if the current need record has the same `terms_rev` but a terms digest other than its `terms_digest`. |
+| `settled` | any, or none | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the highest `terms_rev` among the held `raised` and `amended`, or if the current need record is a `raised` or `amended` with the same `terms_rev` and a terms digest other than its `terms_digest` (a current `withdrawn` is compared by `terms_rev` only). |
 | none, or `reopened` | `raised` or `amended` | **open** |
 | none, or `reopened` | `withdrawn` | by the extension's policy (§11): **open** under the *keep* policy (the principal side keeps presenting it and asks the principal), **withdrawn** under the *stop* policy (it is no longer presented) |
 | none, or `reopened` | none | **unknown**: no need record is held yet |
@@ -480,21 +341,10 @@ need record.
 A stale settlement stays settled. The principal side SHOULD present it to the principal again, and the requester
 SHOULD treat it as made against outdated terms.
 
-**Approvals** (§5.3) are folded apart from both registers and never change the state above. A grant (an `approved`
-with `approval.active: true`) is **in force** when all of these hold over the records a receiver holds:
-
-1. no held `approved` record about the item lists it in `supersedes`;
-2. the need register has no conflict, and its current record is a `raised` or `amended` (not `withdrawn`) whose
-   `terms_rev` equals the grant's `terms_rev`, is the highest `terms_rev` held, and whose terms digest (§5.3) equals
-   `approval.terms_digest`;
-3. no other held `raised` or `amended` with that `terms_rev` has a different terms digest;
-4. no held `settled` about the item names it in `authority.under`, and no held `settled` or `reopened` about the item
-   has a `ts` equal to or later than the grant's.
-
-If several grants are in force, the item's approval is the one with the latest `ts`, equal `ts` broken by the greater
-`id`. The item reports its approval in force, or none. Like the state, this depends only on the records held, not on
-their order or on anything checked outside them. An extension MAY narrow which terms an approval can be in force for
-(Decisions: only terms with criteria).
+The **settlement view** of an item is the part of this state a requester needs (§12): the current settlement-register
+record, and, if it is a `settled`, its outcome, authority kind, the members the extension defines on it (Decisions:
+`answer`) and whether it is stale, exactly as the table above says. It leaves out the state open, withdrawn or
+unknown, whether the need is withdrawn, the claims held, and reporting conflicts.
 
 ## 7. Claims, relations and notes
 
@@ -503,12 +353,11 @@ the principal say "I paid it", or a registrar that saw a declared line disappear
 claim changes no register. The principal side MAY accept it by recording a settlement that lists the claim's id in
 `adopts`, with kind `confirmed` if the principal confirmed it, or `attested` if evidence independent of the claimant
 shows the outcome (the claimant's own word, `evidence.basis` included, is never enough for `attested`); `adopts` MUST
-NOT appear on a settlement of any other kind, nor on any other record. An id in `adopts` adopts every held claim about
-the item with that id; an id in `verified.of` likewise names every record about the item with that id. A claim never
-removes an item from the principal's view. A claim MAY carry `terms_rev`, the terms version it refers to, and MAY
-carry verifiable entries (§5.2); a principal side that adopts a claim on the strength of its verifiable entries
-records the results in `verified` (V5) and settles `attested` only if every entry it relies on is `valid`. Extensions
-narrow what such entries may establish (Acts §2, Decisions §2).
+NOT appear on a settlement of any other kind, nor on any other record of the types this section and §6 define
+(modules say the rest, §11). Evidence the principal side does not check,
+including members of modules it does not implement, counts as the claimant's word. An id in `adopts` adopts every held
+claim about the item with that id. A claim never removes an item from the principal's view. A claim MAY carry
+`terms_rev`, the terms version it refers to.
 
 **Relations.** A `related` record carries `relation`:
 
@@ -520,13 +369,12 @@ narrow what such entries may establish (Acts §2, Decisions §2).
 
 - `same_as` is emitted by the principal side (`origin: "principal"`) when it treats two items as one, for example the
   same request raised by two projects, or a request repeating one already settled. Relations never change any item's
-  state (§6): when the principal side settles a group of related items, it MUST emit a `settled` for each item, so
-  that every requester computes the same state. A settlement under an approval (§5.3) covers only its own item: the
-  others stay open until they are settled on their own authority. One requester withdrawing leaves the other items
-  open. A relation the principal side sends to a project names an item of another project only by a `uri` that the
-  principal side alone can resolve, never by that project's `ext`, `project` and `key` (§13).
-  A requester that disagrees sends a `note` about its item saying why the two differ; the principal side SHOULD then
-  retract the relation.
+  state (§6): when the principal side settles a group of related items, it MUST emit a `settled` for each item, on
+  that item's own authority, so that every requester computes the same state. One requester withdrawing leaves the
+  other items open. A relation the principal side sends to a project names an item of another project only by a `uri`
+  that the principal side alone can resolve, never by that project's `ext`, `project` and `key` (§13). A requester
+  that disagrees sends a `note` about its item saying why the two differ; the principal side SHOULD then retract the
+  relation.
 - `derived_from` is emitted by the requester when its item arises from another item, inside or outside this family
   (§3 R5; a question asked while answering an inquiry from the principal; a task that an answer created).
 - `replaced_by` is emitted by the requester when it replaces its item with another of its own items: the same need,
@@ -535,7 +383,8 @@ narrow what such entries may establish (Acts §2, Decisions §2).
   an item sends `replaced_by` and then withdraws the item with the extension's replacement reason. An item with more
   than one active `replaced_by` has no replacement; the principal side SHOULD report it. How the principal side
   presents a replaced item is the extension's policy (§11). A requester's re-sent list that simply omits the old item
-  replaces nothing (R4), and no relation moves a settlement or an approval from one item to another.
+  replaces nothing (R4), and no relation moves a settlement, or anything a module binds to an item, from one item to
+  another.
 
 **Notes.** A `note` record carries information that changes no register: progress, a fact the principal mentioned, a
 premise that changed. It carries `about`, either `{"key": …}` for a keyed item or `{"quote": …}` with text in the
@@ -543,57 +392,55 @@ recipient's own words for something that was never keyed (exactly one of the two
 one the sender chooses that names no item. A note whose `about` has `key` MUST carry the same `key` (a validity rule).
 A note never settles anything. In particular, a note from the principal side saying a premise changed (a moved date)
 is not an amendment: the requester decides whether to amend its terms. A note MAY carry `terms_rev`, the terms version
-it refers to; it MUST when it carries verifiable entries (§5.2). A principal-side note MAY carry `verified`, which is
-how a verification that settled nothing is recorded (V5).
+it refers to.
 
 ## 8. Delivery and application
 
-- The principal side MUST deliver every settlement, approval, relation it emits, and note it addresses to a project to
-  that project, where its agents will read it next (an inbox, notes, a decision log), not only to a session that may
-  no longer exist.
+- The principal side MUST deliver every settlement-register record and relation it emits, every note it addresses to
+  a project, and every record a module tells it to deliver, to that project, where its agents will read it next (an
+  inbox, notes, a decision log), not only to a session that may no longer exist. Of the records it emits and does not
+  retract (§10), only notes may be kept unsent, where a module says so ([Evidence](../evidence/SPEC.md)).
 - **Mechanical versus judgement.** Only an extension's binding applies records mechanically, and only to keyed items
   (for example, striking a line in a state document). Everything else, including every note and every `quote`, is
   applied by judgement: the recipient decides what changes. Implementations MUST NOT apply a `quote` reference
   mechanically.
 - A `note` on any record is for the other party: on need records and claims, for the principal side, which SHOULD show
-  it with the item; on settlements, approvals and notes from the principal side, for the project.
-- What the principal side sends a project carries only what that project may know (§13), and its verification results
-  rather than proof bodies about the principal (§5.2).
+  it with the item; on records from the principal side, for the project.
+- What the principal side sends a project carries only what that project may know (§13).
 
 ## 9. When a person decides
 
-These rules apply to every settlement and every approval (§5.3) of kind `principal` or `confirmed`, that is, whenever
-a natural person decides or confirms, whether the principal or an organisation's representative.
+These rules apply to every settlement of kind `principal` or `confirmed`, that is, whenever a natural person decides
+or confirms, whether the principal or an organisation's representative, and to whatever else a module says a person
+decides.
 
 - The principal side MUST present the terms at the `terms_rev` it records, and SHOULD record `evidence.presented`. If
   the terms change before the person decides, the principal side MUST present them again.
 - The principal side SHOULD show the requester's working assumption as such, and SHOULD NOT pre-select it.
 - The principal side SHOULD show, or flag, members of the terms it does not recognise: a requester must not rely on
   terms the person was never shown.
-- Before an approval, the principal side MUST make clear what it authorises: that a verifier may settle the item
-  without the person seeing the result, on what conditions, and for these terms only.
 - The principal side SHOULD batch and rate-limit items per project and SHOULD NOT present an item it can settle under
   an existing mandate. A person's attention is the scarce resource this family protects.
 - *Note (informative):* a person who confirms everything they are shown is deciding only in name. Recording
   `presented`, the authority kind and the decider makes that visible, and is a precondition for the human oversight
-  that rules such as the EU AI Act Article 14 require of high-risk systems. Approvals (§5.3) exist so that a person
-  can decide what counts as done instead of reviewing more work than they can read; they do not make the review
-  unnecessary, they move it (§13).
+  that rules such as the EU AI Act Article 14 require of high-risk systems.
 
 ## 10. Identifiers, deduplication and ordering
 
-- A record id MUST be unique per logical record within its (`ext` name, `project`, `origin`), and MUST be the same on
-  every retransmission. Extensions say how ids are derived when a sender must re-create them after a crash. A sender
-  MUST NOT reuse an id for a different record. Ids are scoped by `origin` so that no party can displace another
-  role's record by reusing its id; every reference to an id (`supersedes`, `adopts`, `under`, `verified.of`) names a
-  record of the origin that reference implies (the register's owner, a claimant, the principal side).
+- A record id MUST be unique per logical record within its (`ext` name, `project`, `origin`), whatever its type, and
+  MUST be the same on every retransmission. Extensions say how ids are derived when a sender must re-create them after
+  a crash. A sender MUST NOT reuse an id for a different record. Ids are scoped by `origin` so that no party can
+  displace another role's record by reusing its id; every reference to an id (`supersedes`, `adopts`, and those a
+  module defines) names a record of the origin that reference implies (the register's owner, a claimant, the
+  principal side), or of the origin it states.
 - Receivers MUST discard a record identical to one they have already processed with the same (`ext` name, `project`,
   `origin`, `id`). A record that fails validation, or names a version the receiver does not implement (§4), is not
   processed: it is ignored, and does not block a valid record with the same id. A receiver that sees an id reused
   with different valid content keeps the one whose RFC 8785 serialisation is greater in code-point order, whatever
   the arrival order, and SHOULD report it unless the two differ only in `ts` (a record re-created after a crash). A
   need record replaced this way changes the terms at its `terms_rev`; settlements made on the other content become
-  stale through their `terms_digest` (§6).
+  stale through their `terms_digest` (§6). A record never displaces a record of another type, and every reference
+  to an id names records of the types it implies (`supersedes`: the same register; `adopts`: claims).
 - Senders MUST retry until the transport accepts the record (at-least-once delivery). Ordering is not guaranteed;
   §6 makes the current state independent of arrival order.
 - A record that was never sent MAY be retracted by its sender without trace (for example, a settlement held for an
@@ -601,7 +448,7 @@ a natural person decides or confirms, whether the principal or an organisation's
 - This family does not define a transport. Any transport with at-least-once delivery and authenticated senders will
   do: an HTTPS webhook, a message bus, a shared append-only log, an MCP tool call, an A2A message.
 
-## 11. Extensions
+## 11. Extensions and modules
 
 An extension document MUST define:
 
@@ -610,21 +457,53 @@ An extension document MUST define:
 3. its `outcome` values for settlements and claims, and its `reason` values for withdrawals;
 4. its table of (`type`, `origin`) pairs with schemas, restricting §4;
 5. its policy for an item whose need is withdrawn and whose settlement is open (§6);
-6. any binding that applies records mechanically, and what it applies;
-7. whether its items take approvals (§5.3) and, if they do, what an approval authorises and under what conditions a
-   settlement may be made under one;
-8. its policy for an item withdrawn as replaced by another (§7);
-9. its conformance classes and suite.
+6. its policy for an item withdrawn as replaced by another (§7);
+7. any binding that applies records mechanically, and what it applies;
+8. its conformance classes and suite.
+
+A **module** adds optional members, record types and rules to the extensions it names. It has no `ext` value: it is
+versioned with what it layers on, so a record's `ph` and `ext` also fix the version of every module whose content it
+carries. A module record type changes no register; it is valid only in an extension whose table lists its (`type`,
+`origin`) pair (§4).
+
+- **A module never changes validity or state.** Whether a record is valid under the core and its extension, and every
+  item's state (§6), are the same for a receiver that implements a module as for one that does not. For a module
+  record, validity is the rules of §4 that hold for every record (I-JSON, integer bounds, `ph` agreeing with `ext`,
+  `ts`, the core record schema, the pair the extension lists), R6 and the sender's role (§13); the rules of §5 and §7
+  are for the core types. A module record that fails one of these is invalid; the module's own schema and rules are
+  for receivers that implement it. A module states two kinds of rules: **structural rules** on its **module content**
+  (the members it defines, its record types, and what it reads into core members, as the module says), and **duties**
+  of the party that emits. A receiver that implements the module and finds a record that breaks a structural rule
+  ignores that record's module content and SHOULD report it; one that finds a duty broken SHOULD report it. A module
+  built on another applies its rules to what the other leaves after its own. A receiver that does not implement a
+  module consumes that module's records without acting on them, and ignores its members.
+- **Reserved prefixes.** A module MAY define a prefix of `authority.under` that names a mandate recorded in this
+  family. The prefixes so defined are reserved: `approval:` ([Criteria](../criteria/SPEC.md)). To a receiver that does
+  not implement the module, such an `under` is opaque, like any other.
+- **Modules are configured.** Which modules each party implements is configured per deployment, like roles. A party
+  MUST NOT rely on a module its counterpart is not configured for. Where the principal side does not implement a
+  module, items are presented to the principal as any other (R4): nothing waits on a module that is absent.
+
+A module document MUST define: the documents it layers on and those it requires; the members and record types it
+adds, and the (`type`, `origin`) pairs extensions list for it; its structural rules and what they make it ignore; the
+duties it places on each party; any `under` prefix it reserves; its conversion between versions (§14); and its
+conformance classes and suite.
 
 ## 12. Conformance
 
-- A **conforming requester** emits only the need records, claims, relations and notes R1–R3 allow, increments
-  `terms_rev` on each amendment, and applies delivered records as in §8.
-- A **conforming principal side** emits settlements and approvals only as in §3 and §5, records verification results
-  as V5 requires, computes state as in §6, delivers as in §8, and follows §9. A **verifiable** principal side
-  additionally puts `evidence.proof` on every settlement and approval of kind `principal` or `confirmed`.
-- Every role is configured as R6 requires, validates records (§4, §5), deduplicates (§10), and computes the same
-  current state and approval in force from the same records (§6).
+- A **conforming requester** emits only the need records, claims, relations and notes R1–R3 and §7 allow, with ids
+  as §10 says, increments `terms_rev` on each amendment, validates the records it receives (§4, §5), deduplicates
+  (§10), computes for each of its items the settlement view (§6), and applies delivered records as in §8.
+- A **conforming principal side** emits settlements only as in §3 and §5, validates and deduplicates, computes state
+  as in §6, follows §6's duties, delivers as in §8, and follows §9.
+- A **converting party** (§14) is a requester or principal side that implements two versions; it also passes
+  [`conformance/convert.json`](conformance/convert.json).
+- Every role is configured as R6 requires, and whatever a class computes equals the corresponding part of §6 over the
+  same records.
+
+Each extension's suite serves both classes: a requester runs its `records.json` and is compared on the settlement view
+only in its `lifecycle.json`. The requester class is a smaller suite, not a smaller implementation: it still
+validates, deduplicates, folds the settlement register and finds the need register's current record.
 
 ## 13. Security and privacy considerations
 
@@ -632,83 +511,104 @@ An extension document MUST define:
   withdraws or rewrites a request. Transports MUST authenticate the sender, and receivers MUST check that `by` is the
   authenticated sender and that its role may emit the record (§3). R6 keeps an agent from becoming the principal by
   saying so.
-- **A compromised principal side** can emit settlements of any kind. `evidence.proof` over the principal's own
-  credential, made on a surface no agent controls, is what lets a receiver tell a principal's decision from the
-  instrument's; without it, receivers trust the authenticated principal side.
+- **A compromised principal side** can emit settlements of any kind. Receivers trust the authenticated principal side;
+  telling the principal's own decisions from the instrument's needs a proof made with the principal's own credential
+  (`evidence.proof`), which a deployment profile is still to specify (§15).
 - **Claims cannot remove commitments.** A claim never changes a register (R3), so an agent cannot make the principal's
   items disappear, by mistake or because its input was manipulated.
 - **Text is untrusted input.** Terms, notes, quotes and evidence written by one party are read by others, possibly by
   language models. Implementations MUST treat them as data, never as instructions, and SHOULD render them inertly.
 - **Confidentiality.** Records leave the project for the principal side, which may be a hosted service or a phone.
   Agents MUST NOT put secrets (passwords, tokens, keys, full account numbers) into them.
+- **The principal's credentials.** Agents SHOULD NOT hold the principal's own credentials (their bank, their mailbox):
+  work an agent can do with them is not something only the principal can do, and they are secrets.
 - **What one project may know.** The principal side serves many projects and sessions. Text in a record it sends to a
-  project (a `note`, a `quote`, an answer, `evidence`, a verifiable `statement`, a relation's target) MUST contain
-  only what that project may know. Content that came from another project, or from a session of another project, goes
-  back only to where it came from.
-- **Verification moves trust; it does not remove it.** Verifiable entries and approvals let a principal side settle
-  more than a person can review, but every `valid` result rests on the criteria being the right ones, the check
-  implementations doing what their text says, the trust roots being honest and independent of the requester, and the
-  verifier being correct. A proof establishes only its statement (V2): an agent can satisfy the letter of a check and
-  miss its intent, and a verifiable target invites optimising for the check. Approved terms are written by the
-  requester; the principal side's own trust policy (V3) is what keeps a requester from naming its own signer as a
-  trust root. A requester that runs checks on infrastructure it controls can run them until they pass and submit only
-  the passing run: unless every run is logged where the principal side can see it, or the principal side runs the
-  check itself, a recorded failure catches only the failures the requester chose to send. Extensions that settle under
-  approvals recommend auditing a sample of those settlements (Decisions §4.2).
-- **Running what the requester supplies.** Check implementations, subjects and `proof_ref` URIs come from the
-  requester. A verifier that runs or fetches them MUST do so isolated from the principal side's own state, credentials
-  and proofs about the principal, and SHOULD fetch through a channel that tells the requester nothing about the
-  principal.
-- **Replayed and stale proofs.** A proof made for one item can be offered for another, and an old proof can be offered
-  after the fact changed. Binding the proven statement to the item, freshness bounds per format, and reporting reuse
-  (V3, V4) are the defences.
-- **Proofs about the principal.** Selective-disclosure credentials (SD-JWT, BBS) and web proofs (zkTLS, TLSNotary) can
-  disclose facts about the principal: their identity, accounts and payments. Such proofs stay with the principal side
-  (§5.2). An agent able to produce a web proof over the principal's own account must hold that account's session, that
-  is, the principal's credentials; agents SHOULD NOT hold them (work an agent can do with the principal's credentials
-  is not something only the principal can do, and those credentials are secrets, above). Proofs about the principal's
-  accounts are therefore made by the principal side, on a surface the principal controls; agents offer proofs about
-  their own work and about public facts.
-- **Approvals are authority.** A forged or replayed approval lets a verifier settle without the principal. Approvals
-  are bound to one item and one terms version, authorise one settlement (§5.3), and `evidence.proof` on them is what
-  lets a receiver tell the principal's approval from the instrument's. An approved item whose requester never submits
-  stays unsettled; the principal side SHOULD present it to the principal again at its due date, or after a period it
-  tells the principal, rather than keep it out of view (§9).
+  project (a `note`, a `quote`, an answer, `evidence`, a relation's target) MUST contain only what that project may
+  know. Content that came from another project, or from a session of another project, goes back only to where it came
+  from.
 - **Resource limits.** Receivers SHOULD bound record size, text length and record rate per project.
 
 ## 14. Versioning
 
-- `ph` carries the core version; `ext` carries each extension's name and version.
-- Before 1.0, every version is its own contract: senders and receivers support exactly the versions they claim. From
-  1.0 on, adding optional members, record types or outcome values will be a minor change; removing or renaming a
-  member, or changing the meaning of one, will require a new major version.
-- A version leaves draft status only once, for every conformance class with a suite, two independent
-  implementations of that class pass it. Implementations that play different roles (for example a requester on one
-  side and a principal side on the other) show that the records interoperate, not that two readers of the same text
-  read it the same way, so they do not count towards each other's class. Implementations by the same author, or
-  built on the same codebase, are not independent.
+- `ph` carries the core version; `ext` carries each extension's name and version. Each extension version names the
+  core version it extends, so the pair is fixed. Before 1.0 the family is released together: core, extensions and
+  modules share one version number.
+- Before 1.0, every version is its own contract: senders and receivers support exactly the versions they claim,
+  except as **Mixed versions** below allows. From 1.0 on, adding optional members, record types or outcome values will
+  be a minor change; removing or renaming a member, or changing the meaning of one, will require a new major version.
+  That promise does not cover a module that is still experimental.
+- Each document has its own status. A version of a document leaves draft status only once, for every conformance
+  class with a suite, two independent implementations of that class pass it. Implementations that play different
+  roles (for example a requester on one side and a principal side on the other) show that the records interoperate,
+  not that two readers of the same text read it the same way, so they do not count towards each other's class.
+  Implementations by the same author, or built on the same codebase, are not independent. A module that no
+  implementation besides this family's reference code passes is **experimental**; it becomes a draft once one does.
+  A module's status never holds back the core or an extension.
 
-**Change log.** 0.4 (2026-11-01): verifiable entries (`evidence.verifiable`) and verification results
-(`evidence.verified`) with rules V1–V5; approvals, a new `approved` record and the one mandate this family defines,
-bound to an item's terms by the terms digest and referenced as `under: "approval:<id>"` (§5.3, §15); the approval in
-force is folded beside the registers (§6); the `replaced_by` relation; `terms_rev` on claims and notes; R4 covers a
-requester's listing that omits an item; §13 covers text sent to a project, proofs and approvals; leaving draft
-needs two independent implementations per conformance class (§14). Every extension is re-pinned to core 0.4. 0.3 (2026-10-27): the event model of 0.2 is replaced by two registers with owners, claims,
-relations and notes; resolutions carry an authority kind, a decider and evidence; the principal is defined
-structurally and configured (R6); Tasks and Questions become the Acts and Decisions extensions. A mapping from every
-0.2 event to 0.3 records is in each extension. 0.2 (2026-10-27): split from Human Task Handoff 0.1.
+**Mixed versions.** Parties upgrade one at a time, so for a while two counterparts may speak versions N−1 and N of an
+extension.
 
-## 15. Scope
+1. Which version each party speaks is configured, per role, project and extension, like the roles themselves (§1):
+   all parties holding one role in a project speak one version of an extension.
+2. A party MAY implement both N−1 and N, with the validity rules of both, during the transition. That party
+   converts; its counterpart changes nothing. It validates every record it receives in N−1 under N−1 and ignores it if
+   it is invalid there. It keeps the records as they were sent and converts them to N each time it folds, so that a
+   conversion that depends on other records held (below) is a function of the records held, not of their order; the
+   converted form is never passed on as the counterpart's record. It converts every record it sends to an N−1
+   counterpart to N−1. Two parties that both speak N use N.
+3. Conversion keeps `id` (§10) and removes `evidence.proof`. Where the terms digest changes between the versions (0.4
+   and 0.5 do: 0.4's covered the extension version), a settlement's `terms_digest` becomes the digest, in the target
+   version, of the held need record at its `terms_rev` whose digest in the source version equals it; if no held need
+   record matches, the value is kept (the settlement was made on other terms, or its need record is not held yet; the
+   next fold after it arrives converts the settlement). Each extension, and each module with records of its own,
+   states the rest of its conversion in both directions in its "changes" section. A version whose conversion changes
+   the meaning of a member of `terms` without changing its bytes MUST say so, and its conversion then keeps a
+   settlement's `terms_digest` as it is, so that the settlement reads as stale (§4).
+   [`conformance/convert.json`](conformance/convert.json) holds the vectors for 0.4 and 0.5.
+4. A party that implements both versions MUST NOT make, about an item whose counterpart speaks N−1, a record that has
+   no valid N−1 form.
+
+**Change log.** 0.5 (2026-11-01): a restructuring release. Verifiable entries and verification results (0.4 §5.2,
+V2–V5) move to the [Evidence](../evidence/SPEC.md) module; approvals (0.4 §5.3 and the approval fold of §6) move to
+the [Criteria](../criteria/SPEC.md) module, layered on Decisions; modules never change validity or state (§11); the
+terms digest is defined in §4 and computed over the extension name without its version; the principal side's `ts`
+duty, in 0.4 a rule of approvals, binds every principal side, and implementations that share the principal side
+deliver their settlement-register records to each other (§6, new); the requester class computes only
+the settlement view (§6, §12); mixed versions (§14). Rules of 0.4 that 0.5 relaxes, so that records invalid in 0.4
+may be valid in 0.5:
+
+- malformed `evidence.verifiable` or `evidence.verified`, and verifiable entries without `terms_rev`, no longer make a
+  record invalid (a receiver implementing Evidence ignores them);
+- malformed `terms.criteria` no longer makes a need record invalid (Criteria ignores the criteria);
+- the shape of a settlement under an approval, and of an `approved` record beyond the core checks, is no longer a
+  validity rule (Criteria ignores it and reports it); an `under` beginning with `approval:` in Acts is no longer
+  invalid (the prefix is reserved, the value opaque);
+- a deployment can no longer make a settlement without a verifying `evidence.proof` invalid by configuring the
+  principal's keys, and the *verifiable* principal side is gone (§15);
+- the approval in force is no longer computed by every role;
+- the terms digest no longer covers the extension version;
+- records of different types with the same id (a module record and a core record, but also, say, a `raised` and an
+  `amended`) no longer displace each other (§10);
+- `evidence.proof` is only reserved: 0.4's SHOULD on settlements of kind `principal` or `confirmed`, its SHOULD on
+  evidence of a representative's power, and its definition over the record's JCS form wait for the deployment profile
+  (§15).
+
+0.4 (2026-11-01): verifiable entries and verification results with rules V1–V5; approvals, a new `approved` record
+bound to an item's terms by the terms digest; the `replaced_by` relation; `terms_rev` on claims and notes; R4 covers
+a requester's listing that omits an item; §13 covers text sent to a project; leaving draft needs two independent
+implementations per conformance class (§14). 0.3 (2026-10-27): the event model of 0.2 is replaced by two registers
+with owners, claims, relations and notes; resolutions carry an authority kind, a decider and evidence; the principal
+is defined structurally and configured (R6); Tasks and Questions become the Acts and Decisions extensions. A mapping
+from every 0.2 event to 0.3 records is in each extension. 0.2 (2026-10-27): split from Human Task Handoff 0.1.
+
+## 15. Scope and open issues
 
 Out of scope, deliberately:
 
-- **Mandate formats and lifecycle, except approvals.** Issuing, scoping, revoking and verifying mandates belong to
-  their own systems (§16); for those this family only records the reference (`under`) and the chain. The one exception
-  is the approval (§5.3), a deliberately narrow mandate defined here: it is granted by a person, covers one item's
-  terms at one `terms_rev` and nothing else, cannot be transferred, lapses when the terms change, and authorises only
-  what the item's extension says. An `under` beginning with `approval:` refers to one; every other `under` stays an
-  opaque reference to another system. Standing instructions that span items ("pay any invoice under 50 euros") remain
-  out of scope.
+- **Mandate formats and lifecycle.** Issuing, scoping, revoking and verifying mandates belong to their own systems
+  (§16); this family records the reference (`under`) and the chain. A module may define a narrow mandate recorded in
+  this family ([Criteria](../criteria/SPEC.md)'s approvals); standing instructions that span items ("pay any invoice
+  under 50 euros") remain out of scope.
 - **Group decision procedures.** An organisation or body may be the principal if it presents one principal side; how
   its members decide (quorum, separation of duties) is internal to that side. Settlements name the representative who
   acted (§5).
@@ -720,6 +620,14 @@ Out of scope, deliberately:
 - **Software agents as principals.** The type constraint in §1 reflects that no legal regime gives software agents
   the standing and oversight a principal implies. A future version MAY revisit it if such a regime exists, together
   with whatever oversight it brings; the rest of this model does not depend on the principal being a person.
+
+Open issues, to be specified later:
+
+- **Resync and completeness.** A receiver cannot yet ask for every record about an item, nor tell that it holds them
+  all; §6 makes the state independent of order, not of loss.
+- **A signed-principal deployment profile.** A proof format for `evidence.proof`, how receivers are configured with
+  the principal's verification keys, whether a record whose proof does not verify is then invalid, and a *verifiable*
+  principal side that signs every decision a person makes (0.4 §5.2 and §12 had a first version).
 
 ## 16. Relation to other specifications
 
@@ -735,7 +643,8 @@ those protocols and to reference their mandates, not to replace them.
   **A2A** carries delegation between agents, including inquiries from the principal's assistant to a project (§15).
 - **AP2, OAuth (RFC 8693 token exchange, RAR) and UCAN** define mandates and delegation. `under` references their
   mandates; `chain` records the actors in the way RFC 8693's nested `act` claims do, except that here the whole chain
-  matters for accountability, not only the current actor. AP2's Trusted Surface is the model for `evidence.proof`.
+  matters for accountability, not only the current actor. AP2's Trusted Surface is the model for `evidence.proof`
+  (§15).
 - **W3C PROV** supplies the vocabulary this model follows: attribution (`by`, `decider`), acting on behalf of
   (`chain`, `under`), revision (`supersedes`) and derivation (`derived_from`).
 - **CHAP** specifies a coordinator-hosted workspace in which several people and agents assign, review and override
@@ -747,19 +656,13 @@ those protocols and to reference their mandates, not to replace them.
 - **EU AI Act Article 14** requires that high-risk systems can be effectively overseen by natural persons; §9's
   records are what such oversight needs to be checkable.
 - **AGENTS.md** tells agents how to work in a repository; a project using this family SHOULD say so there.
-- **Verifiable evidence** borrows its proof systems instead of defining any: web proofs over TLS (TLSNotary, DECO and
-  other "zkTLS" systems), selective-disclosure credentials (SD-JWT, RFC 9901; BBS signatures), and signed build and
-  test attestations (in-toto, SLSA). `format` names them; this family records what was proven and what was checked.
-- **Approvals** apply an idea from scalable-oversight research: when a person cannot check the work, they decide what
-  a cheap, trusted check must establish, as in proof-carrying code (the consumer sets a safety policy and checks a
-  proof instead of the code), AI safety via debate and prover-verifier games. As there, the check is only as good as
-  the policy and the verifier (§13).
 
 ## References
 
 - [RFC 2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
 - [RFC 8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017.
 - [RFC 3339] Klyne, G. and C. Newman, "Date and Time on the Internet: Timestamps", RFC 3339, July 2002.
+- [RFC 7493] Bray, T., Ed., "The I-JSON Message Format", RFC 7493, March 2015.
 - [RFC 8259] Bray, T., Ed., "The JavaScript Object Notation (JSON) Data Interchange Format", RFC 8259, December 2017.
 - [RFC 8693] Jones, M., et al., "OAuth 2.0 Token Exchange", RFC 8693, January 2020.
 - [RFC 8785] Rundgren, A., Jordan, B., and S. Erdtman, "JSON Canonicalization Scheme (JCS)", RFC 8785, June 2020.
@@ -771,8 +674,3 @@ those protocols and to reference their mandates, not to replace them.
 - Collaborative Human-Agent Protocol (CHAP), <https://github.com/BrightbeamAI/chap>.
 - Regulation (EU) 2024/1689 (AI Act), Article 14.
 - AGENTS.md, <https://agents.md>.
-- [RFC 9901] Fett, D., Yasuda, K., and B. Campbell, "Selective Disclosure for JSON Web Tokens", RFC 9901, November
-  2025.
-- Necula, G. C., "Proof-Carrying Code", POPL 1997.
-- Irving, G., Christiano, P., and D. Amodei, "AI safety via debate", arXiv:1805.00899, 2018.
-- Kirchner, J. H., et al., "Prover-Verifier Games improve legibility of LLM outputs", arXiv:2407.13692, 2024.

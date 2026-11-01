@@ -1,4 +1,4 @@
-"""Runs the Principal Handoff Decisions 0.4 conformance suite against the reference implementation.
+"""Runs the Principal Handoff Decisions 0.5 conformance suite against the reference implementation.
 
     cd specs/principal-handoff/reference && python3 -m unittest -v
 """
@@ -9,7 +9,7 @@ import pathlib
 import unittest
 
 import ph_decisions as decisions
-from ph_core import Config
+from ph_core import VIEW, Config
 
 CONF = pathlib.Path(__file__).resolve().parent.parent / "decisions" / "conformance"
 
@@ -35,6 +35,14 @@ class Conformance(unittest.TestCase):
         for c in s["cases"]:
             with self.subTest(c["id"]):
                 self.assertEqual(decisions.fold(c["records"], Config(s["principal"])), c["expect"])
+
+    def test_requester_settlement_view(self):
+        """core section 12: a requester computes the settlement view from need records and principal-side records."""
+        s = suite("lifecycle.json")
+        for c in s["cases"]:
+            with self.subTest(c["id"]):
+                self.assertEqual(decisions.settlement_view(c["records"], Config(s["principal"])),
+                                 {k: c["expect"][k] for k in VIEW})
 
     def test_lifecycle_does_not_depend_on_arrival_order(self):
         s = suite("lifecycle.json")

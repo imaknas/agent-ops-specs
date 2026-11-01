@@ -1,0 +1,610 @@
+{
+  "suite": "evidence/0.5",
+  "principal": "p:owner",
+  "principal_type": "natural",
+  "description": "Evidence section 2: record -> whether it is valid under the core and its extension (the same for every receiver), and whether a verifier uses or ignores its verifiable and verified.",
+  "cases": [
+    {
+      "id": "claimed-verifiable-without-terms-rev",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "claimed-verifiable-both-proof-forms",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              },
+              "proof": "eyJhbGciOi..."
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "claimed-verifiable-without-proof",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "claimed-verifiable-duplicate-ids",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            },
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "claimed-verifiable-bad-digest",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha256:abc"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "claimed-with-verified",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ],
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "raised-with-verifiable",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "r9",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Renew the domain"
+        },
+        "terms_rev": 1,
+        "evidence": {
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "raised",
+      "evidence": "ignored"
+    },
+    {
+      "id": "settled-attested-verified",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:verifier"
+        },
+        "adopts": [
+          "c1"
+        ],
+        "evidence": {
+          "basis": "claim c1, its TLSNotary proof verified",
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "settled",
+      "evidence": "used"
+    },
+    {
+      "id": "settled-verified-bad-result",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:verifier"
+        },
+        "adopts": [
+          "c1"
+        ],
+        "evidence": {
+          "basis": "claim c1, its TLSNotary proof verified",
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "ok",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "settled",
+      "evidence": "ignored"
+    },
+    {
+      "id": "settled-verified-without-entry",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:verifier"
+        },
+        "adopts": [
+          "c1"
+        ],
+        "evidence": {
+          "basis": "claim c1, its TLSNotary proof verified",
+          "verified": [
+            {
+              "of": {
+                "record": "c1"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "settled",
+      "evidence": "ignored"
+    },
+    {
+      "id": "note-principal-verified",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "used"
+    },
+    {
+      "id": "note-requester-verified",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "n6",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-28T09:00:00Z"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "submission",
+      "record": {
+        "ph": "0.5",
+        "ext": "decisions/0.5",
+        "id": "n:q-demo-7:1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "about": {
+          "key": "q-demo-7"
+        },
+        "terms_rev": 1,
+        "evidence": {
+          "verifiable": [
+            {
+              "id": "tests",
+              "format": "in-toto",
+              "statement": "CI ran check tests on commit sha-256:3333333333333333333333333333333333333333333333333333333333333333 and it passed",
+              "proof_ref": {
+                "uri": "https://ci.example/attestations/tests",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            },
+            {
+              "id": "licence",
+              "format": "in-toto",
+              "statement": "CI ran check licence on commit sha-256:3333333333333333333333333333333333333333333333333333333333333333 and it passed",
+              "proof_ref": {
+                "uri": "https://ci.example/attestations/licence",
+                "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+              }
+            }
+          ]
+        },
+        "note": "Both checks ran on the subject commit."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "used"
+    },
+    {
+      "id": "submission-without-terms-rev",
+      "record": {
+        "ph": "0.5",
+        "ext": "decisions/0.5",
+        "id": "n:q-demo-7:1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "about": {
+          "key": "q-demo-7"
+        },
+        "evidence": {
+          "verifiable": [
+            {
+              "id": "tests",
+              "format": "in-toto",
+              "statement": "CI ran check tests on commit sha-256:3333333333333333333333333333333333333333333333333333333333333333 and it passed",
+              "proof_ref": {
+                "uri": "https://ci.example/attestations/tests",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            },
+            {
+              "id": "licence",
+              "format": "in-toto",
+              "statement": "CI ran check licence on commit sha-256:3333333333333333333333333333333333333333333333333333333333333333 and it passed",
+              "proof_ref": {
+                "uri": "https://ci.example/attestations/licence",
+                "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+              }
+            }
+          ]
+        },
+        "note": "Both checks ran on the subject commit."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "note-principal-failed-verification",
+      "record": {
+        "ph": "0.5",
+        "ext": "decisions/0.5",
+        "id": "n:q-demo-7:v1",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T11:05:00Z",
+        "about": {
+          "key": "q-demo-7"
+        },
+        "terms_rev": 1,
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "n:q-demo-7:1",
+                "entry": "tests"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T11:05:00Z"
+            },
+            {
+              "of": {
+                "record": "n:q-demo-7:1",
+                "entry": "licence"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-27T11:05:00Z"
+            }
+          ]
+        },
+        "note": "Check tests did not verify; the decision goes to the principal."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "used"
+    },
+    {
+      "id": "verified-at-not-a-date",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-02-30T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    }
+  ]
+}

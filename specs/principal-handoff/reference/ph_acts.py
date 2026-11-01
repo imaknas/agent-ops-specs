@@ -1,10 +1,11 @@
-"""Reference registrar for Principal Handoff Acts 0.4, Markdown binding (acts/SPEC.md sections 4 to 6).
+"""Reference registrar for Principal Handoff Acts 0.5, Markdown binding (acts/SPEC.md sections 4 to 6).
 
 Standard library only, Python >= 3.11.
 
   parse(doc, profile)                        -> {"sections", "tasks", "problems", "unclosed"}
-  relink(doc, active, profile, bound)        -> (doc, [key])                    step 2: re-stamp lines that lost their marker
-  register(doc, project, profile, bound)     -> (doc, [{"key", "text"}], [line])  step 3: raise and stamp; lines to report
+  relink(doc, active, profile, bound, known) -> (doc, [key])                    step 2: re-stamp lines that lost their marker
+  register(doc, project, profile, bound, known)
+                                             -> (doc, [{"key", "text"}], [line])  step 3: raise and stamp; lines to report
   amend(doc, latest, profile)                -> {"amended": [{"key", "text"}], "warn": [key]}   step 4
   apply(doc, record, profile, latest)        -> (doc, changed)                  step 1: apply one settlement record
   reconcile(doc, active, profile, bound)     -> [{"key", "action"}]             step 5: ticked, displaced, warn, claim;
@@ -12,7 +13,8 @@ Standard library only, Python >= 3.11.
   recipe_key(project, text)                  -> key                             the example key recipe (non-normative)
 
 `bound` is the set of keys the registrar itself raised from lines of this document (section 4); None means every key
-the caller passes is bound. `active` and `latest` map active bound keys to their latest terms text. Documents are plain
+the caller passes is bound. `known` is the set of keys outside the binding the registrar holds need records for (step 3:
+lines carrying one are neither raised nor relinked). `active` and `latest` map active bound keys to their latest terms text. Documents are plain
 strings. Line numbers are 0-based indexes into doc.split("\\n") (a final empty element produced by a trailing newline
 is not a line). The registrar does nothing with an incomplete document (step 0); callers check parse()["unclosed"].
 """
@@ -293,16 +295,17 @@ def parse(doc: str, p: Profile) -> dict:
             "problems": d.problems, "unclosed": d.unclosed}
 
 
-def relink(doc: str, active: dict, p: Profile, bound: set | None = None) -> tuple[str, list[str]]:
+def relink(doc: str, active: dict, p: Profile, bound: set | None = None,
+           known: set = frozenset()) -> tuple[str, list[str]]:
     """Step 2. active: active bound keys -> latest terms text. Of those no line mentions, a key whose text equals
-    exactly one unkeyed (or wrongly keyed) principal line of the first section, and that line's text no other such
-    key, gets that line back."""
+    exactly one unkeyed (or wrongly keyed, but not known) principal line of the first section, and that line's text no
+    other such key, gets that line back."""
     d = _Doc(doc, p)
     if d.unclosed is not None:
         return doc, []
     vanished = {k: norm(t) for k, t in active.items() if (bound is None or k in bound) and not d.mentions(k)}
     lines = [e for e in d.tasks() if e.section == 0 and e.owner == "principal"
-             and (e.key is None or (bound is not None and e.key not in bound))]
+             and (e.key is None or (bound is not None and e.key not in bound and e.key not in known))]
     done = []
     for e in lines:
         keys = [k for k, t in vanished.items() if t == norm(e.text)]
@@ -313,10 +316,10 @@ def relink(doc: str, active: dict, p: Profile, bound: set | None = None) -> tupl
     return (d.text() if done else doc), done
 
 
-def register(doc: str, project: str, p: Profile, bound: set | None = None,
+def register(doc: str, project: str, p: Profile, bound: set | None = None, known: set = frozenset(),
              derive=recipe_key) -> tuple[str, list[dict], list[int]]:
-    """Step 3. Stamp every principal line of the first section that carries no key, or an unbound one; return the new
-    document, the items to send `raised` for, and the lines it did not raise and reports.
+    """Step 3. Stamp every principal line of the first section that carries no key, or one neither bound nor known;
+    return the new document, the items to send `raised` for, and the lines it did not raise and reports.
 
     A real registrar sends each record before writing the stamp (acts/SPEC.md section 4); here both are returned.
     """
@@ -327,6 +330,9 @@ def register(doc: str, project: str, p: Profile, bound: set | None = None,
     mention = p.mention_re()
     for e in d.tasks():
         if e.section != 0 or e.owner != "principal" or not (e.key is None or (bound is not None and e.key not in bound)):
+            continue
+        if e.key is not None and e.key in known:
+            reported.append(e.i)  # an item raised outside the binding, its marker copied onto the line
             continue
         key = derive(project, e.text)
         if mention.search(e.text) or (bound is not None and key in bound) or norm(e.text) in seen:
@@ -358,9 +364,11 @@ def amend(doc: str, latest: dict, p: Profile) -> dict:
     return out
 
 
-def apply(doc: str, record: dict, p: Profile, latest: dict | None = None) -> tuple[str, bool]:
+def apply(doc: str, record: dict, p: Profile, latest: dict | None = None,
+          bound: set | None = None) -> tuple[str, bool]:
     """Step 1: apply one record. Only principal-side settlement records change the document (invariant I2). latest is
-    the registrar's {"text", "terms_rev", "terms_digest"?} for the key, or None when it holds no terms for it."""
+    the registrar's {"text", "terms_rev", "terms_digest"?} for the key (bound or known), or None when it holds no terms
+    for it. Only a bound key is re-added after a reopening; bound None means the key is bound."""
     if record.get("origin") != "principal" or record.get("type") not in ("settled", "reopened"):
         return doc, False
     d = _Doc(doc, p)
@@ -385,8 +393,8 @@ def apply(doc: str, record: dict, p: Profile, latest: dict | None = None) -> tup
             if not any(kept[i].strip() for i in range(start, end)):
                 kept.insert(start, p.placeholder)
         return _join(kept, d.eol), True
-    if d.holding(key):
-        return doc, False  # reopened, and the line is still there
+    if d.holding(key) or (bound is not None and key not in bound):
+        return doc, False  # reopened, and the line is still there; or a key the registrar did not raise
     text = latest["text"] if latest is not None else record.get("restore_text")
     if text is None:
         return doc, False
@@ -437,7 +445,7 @@ def _check(r: dict) -> list[str]:
     return ["terms.text is a single line"] if isinstance(text, str) and ("\n" in text or "\r" in text) else []
 
 
-EXT = ph_core.ext("acts/0.4", "keep", _check)
+EXT = ph_core.ext("acts/0.5", "keep", _check)
 
 
 def validate(r: dict, cfg: ph_core.Config) -> tuple[str | None, list[str]]:
@@ -447,3 +455,7 @@ def validate(r: dict, cfg: ph_core.Config) -> tuple[str | None, list[str]]:
 def fold(records: list[dict], cfg: ph_core.Config) -> dict:
     """State of one act. A withdrawn need leaves it open: the principal is asked (acts/SPEC.md section 2)."""
     return ph_core.fold(records, EXT, cfg)
+
+
+def settlement_view(records: list[dict], cfg: ph_core.Config) -> dict:
+    return ph_core.settlement_view(records, EXT, cfg)

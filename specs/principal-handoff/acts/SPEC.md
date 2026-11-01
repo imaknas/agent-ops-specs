@@ -1,10 +1,11 @@
-# Principal Handoff: Acts 0.4
+# Principal Handoff: Acts 0.5
 
 | | |
 |---|---|
 | Status | Draft |
-| Version | 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
-| Extension | `acts/0.4`, an extension of [Principal Handoff Core 0.4](../core/SPEC.md) |
+| Version | 0.5 (2026-11-01); 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
+| Extension | `acts/0.5`, an extension of [Principal Handoff Core 0.5](../core/SPEC.md) |
+| Modules | [Evidence](../evidence/SPEC.md) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) (record schema in [`../core/schemas/`](../core/schemas/)) |
 | Conformance suite | [`conformance/`](conformance/) |
@@ -27,7 +28,7 @@ and applies the principal side's settlements back to the document.
 5. [Markdown binding](#5-markdown-binding)
 6. [Key derivation](#6-key-derivation)
 7. [Record ids](#7-record-ids)
-8. [Mapping from 0.2 and changes from 0.3](#8-mapping-from-02-and-changes-from-03)
+8. [Mapping from 0.2 and changes from 0.4](#8-mapping-from-02-and-changes-from-04)
 9. [Conformance](#9-conformance)
 10. [Security considerations](#10-security-considerations)
 11. [Open issues](#11-open-issues)
@@ -81,23 +82,15 @@ stamps key markers, applies the principal side's settlements to the document, an
 - **Withdrawn need, open settlement:** an act may be a commitment the principal has made to someone else, so a
   withdrawal never ends it. The principal side MUST keep the item open and SHOULD ask the principal whether to drop
   it; it ends only with a settlement. (Core §6.)
-- **Replaced acts:** an act withdrawn as `replaced`, whose single active `replaced_by` (core §7) targets an act the
-  principal side holds open (raised, not settled, not withdrawn), stays open but is shown together with its
-  replacement instead of being asked about separately. Once the replacement is settled, the principal side shows the
-  replaced act, its text beside the replacement's, with that settlement, and asks the principal to settle it, without
-  pre-selecting an outcome (core §9). In every other case the withdrawal is treated like any other. A replaced act is
-  settled only by the principal (kind `principal` or `confirmed`), never from the replacement's settlement.
-- **Approvals:** acts take none (core §5.3); `approved` is not in §3's table.
-- **Settling on proofs:** a claim of `done` MAY carry verifiable entries (core §5.2), for example a web proof from the
-  payee's invoice portal that invoice 2026-114 was paid. The principal side MAY adopt such a claim as `attested`
-  (core §7) with the results in `verified`, only for the outcomes `done` and `already_done`, and only if each entry it
-  relies on is `valid` and bound to the act: its verified content contains the act's `key`, its terms digest, or an
-  identifier (an invoice number, an order or payment reference) named in terms of the act that the principal has been
-  shown, since later terms are the requester's alone (core V4). The settlement's `terms_rev` is the claim's. Where the
-  format exposes the underlying fact (a transaction id), the principal side MUST NOT settle a second act on the same
-  fact without the principal (core V4). A proof never settles an act `dropped`. Proofs over the principal's own
-  accounts (their bank, their mailbox) come only from the principal side, never from an agent (core §13); an agent's
-  proofs are over the other party's side or public facts.
+- **Replaced acts:** an act withdrawn as `replaced` follows the keep policy like any withdrawn act; only its
+  presentation differs. While the target of its single active `replaced_by` (core §7) is an act the principal side
+  holds open (raised, not settled, not withdrawn), the principal side SHOULD show the replaced act with that target
+  and ask about both together, not about the replaced act alone; once the target is settled or withdrawn, or is no
+  longer the single active target, it asks about the replaced act on its own, without pre-selecting an outcome (core
+  §9). A replaced act is settled only by the principal (kind `principal` or `confirmed`), never from the replacement's
+  settlement.
+- **Settling on proofs:** a principal side that implements the [Evidence](../evidence/SPEC.md) module may settle an
+  act from a claim that carries proofs, only as Evidence §5 says.
 - **Claims from the registrar** (§4 step 5: a vanished line, a ticked box) are never adopted as `attested` on that
   basis alone: what happened to a line is not evidence that the work was done (core R4). The principal side settles
   such an act with the principal (kind `principal` or `confirmed`), or `attested` on independent evidence.
@@ -105,7 +98,7 @@ stamps key markers, applies the principal side's settlements to the document, an
 
 ## 3. Records
 
-Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.4"`.
+Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.5"`.
 
 | `type` | `origin` | Emitted by | Schema | Additional requirements |
 |---|---|---|---|---|
@@ -114,14 +107,14 @@ Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.4"`.
 | `withdrawn` | `requester` | as above | [`withdrawn`](schemas/withdrawn.schema.json) | `reason` |
 | `settled` | `principal` | the principal side | [`settled`](schemas/settled.schema.json) | `outcome` of §2, `authority`, `terms_rev`, `terms_digest` |
 | `reopened` | `principal` | the principal side | [`reopened`](schemas/reopened.schema.json) | `supersedes`, `restore_text` |
-| `claimed` | `agent`, `registrar`, `requester` | anyone else | [`claimed`](schemas/claimed.schema.json) | `outcome` of §2; `evidence.basis`; `terms_rev` when it carries verifiable entries |
+| `claimed` | `agent`, `registrar`, `requester` | anyone else | [`claimed`](schemas/claimed.schema.json) | `outcome` of §2; `evidence.basis` |
 | `related` | `principal` (`same_as`), `requester` (`derived_from`, `replaced_by`) | | [`related`](schemas/related.schema.json) | `relation` |
 | `note` | `requester`, `registrar`, `principal`, `agent` | | [`note`](schemas/note.schema.json) | `about` |
 
 `restore_text` on `reopened` is a copy of the item's current terms text, so that a registrar that has lost its stored
-terms can still re-add the line. It is not an amendment. Validity rules beyond the schemas (core §4): `terms.text` is
-a single line. `amended` and `withdrawn` MUST list the item's current need record in `supersedes`
-(core §6).
+terms can still re-add the line. It is not an amendment. Validity rule beyond the schemas (core §4): `terms.text` is a
+single line. As core §6 says, `amended` and `withdrawn` MUST list the item's current need record in `supersedes` (a
+duty of the requester, not a validity rule).
 
 ## 4. The registrar
 
@@ -132,9 +125,10 @@ becomes bound when the transport accepts its `raised`, and the registrar persist
 document. Items a requester raised outside the binding are never bound, and steps 1 to 5 never touch them except to
 strike a line after a settlement the deployment delivered. A bound key is **active** when its item is neither settled
 nor withdrawn. The deployment MUST deliver to the registrar every need record and settlement-register record about a
-bound key, so that it knows which keys are active and their latest terms. The terms of a bound key change only
-through the document: agents MUST NOT send `amended` for it (they edit the line), and withdraw it through their
-transport; a withdrawn act is never amended again.
+bound key, so that it knows which keys are active and their latest terms, and likewise every need record and
+settlement-register record of the project's other acts (step 3); a registrar conforms only where it receives them. The
+terms of a bound key change only through the document: agents MUST NOT send `amended` for it (they edit the line), and
+withdraw it through their transport; a withdrawn act is never amended again.
 
 Terms used below (§5.4 defines *carries*):
 
@@ -151,28 +145,40 @@ In one run over a project's document a conforming registrar MUST do the followin
    nothing and warns its operator.
 1. **Apply** pending settlement records from the principal side, notes and relations excepted (they are delivered to
    the project, core §8, never applied to the document):
-   - for a current `settled` (any outcome): if the key is bound and the settlement is stale against the registrar's
-     latest terms, or a holding line's normalised text differs from them, the registrar does not strike; it sends the
-     `amended` of step 4 if the line's text differs and the act is not withdrawn (the settlement becomes stale, core
-     §6, and the principal side presents it again), and SHOULD warn its operator. Otherwise it strikes the key
-     (§5.5.2). A `settled` for a key no line carries is consumed and changes nothing;
+   - for a current `settled` (any outcome): if the key is bound or known (step 3) and the settlement is stale against
+     the registrar's latest terms, or a holding line's normalised text differs from them, the registrar does not
+     strike; it sends the `amended` of step 4 if the key is bound, the line's text differs and the act is not
+     withdrawn (the settlement becomes stale, core §6, and the principal side presents it again), and SHOULD warn its
+     operator. Otherwise it strikes the key (§5.5.2). A `settled` for a key no line carries is consumed and changes
+     nothing;
    - for a current `reopened` of a bound key that has no holding line: re-add the line (§5.5.3) from the latest terms
      the registrar holds, or from the record's `restore_text` only if it holds none (it lost its storage).
 2. **Relink** lines that lost their marker: for every active bound key that has vanished, if exactly one principal
-   task line of the first tasks section that carries no key, or carries a key that is not bound, has a normalised text
-   (§6.1) equal to that key's latest terms, and that text matches no other vanished key, stamp the line with that key
-   (§5.5.1) instead of raising it. (An agent rewrote the line and dropped or broke the marker.) If the match is not
-   one to one, the registrar relinks none of those lines and keys, and SHOULD warn its operator.
+   task line of the first tasks section that carries no key, or carries a key that is neither bound nor known (step
+   3), has a normalised text (§6.1) equal to that key's latest terms, and that text matches no other vanished key,
+   stamp the line with that key (§5.5.1) instead of raising it. (An agent rewrote the line and dropped or broke the
+   marker.) If the match is not one to one, the registrar relinks none of those lines and keys, and SHOULD warn its
+   operator.
 3. **Raise** every remaining principal task line of the first tasks section that carries no key, or carries a key that
-   is not bound (copied from elsewhere, or mistyped), and whose text (§5.5.2) mentions no key: derive its key (§6)
-   from the text, send `raised` with `terms_rev: 1` and the normalised text (§6.1) as `terms.text`, and after the
-   transport accepts it, stamp the line, replacing any marker it had. If the send fails, it MUST NOT stamp. If
-   stamping fails, the next run re-derives the same key and re-sends the same record, which the principal side
-   discards as a duplicate. The registrar does not raise, and SHOULD report: a line that mentions a key without
-   carrying it (text after the marker); a line whose derived key is already bound (the text repeats a settled or
-   withdrawn act, or an active act's earlier text, §11), for which it MUST warn its operator; and a line whose
+   is neither bound nor known (copied from another project, or mistyped), and whose text (§5.5.2) mentions no key:
+   derive its key (§6) from the text, send `raised` with `terms_rev: 1` and the normalised text (§6.1) as
+   `terms.text`, and after the transport accepts it, stamp the line, replacing any marker it had. If the send fails,
+   it MUST NOT stamp. If stamping fails, the next run re-derives the same key and re-sends the same record, which the
+   principal side discards as a duplicate. The registrar does not raise, and SHOULD report: a line that mentions a key
+   without carrying it (text after the marker); a line whose derived key is already bound (the text repeats a settled
+   or withdrawn act, or an active act's earlier text, §11), for which it MUST warn its operator; and a line whose
    normalised text equals that of an earlier line in the same run, which it leaves for the next run. Principal task
-   lines in later tasks sections are not raised.
+   lines in later tasks sections are not raised. A key is **known** when it is not bound but the registrar holds a
+   need record for it in the project: an act the project raised outside the binding, whose records the deployment
+   delivers to it (above), so that every registrar reads the same lines as known. A known key stays known after its
+   act is settled or withdrawn. A settlement of a known act is applied as step 1 says for a bound key, except that
+   nothing is amended: it strikes the lines whose text equals the act's latest terms, and a line whose text differs is
+   left and reported. A line carrying a known key is not raised, relinked or restamped: an agent copied that item's
+   marker onto the line (against I1), and raising the line would give the principal two items for one need. The
+   registrar reports the line and SHOULD warn its operator on every run until it is fixed. Agents fix it by deleting
+   the line (the item stays as it was raised), or, to have the document hold the item, by deleting the marker so that
+   the next run raises the line, and then sending `replaced_by` from the old item to the new one and `withdrawn` with
+   `reason: "replaced"`.
 4. **Amend**: for every active bound key, if its holding lines all have one normalised text and it differs from the
    item's latest terms, send `amended` with that text, `terms_rev` increased by one, and the current need record in
    `supersedes`. An agent changes what it asks by editing the text and keeping the marker. If the holding lines have
@@ -458,9 +464,9 @@ Ids carry a type prefix and a colon, which keys cannot contain (§6.1), so ids o
 - A registrar's `note` for a displaced key (§4 step 5): `d:<key>:r<n>`, with *n* as above.
 - Other records: any id unique per core §10.
 
-## 8. Mapping from 0.2 and changes from 0.3
+## 8. Mapping from 0.2 and changes from 0.4
 
-| Tasks 0.2 event | Acts 0.4 record |
+| Tasks 0.2 event | Acts 0.5 record |
 |---|---|
 | `registered` (registrar), id = key | `raised`, origin `requester`, sent by the registrar, id `r:<key>`, `terms_rev: 1` |
 | `done`, `dropped`, `already_done` (principal) | `settled` with that `outcome`; `authority.kind` `principal`, or, where 0.2 had `decided_by: assistant`, `attested` with `evidence.basis` naming the 0.2 event (`delegated` only where the mandate is known, with `under` and `chain`) |
@@ -469,27 +475,35 @@ Ids carry a type prefix and a colon, which keys cannot contain (§6.1), so ids o
 | inferred `done` (registrar), id `done-<key>` | `claimed`, origin `registrar`, `outcome: "done"`, `evidence.basis`, id `c:<key>:r0` |
 | a resolution's `note` | the settlement's `note`, delivered to the project |
 
-Changes from 0.3 (a 0.3 record is converted by changing `ph` and `ext` and, on `settled`, adding `terms_digest`
-computed over the converted need record at the settlement's `terms_rev`; nothing else changes meaning):
+Changes from 0.4:
 
-- records carry `ph: "0.4"` and `ext: "acts/0.4"`; claims may carry verifiable entries, adopted only as §2 allows;
-- the withdrawal reason `replaced` and the `replaced_by` relation, with §2's policy;
-- the registrar works only on bound keys (§4), counts a key as present wherever its marker is (§4), claims a ticked
-  principal box, notes a displaced key, and raises only from the first tasks section;
-- the binding ignores fenced code and HTML comments, reads every tasks section (§5.2), recognises inline Markdown
-  links and reports labelled lines without a checkbox (§5.3), and accepts any run of spaces or tabs after the
-  checkbox.
+- records carry `ph: "0.5"` and `ext: "acts/0.5"`; settling on proofs moves to the [Evidence](../evidence/SPEC.md)
+  module (Evidence §5), and verifiable entries on claims are Evidence's content, which no longer makes a claim
+  invalid;
+- the presentation of replaced acts is simpler (§2);
+- the registrar neither raises nor relinks a line carrying a known key, and the deployment delivers it every need
+  record and settlement-register record of the project's acts raised outside the binding (§4);
+- a conforming registrar is also a conforming requester (core §12), so it runs `records.json` and `lifecycle.json`
+  (on the settlement view) as well as the binding fixtures (§9.1).
 
-The 0.4 rules keep every line a 0.3 registrar stamped present, whatever 0.4's classification of it (§4).
+**Conversion** (core §14), with vectors in [`../core/conformance/convert.json`](../core/conformance/convert.json):
+both ways, change `ph` and `ext` (`"acts/0.4"` ↔ `"acts/0.5"`), remove `evidence.proof`, and replace a settlement's
+`terms_digest` as core §14 says. A record valid in 0.5 but not in 0.4 (a claim with malformed verifiable entries, a
+settlement whose `under` begins with `approval:`) has no 0.4 form. The 0.3 to 0.4 conversion was: change `ph` and
+`ext`, and on `settled` add `terms_digest` computed over the converted need record at the settlement's `terms_rev`.
+
+The 0.4 and 0.5 rules keep every line a 0.3 registrar stamped present, whatever their classification of it (§4).
 
 ## 9. Conformance
 
 ### 9.1 Conformance classes
 
 - A **conforming reader** parses tasks sections as in §5.2–§5.4 for the profiles it claims.
-- A **conforming registrar** is a conforming reader and implements §4–§7.
+- A **conforming requester** follows core §12; it runs `records.json` and is compared on the settlement view in
+  `lifecycle.json`.
+- A **conforming registrar** is a conforming reader and a conforming requester, and implements §4–§7.
 - A **conforming principal side** for acts follows core §12 and §2: the withdrawn-need and replaced-act policies, and
-  the limits on settling from proofs and from registrar claims.
+  the limit on settling from registrar claims.
 
 ### 9.2 Conformance suite
 
@@ -500,13 +514,13 @@ The 0.4 rules keep every line a 0.3 registrar stamped present, whatever 0.4's cl
 | `profiles.json` | the `en` and `zh-hant` profiles |
 | `parse.json` | §5.2–§5.4: document → tasks sections, task lines, lines to report, and whether it is incomplete |
 | `keys.json` | §6.2 example recipe (only for implementations that use it) |
-| `relink.json` | §4 step 2: document + vanished active keys + bound keys → re-stamped document |
-| `register.json` | §4 step 3 and §5.5.1: document + bound keys → stamped document and `raised` records |
+| `relink.json` | §4 step 2: document + vanished active keys + bound and known keys → re-stamped document |
+| `register.json` | §4 step 3 and §5.5.1: document + bound and known keys → stamped document and `raised` records |
 | `amend.json` | §4 step 4: document with edited keyed lines + latest terms → `amended` records, or keys to warn about |
 | `apply.json` | §4 step 1, I2, §5.5.2–§5.5.3: document + record → document |
 | `reconcile.json` | §4 step 5: document + active keys + bound keys → claims, notes or warnings |
 | `records.json` | §3: record → schema it validates against, or invalid |
-| `lifecycle.json` | core §6 and §2's keep policy: the records one receiver holds for one act → its state |
+| `lifecycle.json` | core §6 and §2's keep policy: the records one receiver holds for one act → its state; a requester is compared on the settlement view only (core §12) |
 
 Documents are compared as their sequences of non-blank lines with trailing whitespace removed.
 
@@ -517,8 +531,6 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 - **Forged settlements change documents.** A forged `settled` makes the registrar delete a line; a forged `reopened`
   makes it add one with attacker-chosen `restore_text` that agents will later read. Registrars MUST accept settlements
   only from the principal side. Keeping state documents under version control makes any wrong strike recoverable.
-- **Proofs of payment** can disclose the principal's accounts and spending. §2 limits who makes them and what they may
-  settle; core §5.2 and §13 keep proofs about the principal with the principal side.
 - **Keys leak a little.** A key derived as in §6.2 reveals the project name and a short hash of the text. Use a keyed
   hash (HMAC with a registrar secret) if keys are visible to parties that must not learn task contents.
 
@@ -529,6 +541,8 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
   SHOULD make re-declared texts distinct, and the registrar neither raises nor stamps such a line and MUST warn its
   operator (§4 step 3).
 - **Due dates in Markdown.** `terms.due` has no Markdown syntax yet.
+- **A document of its own for the binding.** The Markdown binding (§4–§7) is most of this document and is needed only
+  by registrars and readers; it may move to a document of its own, leaving here the item kind and its policies.
 - **Transport bindings.** No binding to a specific transport (HTTPS webhooks, A2A, MCP) is defined yet.
 
 ## 12. Implementations
@@ -537,13 +551,16 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 
 | Implementation | Roles | Profiles | Status |
 |---|---|---|---|
-| [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state (no transport) | `en`, `zh-hant` | passes the 0.4 conformance suites |
-| agent-hub (to be published) | registrar and requesters for Acts; requesters for Decisions | `zh-hant` | the reference deployment this document is generalised from; implements Acts 0.3 and Decisions 0.3, and runs the 0.3 binding fixtures (`parse`, `keys`, `register`, `relink`, `amend`, `apply`, `reconcile`), not `records` or `lifecycle` |
-| Muninn, with agent-hub's built-in owner side | principal side | | implements the principal side of 0.3 |
+| [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state, the Evidence and Criteria modules (no transport) | `en`, `zh-hant` | passes the 0.5 conformance suites of every document |
+| agent-hub (to be published) | registrar and requesters for Acts; requesters for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.4 and Decisions 0.4, and runs the 0.4 binding fixtures (`parse`, `keys`, `register`, `relink`, `amend`, `apply`, `reconcile`), not `records` or `lifecycle` |
+| Muninn, with agent-hub's built-in owner side | principal side | | implements the principal side of 0.4; passes the 0.4 `records`, `lifecycle` and terms-digest suites |
 
-The reference deployment has two implementations acting as its principal side. As core §5.3 allows, it leaves
-approvals to Muninn alone: agent-hub's built-in owner side records no approvals and delivers its settlements to
-Muninn. Neither implements approvals yet.
+The reference code and agent-hub share an author, so under core §14 they are not independent: no class of this
+document has two independent implementations yet.
+
+The reference deployment has two implementations acting as its principal side; each delivers its settlements to the
+other (core §6). Neither records approvals ([Criteria](../criteria/SPEC.md)) or checks proofs
+([Evidence](../evidence/SPEC.md)).
 
 ## Appendix A: Worked example
 
@@ -560,7 +577,7 @@ Muninn. Neither implements approvals yet.
 2. That night the registrar derives `task-demo-c3d8af57d4`, sends
 
    ```json
-   {"ph": "0.4", "ext": "acts/0.4", "id": "r:task-demo-c3d8af57d4", "type": "raised", "origin": "requester",
+   {"ph": "0.5", "ext": "acts/0.5", "id": "r:task-demo-c3d8af57d4", "type": "raised", "origin": "requester",
     "by": "registrar:demo", "key": "task-demo-c3d8af57d4", "project": "demo", "ts": "2026-10-27T02:10:00Z",
     "terms": {"text": "Renew the domain"}, "terms_rev": 1}
    ```
@@ -570,9 +587,9 @@ Muninn. Neither implements approvals yet.
 3. The principal renews the domain and ticks it off in their assistant, which sends
 
    ```json
-   {"ph": "0.4", "ext": "acts/0.4", "id": "s-81f2", "type": "settled", "origin": "principal", "by": "ps:assistant",
+   {"ph": "0.5", "ext": "acts/0.5", "id": "s-81f2", "type": "settled", "origin": "principal", "by": "ps:assistant",
     "key": "task-demo-c3d8af57d4", "project": "demo", "ts": "2026-10-28T08:30:00Z", "terms_rev": 1,
-    "terms_digest": "sha-256:e0800bf76e20f21349abccc7cfdd5e13f29152762c8f643708a2e23e19dd40ab",
+    "terms_digest": "sha-256:a9467037327c1e0e7ce14815d5180ad390e1c754a703d4680b06ff1eafa26c0f",
     "outcome": "done", "authority": {"kind": "principal", "decider": "p:owner"}}
    ```
 
@@ -586,7 +603,7 @@ anything.
 
 *Non-normative.* The reference deployment uses its own message names on an internal event bus:
 
-| Reference deployment | Acts 0.4 |
+| Reference deployment | Acts 0.5 |
 |---|---|
 | message type `task` sent to the principal, with a fixed id equal to the key | `raised` (`id` = `r:<key>`) |
 | principal-side handoff with `effect` `done` / `dropped` / `already_done` | `settled` with that `outcome` |

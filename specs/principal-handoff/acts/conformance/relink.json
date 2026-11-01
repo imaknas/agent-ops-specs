@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.4",
+  "suite": "acts/0.5",
   "description": "Registrar step 2: an unkeyed principal line whose normalised text equals the latest terms of a vanished open key gets that key back.",
   "cases": [
     {
@@ -234,6 +234,30 @@
           "- [ ] [agent] Other",
           "## Tasks",
           "- [ ] [owner] Renew the domain"
+        ]
+      }
+    },
+    {
+      "id": "known-marker-not-relinked",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: ask-demo-1f2e3d)"
+      ],
+      "active": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "bound": [
+        "task-demo-aaaaaaaaaa"
+      ],
+      "known": [
+        "ask-demo-1f2e3d"
+      ],
+      "expect": {
+        "relinked": [],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: ask-demo-1f2e3d)"
         ]
       }
     }

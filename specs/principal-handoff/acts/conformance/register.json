@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.4",
+  "suite": "acts/0.5",
   "description": "Registration vectors: document -> stamped document + registered events (key, text).",
   "cases": [
     {
@@ -299,6 +299,59 @@
           "- [ ] [owner] Pay the invoice",
           "### [Acme]",
           "- [ ] Call the bank (waiting on Acme: task-demo-d5264e8e5b)"
+        ]
+      }
+    },
+    {
+      "id": "known-marker-not-raised",
+      "profile": "en",
+      "project": "demo",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain (waiting on owner: ask-demo-1f2e3d)",
+        "- [ ] [owner] Pay the logo designer's invoice"
+      ],
+      "bound": [],
+      "known": [
+        "ask-demo-1f2e3d"
+      ],
+      "expect": {
+        "raised": [
+          {
+            "key": "task-demo-6ba7e67f0b",
+            "text": "Pay the logo designer's invoice"
+          }
+        ],
+        "reported": [
+          1
+        ],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: ask-demo-1f2e3d)",
+          "- [ ] [owner] Pay the logo designer's invoice (waiting on owner: task-demo-6ba7e67f0b)"
+        ]
+      }
+    },
+    {
+      "id": "zh-known-marker-not-raised",
+      "profile": "zh-hant",
+      "project": "demo",
+      "document": [
+        "## 待辦",
+        "- [ ] 〔Owner〕續約網域(等 Owner:ask-demo-1f2e3d)"
+      ],
+      "bound": [],
+      "known": [
+        "ask-demo-1f2e3d"
+      ],
+      "expect": {
+        "raised": [],
+        "reported": [
+          1
+        ],
+        "document": [
+          "## 待辦",
+          "- [ ] 〔Owner〕續約網域(等 Owner:ask-demo-1f2e3d)"
         ]
       }
     }

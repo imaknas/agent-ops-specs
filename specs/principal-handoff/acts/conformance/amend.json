@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.4",
+  "suite": "acts/0.5",
   "description": "Registrar step 4: holding lines whose normalised text differs from the latest terms -> amended items; holding lines that disagree -> warnings.",
   "cases": [
     {

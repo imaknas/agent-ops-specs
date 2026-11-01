@@ -293,8 +293,9 @@ whisper).
 
 ## 7. Verifiable evidence and scalable oversight (checked 2026-11-01)
 
-*Added for 0.4, which lets records carry proofs of facts (core §5.2) and lets the principal approve acceptance
-criteria so that a verifier settles a decision without the principal reviewing the work (core §5.3, Decisions §4.1).*
+*Added for 0.4, which lets records carry proofs of facts and lets the principal approve acceptance criteria so that a
+verifier settles a decision without the principal reviewing the work. Since 0.5 these are the
+[Evidence](evidence/SPEC.md) and [Criteria](criteria/SPEC.md) modules.*
 
 ### 7.1 Proofs of facts
 
@@ -312,11 +313,11 @@ criteria so that a verifier settles a decision without the principal reviewing t
 
 **Assessment.** These systems prove *that a statement holds*, signed or notarised by someone. None of them says
 whether the statement is the one that matters for an item. Principal Handoff therefore records the statement next to
-the proof, keeps "what the proof establishes" (V2) apart from "which item it is about" (V4, the emitter's judgement
-unless an extension requires binding), and makes "valid" relative to the principal side's own trust roots (V3). The
-privacy properties of SD-JWT, BBS and zkTLS are why proofs about the principal stay with the principal side (core
-§5.2, §13). A web proof over the principal's own bank or mailbox requires that account's session, which is why core
-§13 has such proofs made by the principal side rather than by agents.
+the proof, keeps "what the proof establishes" (Evidence V2) apart from "which item it is about" (V4, the emitter's
+judgement unless a rule relying on it requires binding), and makes "valid" relative to the principal side's own trust
+roots (V3). The privacy properties of SD-JWT, BBS and zkTLS are why proofs about the principal stay with the principal
+side (Evidence §4). A web proof over the principal's own bank or mailbox requires that account's session, which is why
+Evidence §4 has such proofs made by the principal side rather than by agents.
 
 ### 7.2 Checking instead of reviewing
 
@@ -332,15 +333,15 @@ privacy properties of SD-JWT, BBS and zkTLS are why proofs about the principal s
 - **Reward hacking** (Skalse et al., "Defining and Characterizing Reward Hacking", NeurIPS 2022; not re-read): an
   optimiser pointed at a proxy it can check tends to satisfy the proxy rather than the intent behind it.
 
-**Assessment.** Approvals (core §5.3) apply this idea to items that only the principal may settle: the person decides
-*what counts as done* (the criteria, their implementations and trust roots), which is short, and a verifier checks the
-proofs, which is cheap. As in proof-carrying code, this does not remove trust; it moves it to the criteria, the check
-implementations, the trust roots and the verifier (core §13). Three choices follow: the approval binds one item's
-exact terms, so a requester cannot reuse it; one failed check sends the decision back to the person, so a flaky check
-cannot be retried until it passes; and a sample of verifier-settled decisions is audited by the person (Decisions
-§4.2), which is the only measure of how often the checks are gamed. None of the surveyed protocols (§1–§6) records an
-approval of acceptance criteria as a mandate bound to an item, or settles on proofs checked against the principal's
-own trust roots.
+**Assessment.** Approvals (Criteria §4) apply this idea to items that only the principal may settle: the person
+decides *what counts as done* (the criteria, their implementations and trust roots), which is short, and a verifier
+checks the proofs, which is cheap. As in proof-carrying code, this does not remove trust; it moves it to the criteria,
+the check implementations, the trust roots and the verifier (Criteria §9). Three choices follow: the approval binds
+one item's exact terms, so a requester cannot reuse it; one failed check sends the decision back to the person, so a
+flaky check cannot be retried until it passes; and a sample of verifier-settled decisions is audited by the person
+(Criteria §6), which is the only measure of how often the checks are gamed. None of the surveyed protocols (§1–§6)
+records an approval of acceptance criteria as a mandate bound to an item, or settles on proofs checked against the
+principal's own trust roots.
 
 ## Sources
 

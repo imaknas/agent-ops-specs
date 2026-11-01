@@ -1,4 +1,4 @@
-"""Runs the Principal Handoff Acts 0.4 conformance suite against the reference implementation.
+"""Runs the Principal Handoff Acts 0.5 conformance suite against the reference implementation.
 
     cd specs/principal-handoff/reference && python3 -m unittest -v
 """
@@ -9,7 +9,7 @@ import pathlib
 import unittest
 
 import ph_acts as acts
-from ph_core import Config
+from ph_core import VIEW, Config
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONF = ROOT / "acts" / "conformance"
@@ -38,6 +38,11 @@ def bound(c: dict) -> set | None:
     return set(c["bound"]) if "bound" in c else None
 
 
+def known(c: dict) -> set:
+    """Keys outside the binding whose need records the registrar holds (section 4 step 3)."""
+    return set(c.get("known", []))
+
+
 def profile(name: str, params: dict | None = None) -> acts.Profile:
     return acts.Profile.from_json(PROFILES[name], **(params or {}))
 
@@ -57,7 +62,7 @@ class Binding(unittest.TestCase):
         for c in cases("register.json"):
             with self.subTest(c["id"]):
                 out, raised, reported = acts.register(doc(c["document"]), c["project"], profile(c["profile"], c.get("parameters")),
-                                                      bound(c))
+                                                      bound(c), known(c))
                 self.assertEqual(raised, c["expect"]["raised"])
                 self.assertEqual(reported, c["expect"]["reported"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
@@ -66,14 +71,15 @@ class Binding(unittest.TestCase):
         for c in cases("register.json"):
             with self.subTest(c["id"]):
                 p = profile(c["profile"], c.get("parameters"))
-                once, raised, _ = acts.register(doc(c["document"]), c["project"], p, bound(c))
+                once, raised, _ = acts.register(doc(c["document"]), c["project"], p, bound(c), known(c))
                 b = None if bound(c) is None else bound(c) | {r["key"] for r in raised}
-                self.assertEqual(acts.register(once, c["project"], p, b)[:2], (once, []))
+                self.assertEqual(acts.register(once, c["project"], p, b, known(c))[:2], (once, []))
 
     def test_relink(self):
         for c in cases("relink.json"):
             with self.subTest(c["id"]):
-                out, relinked = acts.relink(doc(c["document"]), c["active"], profile(c["profile"], c.get("parameters")), bound(c))
+                out, relinked = acts.relink(doc(c["document"]), c["active"], profile(c["profile"], c.get("parameters")), bound(c),
+                                            known(c))
                 self.assertEqual(relinked, c["expect"]["relinked"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
@@ -85,7 +91,8 @@ class Binding(unittest.TestCase):
     def test_apply(self):
         for c in cases("apply.json"):
             with self.subTest(c["id"]):
-                out, changed = acts.apply(doc(c["document"]), c["record"], profile(c["profile"], c.get("parameters")), c.get("latest"))
+                out, changed = acts.apply(doc(c["document"]), c["record"], profile(c["profile"], c.get("parameters")), c.get("latest"),
+                                         bound(c))
                 self.assertEqual(changed, c["expect"]["changed"])
                 self.assertEqual(nonblank(out), nonblank(doc(c["expect"]["document"])))
 
@@ -118,6 +125,15 @@ class Records(unittest.TestCase):
         for c in s["cases"]:
             with self.subTest(c["id"]):
                 self.assertEqual(acts.fold(c["records"], Config(s["principal"])), c["expect"])
+
+    def test_requester_settlement_view(self):
+        """core section 12: a requester, holding only need records and the principal side's records, computes the
+        settlement view of the full fold."""
+        s = suite("lifecycle.json")
+        for c in s["cases"]:
+            with self.subTest(c["id"]):
+                self.assertEqual(acts.settlement_view(c["records"], Config(s["principal"])),
+                                 {k: c["expect"][k] for k in VIEW})
 
     def test_lifecycle_does_not_depend_on_arrival_order(self):
         s = suite("lifecycle.json")

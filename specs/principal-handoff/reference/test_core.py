@@ -1,4 +1,4 @@
-"""Runs the Principal Handoff Core 0.4 conformance vectors and checks every schema stays within the core section 4
+"""Runs the Principal Handoff Core 0.5 conformance vectors and checks every schema stays within the core section 4
 keyword subset.
 
     cd specs/principal-handoff/reference && python3 -m unittest -v
@@ -12,19 +12,23 @@ import unittest
 import ph_core
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SCHEMAS = [ROOT / d / "schemas" for d in ("core", "acts", "decisions")]
+CONF = ROOT / "core" / "conformance"
+SCHEMAS = [ROOT / d / "schemas" for d in ("core", "acts", "decisions", "evidence", "criteria")]
 ALLOWED = {"$schema", "$id", "$ref", "title", "description", "type", "required", "properties", "enum", "const",
            "pattern", "items"}
 
 
 class Core(unittest.TestCase):
     def test_terms_digest(self):
-        for c in json.loads((ROOT / "core" / "conformance" / "terms-digest.json").read_text())["cases"]:
+        for c in json.loads((CONF / "terms-digest.json").read_text())["cases"]:
             with self.subTest(c["id"]):
-                r = c["record"]
-                bound = {k: r[k] for k in ("ext", "project", "key", "terms_rev", "terms")}
-                self.assertEqual(ph_core._canon(bound), c["canonical"])
-                self.assertEqual(ph_core.terms_digest(r), c["digest"])
+                self.assertEqual(ph_core._canon(ph_core.digest_input(c["record"])), c["canonical"])
+                self.assertEqual(ph_core.terms_digest(c["record"]), c["digest"])
+
+    def test_convert(self):
+        for c in json.loads((CONF / "convert.json").read_text())["cases"]:
+            with self.subTest(c["id"]):
+                self.assertEqual(ph_core.convert(c["record"], c["to"], c["held"]), c["expect"])
 
     def test_schemas_use_only_the_subset(self):
         def walk(x, where):

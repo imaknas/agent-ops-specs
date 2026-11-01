@@ -21,8 +21,13 @@ TYPES = {
 }
 
 
+WS = "\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff"  # ECMAScript's \s
+
+
 def _ecma(pattern: str) -> str:
-    """ECMAScript's $ matches only at the very end of the string; Python's also before a final newline."""
+    r"""ECMAScript's $ matches only at the very end of the string, Python's also before a final newline; and the two
+    disagree on what \s is (U+FEFF, U+001C to U+001F). The schemas use \s and \S outside character classes only."""
+    pattern = pattern.replace("\\S", f"[^{WS}]").replace("\\s", f"[{WS}]")
     return re.sub(r"(?<!\\)\$", r"\\Z", pattern)
 
 

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "criteria/schemas/criteria.schema.json",
+  "title": "Principal Handoff Criteria 0.5: criteria",
+  "description": "terms.criteria of a decision (criteria section 2). Terms whose criteria break this schema stay valid; Criteria ignores the criteria.",
+  "type": "object",
+  "required": [
+    "subject",
+    "checks",
+    "answer"
+  ],
+  "properties": {
+    "subject": {
+      "type": "object",
+      "required": [
+        "uri",
+        "digest"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha-256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "text",
+          "format",
+          "implementation",
+          "trust"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "text": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "format": {
+            "type": "string",
+            "pattern": "^\\S{1,128}$"
+          },
+          "implementation": {
+            "type": "object",
+            "required": [
+              "uri",
+              "digest"
+            ],
+            "properties": {
+              "uri": {
+                "type": "string",
+                "pattern": "\\S"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha-256:[0-9a-f]{64}$"
+              }
+            }
+          },
+          "trust": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "option": {
+          "type": "string",
+          "pattern": "^\\S{1,64}$"
+        }
+      }
+    }
+  }
+}

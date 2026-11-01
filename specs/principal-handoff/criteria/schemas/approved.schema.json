@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "criteria/schemas/approved.schema.json",
+  "title": "Principal Handoff Criteria 0.5: approved",
+  "description": "Principal side: the principal approved the decision's terms at one terms_rev (criteria section 4), or the approval is retracted (active false). A Criteria record on decisions/0.5; changes no register.",
+  "$ref": "../../core/schemas/record.schema.json",
+  "required": [
+    "approval"
+  ],
+  "properties": {
+    "ext": {
+      "const": "decisions/0.5"
+    },
+    "type": {
+      "const": "approved"
+    },
+    "origin": {
+      "const": "principal"
+    },
+    "approval": {
+      "description": "What the approval binds (criteria section 4).",
+      "type": "object",
+      "required": [
+        "active"
+      ],
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "terms_digest": {
+          "type": "string",
+          "pattern": "^sha-256:[0-9a-f]{64}$"
+        },
+        "after": {
+          "description": "On a grant: the current settlement-register record when it was made.",
+          "type": "string",
+          "pattern": "^\\S{1,256}$"
+        }
+      }
+    }
+  }
+}
