@@ -22,7 +22,7 @@ never change an item's state; an experimental module has no implementation besid
 How it fits next to existing standards (non-normative):
 
 ```
-Principal's assistant (Muninn, OpenClaw, …)  ⇄  Project platform (agent-hub, …)
+Principal's assistant (Muninn, OpenClaw, …)  ⇄  Project platform (brunna, …)
   borrow a project's agent session        →  ACP
   read project state, answer permissions  →  MCP
   work and choices only the principal can →  Principal Handoff (this family)

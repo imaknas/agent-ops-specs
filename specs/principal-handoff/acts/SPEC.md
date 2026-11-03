@@ -182,10 +182,10 @@ The binding's open issues are in Acts Markdown §9.
 | Implementation | Roles | Profiles | Status |
 |---|---|---|---|
 | [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state, the Evidence and Criteria modules (no transport) | `en`, `zh-hant` | passes the 0.5 conformance suites of every document |
-| agent-hub (to be published) | registrar and requesters for Acts; requesters for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.4 and Decisions 0.4, and runs the 0.4 binding fixtures (`parse`, `keys`, `register`, `relink`, `amend`, `apply`, `reconcile`), not `records` or `lifecycle` |
-| Muninn, with agent-hub's built-in owner side | principal side | | implements the principal side of 0.4; passes the 0.4 `records`, `lifecycle` and terms-digest suites |
+| [brunna](https://github.com/imaknas/brunna) | registrar and requesters for Acts; requesters for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.5 and Decisions 0.5, and passes the binding fixtures, `records`, `lifecycle` (settlement view), the terms-digest vectors and `convert` (without the Criteria cases) |
+| Muninn, with brunna's built-in owner side | principal side | | implements the principal side of 0.5; passes `records`, `lifecycle`, the terms-digest vectors and `convert` (without the Criteria cases) |
 
-The reference code and agent-hub share an author, so under core §14 they are not independent: no class of this
+The reference code, brunna and Muninn share an author, so under core §14 they are not independent: no class of this
 document or of the binding has two independent implementations yet.
 
 The reference deployment has two implementations acting as its principal side; each delivers its settlements to the
