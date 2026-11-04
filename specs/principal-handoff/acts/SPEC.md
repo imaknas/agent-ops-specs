@@ -119,6 +119,8 @@ principal sides that do not use a state document need not implement it.
 
 ## 6. Mapping from 0.2 and changes from 0.5
 
+*The mapping is informative: older versions are outside this specification (core §14).*
+
 | Tasks 0.2 event | Acts 0.6 record |
 |---|---|
 | `registered` (registrar), id = key | `raised`, origin `requester`, sent by the registrar, id `r:<key>`, `terms_rev: 1` |
