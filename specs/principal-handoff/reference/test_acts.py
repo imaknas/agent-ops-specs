@@ -10,6 +10,7 @@ import pathlib
 import unittest
 
 import ph_acts as acts
+import ph_core
 from ph_core import VIEW, Config
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -118,10 +119,22 @@ class Records(unittest.TestCase):
             with self.subTest(c["id"]):
                 cfg = Config(s["principal"], c.get("principal_type", s.get("principal_type")) == "legal")
                 name, errs = acts.validate(c["record"], cfg)
-                if c["valid"]:
+                if c["valid"] is None:  # an extension or version not implemented: kept, not acted on (core sections 4, 6)
+                    self.assertFalse(ph_core.implemented(c["record"], acts.EXT))
+                elif c["valid"]:
                     self.assertEqual((name, errs), (c["schema"], []))
                 else:
                     self.assertTrue(errs, f"expected invalid, validated against {name}")
+
+    def test_relations(self):
+        s = suite("relations.json")
+        for c in s["cases"]:
+            with self.subTest(c["id"]):
+                for records in (c["records"], list(reversed(c["records"]))):
+                    self.assertEqual(ph_core.relations(records, acts.EXT, Config(s["principal"])),
+                                     c["expect"]["relations"])
+                    self.assertEqual(ph_core.replacement(records, acts.EXT, Config(s["principal"])),
+                                     c["expect"]["replacement"])
 
     def test_lifecycle(self):
         s = suite("lifecycle.json")

@@ -532,9 +532,9 @@
       }
     },
     {
-      "id": "same-as-other-project-by-key-is-only-a-duty",
-      "valid": true,
-      "schema": "related",
+      "id": "same-as-other-project-by-key",
+      "valid": false,
+      "schema": null,
       "record": {
         "ph": "0.6",
         "ext": "acts/0.6",
@@ -665,8 +665,8 @@
       }
     },
     {
-      "id": "wrong-extension",
-      "valid": false,
+      "id": "unimplemented-extension-not-acted-on",
+      "valid": null,
       "schema": null,
       "record": {
         "ph": "0.6",
@@ -1000,38 +1000,6 @@
         }
       },
       "principal_type": "legal"
-    },
-    {
-      "id": "claimed-verifiable",
-      "valid": true,
-      "schema": "claimed",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "c1",
-        "type": "claimed",
-        "origin": "agent",
-        "by": "agent:other",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "evidence": {
-          "basis": "a TLSNotary proof of the transfer",
-          "verifiable": [
-            {
-              "id": "payment",
-              "format": "tlsnotary",
-              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
-              "proof_ref": {
-                "uri": "https://proofs.example/p/81f2",
-                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
-              }
-            }
-          ]
-        }
-      }
     },
     {
       "id": "withdrawn-replaced",

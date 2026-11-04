@@ -157,6 +157,7 @@ binding's fixtures are in [`../acts-markdown/conformance/`](../acts-markdown/con
 |---|---|
 | `records.json` | §3: record → schema it validates against, or invalid |
 | `lifecycle.json` | core §6 and §2's keep policy: the records one receiver holds for one act → its state; a requester is compared on the settlement view only (core §12) |
+| `relations.json` | core §7: the `related` records one receiver holds for one act → its active relations and its replacement |
 
 ## 8. Security considerations
 
@@ -176,8 +177,8 @@ The binding's open issues are in Acts Markdown §9.
 | Implementation | Roles | Profiles | Status |
 |---|---|---|---|
 | [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state, the Evidence and Criteria modules (no transport) | `en`, `zh-hant` | passes the 0.6 conformance suites of every document |
-| [brunna](https://github.com/imaknas/brunna) | registrar and requesters for Acts; requesters for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.5 and Decisions 0.5, and passes the binding fixtures, `records`, `lifecycle` (settlement view), the terms-digest vectors and `convert` (without the Criteria cases) |
-| Muninn, with brunna's built-in owner side | principal side | | implements the principal side of 0.5; passes `records`, `lifecycle`, the terms-digest vectors and `convert` (without the Criteria cases) |
+| [brunna](https://github.com/imaknas/brunna) | registrar and requesters for Acts; requesters for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.5 and Decisions 0.5; passes the 0.5 suites |
+| Muninn, with brunna's built-in owner side | principal side | | implements Acts 0.5 and Decisions 0.5; passes the 0.5 suites |
 
 The reference code, brunna and Muninn share an author, so under core §14 they are not independent: no class of this
 document or of the binding has two independent implementations yet.

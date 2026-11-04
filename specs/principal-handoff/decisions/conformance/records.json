@@ -620,9 +620,9 @@
       }
     },
     {
-      "id": "same-as-other-project-by-key-is-only-a-duty",
-      "valid": true,
-      "schema": "related",
+      "id": "same-as-other-project-by-key",
+      "valid": false,
+      "schema": null,
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -753,8 +753,8 @@
       }
     },
     {
-      "id": "wrong-extension",
-      "valid": false,
+      "id": "unimplemented-extension-not-acted-on",
+      "valid": null,
       "schema": null,
       "record": {
         "ph": "0.6",

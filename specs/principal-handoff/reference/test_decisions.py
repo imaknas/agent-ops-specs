@@ -8,6 +8,7 @@ import json
 import pathlib
 import unittest
 
+import ph_core
 import ph_decisions as decisions
 from ph_core import VIEW, Config
 
@@ -25,10 +26,22 @@ class Conformance(unittest.TestCase):
             with self.subTest(c["id"]):
                 cfg = Config(s["principal"], c.get("principal_type", s.get("principal_type")) == "legal")
                 name, errs = decisions.validate(c["record"], cfg)
-                if c["valid"]:
+                if c["valid"] is None:  # an extension or version not implemented: kept, not acted on (core sections 4, 6)
+                    self.assertFalse(ph_core.implemented(c["record"], decisions.EXT))
+                elif c["valid"]:
                     self.assertEqual((name, errs), (c["schema"], []))
                 else:
                     self.assertTrue(errs, f"expected invalid, validated against {name}")
+
+    def test_relations(self):
+        s = suite("relations.json")
+        for c in s["cases"]:
+            with self.subTest(c["id"]):
+                for records in (c["records"], list(reversed(c["records"]))):
+                    self.assertEqual(ph_core.relations(records, decisions.EXT, Config(s["principal"])),
+                                     c["expect"]["relations"])
+                    self.assertEqual(ph_core.replacement(records, decisions.EXT, Config(s["principal"])),
+                                     c["expect"]["replacement"])
 
     def test_lifecycle(self):
         s = suite("lifecycle.json")

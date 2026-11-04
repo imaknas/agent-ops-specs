@@ -43,11 +43,11 @@ cd reference && python3 -m unittest
 
 0.6 is a release candidate. Until an implementation independent of this family's author passes the 0.6 suites of a
 requester or principal side of Acts or Decisions, and at least three months have passed since 0.6 was released, the
-maintainers make no breaking change to core, Acts, Acts Markdown, Decisions, or the Evidence and Criteria modules.
-0.6.x keeps `ph` and `ext` at "0.6" and changes only wording and examples, corrects schemas and fixtures that are in
-error under core §4, and adds or corrects fixtures only where every implementation listed in the implementations
-tables (for example [Acts §10](acts/SPEC.md#10-implementations)) already passes them. A breaking change is anything
-that changes validity, held records, state or conversion results for some set of records, or adds or changes a MUST.
-A defect that can only be fixed by a breaking change is fixed in 0.7, which becomes the release candidate and
-restarts the count. 1.0 is decided once both conditions hold, and is reached through core §14's Mixed versions; it
-may still be a draft under core §14.
+maintainers make no breaking change to core, Acts, Acts Markdown, Decisions, or the Evidence and Criteria modules. 0.6.x
+keeps `ph` and `ext` at "0.6" and changes only wording and examples, always corrects schemas and fixtures that are in
+error under core §4, and adds new fixtures only where every implementation listed as passing the 0.6 suites (in [Acts
+§10](acts/SPEC.md#10-implementations), which lists both extensions) already passes them. A breaking change is anything
+that changes validity, held records, state or conversion results for some set of records, or adds or changes a MUST. A
+defect that can only be fixed by a breaking change is fixed in 0.7, which becomes the release candidate and restarts the
+count. 1.0 is decided once both conditions hold, and is reached through core §14's Mixed versions; it may still be a
+draft under core §14.

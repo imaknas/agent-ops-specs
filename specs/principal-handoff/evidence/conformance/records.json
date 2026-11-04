@@ -5,6 +5,39 @@
   "description": "Evidence section 2: record -> whether it is valid under the core and its extension (the same for every receiver), and whether a verifier uses or ignores its verifiable and verified.",
   "cases": [
     {
+      "id": "claimed-verifiable",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "used"
+    },
+    {
       "id": "claimed-verifiable-without-terms-rev",
       "record": {
         "ph": "0.6",

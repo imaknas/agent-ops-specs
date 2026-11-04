@@ -21,7 +21,9 @@ TYPES = {
 }
 
 
-WS = "\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff"  # ECMAScript's \s
+# core section 1: whitespace is ECMAScript's WhiteSpace and LineTerminator (its \s); characters are code points, which
+# is what Python's re counts on str, as ECMAScript's u flag does
+WS = "\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff"
 
 
 def _ecma(pattern: str) -> str:

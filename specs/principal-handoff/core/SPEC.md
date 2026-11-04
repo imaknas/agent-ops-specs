@@ -53,7 +53,8 @@ principal's approval of a decision's acceptance criteria, so that a verifier may
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT
 RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 [RFC 2119]
 [RFC 8174] when, and only when, they appear in all capitals, as shown here. Sections marked *non-normative*, examples
-and notes are informative.
+and notes are informative. A **character** is a Unicode code point, and **whitespace** is the characters ECMAScript
+calls WhiteSpace and LineTerminator.
 
 **Party identifier**
 : A string that identifies one party (a person, an organisation, an agent, a system) within a deployment, no
@@ -244,18 +245,18 @@ writes claims or notes about a project it holds no role in.
 
 Extensions MAY restrict this table further, and MUST NOT widen it, except that an extension's table MAY also list
 (`type`, `origin`) pairs that a module layered on it defines (§11); no other type is valid. The core record schema
-therefore leaves `type` open, and the extension's table decides which types are valid. A receiver selects the schema
-by `ext` and the (`type`, `origin`) pair as the extension's table lists, and MUST reject a record whose pair is not
-listed. For a module pair the extension assigns no schema of its own: receivers apply the core record schema, and the
-module's schema is one of its structural rules (§11). A record whose `ph` is not the core version its `ext` names is
-invalid. A receiver that does not implement the extension or version named in `ext` MUST NOT act on the record; it
-SHOULD consume it without error and MAY report it. The schemas use JSON Schema draft 2020-12 restricted to `type`,
-`required`, `properties`, `enum`, `const`, `pattern` (an ECMAScript regular expression, in which `$` matches only at
-the end of the string), `items` and `$ref` (a relative path), plus the annotations `$schema`, `$id` (the schema's path
-from the family's root, against which `$ref` resolves), `title` and `description`, so that a small validator suffices.
-Validity is what the text of these specifications states. Where the text and a schema or a conformance fixture
-disagree, the text governs: a schema constraint the text does not state, or a fixture that contradicts the text, is
-an error in the schema or fixture.
+therefore leaves `type` open, and the extension's table decides which types are valid. A receiver selects the schema by
+`ext` and the (`type`, `origin`) pair as the extension's table lists, and MUST reject a record whose pair is not listed.
+For a module pair the extension assigns no schema of its own: receivers apply the core record schema, and the module's
+schema is one of its structural rules (§11). A record whose `ph` is not the core version its `ext` names is invalid. A
+receiver that does not implement the extension or version named in `ext` MUST NOT act on the record; it SHOULD consume
+it without error and MAY report it. The schemas use JSON Schema draft 2020-12 restricted to `type`, `required`,
+`properties`, `enum`, `const`, `pattern` (an ECMAScript regular expression with Unicode (`u`) semantics, in which `$`
+matches only at the end of the string), `items` and `$ref` (a relative path), plus the annotations `$schema`, `$id` (the
+schema's path from the family's root, against which `$ref` resolves), `title` and `description`, so that a small
+validator suffices. Validity is what the text of these specifications states. Where the text and a schema or a
+conformance fixture disagree, the text governs: a schema constraint the text does not state, or a fixture that
+contradicts the text, is an error in the schema or fixture.
 
 ## 5. Authority and evidence
 
@@ -380,12 +381,11 @@ claim about the item with that id. A claim never removes an item from the princi
 
 - `same_as` is emitted by the principal side (`origin: "principal"`) when it treats two items as one, for example the
   same request raised by two projects, or a request repeating one already settled. Relations never change any item's
-  state (§6): when the principal side settles a group of related items, it MUST emit a `settled` for each item, on
-  that item's own authority, so that every requester computes the same state. One requester withdrawing leaves the
-  other items open. A relation the principal side sends to a project names an item of another project only by a `uri`
-  that the principal side alone can resolve, never by that project's `ext`, `project` and `key` (§13; a duty of the
-  principal side, not a validity rule). A requester that disagrees sends a `note` about its item saying why the two
-  differ; the principal side SHOULD then retract the relation.
+  state (§6): when the principal side settles a group of related items, it MUST emit a `settled` for each item, on that
+  item's own authority, so that every requester computes the same state. One requester withdrawing leaves the other
+  items open. A relation the principal side sends to a project names an item of another project only by a `uri` that the
+  principal side alone can resolve, never by that project's `ext`, `project` and `key` (§13). A requester that disagrees
+  sends a `note` about its item saying why the two differ; the principal side SHOULD then retract the relation.
 - `derived_from` is emitted by the requester when its item arises from another item, inside or outside this family
   (§3 R5; a question asked while answering an inquiry from the principal; a task that an answer created). A
   `same_as` or `derived_from` whose target is the record's own item is valid and has no effect.
@@ -513,7 +513,8 @@ conformance classes and suite.
 - A **conforming principal side** emits settlements only as in §3 and §5, validates and deduplicates, computes state
   as in §6, follows §6's duties, delivers as in §8, and follows §9.
 - A **converting party** (§14) is a requester or principal side that implements two versions; it MUST also pass
-  [`conformance/convert.json`](conformance/convert.json).
+  the cases of [`conformance/convert.json`](conformance/convert.json) for the extensions it implements (its `held`
+  cases are Acts).
 - Every role is configured as R6 requires, and whatever a class computes equals the corresponding part of §6 over the
   same records.
 
@@ -579,11 +580,11 @@ its conformance.
    what a receiver of N−1 alone computes: receivers compute the same results from the same records when they are
    configured for the same version. The converted form is never passed on as the counterpart's record. It sends records
    in N−1 to counterparts configured for N−1, and in N to all others.
-3. Conversion keeps `id` (§10) and removes `evidence.proof`. Each extension, and each module with records of its
-   own, states the rest of its conversion in both directions in its "changes" section, with the records valid in N−1
-   that have no N form. A version that changes the meaning of a member of `terms` MUST rename that member, so that
-   the terms digest changes and settlements made before it read as stale (§4).
-   [`conformance/convert.json`](conformance/convert.json) holds the vectors for 0.5 and 0.6.
+3. Conversion keeps `id` (§10) and removes `evidence.proof`, and `evidence` with it if nothing else is left. Each
+   extension, and each module with records of its own, states the rest of its conversion in both directions in its
+   "changes" section, with the records valid in N−1 that have no N form. A version that changes the meaning of a member
+   of `terms` MUST rename that member, so that the terms digest changes and settlements made before it read as stale
+   (§4). [`conformance/convert.json`](conformance/convert.json) holds the vectors for 0.5 and 0.6.
 
    *0.5 and 0.6:* conversion is a function of the record alone, never of other records held. The core changes `ph`;
    a relation's `target.ext` that contains a `/` becomes its part before the first `/`, and one without a `/` is
@@ -599,8 +600,7 @@ identify one relation. Held records are defined (§6). Mixed versions covers onl
 configured for N and holds converted forms; 0.5 ↔ 0.6 conversion is record-local; a change of meaning renames the
 member. The converting party no longer holds back leaving draft; minor versions and ending a transition are open issues
 (§15). Validity is what the text states; schemas and fixtures that disagree with it are in error (§4). `replaced_by`
-uses the item form, and self-targets of `same_as` and `derived_from` have no effect (§7); a `same_as` naming another
-project's item in the item form, invalid in 0.5, is now a breach of a duty only (§7). Receivers keep records of
+uses the item form, and self-targets of `same_as` and `derived_from` have no effect (§7). Receivers keep records of
 versions they do not implement (§6).
 
 0.5 (2026-11-01): a restructuring release. Verifiable entries and verification results (0.4 §5.2,

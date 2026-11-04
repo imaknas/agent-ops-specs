@@ -12,6 +12,7 @@ Standard library only, Python >= 3.11. Extensions plug in through an Ext descrip
   settlement_view(records, ext, config)            -> the part of the state a requester computes (core section 12)
   terms_digest(need_record)                        -> "sha-256:<hex>" over the item and its terms (core section 4)
   relations(records, ext, config)                  -> the item's active relations (section 7)
+  replacement(records, ext, config)                -> the target of its single active replaced_by, or None
   convert(record, version)                         -> the record in the other version of its extension, or None
                                                       if it has no form there (section 14, 0.5 <-> 0.6)
   converting_held(records, ext, config)            -> what a party configured for 0.6 that also implements 0.5
@@ -142,11 +143,19 @@ def _relation(r: dict) -> list[str]:
     item = all(k in tg for k in ("ext", "project", "key"))
     if item == ("uri" in tg) or (not item and tg.keys() & {"ext", "project", "key"}):  # exactly one form
         out.append("relation target must be an item {ext, project, key} or a {uri}")
-    # naming another project's item by uri (same_as) or another deployment's (R5) is a duty, not a validity rule
+    if r.get("origin") == "principal" and item and tg["project"] != r.get("project"):
+        out.append("the principal side names another project's item only by uri")
+    # naming another deployment's item by uri (R5) is a duty, not a validity rule
     if rel.get("kind") == "replaced_by" and not (
             item and tg["ext"] == _name(r) and tg["project"] == r.get("project") and tg["key"] != r.get("key")):
         out.append("replaced_by targets another item of the same extension and project, in the item form")
     return out
+
+
+def implemented(r: dict, e: Ext) -> bool:
+    """core section 4: whether the record names the extension and version e implements; one that does not is kept
+    and not acted on (core section 6)."""
+    return r.get("ext") == e.name and r.get("ph") == e.name.split("/")[1]
 
 
 def _name(r: dict) -> str | None:
@@ -337,11 +346,17 @@ def relations(records: list[dict], e: Ext, cfg: Config) -> list[dict]:
     return out
 
 
+def replacement(records: list[dict], e: Ext, cfg: Config) -> dict | None:
+    """core section 7: the target of the item's single active replaced_by; an item with more than one has none."""
+    active = [r["target"] for r in relations(records, e, cfg) if r["kind"] == "replaced_by"]
+    return active[0] if len(active) == 1 else None
+
+
 # --- mixed versions (core section 14; the 0.5 <-> 0.6 conversion of core section 14, Acts section 6, Decisions
 # section 6 and Criteria section 10)
 
 NAME = re.compile(r"[a-z][a-z0-9-]*")
-PROJECT = re.compile(r"\S{1,128}")
+PROJECT = re.compile(f"[^{schema_subset.WS}]{{1,128}}")  # core section 1: whitespace as ECMAScript defines it
 
 
 def convert(r: dict, version: str) -> dict | None:
@@ -370,9 +385,9 @@ def convert(r: dict, version: str) -> dict | None:
 
 
 def _errors_0_5(r: dict, e: Ext, cfg: Config) -> list[str]:
-    """0.5 validity, read as the 0.6 validity of the converted form plus the two 0.5 rules that 0.6 relaxes: a
-    same_as named another project's item only by uri, and a replaced_by's target.ext was the record's whole ext. A
-    record with no 0.6 form is not held whatever its 0.5 validity, so that is not decided here."""
+    """0.5 validity, read as the 0.6 validity of the converted form plus the 0.5 rule that 0.6 relaxes: a
+    replaced_by's target.ext was the record's whole ext. A record with no 0.6 form is not held whatever its 0.5
+    validity, so that is not decided here."""
     ok = r.get("ph") == "0.5" and isinstance(r.get("ext"), str) and r["ext"] == f"{_name(r)}/0.5"
     n = convert(r, "0.6") if ok else None
     if n is None:
@@ -380,11 +395,8 @@ def _errors_0_5(r: dict, e: Ext, cfg: Config) -> list[str]:
     errs = validate(n, e, cfg)[1]
     rel = r.get("relation") or {}
     tg = rel.get("target") or {}
-    if r.get("type") == "related" and "ext" in tg:
-        if rel.get("kind") == "same_as" and tg.get("project") != r.get("project"):
-            errs.append("0.5: the principal side names another project's item only by uri")
-        if rel.get("kind") == "replaced_by" and tg.get("ext") != r.get("ext"):
-            errs.append("0.5: replaced_by targets an item of the same ext")
+    if r.get("type") == "related" and "ext" in tg and rel.get("kind") == "replaced_by" and tg.get("ext") != r.get("ext"):
+        errs.append("0.5: replaced_by targets an item of the same ext")
     return errs
 
 

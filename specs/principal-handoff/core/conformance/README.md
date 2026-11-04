@@ -16,12 +16,13 @@ record, ownership, authority and state rules of the core are exercised through e
   "principal", "cases": [{id, module?, record, to, expect}], "held": [{id, records, expect}]}`.
   - In `cases`, `record` is converted to version `to` (`"0.5"` or `"0.6"`) from the record alone; `expect` is the
     converted record, or `null` where it has no form in that version. The cases cover need records, settlements and
-    notes (`ph` and `ext` change, `evidence.proof` is removed, the terms digest is kept), Criteria grants (`"module":
-    "criteria"`, for parties that implement Criteria; unchanged but for `ph` and `ext`), and relations: `target.ext`
-    loses its version going up and gets `/0.5` back going down, a `uri` target is unchanged, and a 0.5 target whose
-    extension name or project is off-pattern has no 0.6 form.
-  - In `held`, `records` are what a party configured for 0.6 that also implements 0.5 has received about one act
-    (Acts), in either version; `expect` is `{held, relations}`: the ids of the records it holds (a 0.5 record only if
-    it is valid in 0.5 and has a 0.6 form, §10 comparing 0.6 forms) and the act's active relations as `{kind,
-    target}`, sorted. Neither depends on arrival order. A record valid in 0.6 but invalid in 0.5 (a `same_as` naming
-    another project's item in the item form) is not held when it arrives in 0.5.
+    notes (`ph` and `ext` change, `evidence.proof` is removed, and `evidence` with it if nothing is left; the terms
+    digest is kept), Criteria grants (`"module": "criteria"`, for parties that implement Criteria; unchanged but for
+    `ph` and `ext`), and relations of both extensions: `target.ext` keeps only its part before the first `/` going up
+    and gets `/0.5` back going down, a `uri` target is unchanged, and a 0.5 target whose extension name or project is
+    off-pattern has no 0.6 form.
+  - The `held` cases are Acts only: a converting party passes them if it implements Acts (core §12). `records` are what
+    a party configured for 0.6 that also implements 0.5 has received about one act, in either version; `expect` is
+    `{held, relations}`: the ids of the records it holds (a 0.5 record only if it is valid in 0.5 and has a 0.6 form,
+    §10 comparing 0.6 forms) and the act's active relations as `{kind, target}`, sorted. Neither depends on arrival
+    order.

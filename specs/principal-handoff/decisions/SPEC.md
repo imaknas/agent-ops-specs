@@ -178,8 +178,10 @@ changes meaning. The only 0.5 records with no 0.6 form are the relations core §
 |---|---|
 | `records.json` | §3 and core §4–§5: record → schema it validates against, or invalid |
 | `lifecycle.json` | core §6 and §4 here: the records one receiver holds for one decision (with duplicates, reordering, revisions, forks, ties, cycles, withdrawals, stale terms and invalid records) → the decision's state; a requester is compared on the settlement view only (core §12) |
+| `relations.json` | core §7: the `related` records one receiver holds for one decision → its active relations and its replacement |
 
-The core's [terms-digest vectors](../core/conformance/terms-digest.json) apply to every implementation.
+The core's [terms-digest vectors](../core/conformance/terms-digest.json) apply to every implementation. Implementations
+of this extension are listed with those of Acts ([Acts §10](../acts/SPEC.md#10-implementations)).
 
 ## 8. Security considerations
 
