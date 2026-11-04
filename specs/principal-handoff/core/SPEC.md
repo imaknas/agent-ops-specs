@@ -506,7 +506,7 @@ conformance classes and suite.
   (§10), computes for each of its items the settlement view (§6), and applies delivered records as in §8.
 - A **conforming principal side** emits settlements only as in §3 and §5, validates and deduplicates, computes state
   as in §6, follows §6's duties, delivers as in §8, and follows §9.
-- A **converting party** (§14) is a requester or principal side that implements two versions; it also passes
+- A **converting party** (§14) is a requester or principal side that implements two versions; it MUST also pass
   [`conformance/convert.json`](conformance/convert.json).
 - Every role is configured as R6 requires, and whatever a class computes equals the corresponding part of §6 over the
   same records.
