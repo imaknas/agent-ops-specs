@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Experimental (no implementation besides the reference code); all normative content frozen in the release candidate, where only this status may change (core §14) |
+| Status | Experimental ([release candidate](../README.md#release-candidate)) |
 | Version | 0.6 (2026-11-04); 0.5 (2026-11-01); in core 0.4 §5.3 and Decisions 0.4 §2.1–§4.2 |
 | Module | of [Principal Handoff: Decisions 0.6](../decisions/SPEC.md) (`decisions/0.6`); requires [Evidence 0.6](../evidence/SPEC.md) |
 | License | Apache-2.0 |
