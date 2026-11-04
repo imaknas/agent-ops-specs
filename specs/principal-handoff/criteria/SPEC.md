@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Experimental (no implementation besides the reference code); wire content frozen in the release candidate (core §14) |
+| Status | Experimental (no implementation besides the reference code); all normative content frozen in the release candidate, where only this status may change (core §14) |
 | Version | 0.6 (2026-11-04); 0.5 (2026-11-01); in core 0.4 §5.3 and Decisions 0.4 §2.1–§4.2 |
 | Module | of [Principal Handoff: Decisions 0.6](../decisions/SPEC.md) (`decisions/0.6`); requires [Evidence 0.6](../evidence/SPEC.md) |
 | License | Apache-2.0 |
@@ -320,9 +320,10 @@ The [core](../core/SPEC.md#13-security-and-privacy-considerations) and
 
 ## 10. Changes from 0.5
 
-None to the rules; "held" (§4) has core §6's definition. Conversion between 0.5 and 0.6 changes `ph` and `ext` as
-Decisions §6 says and nothing else: the terms digest is computed as in 0.5 (core §4), so `approval.terms_digest` is
-kept. In 0.4 this module was core §5.3, the approval fold of core §6, and Decisions §2.1–§2.2 and §4.1–§4.2.
+None to the rules; "held" (§4) has core §6's definition. Both ways, an `approved` converts by changing `ph` and `ext`
+(`"decisions/0.5"` ↔ `"decisions/0.6"`) and removing `evidence.proof` (core §14); `approval.terms_digest` is kept,
+since the terms digest is computed as in 0.5 (core §4). Every 0.5 record of this module has a 0.6 form. In 0.4 this
+module was core §5.3, the approval fold of core §6, and Decisions §2.1–§2.2 and §4.1–§4.2.
 
 ## 11. Relation to other specifications
 

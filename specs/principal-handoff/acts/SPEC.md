@@ -132,9 +132,7 @@ Changes from 0.5: records carry `ph: "0.6"` and `ext: "acts/0.6"`, and a relatio
 
 **Conversion** (core §14), with vectors in [`../core/conformance/convert.json`](../core/conformance/convert.json):
 both ways, change `ph` and `ext` (`"acts/0.5"` ↔ `"acts/0.6"`), remove `evidence.proof`, and convert a relation's
-`target.ext` as core §14 says. The only 0.5 records with no 0.6 form are the relations core §14 lists. The 0.4 to 0.5
-conversion was: change `ph` and `ext`, remove `evidence.proof`, and replace a settlement's `terms_digest` as core 0.5
-§14 said.
+`target.ext` as core §14 says. The only 0.5 records with no 0.6 form are the relations core §14 lists.
 
 ## 7. Conformance
 

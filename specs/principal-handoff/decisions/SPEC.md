@@ -155,8 +155,7 @@ extension name `decisions` (core §7).
 **Conversion** (core §14), with vectors in [`../core/conformance/convert.json`](../core/conformance/convert.json).
 Both ways: change `ph` and `ext` (`"decisions/0.5"` ↔ `"decisions/0.6"`), remove `evidence.proof`, and convert a
 relation's `target.ext` as core §14 says. Criteria's `approved` records convert as Criteria §10 says. Nothing else
-changes meaning. The only 0.5 records with no 0.6 form are the relations core §14 lists. The 0.4 to 0.5 conversion
-was: change `ph` and `ext`, remove `evidence.proof`, and replace a settlement's `terms_digest` as core 0.5 §14 said.
+changes meaning. The only 0.5 records with no 0.6 form are the relations core §14 lists.
 
 ## 7. Conformance
 

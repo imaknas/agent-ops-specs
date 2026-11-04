@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Experimental (no implementation besides the reference code); wire content frozen in the release candidate (core §14) |
+| Status | Experimental (no implementation besides the reference code); all normative content frozen in the release candidate, where only this status may change (core §14) |
 | Version | 0.6 (2026-11-04); 0.5 (2026-11-01); in core 0.4 as §5.2 |
 | Module | of [Principal Handoff Core 0.6](../core/SPEC.md), for every extension (`acts/0.6`, `decisions/0.6`) |
 | License | Apache-2.0 |
@@ -192,7 +192,8 @@ or `ignored`: whether a verifier keeps the record's `verifiable` and `verified` 
 ## 8. Changes from 0.5
 
 None. The members and their meaning are unchanged, and the terms digest is computed as in 0.5 (core §4), so a record
-converts between 0.5 and 0.6 as its extension says (Acts §6, Decisions §6). In 0.4 this module was core §5.2 and
+converts between 0.5 and 0.6 as its extension says (Acts §6, Decisions §6); no 0.5 record lacks a 0.6 form because
+of this module's members. In 0.4 this module was core §5.2 and
 §13.
 
 ## 9. Relation to other specifications

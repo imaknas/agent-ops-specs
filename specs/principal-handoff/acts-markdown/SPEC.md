@@ -411,7 +411,8 @@ record's.
 
 ## 6. Changes from 0.5
 
-None to the binding's rules: the records a registrar sends carry `ph: "0.6"` and `ext: "acts/0.6"`, and convert as
+None to the binding's rules: the records a registrar sends carry `ph: "0.6"` and `ext: "acts/0.6"`, the
+`replaced_by` that agents send for a re-raised act (§2) carries `target.ext: "acts"` (core §7), and records convert as
 Acts §6 says. In 0.4 this binding was Acts §4–§7; 0.5 made it a document of its own. The rules since 0.4 keep every
 line a 0.3 registrar stamped present, whatever their classification of it (§2).
 
