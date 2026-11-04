@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.5",
+  "suite": "acts/0.6",
   "description": "Parse vectors: document -> tasks sections, tasks, lines to report (malformed checkbox lines, task-like lines, extra tasks headings) and where an unclosed block opens.",
   "cases": [
     {

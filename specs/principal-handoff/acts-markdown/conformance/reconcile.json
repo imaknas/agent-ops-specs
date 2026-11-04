@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.5",
+  "suite": "acts/0.6",
   "description": "Reconciliation vectors: document + open registered keys (key -> text) -> actions.",
   "cases": [
     {

@@ -1,15 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "criteria/schemas/approved.schema.json",
-  "title": "Principal Handoff Criteria 0.5: approved",
-  "description": "Principal side: the principal approved the decision's terms at one terms_rev (criteria section 4), or the approval is retracted (active false). A Criteria record on decisions/0.5; changes no register.",
+  "title": "Principal Handoff Criteria 0.6: approved",
+  "description": "Principal side: the principal approved the decision's terms at one terms_rev (criteria section 4), or the approval is retracted (active false). A Criteria record on decisions/0.6; changes no register.",
   "$ref": "../../core/schemas/record.schema.json",
   "required": [
     "approval"
   ],
   "properties": {
     "ext": {
-      "const": "decisions/0.5"
+      "const": "decisions/0.6"
     },
     "type": {
       "const": "approved"

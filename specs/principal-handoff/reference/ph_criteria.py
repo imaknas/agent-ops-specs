@@ -1,4 +1,4 @@
-"""Reference reading of the Principal Handoff Criteria 0.5 module (criteria/SPEC.md sections 2, 4 and 7), on
+"""Reference reading of the Principal Handoff Criteria 0.6 module (criteria/SPEC.md sections 2, 4 and 7), on
 ph_decisions and ph_evidence.
 
   breaches(record, config) -> [errors]       the structural rules of section 7 the record breaks (its module content)

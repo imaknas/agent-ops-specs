@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "evidence/schemas/evidence.schema.json",
-  "title": "Principal Handoff Evidence 0.5: evidence members",
+  "title": "Principal Handoff Evidence 0.6: evidence members",
   "description": "The members of a record's evidence that the Evidence module defines (evidence section 2). A record that breaks this schema stays valid; a verifier ignores its verifiable and verified.",
   "type": "object",
   "properties": {

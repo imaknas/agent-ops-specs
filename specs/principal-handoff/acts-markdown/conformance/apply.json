@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.5",
+  "suite": "acts/0.6",
   "description": "Registrar step 1: document + one record -> document. Only principal-side settled/reopened change it (I2).",
   "cases": [
     {
@@ -28,8 +28,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -70,8 +70,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "dropped-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -105,8 +105,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "already_done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -139,8 +139,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -184,8 +184,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "done-task-demo-bbbbbbbbbb",
         "key": "task-demo-bbbbbbbbbb",
         "project": "demo",
@@ -229,8 +229,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -271,8 +271,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -313,8 +313,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -353,8 +353,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -390,8 +390,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "reopened-task-demo-bbbbbbbbbb",
         "key": "task-demo-bbbbbbbbbb",
         "project": "demo",
@@ -426,8 +426,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -459,8 +459,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -493,8 +493,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "done-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -531,8 +531,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "dropped-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -571,8 +571,8 @@
         ]
       },
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "reopened-task-demo-aaaaaaaaaa",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -595,8 +595,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "w1",
         "type": "withdrawn",
         "origin": "requester",
@@ -627,8 +627,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "n1",
         "type": "note",
         "origin": "principal",
@@ -664,8 +664,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -704,8 +704,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -743,8 +743,8 @@
         "- [ ] [agent] Write docs"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "o-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -778,8 +778,8 @@
         "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -815,8 +815,8 @@
         "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -855,8 +855,8 @@
         "- [ ] Sign the contract (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -896,8 +896,8 @@
         "- [ ] [agent] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -934,8 +934,8 @@
         "- [ ] [agent] Other"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -974,8 +974,8 @@
         "```"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -1014,8 +1014,8 @@
         "```"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -1052,8 +1052,8 @@
         "- (none)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "o-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -1088,8 +1088,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "o-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -1125,8 +1125,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s-81f2",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -1163,8 +1163,8 @@
         "- (none)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "o:ask",
         "type": "reopened",
         "origin": "principal",
@@ -1194,8 +1194,8 @@
         "- [ ] [owner] Renew the domain this week (waiting on owner: ask-demo-1f2e3d)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s:ask",
         "type": "settled",
         "origin": "principal",
@@ -1233,8 +1233,8 @@
         "- [ ] [owner] Renew the domain (waiting on owner: ask-demo-1f2e3d)"
       ],
       "record": {
-        "ph": "0.5",
-        "ext": "acts/0.5",
+        "ph": "0.6",
+        "ext": "acts/0.6",
         "id": "s:ask",
         "type": "settled",
         "origin": "principal",

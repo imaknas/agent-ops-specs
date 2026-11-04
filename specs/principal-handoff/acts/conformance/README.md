@@ -1,4 +1,4 @@
-# Principal Handoff Acts 0.5 conformance suite
+# Principal Handoff Acts 0.6 conformance suite
 
 JSON fixtures that any implementation of [Principal Handoff Acts](../SPEC.md) can run. The reference runner is
 [`../../reference/test_acts.py`](../../reference/test_acts.py) (`cd ../../reference && python3 -m unittest`). The
@@ -7,7 +7,7 @@ fixtures of the [Acts Markdown binding](../../acts-markdown/SPEC.md) are in
 
 ## Common conventions
 
-- Every file is `{"suite": "acts/0.5", "description": …, "principal": …, "cases": [ … ]}`, where `principal` is the
+- Every file is `{"suite": "acts/0.6", "description": …, "principal": …, "cases": [ … ]}`, where `principal` is the
   configured principal identifier (core R6). Every case has a unique `id`.
 
 ## Files

@@ -599,7 +599,8 @@ identify one relation. Held records are defined (§6). Mixed versions covers onl
 configured for N and holds converted forms; 0.5 ↔ 0.6 conversion is record-local; a change of meaning renames the
 member. The converting party no longer holds back leaving draft; minor versions and ending a transition are open issues
 (§15). Validity is what the text states; schemas and fixtures that disagree with it are in error (§4). `replaced_by`
-uses the item form, and self-targets of `same_as` and `derived_from` have no effect (§7). Receivers keep records of
+uses the item form, and self-targets of `same_as` and `derived_from` have no effect (§7); a `same_as` naming another
+project's item in the item form, invalid in 0.5, is now a breach of a duty only (§7). Receivers keep records of
 versions they do not implement (§6).
 
 0.5 (2026-11-01): a restructuring release. Verifiable entries and verification results (0.4 §5.2,

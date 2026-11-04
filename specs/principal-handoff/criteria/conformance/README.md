@@ -1,9 +1,9 @@
-# Principal Handoff Criteria 0.5 conformance suite
+# Principal Handoff Criteria 0.6 conformance suite
 
 JSON fixtures for the [Criteria module](../SPEC.md). The reference runner is
 [`../../reference/test_criteria.py`](../../reference/test_criteria.py) (`cd ../../reference && python3 -m unittest`).
 
-Both files are `{"suite": "criteria/0.5", "principal": …, "description": …, "cases": [ … ]}`.
+Both files are `{"suite": "criteria/0.6", "principal": …, "description": …, "cases": [ … ]}`.
 
 - `records.json` (SPEC §2, §7, core §11): `{id, record, valid, schema?, criteria, principal_type?}`. `valid` is
   whether the record is valid under the core and Decisions, the same for every receiver whether or not it implements

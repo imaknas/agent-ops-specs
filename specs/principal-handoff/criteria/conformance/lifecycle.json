@@ -1,5 +1,5 @@
 {
-  "suite": "criteria/0.5",
+  "suite": "criteria/0.6",
   "principal": "p:owner",
   "description": "Criteria section 4: the records a principal side holds for one decision -> its state and the approval in force.",
   "cases": [
@@ -8,8 +8,8 @@
       "spec": "criteria §4, §6",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -70,8 +70,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -113,8 +113,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -156,8 +156,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -218,8 +218,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -241,8 +241,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "a:q-demo-7:2",
           "type": "amended",
           "origin": "requester",
@@ -326,8 +326,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -388,8 +388,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -411,8 +411,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "a:q-demo-7:2",
           "type": "amended",
           "origin": "requester",
@@ -476,8 +476,8 @@
           ]
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap3",
           "type": "approved",
           "origin": "principal",
@@ -519,8 +519,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -581,8 +581,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -624,8 +624,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -686,8 +686,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "a:q-demo-7:2",
           "type": "amended",
           "origin": "requester",
@@ -751,8 +751,8 @@
           ]
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -794,8 +794,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -856,8 +856,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -879,8 +879,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap2",
           "type": "approved",
           "origin": "principal",
@@ -917,8 +917,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -979,8 +979,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "apx",
           "type": "approved",
           "origin": "principal",
@@ -1023,8 +1023,8 @@
       "spec": "criteria §5",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -1085,8 +1085,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -1108,8 +1108,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "n:q-demo-7:1",
           "type": "note",
           "origin": "requester",
@@ -1146,8 +1146,8 @@
           "note": "Both checks ran on the subject commit."
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:q-demo-7:1",
           "type": "settled",
           "origin": "principal",
@@ -1218,8 +1218,8 @@
       "spec": "criteria §5",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -1280,8 +1280,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -1303,8 +1303,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "n:q-demo-7:1",
           "type": "note",
           "origin": "requester",
@@ -1341,8 +1341,8 @@
           "note": "Both checks ran on the subject commit."
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "n:q-demo-7:v1",
           "type": "note",
           "origin": "principal",
@@ -1399,8 +1399,8 @@
       "spec": "criteria §5",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -1461,8 +1461,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -1484,8 +1484,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "n:q-demo-7:1",
           "type": "note",
           "origin": "requester",
@@ -1522,8 +1522,8 @@
           "note": "Both checks ran on the subject commit."
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:q-demo-7:1",
           "type": "settled",
           "origin": "principal",
@@ -1571,8 +1571,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap2",
           "type": "approved",
           "origin": "principal",
@@ -1612,8 +1612,8 @@
       "spec": "criteria §6",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -1674,8 +1674,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -1697,8 +1697,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "n:q-demo-7:1",
           "type": "note",
           "origin": "requester",
@@ -1735,8 +1735,8 @@
           "note": "Both checks ran on the subject commit."
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:q-demo-7:1",
           "type": "settled",
           "origin": "principal",
@@ -1784,8 +1784,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:q-demo-7:audit",
           "type": "settled",
           "origin": "principal",
@@ -1836,8 +1836,8 @@
       "spec": "criteria §6",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -1898,8 +1898,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -1921,8 +1921,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "n:q-demo-7:1",
           "type": "note",
           "origin": "requester",
@@ -1959,8 +1959,8 @@
           "note": "Both checks ran on the subject commit."
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:q-demo-7:1",
           "type": "settled",
           "origin": "principal",
@@ -2008,8 +2008,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "o:q-demo-7:audit",
           "type": "reopened",
           "origin": "principal",
@@ -2043,8 +2043,8 @@
       "spec": "criteria §4 condition 4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -2105,8 +2105,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -2128,8 +2128,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:hand",
           "type": "settled",
           "origin": "principal",
@@ -2150,8 +2150,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "o:hand",
           "type": "reopened",
           "origin": "principal",
@@ -2184,8 +2184,8 @@
       "spec": "criteria §4 conditions 2-3",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -2246,8 +2246,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -2269,8 +2269,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r2",
           "type": "raised",
           "origin": "requester",
@@ -2351,8 +2351,8 @@
       "spec": "criteria §4 condition 2",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -2413,8 +2413,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "a:q-demo-7:2",
           "type": "amended",
           "origin": "requester",
@@ -2478,8 +2478,8 @@
           ]
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap3",
           "type": "approved",
           "origin": "principal",
@@ -2501,8 +2501,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "a:bad",
           "type": "amended",
           "origin": "requester",
@@ -2586,8 +2586,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -2612,8 +2612,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -2655,8 +2655,8 @@
       "spec": "criteria §4 condition 2",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -2717,8 +2717,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -2740,8 +2740,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "w4",
           "type": "withdrawn",
           "origin": "requester",
@@ -2775,8 +2775,8 @@
       "spec": "criteria §4 condition 4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -2837,8 +2837,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -2860,8 +2860,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:q-demo-7:1",
           "type": "settled",
           "origin": "principal",
@@ -2932,8 +2932,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -2994,8 +2994,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -3017,8 +3017,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1b",
           "type": "approved",
           "origin": "principal",
@@ -3060,8 +3060,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -3122,8 +3122,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -3145,8 +3145,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1c",
           "type": "approved",
           "origin": "principal",
@@ -3191,8 +3191,8 @@
       "spec": "criteria §4 condition 4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -3253,8 +3253,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -3277,8 +3277,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:q-demo-7:1",
           "type": "settled",
           "origin": "principal",
@@ -3349,8 +3349,8 @@
       "spec": "criteria §4",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -3411,8 +3411,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -3434,8 +3434,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ret-x",
           "type": "approved",
           "origin": "principal",
@@ -3471,8 +3471,8 @@
       "spec": "criteria §4 condition 4: a settlement the grant was not made over lapses it, whatever its ts",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -3533,8 +3533,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -3556,8 +3556,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:owner-view:1",
           "type": "settled",
           "origin": "principal",
@@ -3600,8 +3600,8 @@
       "spec": "criteria §4 condition 4: a grant made over the current reopening is in force",
       "records": [
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "r:q-demo-7",
           "type": "raised",
           "origin": "requester",
@@ -3662,8 +3662,8 @@
           "terms_rev": 1
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap1",
           "type": "approved",
           "origin": "principal",
@@ -3685,8 +3685,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s:hand",
           "type": "settled",
           "origin": "principal",
@@ -3707,8 +3707,8 @@
           }
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "o:hand",
           "type": "reopened",
           "origin": "principal",
@@ -3721,8 +3721,8 @@
           ]
         },
         {
-          "ph": "0.5",
-          "ext": "decisions/0.5",
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "ap2",
           "type": "approved",
           "origin": "principal",

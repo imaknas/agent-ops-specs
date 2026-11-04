@@ -1,4 +1,4 @@
-"""Reference reading of Principal Handoff Core 0.5 (core/SPEC.md sections 3 to 7, 10, 11 and 14).
+"""Reference reading of Principal Handoff Core 0.6 (core/SPEC.md sections 3 to 7, 10, 11 and 14).
 
 Standard library only, Python >= 3.11. Extensions plug in through an Ext description:
 
@@ -11,7 +11,11 @@ Standard library only, Python >= 3.11. Extensions plug in through an Ext descrip
   fold(records, ext, config)                       -> the item's state, independent of arrival order
   settlement_view(records, ext, config)            -> the part of the state a requester computes (core section 12)
   terms_digest(need_record)                        -> "sha-256:<hex>" over the item and its terms (core section 4)
-  convert(record, version, held)                   -> the record in another version of its extension (section 14)
+  relations(records, ext, config)                  -> the item's active relations (section 7)
+  convert(record, version)                         -> the record in the other version of its extension, or None
+                                                      if it has no form there (section 14, 0.5 <-> 0.6)
+  converting_held(records, ext, config)            -> what a party configured for 0.6 that also implements 0.5
+                                                      holds (sections 6 and 14)
 """
 from __future__ import annotations
 
@@ -41,7 +45,7 @@ VIEW = ("settlement", "outcome", "answer", "authority", "stale")  # the settleme
 
 @dataclass(frozen=True)
 class Ext:
-    name: str               # "acts/0.5"
+    name: str               # "acts/0.6"
     schemas: pathlib.Path
     withdrawn_policy: str   # "keep": stays open and the principal is asked; "stop": no longer presented
     check: Callable[[dict], list[str]] = field(default=lambda r: [])
@@ -138,12 +142,16 @@ def _relation(r: dict) -> list[str]:
     item = all(k in tg for k in ("ext", "project", "key"))
     if item == ("uri" in tg) or (not item and tg.keys() & {"ext", "project", "key"}):  # exactly one form
         out.append("relation target must be an item {ext, project, key} or a {uri}")
-    if r.get("origin") == "principal" and item and tg["project"] != r.get("project"):
-        out.append("the principal side names another project's item only by uri")
+    # naming another project's item by uri (same_as) or another deployment's (R5) is a duty, not a validity rule
     if rel.get("kind") == "replaced_by" and not (
-            item and tg["ext"] == r.get("ext") and tg["project"] == r.get("project") and tg["key"] != r.get("key")):
-        out.append("replaced_by targets another item of the same extension and project")
+            item and tg["ext"] == _name(r) and tg["project"] == r.get("project") and tg["key"] != r.get("key")):
+        out.append("replaced_by targets another item of the same extension and project, in the item form")
     return out
+
+
+def _name(r: dict) -> str | None:
+    """core section 4: the extension's name is the part of ext before the /."""
+    return r["ext"].split("/")[0] if isinstance(r.get("ext"), str) else None
 
 
 def _authority(r: dict, cfg: Config) -> list[str]:
@@ -249,12 +257,6 @@ def terms_digest(need: dict) -> str:
     return "sha-256:" + hashlib.sha256(_canon(digest_input(need)).encode("utf-8")).hexdigest()
 
 
-def terms_digest_0_4(need: dict) -> str:
-    """Core 0.4's terms digest, over the full ext value (version included); used only to convert 0.4 records."""
-    bound = {k: need[k] for k in ("ext", "project", "key", "terms_rev", "terms")}
-    return "sha-256:" + hashlib.sha256(_canon(bound).encode("utf-8")).hexdigest()
-
-
 def held(records: list[dict], e: Ext, cfg: Config) -> list[dict]:
     """The valid records of the types the core folds, one per (origin, id): an invalid record never blocks a valid one
     with the same id, an id reused with different valid content keeps the greater canonical form, and a record never
@@ -314,36 +316,86 @@ def settlement_view(records: list[dict], e: Ext, cfg: Config) -> dict:
     return {k: state[k] for k in VIEW}
 
 
-# --- mixed versions (core section 14; the 0.4 <-> 0.5 conversion of Acts section 6, Decisions section 6, Criteria
-# section 10)
+def relations(records: list[dict], e: Ext, cfg: Config) -> list[dict]:
+    """core section 7: each relation of the item is identified by its kind and the target's extension name, project
+    and key, or by its kind and uri (an exact string); the latest held `related` decides whether it is active. Returns
+    the active ones as {kind, target}, sorted. A same_as or derived_from naming the record's own item has no effect."""
+    latest: dict[tuple, dict] = {}
+    for r in held(records, e, cfg):
+        if r["type"] != "related":
+            continue
+        rel, tg = r["relation"], r["relation"]["target"]
+        k = (rel["kind"], "uri", tg["uri"]) if "uri" in tg else (rel["kind"], tg["ext"], tg["project"], tg["key"])
+        if k not in latest or (_when(r["ts"]), r["id"]) > (_when(latest[k]["ts"]), latest[k]["id"]):
+            latest[k] = r
+    out = []
+    for k in sorted(latest):
+        r = latest[k]
+        tg = {m: v for m, v in r["relation"]["target"].items() if m in ("uri", "ext", "project", "key")}
+        if r["relation"]["active"] and tg != {"ext": _name(r), "project": r["project"], "key": r["key"]}:
+            out.append({"kind": k[0], "target": tg})
+    return out
 
-def convert(r: dict, version: str, records: list[dict]) -> dict:
-    """r converted to `version` ("0.4" or "0.5") of its extension, given the records the converter holds about the item
-    (in either version). A converter keeps what it received and converts again at each fold (core section 14)."""
-    name = r["ext"].split("/")[0]
+
+# --- mixed versions (core section 14; the 0.5 <-> 0.6 conversion of core section 14, Acts section 6, Decisions
+# section 6 and Criteria section 10)
+
+NAME = re.compile(r"[a-z][a-z0-9-]*")
+PROJECT = re.compile(r"\S{1,128}")
+
+
+def convert(r: dict, version: str) -> dict | None:
+    """r converted to `version` ("0.5" or "0.6") of its extension, from the record alone; None if it has no form in
+    that version (core section 14: a 0.5 relation whose target does not convert)."""
     out = {k: v for k, v in r.items()}
-    out["ph"], out["ext"] = version, f"{name}/{version}"
+    out["ph"], out["ext"] = version, f"{_name(r)}/{version}"
     ev = {k: v for k, v in (r.get("evidence") or {}).items() if k != "proof"}
     if "evidence" in r:
         if ev:
             out["evidence"] = ev
         else:
             del out["evidence"]
-    old = terms_digest_0_4 if version == "0.5" else terms_digest
-    new = terms_digest if version == "0.5" else terms_digest_0_4
-    needs = [{**n, "ext": f"{name}/{version}"} for n in records
-             if n.get("type") in ("raised", "amended") and n.get("terms_rev") == r.get("terms_rev")]
-    source = r["ext"]
-
-    def redigest(value: str) -> str:  # the held need record whose source digest matches, else the value as it is
-        match = [n for n in needs if old({**n, "ext": source}) == value]
-        return new(match[0]) if match else value
-
-    if r.get("type") == "settled":
-        out["terms_digest"] = redigest(r["terms_digest"])
-    if r.get("type") == "approved" and (r.get("approval") or {}).get("active"):
-        # Criteria section 10: a converted grant names no `after`, so it is in force only while no settlement is held
-        ap = {k: v for k, v in r["approval"].items() if k != "after"}
-        ap["terms_digest"] = redigest(r["approval"].get("terms_digest", ""))
-        out["approval"] = ap
+    tg = (r.get("relation") or {}).get("target") if r.get("type") == "related" else None
+    if isinstance(tg, dict) and isinstance(tg.get("ext"), str):
+        t = dict(tg)
+        if version == "0.6":
+            t["ext"] = tg["ext"].split("/")[0]
+            if not NAME.fullmatch(t["ext"]) or not (isinstance(t.get("project"), str)
+                                                    and PROJECT.fullmatch(t["project"])):
+                return None
+        else:
+            t["ext"] = f"{tg['ext']}/0.5"
+        out["relation"] = {**r["relation"], "target": t}
     return out
+
+
+def _errors_0_5(r: dict, e: Ext, cfg: Config) -> list[str]:
+    """0.5 validity, read as the 0.6 validity of the converted form plus the two 0.5 rules that 0.6 relaxes: a
+    same_as named another project's item only by uri, and a replaced_by's target.ext was the record's whole ext. A
+    record with no 0.6 form is not held whatever its 0.5 validity, so that is not decided here."""
+    ok = r.get("ph") == "0.5" and isinstance(r.get("ext"), str) and r["ext"] == f"{_name(r)}/0.5"
+    n = convert(r, "0.6") if ok else None
+    if n is None:
+        return ["not a 0.5 record with a 0.6 form"]
+    errs = validate(n, e, cfg)[1]
+    rel = r.get("relation") or {}
+    tg = rel.get("target") or {}
+    if r.get("type") == "related" and "ext" in tg:
+        if rel.get("kind") == "same_as" and tg.get("project") != r.get("project"):
+            errs.append("0.5: the principal side names another project's item only by uri")
+        if rel.get("kind") == "replaced_by" and tg.get("ext") != r.get("ext"):
+            errs.append("0.5: replaced_by targets an item of the same ext")
+    return errs
+
+
+def converting_held(records: list[dict], e: Ext, cfg: Config) -> list[dict]:
+    """What a party configured for 0.6 that also implements 0.5 holds (core sections 6 and 14): a record received in
+    0.5 counts only if it is valid in 0.5 and has a 0.6 form, and section 10 compares the 0.6 forms."""
+    forms = []
+    for r in records:
+        if r.get("ph") == "0.5":
+            if not _errors_0_5(r, e, cfg):
+                forms.append(convert(r, "0.6"))
+        else:
+            forms.append(r)
+    return held(forms, e, cfg)

@@ -1,10 +1,10 @@
-# Principal Handoff Decisions 0.5 conformance suite
+# Principal Handoff Decisions 0.6 conformance suite
 
 JSON fixtures that any implementation of [Principal Handoff Decisions](../SPEC.md) can run. The reference runner is
 [`../../reference/test_decisions.py`](../../reference/test_decisions.py) (`cd ../../reference && python3 -m
 unittest`).
 
-Both files are `{"suite": "decisions/0.5", "principal": …, "description": …, "cases": [ … ]}`; `principal` is the
+Both files are `{"suite": "decisions/0.6", "principal": …, "description": …, "cases": [ … ]}`; `principal` is the
 configured principal identifier (core R6).
 
 - `records.json` (SPEC §3, core §4–§5): `{id, record, valid, schema, principal_type?}`, with a top-level

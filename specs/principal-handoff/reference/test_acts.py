@@ -1,4 +1,4 @@
-"""Runs the Principal Handoff Acts 0.5 and Acts Markdown binding 0.5 conformance suites against the reference
+"""Runs the Principal Handoff Acts 0.6 and Acts Markdown binding 0.6 conformance suites against the reference
 implementation.
 
     cd specs/principal-handoff/reference && python3 -m unittest -v

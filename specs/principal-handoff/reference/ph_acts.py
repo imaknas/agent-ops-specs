@@ -1,5 +1,5 @@
-"""Reference registrar for the Principal Handoff Acts Markdown binding 0.5 (acts-markdown/SPEC.md sections 2 to 4),
-and record validation and state for Acts 0.5 (acts/SPEC.md sections 2 and 3).
+"""Reference registrar for the Principal Handoff Acts Markdown binding 0.6 (acts-markdown/SPEC.md sections 2 to 4),
+and record validation and state for Acts 0.6 (acts/SPEC.md sections 2 and 3).
 
 Standard library only, Python >= 3.11.
 
@@ -446,7 +446,7 @@ def _check(r: dict) -> list[str]:
     return ["terms.text is a single line"] if isinstance(text, str) and ("\n" in text or "\r" in text) else []
 
 
-EXT = ph_core.ext("acts/0.5", "keep", _check)
+EXT = ph_core.ext("acts/0.6", "keep", _check)
 
 
 def validate(r: dict, cfg: ph_core.Config) -> tuple[str | None, list[str]]:

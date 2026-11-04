@@ -175,7 +175,7 @@ The binding's open issues are in Acts Markdown §9.
 
 | Implementation | Roles | Profiles | Status |
 |---|---|---|---|
-| [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state, the Evidence and Criteria modules (no transport) | `en`, `zh-hant` | passes the 0.5 conformance suites of every document |
+| [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state, the Evidence and Criteria modules (no transport) | `en`, `zh-hant` | passes the 0.6 conformance suites of every document |
 | [brunna](https://github.com/imaknas/brunna) | registrar and requesters for Acts; requesters for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.5 and Decisions 0.5, and passes the binding fixtures, `records`, `lifecycle` (settlement view), the terms-digest vectors and `convert` (without the Criteria cases) |
 | Muninn, with brunna's built-in owner side | principal side | | implements the principal side of 0.5; passes `records`, `lifecycle`, the terms-digest vectors and `convert` (without the Criteria cases) |
 

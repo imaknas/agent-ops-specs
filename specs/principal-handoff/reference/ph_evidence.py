@@ -1,4 +1,4 @@
-"""Reference reading of the Principal Handoff Evidence 0.5 module (evidence/SPEC.md section 2), on ph_core.
+"""Reference reading of the Principal Handoff Evidence 0.6 module (evidence/SPEC.md section 2), on ph_core.
 
   breaches(record) -> [errors]   the structural rules a record's verifiable and verified break
   usable(record)   -> evidence   the record's evidence as a verifier uses it: verifiable and verified removed when the

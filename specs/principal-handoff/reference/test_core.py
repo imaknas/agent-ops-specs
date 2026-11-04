@@ -1,4 +1,4 @@
-"""Runs the Principal Handoff Core 0.5 conformance vectors and checks every schema stays within the core section 4
+"""Runs the Principal Handoff Core 0.6 conformance vectors and checks every schema stays within the core section 4
 keyword subset.
 
     cd specs/principal-handoff/reference && python3 -m unittest -v
@@ -9,6 +9,7 @@ import json
 import pathlib
 import unittest
 
+import ph_acts
 import ph_core
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -28,7 +29,18 @@ class Core(unittest.TestCase):
     def test_convert(self):
         for c in json.loads((CONF / "convert.json").read_text())["cases"]:
             with self.subTest(c["id"]):
-                self.assertEqual(ph_core.convert(c["record"], c["to"], c["held"]), c["expect"])
+                self.assertEqual(ph_core.convert(c["record"], c["to"]), c["expect"])
+
+    def test_converting_party_holds_converted_forms(self):
+        s = json.loads((CONF / "convert.json").read_text())
+        cfg = ph_core.Config(s["principal"])
+        for c in s["held"]:
+            with self.subTest(c["id"]):
+                held = ph_core.converting_held(c["records"], ph_acts.EXT, cfg)
+                self.assertEqual(sorted(r["id"] for r in held), c["expect"]["held"])
+                self.assertEqual(ph_core.relations(held, ph_acts.EXT, cfg), c["expect"]["relations"])
+                again = ph_core.converting_held(list(reversed(c["records"])), ph_acts.EXT, cfg)
+                self.assertEqual(sorted(again, key=lambda r: r["id"]), sorted(held, key=lambda r: r["id"]))
 
     def test_schemas_use_only_the_subset(self):
         def walk(x, where):

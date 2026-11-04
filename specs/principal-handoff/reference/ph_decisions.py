@@ -1,4 +1,4 @@
-"""Reference reading of Principal Handoff Decisions 0.5 (decisions/SPEC.md sections 2 to 4), on ph_core.
+"""Reference reading of Principal Handoff Decisions 0.6 (decisions/SPEC.md sections 2 to 4), on ph_core.
 
   validate(record, config)        -> (type or None, [errors])
   fold(records, config)           -> the decision's state (core section 6; a withdrawn need: no longer presented)
@@ -22,7 +22,7 @@ def _check(r: dict) -> list[str]:
 
 
 # section 3: approved is a pair of the Criteria module, which only receivers implementing it act on
-EXT = ph_core.ext("decisions/0.5", "stop", _check, modules={"approved": {"principal"}})
+EXT = ph_core.ext("decisions/0.6", "stop", _check, modules={"approved": {"principal"}})
 
 
 def validate(r: dict, cfg: ph_core.Config) -> tuple[str | None, list[str]]:

@@ -1,4 +1,4 @@
-# Principal Handoff Acts Markdown binding 0.5 conformance suite
+# Principal Handoff Acts Markdown binding 0.6 conformance suite
 
 JSON fixtures that any implementation of the [Acts Markdown binding](../SPEC.md) can run. The reference runner is
 [`../../reference/test_acts.py`](../../reference/test_acts.py) (`cd ../../reference && python3 -m unittest`). A
@@ -6,7 +6,7 @@ registrar also runs the [Acts suite](../../acts/conformance/) as a requester (SP
 
 ## Common conventions
 
-- Every file except `profiles.json` is `{"suite": "acts/0.5", "description": …, "cases": [ … ]}`: the binding has no
+- Every file except `profiles.json` is `{"suite": "acts/0.6", "description": …, "cases": [ … ]}`: the binding has no
   `ext` value of its own and is versioned with Acts. Every case has a unique `id`.
 - `profile` names an entry of `profiles.json`. Both profiles have a parameter `principal_tag`, whose value for the
   fixtures is under the profile's `parameters` (`owner` for `en`, `Owner` for `zh-hant`). A case MAY carry

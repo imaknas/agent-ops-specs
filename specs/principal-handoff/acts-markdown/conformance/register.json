@@ -1,5 +1,5 @@
 {
-  "suite": "acts/0.5",
+  "suite": "acts/0.6",
   "description": "Registration vectors: document -> stamped document + registered events (key, text).",
   "cases": [
     {
