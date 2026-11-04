@@ -5,14 +5,16 @@ AI agents working for someone keep hitting things only that someone can settle: 
 Handoff specifies how those items leave the agents, reach the principal's own tool, and come back settled, recording
 who decided and under what authority, when the items outlive every agent session.
 
+Every document is at 0.6, a [release candidate](#release-candidate).
+
 | Document | Version | What it covers |
 |---|---|---|
-| [Core](core/SPEC.md) | 0.6 draft ([release candidate](#release-candidate)) | One model for every item: a need register owned by the requester, a settlement register owned by the principal side, claims, relations and notes; authority kinds, deciders and evidence; the principal as a configured root; modules; mixed versions |
-| [Acts](acts/SPEC.md) | 0.6 draft ([release candidate](#release-candidate)) | Work only the principal can do: its terms, outcomes, records and policies (formerly Tasks 0.2 / Human Task Handoff 0.1) |
-| [Acts Markdown](acts-markdown/SPEC.md) | 0.6 draft ([release candidate](#release-candidate)) | Binding of Acts for a project's state document: agents declare acts as lines, and a registrar raises them and applies settlements back (in Acts until 0.4) |
-| [Decisions](decisions/SPEC.md) | 0.6 draft ([release candidate](#release-candidate)) | Answers and choices only the principal may make (formerly Questions 0.1) |
-| [Evidence](evidence/SPEC.md) | 0.6 experimental ([release candidate](#release-candidate)) | Module for every extension: independently verifiable proofs of facts, and what the principal side checked |
-| [Criteria](criteria/SPEC.md) | 0.6 experimental ([release candidate](#release-candidate)) | Module for Decisions: acceptance criteria the principal approves, so that a verifier may settle a decision without the principal reviewing the work |
+| [Core](core/SPEC.md) | 0.6 draft | One model for every item: a need register owned by the requester, a settlement register owned by the principal side, claims, relations and notes; authority kinds, deciders and evidence; the principal as a configured root; modules; mixed versions |
+| [Acts](acts/SPEC.md) | 0.6 draft | Work only the principal can do: its terms, outcomes, records and policies (formerly Tasks 0.2 / Human Task Handoff 0.1) |
+| [Acts Markdown](acts-markdown/SPEC.md) | 0.6 draft | Binding of Acts for a project's state document: agents declare acts as lines, and a registrar raises them and applies settlements back (in Acts until 0.4) |
+| [Decisions](decisions/SPEC.md) | 0.6 draft | Answers and choices only the principal may make (formerly Questions 0.1) |
+| [Evidence](evidence/SPEC.md) | 0.6 experimental | Module for every extension: independently verifiable proofs of facts, and what the principal side checked |
+| [Criteria](criteria/SPEC.md) | 0.6 experimental | Module for Decisions: acceptance criteria the principal approves, so that a verifier may settle a decision without the principal reviewing the work |
 | [Related work](RELATED-WORK.md) | | How this compares with ACP, MCP, A2A, AG-UI, CHAP, AuthZEN, IETF agent drafts, iCalendar/JSCalendar, agent SDKs, and proof systems and scalable-oversight research |
 
 An implementation may support one extension without the other, and a module without those it does not require. Modules
@@ -42,8 +44,8 @@ cd reference && python3 -m unittest
 0.6 is a release candidate. Until an implementation independent of this family's author passes the 0.6 suites of a
 requester or principal side of Acts or Decisions, and at least three months have passed since 0.6 was released, the
 maintainers make no breaking change to core, Acts, Acts Markdown, Decisions, or the Evidence and Criteria modules:
-0.6.x changes only wording, examples, and fixtures that every listed implementation already passes. A defect that can
-only be fixed by a breaking change is fixed in 0.7, which becomes the release candidate and restarts the count.
-
-1.0 is decided once both conditions hold. It will be a new version reached through core §14's Mixed versions, and its
-conversion from the release candidate is meant to change only `ph` and `ext`.
+0.6.x keeps `ph` and `ext` at "0.6" and changes only wording, examples, and fixtures that every listed implementation
+already passes. A breaking change is anything that changes validity, held records, state or conversion results for
+some set of records, or adds or changes a MUST. A defect that can only be fixed by a breaking change is fixed in 0.7,
+which becomes the release candidate and restarts the count. 1.0 is decided once both conditions hold, and is reached
+through core §14's Mixed versions.
