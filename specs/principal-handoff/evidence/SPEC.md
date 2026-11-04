@@ -1,10 +1,10 @@
-# Principal Handoff: Evidence 0.5
+# Principal Handoff: Evidence 0.6
 
 | | |
 |---|---|
-| Status | Experimental (no implementation besides the reference code, core §14) |
-| Version | 0.5 (2026-11-01); in core 0.4 as §5.2 |
-| Module | of [Principal Handoff Core 0.5](../core/SPEC.md), for every extension (`acts/0.5`, `decisions/0.5`) |
+| Status | Experimental (no implementation besides the reference code); wire content frozen in the release candidate (core §14) |
+| Version | 0.6 (2026-11-04); 0.5 (2026-11-01); in core 0.4 as §5.2 |
+| Module | of [Principal Handoff Core 0.6](../core/SPEC.md), for every extension (`acts/0.6`, `decisions/0.6`) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) |
 | Conformance suite | [`conformance/`](conformance/) |
@@ -27,7 +27,7 @@ module (core §11), it never changes whether a record is valid or what state an 
 5. [Use by the extensions](#5-use-by-the-extensions)
 6. [Conformance](#6-conformance)
 7. [Security considerations](#7-security-considerations)
-8. [Changes from 0.4](#8-changes-from-04)
+8. [Changes from 0.5](#8-changes-from-05)
 9. [Relation to other specifications](#9-relation-to-other-specifications)
 
 ## 1. Conventions and terminology
@@ -189,15 +189,11 @@ or `ignored`: whether a verifier keeps the record's `verifiable` and `verified` 
 - **Proofs of payment** can disclose the principal's accounts and spending; §5 limits who makes them and what they may
   settle.
 
-## 8. Changes from 0.4
+## 8. Changes from 0.5
 
-In 0.4 this module was core §5.2 and §13. V1 stays in the core (core §5.2); the structural rules of §2 were validity
-rules and now only make a verifier ignore a record's `verifiable` and `verified` (core §11); `of` may name the
-record's `origin`; V4's exception for reused proofs is now whatever a module layered on this one allows (Criteria §5);
-the uses by Acts and Decisions (§5) moved here from those extensions. A proof whose content names a terms digest names
-it as the version it was made under computed it: a proof made under 0.4 names a 0.4 digest, which a verifier compares
-with the 0.4 digest of the need record. The members and their meaning are unchanged, so a record converts between 0.4
-and 0.5 as its extension says (Acts §6, Decisions §6).
+None. The members and their meaning are unchanged, and the terms digest is computed as in 0.5 (core §4), so a record
+converts between 0.5 and 0.6 as its extension says (Acts §6, Decisions §6). In 0.4 this module was core §5.2 and
+§13.
 
 ## 9. Relation to other specifications
 
@@ -209,7 +205,7 @@ systems), selective-disclosure credentials (SD-JWT, RFC 9901; BBS signatures), a
 
 ## References
 
-- Principal Handoff Core 0.5, [`../core/SPEC.md`](../core/SPEC.md).
+- Principal Handoff Core 0.6, [`../core/SPEC.md`](../core/SPEC.md).
 - [RFC 3339] Klyne, G. and C. Newman, "Date and Time on the Internet: Timestamps", RFC 3339, July 2002.
 - [RFC 9901] Fett, D., Yasuda, K., and B. Campbell, "Selective Disclosure for JSON Web Tokens", RFC 9901, November
   2025.

@@ -1,10 +1,10 @@
-# Principal Handoff: Acts Markdown binding 0.5
+# Principal Handoff: Acts Markdown binding 0.6
 
 | | |
 |---|---|
-| Status | Draft |
-| Version | 0.5 (2026-11-01); in Acts 0.4 and 0.3 as §4–§7; formerly part of Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
-| Binding | of [Principal Handoff: Acts 0.5](../acts/SPEC.md) (`acts/0.5`), for a project's state document in Markdown |
+| Status | Draft, release candidate (core §14) |
+| Version | 0.6 (2026-11-04); 0.5 (2026-11-01); in Acts 0.4 and 0.3 as §4–§7; formerly part of Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
+| Binding | of [Principal Handoff: Acts 0.6](../acts/SPEC.md) (`acts/0.6`), for a project's state document in Markdown |
 | License | Apache-2.0 |
 | Records | [Acts §3](../acts/SPEC.md#3-records) (schemas in [`../acts/schemas/`](../acts/schemas/)) |
 | Conformance suite | [`conformance/`](conformance/) |
@@ -26,7 +26,7 @@ not need it.
 3. [Document format](#3-document-format)
 4. [Key derivation](#4-key-derivation)
 5. [Record ids](#5-record-ids)
-6. [Changes from 0.4](#6-changes-from-04)
+6. [Changes from 0.5](#6-changes-from-05)
 7. [Conformance](#7-conformance)
 8. [Security considerations](#8-security-considerations)
 9. [Open issues](#9-open-issues)
@@ -409,20 +409,11 @@ record's.
   reopening.
 - A registrar's `note` for a displaced key (§2 step 5): `d:<key>:r<n>`, with *n* as above.
 
-## 6. Changes from 0.4
+## 6. Changes from 0.5
 
-In 0.4 this binding was Acts §4–§7, with its conformance classes, fixtures, security considerations, open issues and
-worked example in Acts §9–§11 and Appendix A; in 0.5 it is a document of its own. The move changes no rule. The rule
-on keys a requester assigns outside the binding (0.4 §6.1) moved to Acts §2, where requesters read it, and §4.1
-states the prefix of derived keys in its place; the need-record ids of 0.4 §7 (`r:`, `a:`) stay in Acts §4. Changes
-from 0.4:
-
-- the registrar neither raises nor relinks a line carrying a known key, and the deployment delivers it every need
-  record and settlement-register record of the project's acts raised outside the binding (§2);
-- a conforming registrar is also a conforming requester (core §12), so it runs Acts' `records.json` and
-  `lifecycle.json` (on the settlement view) as well as the binding fixtures (§7.1).
-
-The 0.4 and 0.5 rules keep every line a 0.3 registrar stamped present, whatever their classification of it (§2).
+None to the binding's rules: the records a registrar sends carry `ph: "0.6"` and `ext: "acts/0.6"`, and convert as
+Acts §6 says. In 0.4 this binding was Acts §4–§7; 0.5 made it a document of its own. The rules since 0.4 keep every
+line a 0.3 registrar stamped present, whatever their classification of it (§2).
 
 ## 7. Conformance
 
@@ -489,7 +480,7 @@ implementations yet (core §14).
 2. That night the registrar derives `task-demo-c3d8af57d4`, sends
 
    ```json
-   {"ph": "0.5", "ext": "acts/0.5", "id": "r:task-demo-c3d8af57d4", "type": "raised", "origin": "requester",
+   {"ph": "0.6", "ext": "acts/0.6", "id": "r:task-demo-c3d8af57d4", "type": "raised", "origin": "requester",
     "by": "registrar:demo", "key": "task-demo-c3d8af57d4", "project": "demo", "ts": "2026-10-27T02:10:00Z",
     "terms": {"text": "Renew the domain"}, "terms_rev": 1}
    ```
@@ -499,7 +490,7 @@ implementations yet (core §14).
 3. The principal renews the domain and ticks it off in their assistant, which sends
 
    ```json
-   {"ph": "0.5", "ext": "acts/0.5", "id": "s-81f2", "type": "settled", "origin": "principal", "by": "ps:assistant",
+   {"ph": "0.6", "ext": "acts/0.6", "id": "s-81f2", "type": "settled", "origin": "principal", "by": "ps:assistant",
     "key": "task-demo-c3d8af57d4", "project": "demo", "ts": "2026-10-28T08:30:00Z", "terms_rev": 1,
     "terms_digest": "sha-256:a9467037327c1e0e7ce14815d5180ad390e1c754a703d4680b06ff1eafa26c0f",
     "outcome": "done", "authority": {"kind": "principal", "decider": "p:owner"}}

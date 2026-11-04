@@ -1,10 +1,10 @@
-# Principal Handoff: Acts 0.5
+# Principal Handoff: Acts 0.6
 
 | | |
 |---|---|
-| Status | Draft |
-| Version | 0.5 (2026-11-01); 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
-| Extension | `acts/0.5`, an extension of [Principal Handoff Core 0.5](../core/SPEC.md) |
+| Status | Draft, release candidate (core §14) |
+| Version | 0.6 (2026-11-04); 0.5 (2026-11-01); 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
+| Extension | `acts/0.6`, an extension of [Principal Handoff Core 0.6](../core/SPEC.md) |
 | Binding | [Acts Markdown](../acts-markdown/SPEC.md) |
 | Modules | [Evidence](../evidence/SPEC.md) |
 | License | Apache-2.0 |
@@ -27,7 +27,7 @@ lets agents declare acts as lines in a project's state document, the document th
 3. [Records](#3-records)
 4. [Record ids](#4-record-ids)
 5. [Markdown binding](#5-markdown-binding)
-6. [Mapping from 0.2 and changes from 0.4](#6-mapping-from-02-and-changes-from-04)
+6. [Mapping from 0.2 and changes from 0.5](#6-mapping-from-02-and-changes-from-05)
 7. [Conformance](#7-conformance)
 8. [Security considerations](#8-security-considerations)
 9. [Open issues](#9-open-issues)
@@ -80,7 +80,7 @@ with the access it has.
 
 ## 3. Records
 
-Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.5"`.
+Records use the [core record](../core/SPEC.md#4-records) with `ext: "acts/0.6"`.
 
 | `type` | `origin` | Emitted by | Schema | Additional requirements |
 |---|---|---|---|---|
@@ -116,9 +116,9 @@ when the principal side settles the act, and re-adds the line of an act it raise
 ids of its claims and notes, and the records a deployment that runs a registrar delivers to it. Requesters and
 principal sides that do not use a state document need not implement it.
 
-## 6. Mapping from 0.2 and changes from 0.4
+## 6. Mapping from 0.2 and changes from 0.5
 
-| Tasks 0.2 event | Acts 0.5 record |
+| Tasks 0.2 event | Acts 0.6 record |
 |---|---|
 | `registered` (registrar), id = key | `raised`, origin `requester`, sent by the registrar, id `r:<key>`, `terms_rev: 1` |
 | `done`, `dropped`, `already_done` (principal) | `settled` with that `outcome`; `authority.kind` `principal`, or, where 0.2 had `decided_by: assistant`, `attested` with `evidence.basis` naming the 0.2 event (`delegated` only where the mandate is known, with `under` and `chain`) |
@@ -127,21 +127,14 @@ principal sides that do not use a state document need not implement it.
 | inferred `done` (registrar), id `done-<key>` | `claimed`, origin `registrar`, `outcome: "done"`, `evidence.basis`, id `c:<key>:r0` |
 | a resolution's `note` | the settlement's `note`, delivered to the project |
 
-Changes from 0.4:
-
-- records carry `ph: "0.5"` and `ext: "acts/0.5"`; settling on proofs moves to the [Evidence](../evidence/SPEC.md)
-  module (Evidence §5), and verifiable entries on claims are Evidence's content, which no longer makes a claim
-  invalid;
-- the presentation of replaced acts is simpler (§2);
-- the Markdown binding (0.4 §4–§7, with its conformance classes, fixtures, security considerations, open issues and
-  worked example) is a document of its own, [Acts Markdown](../acts-markdown/SPEC.md), which lists its changes from
-  0.4; the rule on keys a requester assigns outside the binding (0.4 §6.1) is now in §2.
+Changes from 0.5: records carry `ph: "0.6"` and `ext: "acts/0.6"`, and a relation names an act by the extension name
+`acts` (core §7).
 
 **Conversion** (core §14), with vectors in [`../core/conformance/convert.json`](../core/conformance/convert.json):
-both ways, change `ph` and `ext` (`"acts/0.4"` ↔ `"acts/0.5"`), remove `evidence.proof`, and replace a settlement's
-`terms_digest` as core §14 says. A record valid in 0.5 but not in 0.4 (a claim with malformed verifiable entries, a
-settlement whose `under` begins with `approval:`) has no 0.4 form. The 0.3 to 0.4 conversion was: change `ph` and
-`ext`, and on `settled` add `terms_digest` computed over the converted need record at the settlement's `terms_rev`.
+both ways, change `ph` and `ext` (`"acts/0.5"` ↔ `"acts/0.6"`), remove `evidence.proof`, and convert a relation's
+`target.ext` as core §14 says. The only 0.5 records with no 0.6 form are the relations core §14 lists. The 0.4 to 0.5
+conversion was: change `ph` and `ext`, remove `evidence.proof`, and replace a settlement's `terms_digest` as core 0.5
+§14 said.
 
 ## 7. Conformance
 
@@ -196,7 +189,7 @@ other (core §6). Neither records approvals ([Criteria](../criteria/SPEC.md)) or
 
 *Non-normative.* The reference deployment uses its own message names on an internal event bus:
 
-| Reference deployment | Acts 0.5 |
+| Reference deployment | Acts 0.6 |
 |---|---|
 | message type `task` sent to the principal, with a fixed id equal to the key | `raised` (`id` = `r:<key>`) |
 | principal-side handoff with `effect` `done` / `dropped` / `already_done` | `settled` with that `outcome` |

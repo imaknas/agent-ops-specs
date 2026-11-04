@@ -1,9 +1,9 @@
-# Principal Handoff Core 0.5
+# Principal Handoff Core 0.6
 
 | | |
 |---|---|
-| Status | Draft |
-| Version | 0.5 (2026-11-01) |
+| Status | Draft, release candidate (§14) |
+| Version | 0.6 (2026-11-04) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) |
 | Conformance vectors | [`conformance/`](conformance/) |
@@ -181,8 +181,8 @@ IEEE 754 doubles) that validates against
 
 | Member | Type | Req. | Meaning |
 |---|---|---|---|
-| `ph` | string | yes | Core version; `"0.5"` for this document. |
-| `ext` | string | yes | Extension name and version, e.g. `"acts/0.5"`, `"decisions/0.5"`. |
+| `ph` | string | yes | Core version; `"0.6"` for this document. |
+| `ext` | string | yes | Extension name and version, e.g. `"acts/0.6"`, `"decisions/0.6"`. |
 | `id` | string | yes | Record id, no whitespace, 1–256 characters (§10). |
 | `type` | string | yes | One of the record types below, or a module record type the extension's table lists (§11). |
 | `origin` | string | yes | The role that emitted it: `requester`, `principal` (the principal side), `agent` (any other agent), or a role the extension defines. |
@@ -211,7 +211,7 @@ defines it, MUST be a calendar date.
 
 **Terms digest.** The terms digest of a need record (`raised` or `amended`) is `sha-256:` followed by the lowercase
 hexadecimal SHA-256 of the UTF-8 bytes of the RFC 8785 serialisation of the JSON object whose members are exactly
-`ext`, with its `/` and version removed (`decisions`, not `decisions/0.5`), and `project`, `key`, `terms_rev` and
+`ext`, with its `/` and version removed (`decisions`, not `decisions/0.6`), and `project`, `key`, `terms_rev` and
 `terms`, copied from that record as received, including members of `terms` the receiver does not recognise. Receivers
 keep `terms` as received. Because records are I-JSON and numbers are bounded integers, every receiver computes the
 same digest. The digest binds the item and its terms at one `terms_rev`, not the version of the extension: a version
@@ -303,6 +303,11 @@ profile is still to specify (§15). Until one does, senders MUST NOT emit it and
 
 ## 6. Current state
 
+The records a receiver **holds** about an item are the records about it that are valid in the version they were
+received in, a version the receiver implements (§4, §14), and that are not displaced under §10. §10 displaces by
+(`ext` name, `project`, `origin`, `id`), not by item, so a record about one item can displace one about another. Every
+rule of this family about held records, in modules too, uses this definition.
+
 Each register is folded separately, over all its records a receiver holds, regardless of arrival order:
 
 - A **head** is a record in the register that no other held record of the same register names in `supersedes`.
@@ -365,8 +370,8 @@ claim about the item with that id. A claim never removes an item from the princi
 | Member | Meaning |
 |---|---|
 | `kind` | `same_as`, `derived_from` or `replaced_by`. |
-| `target` | The other item: `{"ext", "project", "key"}` (all three) for an item of this family, or `{"uri"}` for anything else (an A2A task, a bus message, an issue). Exactly one of the two forms MUST be used. |
-| `active` | `true`, or `false` to retract the relation. For each (`kind`, `target`) of an item, the relation record with the latest `ts` (equal `ts`: greater `id`) decides whether the relation is active. |
+| `target` | The other item: `{"ext", "project", "key"}` (all three) for an item of this family in the same deployment, or `{"uri"}` for anything else (an A2A task, a bus message, an issue). `ext` is the extension's name only, matching `^[a-z][a-z0-9-]*$` (`decisions`, not `decisions/0.6`), so that a target names the same item in every version; `project` and `key` take the patterns of the record's `project` and `key`. Exactly one of the two forms MUST be used; other members of `target` are ignored. An item outside this family, or in another deployment (an upstream item, §3 R5), MUST be named by `uri` (a duty of the emitter, not a validity rule: receivers cannot check it). |
+| `active` | `true`, or `false` to retract the relation. For each relation of an item, identified by (`kind`, `target.ext`, `target.project`, `target.key`) or by (`kind`, `target.uri`), the relation record with the latest `ts` (equal `ts`: greater `id`) decides whether the relation is active. The two forms never identify the same relation, and `uri` values are compared as exact strings, without normalisation. |
 
 - `same_as` is emitted by the principal side (`origin: "principal"`) when it treats two items as one, for example the
   same request raised by two projects, or a request repeating one already settled. Relations never change any item's
@@ -379,13 +384,13 @@ claim about the item with that id. A claim never removes an item from the princi
 - `derived_from` is emitted by the requester when its item arises from another item, inside or outside this family
   (§3 R5; a question asked while answering an inquiry from the principal; a task that an answer created).
 - `replaced_by` is emitted by the requester when it replaces its item with another of its own items: the same need,
-  raised again under another key. Its target MUST be an item with the same `ext` and `project` as the record, and not
-  the item itself: an item of another kind would fall under another withdrawal policy (§11). A requester that replaces
-  an item sends `replaced_by` and then withdraws the item with the extension's replacement reason. An item with more
-  than one active `replaced_by` has no replacement; the principal side SHOULD report it. How the principal side
-  presents a replaced item is the extension's policy (§11). A requester's re-sent list that simply omits the old item
-  replaces nothing (R4), and no relation moves a settlement, or anything a module binds to an item, from one item to
-  another.
+  raised again under another key. Its target MUST be an item of the same extension (its `target.ext` is the name in
+  the record's `ext`) and `project` as the record, and not the item itself: an item of another kind would fall under
+  another withdrawal policy (§11). A requester that replaces an item sends `replaced_by` and then withdraws the item
+  with the extension's replacement reason. An item with more than one active `replaced_by` has no replacement; the
+  principal side SHOULD report it. How the principal side presents a replaced item is the extension's policy (§11). A
+  requester's re-sent list that simply omits the old item replaces nothing (R4), and no relation moves a settlement,
+  or anything a module binds to an item, from one item to another.
 
 **Notes.** A `note` record carries information that changes no register: progress, a fact the principal mentioned, a
 premise that changed. It carries `about`, either `{"key": …}` for a keyed item or `{"quote": …}` with text in the
@@ -437,11 +442,12 @@ decides.
 - Receivers MUST discard a record identical to one they have already processed with the same (`ext` name, `project`,
   `origin`, `id`). A record that fails validation, or names a version the receiver does not implement (§4), is not
   processed: it is ignored, and does not block a valid record with the same id. A receiver that sees an id reused
-  with different valid content keeps the one whose RFC 8785 serialisation is greater in code-point order, whatever
-  the arrival order, and SHOULD report it unless the two differ only in `ts` (a record re-created after a crash). A
-  need record replaced this way changes the terms at its `terms_rev`; settlements made on the other content become
-  stale through their `terms_digest` (§6). A record never displaces a record of another type, and every reference
-  to an id names records of the types it implies (`supersedes`: the same register; `adopts`: claims).
+  with different valid content, about the same item or not, keeps the one whose RFC 8785 serialisation is greater in
+  code-point order, whatever the arrival order, and SHOULD report it unless the two differ only in `ts` (a record
+  re-created after a crash). A need record replaced this way changes the terms at its `terms_rev`; settlements made
+  on the other content become stale through their `terms_digest` (§6). A record never displaces a record of another
+  type, and every reference to an id names records of the types it implies (`supersedes`: the same register;
+  `adopts`: claims).
 - Senders MUST retry until the transport accepts the record (at-least-once delivery). Ordering is not guaranteed;
   §6 makes the current state independent of arrival order.
 - A record that was never sent MAY be retracted by its sender without trace (for example, a settlement held for an
@@ -538,11 +544,12 @@ validates, deduplicates, folds the settlement register and finds the need regist
   core version it extends, so the pair is fixed. Before 1.0 the family is released together: core, extensions,
   bindings and modules share one version number.
 - Before 1.0, every version is its own contract: senders and receivers support exactly the versions they claim,
-  except as **Mixed versions** below allows. From 1.0 on, adding optional members, record types or outcome values will
-  be a minor change; removing or renaming a member, or changing the meaning of one, will require a new major version.
-  That promise does not cover a module that is still experimental.
+  except as **Mixed versions** below allows. From 1.0 on, removing or renaming a member, or changing the meaning of
+  one, will require a new major version; how minor versions are marked and handled is an open issue (§15). That
+  promise does not cover a module that is still experimental.
 - Each document has its own status. A version of a document leaves draft status only once, for every conformance
-  class with a suite, two independent implementations of that class pass it. Implementations that play different
+  class with a suite except the converting party (§12), which is needed only while parties upgrade, two independent
+  implementations of that class pass it. Implementations that play different
   roles (for example a requester on one side and a principal side on the other) show that the records interoperate,
   not that two readers of the same text read it the same way, so they do not count towards each other's class.
   Implementations by the same author, or built on the same codebase, are not independent. A module that no
@@ -550,35 +557,71 @@ validates, deduplicates, folds the settlement register and finds the need regist
   A module's status never holds back the core or an extension.
 
 **Mixed versions.** Parties upgrade one at a time, so for a while two counterparts may speak versions N−1 and N of an
-extension.
+extension. This section covers only N−1 and N: records of older versions are outside this specification and its
+conformance.
 
 1. Which version each party speaks is configured, per role, project and extension, like the roles themselves (§1):
    all parties holding one role in a project speak one version of an extension.
 2. A party MAY implement both N−1 and N, with the validity rules of both, during the transition. That party
    converts; its counterpart changes nothing. It validates every record it receives in N−1 under N−1 and ignores it if
-   it is invalid there. It keeps the records as they were sent and converts them to N each time it folds, so that a
-   conversion that depends on other records held (below) is a function of the records held, not of their order; the
-   converted form is never passed on as the counterpart's record. It converts every record it sends to an N−1
-   counterpart to N−1. Two parties that both speak N use N.
-3. Conversion keeps `id` (§10) and removes `evidence.proof`. Where the terms digest changes between the versions (0.4
-   and 0.5 do: 0.4's covered the extension version), a settlement's `terms_digest` becomes the digest, in the target
-   version, of the held need record at its `terms_rev` whose digest in the source version equals it; if no held need
-   record matches, the value is kept (the settlement was made on other terms, or its need record is not held yet; the
-   next fold after it arrives converts the settlement). Each extension, and each module with records of its own,
-   states the rest of its conversion in both directions in its "changes" section. A version whose conversion changes
-   the meaning of a member of `terms` without changing its bytes MUST say so, and its conversion then keeps a
+   it is invalid there, even where N only relaxes a rule of N−1, so that every receiver computes the same state from
+   the same records; it does not validate the converted form again. It keeps the records as they were sent and folds
+   their converted (N) forms, applying §10's identity and keep-the-greater rule to those forms; since conversion
+   depends on the record alone (item 3), the result does not depend on arrival order. The converted form is never
+   passed on as the counterpart's record. It converts every record it sends to an N−1 counterpart to N−1. Two parties
+   that both speak N use N.
+3. Conversion between consecutive versions MUST be a function of the record alone, never of other records held. It
+   keeps `id` (§10) and removes `evidence.proof`. Between 0.5 and 0.6 the core changes `ph`, and a relation's
+   `target.ext` becomes its part before the first `/` (0.5 to 0.6) or gets `/0.5` appended (0.6 to 0.5); a `uri`
+   target is unchanged. Each extension, and each module with records of its own, states the rest of its conversion
+   in both directions in its "changes" section, and every document lists the records valid in N−1 that have no valid
+   N form (the core in its change log); a converting party ignores those. A version whose conversion changes the
+   meaning of a member of `terms` without changing its bytes MUST say so, and its conversion then keeps a
    settlement's `terms_digest` as it is, so that the settlement reads as stale (§4).
-   [`conformance/convert.json`](conformance/convert.json) holds the vectors for 0.4 and 0.5.
+   [`conformance/convert.json`](conformance/convert.json) holds the vectors for 0.5 and 0.6.
 4. A party that implements both versions MUST NOT make, about an item whose counterpart speaks N−1, a record that has
    no valid N−1 form.
 
-**Change log.** 0.5 (2026-11-01): a restructuring release. Verifiable entries and verification results (0.4 §5.2,
+**Release candidate.** 0.6 is a release candidate for 1.0. Its freeze covers core, Acts, Acts Markdown and Decisions
+0.6, and the wire content of the Evidence and Criteria modules (their record types, members and structural rules),
+which share `ph` and `ext`; of the modules, only the status (experimental or draft) may change during it.
+
+- A **breaking change** makes a valid record invalid or an invalid one valid, changes any state or conversion
+  result, or changes the expected result of any existing fixture.
+- **0.6.x** releases keep `ph` and `ext` at `0.6`. They change wording, examples and non-normative text; add fixtures
+  only where every implementation listed in an implementations table already gives that result; and may add
+  normative text that is not breaking (for example a new SHOULD duty), listed in the change log. A defect that needs
+  a breaking change is fixed in 0.7, which becomes the release candidate and starts the freeze again.
+- The freeze **ends** when both hold: (a) a conforming requester or principal side of Acts or Decisions that is
+  independent (not by this family's author, and not built on [`../reference/`](../reference/) or on another listed
+  implementation) passes that class's suites, with its results recorded in an implementations table; (b) three
+  months have passed since the date of the `principal-handoff-0.6` tag.
+- If the freeze ends with no breaking change, **1.0** has 0.6's rules, and 1.0 receivers accept records whose `ph` is
+  `0.6` (and whose `ext` ends in `/0.6`) as they are.
+
+**Change log.** 0.6 (2026-11-04): a stabilizing release, and the release candidate for 1.0 (above). A relation's
+`target.ext` names the extension without its version, and `target.project` follows the project pattern (§7); the
+records a receiver holds are defined (§6); conversion is a function of the record alone, and a converting party
+deduplicates the converted forms (Mixed versions, items 2 and 3); this section covers only N−1 and N; the converting
+party no longer holds back leaving draft; the promise that adding optional members, record types or outcome values
+after 1.0 is a minor change is withdrawn (§15). For records:
+
+- 0.5 targets that differed only in the extension version now identify one relation, which can change which relation
+  is active;
+- a 0.5 target in the item form that named an item in another deployment (an upstream item, §3 R5) converts to what
+  reads as an item of the receiver's own deployment; such targets now use `uri` (§7);
+- a 0.5 `related` whose `target.ext`, up to the first `/`, does not match `^[a-z][a-z0-9-]*$`, or whose
+  `target.project` does not match the project pattern, has no 0.6 form.
+
+0.5 (2026-11-01): a restructuring release. Verifiable entries and verification results (0.4 §5.2,
 V2–V5) move to the [Evidence](../evidence/SPEC.md) module; approvals (0.4 §5.3 and the approval fold of §6) move to
 the [Criteria](../criteria/SPEC.md) module, layered on Decisions; modules never change validity or state (§11); the
 terms digest is defined in §4 and computed over the extension name without its version; the principal side's `ts`
 duty, in 0.4 a rule of approvals, binds every principal side, and implementations that share the principal side
 deliver their settlement-register records to each other (§6, new); the requester class computes only
-the settlement view (§6, §12); mixed versions (§14). Rules of 0.4 that 0.5 relaxes, so that records invalid in 0.4
+the settlement view (§6, §12); mixed versions (§14), whose conversion between 0.4 and 0.5 replaced a settlement's
+`terms_digest` with the digest, in the target version, of the held need record at its `terms_rev` whose digest in the
+source version equalled it, and kept it if none did. Rules of 0.4 that 0.5 relaxes, so that records invalid in 0.4
 may be valid in 0.5:
 
 - malformed `evidence.verifiable` or `evidence.verified`, and verifiable entries without `terms_rev`, no longer make a
@@ -631,7 +674,10 @@ Open issues, to be specified later:
   all; §6 makes the state independent of order, not of loss.
 - **A signed-principal deployment profile.** A proof format for `evidence.proof`, how receivers are configured with
   the principal's verification keys, whether a record whose proof does not verify is then invalid, and a *verifiable*
-  principal side that signs every decision a person makes (0.4 §5.2 and §12 had a first version).
+  principal side that signs every decision a person makes (0.4 §5.2 and §12 had a first version). A deployment would
+  opt in to such a profile.
+- **Minor versions from 1.0 on.** How a minor version is marked, and how receivers handle records of a minor version
+  other than their own (§14).
 
 ## 16. Relation to other specifications
 

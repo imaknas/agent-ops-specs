@@ -1,10 +1,10 @@
-# Principal Handoff: Decisions 0.5
+# Principal Handoff: Decisions 0.6
 
 | | |
 |---|---|
-| Status | Draft |
-| Version | 0.5 (2026-11-01); 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Questions 0.1 |
-| Extension | `decisions/0.5`, an extension of [Principal Handoff Core 0.5](../core/SPEC.md) |
+| Status | Draft, release candidate (core §14) |
+| Version | 0.6 (2026-11-04); 0.5 (2026-11-01); 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Questions 0.1 |
+| Extension | `decisions/0.6`, an extension of [Principal Handoff Core 0.6](../core/SPEC.md) |
 | Modules | [Evidence](../evidence/SPEC.md) · [Criteria](../criteria/SPEC.md) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) (record schema in [`../core/schemas/`](../core/schemas/)) |
@@ -29,7 +29,7 @@ principal has approved them.
 3. [Records](#3-records)
 4. [Lifecycle](#4-lifecycle)
 5. [Receiving decisions](#5-receiving-decisions)
-6. [Mapping from Questions 0.1 and changes from 0.4](#6-mapping-from-questions-01-and-changes-from-04)
+6. [Mapping from Questions 0.1 and changes from 0.5](#6-mapping-from-questions-01-and-changes-from-05)
 7. [Conformance](#7-conformance)
 8. [Security considerations](#8-security-considerations)
 9. [Relation to the Acts extension and other
@@ -76,7 +76,7 @@ which also defines *principal*, *principal side*, *requester*, *delegate*, *item
 
 ## 3. Records
 
-Records use the [core record](../core/SPEC.md#4-records) with `ext: "decisions/0.5"`.
+Records use the [core record](../core/SPEC.md#4-records) with `ext: "decisions/0.6"`.
 
 | `type` | `origin` | Schema | Additional requirements |
 |---|---|---|---|
@@ -137,9 +137,9 @@ validation error.
 - An answer that requires work only the principal can do becomes an act under the Acts extension: the requester
   raises it with a `derived_from` relation to the decision.
 
-## 6. Mapping from Questions 0.1 and changes from 0.4
+## 6. Mapping from Questions 0.1 and changes from 0.5
 
-| Questions 0.1 event | Decisions 0.5 record |
+| Questions 0.1 event | Decisions 0.6 record |
 |---|---|
 | `asked` | `raised`, `terms` from `text`, `options`, `default`, `due`; `terms_rev: 1` |
 | `answered`, `decided_by: principal` | `settled`, `outcome: "decided"`, `authority.kind: "principal"` |
@@ -149,15 +149,14 @@ validation error.
 | `withdrawn`, `reason: settled` | `claimed` with the answer, then `withdrawn`, `reason: "settled"` |
 | `withdrawn`, `reason: not_needed` | `withdrawn`, `reason: "not_needed"` |
 
-Changes from 0.4: `ext` is `decisions/0.5` and records carry `ph: "0.5"`; criteria, submissions, approvals, settling
-by criteria and audits move to the [Criteria](../criteria/SPEC.md) module, and verifiable entries to
-[Evidence](../evidence/SPEC.md); the shape of a settlement under an approval is no longer a validity rule here.
+Changes from 0.5: `ext` is `decisions/0.6` and records carry `ph: "0.6"`; a relation names a decision by the
+extension name `decisions` (core §7).
 
 **Conversion** (core §14), with vectors in [`../core/conformance/convert.json`](../core/conformance/convert.json).
-Both ways: change `ph` and `ext` (`"decisions/0.4"` ↔ `"decisions/0.5"`), remove `evidence.proof`, and replace a
-settlement's `terms_digest` as core §14 says. Criteria's `approved` records convert as Criteria §10 says. Nothing else
-changes meaning. A record valid in 0.5 but
-not in 0.4 (for example a settlement under an approval without `evidence.verified`) has no 0.4 form (core §14).
+Both ways: change `ph` and `ext` (`"decisions/0.5"` ↔ `"decisions/0.6"`), remove `evidence.proof`, and convert a
+relation's `target.ext` as core §14 says. Criteria's `approved` records convert as Criteria §10 says. Nothing else
+changes meaning. The only 0.5 records with no 0.6 form are the relations core §14 lists. The 0.4 to 0.5 conversion
+was: change `ph` and `ext`, remove `evidence.proof`, and replace a settlement's `terms_digest` as core 0.5 §14 said.
 
 ## 7. Conformance
 
@@ -213,4 +212,4 @@ The [core considerations](../core/SPEC.md#13-security-and-privacy-considerations
 
 ## References
 
-- Principal Handoff Core 0.5, [`../core/SPEC.md`](../core/SPEC.md).
+- Principal Handoff Core 0.6, [`../core/SPEC.md`](../core/SPEC.md).

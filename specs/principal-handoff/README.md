@@ -7,17 +7,21 @@ who decided and under what authority, when the items outlive every agent session
 
 | Document | Version | What it covers |
 |---|---|---|
-| [Core](core/SPEC.md) | 0.5 draft | One model for every item: a need register owned by the requester, a settlement register owned by the principal side, claims, relations and notes; authority kinds, deciders and evidence; the principal as a configured root; modules; mixed versions |
-| [Acts](acts/SPEC.md) | 0.5 draft | Work only the principal can do: its terms, outcomes, records and policies (formerly Tasks 0.2 / Human Task Handoff 0.1) |
-| [Acts Markdown](acts-markdown/SPEC.md) | 0.5 draft | Binding of Acts for a project's state document: agents declare acts as lines, and a registrar raises them and applies settlements back (in Acts until 0.4) |
-| [Decisions](decisions/SPEC.md) | 0.5 draft | Answers and choices only the principal may make (formerly Questions 0.1) |
-| [Evidence](evidence/SPEC.md) | 0.5 experimental | Module for every extension: independently verifiable proofs of facts, and what the principal side checked |
-| [Criteria](criteria/SPEC.md) | 0.5 experimental | Module for Decisions: acceptance criteria the principal approves, so that a verifier may settle a decision without the principal reviewing the work |
+| [Core](core/SPEC.md) | 0.6 draft, release candidate | One model for every item: a need register owned by the requester, a settlement register owned by the principal side, claims, relations and notes; authority kinds, deciders and evidence; the principal as a configured root; modules; mixed versions; the release candidate |
+| [Acts](acts/SPEC.md) | 0.6 draft, release candidate | Work only the principal can do: its terms, outcomes, records and policies (formerly Tasks 0.2 / Human Task Handoff 0.1) |
+| [Acts Markdown](acts-markdown/SPEC.md) | 0.6 draft, release candidate | Binding of Acts for a project's state document: agents declare acts as lines, and a registrar raises them and applies settlements back (in Acts until 0.4) |
+| [Decisions](decisions/SPEC.md) | 0.6 draft, release candidate | Answers and choices only the principal may make (formerly Questions 0.1) |
+| [Evidence](evidence/SPEC.md) | 0.6 experimental, wire content frozen | Module for every extension: independently verifiable proofs of facts, and what the principal side checked |
+| [Criteria](criteria/SPEC.md) | 0.6 experimental, wire content frozen | Module for Decisions: acceptance criteria the principal approves, so that a verifier may settle a decision without the principal reviewing the work |
 | [Related work](RELATED-WORK.md) | | How this compares with ACP, MCP, A2A, AG-UI, CHAP, AuthZEN, IETF agent drafts, iCalendar/JSCalendar, agent SDKs, and proof systems and scalable-oversight research |
 
 An implementation may support one extension without the other, and a module without those it does not require. Modules
 never change an item's state; an experimental module has no implementation besides the reference code
 (core §14).
+
+0.6 is the release candidate for 1.0 (core §14): until an independent requester or principal side of Acts or Decisions
+passes its suites and three months have passed, 0.6.x releases make no change that turns a valid record invalid, or
+an invalid one valid, or changes any state or conversion result. If none is needed, 1.0 has 0.6's rules.
 
 How it fits next to existing standards (non-normative):
 

@@ -1,10 +1,10 @@
-# Principal Handoff: Criteria 0.5
+# Principal Handoff: Criteria 0.6
 
 | | |
 |---|---|
-| Status | Experimental (no implementation besides the reference code, core §14) |
-| Version | 0.5 (2026-11-01); in core 0.4 §5.3 and Decisions 0.4 §2.1–§4.2 |
-| Module | of [Principal Handoff: Decisions 0.5](../decisions/SPEC.md) (`decisions/0.5`); requires [Evidence 0.5](../evidence/SPEC.md) |
+| Status | Experimental (no implementation besides the reference code); wire content frozen in the release candidate (core §14) |
+| Version | 0.6 (2026-11-04); 0.5 (2026-11-01); in core 0.4 §5.3 and Decisions 0.4 §2.1–§4.2 |
+| Module | of [Principal Handoff: Decisions 0.6](../decisions/SPEC.md) (`decisions/0.6`); requires [Evidence 0.6](../evidence/SPEC.md) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) (record schema in [`../core/schemas/`](../core/schemas/)) |
 | Conformance suite | [`conformance/`](conformance/) |
@@ -31,7 +31,7 @@ settlement made under an approval is opaque, like any other mandate reference.
 7. [Records](#7-records)
 8. [Conformance](#8-conformance)
 9. [Security considerations](#9-security-considerations)
-10. [Changes from 0.4](#10-changes-from-04)
+10. [Changes from 0.5](#10-changes-from-05)
 11. [Relation to other specifications](#11-relation-to-other-specifications)
 12. [Open issues](#12-open-issues)
 
@@ -150,8 +150,8 @@ another item. In particular, a decision replaced by another (`replaced_by`) pass
 check results.
 
 **In force.** Only the principal side computes which approval is in force; no other role needs to. Over the records
-it holds, a grant (an `approved` with `approval.active: true` that follows this module's structural rules) is **in
-force** when all of these hold:
+it holds (core §6), a grant (an `approved` with `approval.active: true` that follows this module's structural rules)
+is **in force** when all of these hold:
 
 1. no held `approved` record about the decision lists it in `supersedes`;
 2. the need register has no conflict, and its current record is a `raised` or `amended` (not `withdrawn`) whose
@@ -318,17 +318,11 @@ The [core](../core/SPEC.md#13-security-and-privacy-considerations) and
   principal side runs the check itself, a recorded failure catches only the failures the requester chose to send.
   Audits (§6) are the measure of how often it happens.
 
-## 10. Changes from 0.4
+## 10. Changes from 0.5
 
-In 0.4 this module was core §5.3, the approval fold of core §6, and Decisions §2.1–§2.2 and §4.1–§4.2. Changes:
-whether an approval is in force no longer depends on clocks: a grant names, in `approval.after`, the
-settlement-register record it was made over, and condition 4 of §4 replaces 0.4's "no settlement or reopening with a
-later `ts`"; the principal side's `ts` duty for settlements and reopenings stays in core §6, and an approval needs
-none; only the principal side computes the approval in force; the rules of §7 make this module ignore what breaks them
-instead of making the record invalid (core §11). Conversion: from 0.4 to 0.5 a grant keeps no `after`, so that it is
-in force only while no settlement-register record of the decision is held (0.4's clock-based reading is not carried
-over; the principal re-approves if needed), and its `approval.terms_digest` is replaced as a settlement's
-`terms_digest` is (core §14); from 0.5 to 0.4, `approval.after` is removed and the digest replaced back.
+None to the rules; "held" (§4) has core §6's definition. Conversion between 0.5 and 0.6 changes `ph` and `ext` as
+Decisions §6 says and nothing else: the terms digest is computed as in 0.5 (core §4), so `approval.terms_digest` is
+kept. In 0.4 this module was core §5.3, the approval fold of core §6, and Decisions §2.1–§2.2 and §4.1–§4.2.
 
 ## 11. Relation to other specifications
 
@@ -349,8 +343,8 @@ policy and the verifier (§9).
 
 ## References
 
-- Principal Handoff Core 0.5, [`../core/SPEC.md`](../core/SPEC.md); Decisions 0.5,
-  [`../decisions/SPEC.md`](../decisions/SPEC.md); Evidence 0.5, [`../evidence/SPEC.md`](../evidence/SPEC.md).
+- Principal Handoff Core 0.6, [`../core/SPEC.md`](../core/SPEC.md); Decisions 0.6,
+  [`../decisions/SPEC.md`](../decisions/SPEC.md); Evidence 0.6, [`../evidence/SPEC.md`](../evidence/SPEC.md).
 - Necula, G. C., "Proof-Carrying Code", POPL 1997.
 - Irving, G., Christiano, P., and D. Amodei, "AI safety via debate", arXiv:1805.00899, 2018.
 - Kirchner, J. H., et al., "Prover-Verifier Games improve legibility of LLM outputs", arXiv:2407.13692, 2024.
