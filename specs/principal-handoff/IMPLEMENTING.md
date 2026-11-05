@@ -215,7 +215,8 @@ Your implementation doesn't need the rest of the suite: `relations.json` and the
 a principal side, and `convert.json` is for a party that implements two versions.
 
 Passing doesn't prove everything yet. Each case holds the records of one item, so the suite can't show an id reused
-across two items (core §10). Test that yourself.
+across two items (core §10): test that yourself. [Open readings](OPEN-READINGS.md) lists cases the text doesn't clearly
+decide, which no fixture tests.
 
 [`reference/`](reference/) is a standard-library Python reading of all this. It's a good way to investigate a
 disagreement, but passing the fixtures matters more than matching it.
