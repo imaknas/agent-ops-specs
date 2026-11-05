@@ -15,6 +15,7 @@ Every document is at 0.6, a [release candidate](#release-candidate).
 | [Decisions](decisions/SPEC.md) | 0.6 draft | Answers and choices only the principal may make (formerly Questions 0.1) |
 | [Evidence](evidence/SPEC.md) | 0.6 experimental | Module for every extension: independently verifiable proofs of facts, and what the principal side checked |
 | [Criteria](criteria/SPEC.md) | 0.6 experimental | Module for Decisions: acceptance criteria the principal approves, so that a verifier may settle a decision without the principal reviewing the work |
+| [Implementing a requester](IMPLEMENTING.md) | | A non-normative walk-through, from nothing to passing the suites |
 | [Related work](RELATED-WORK.md) | | How this compares with ACP, MCP, A2A, AG-UI, CHAP, AuthZEN, IETF agent drafts, iCalendar/JSCalendar, agent SDKs, and proof systems and scalable-oversight research |
 
 An implementation may support one extension without the other, and a module without those it does not require. Modules
