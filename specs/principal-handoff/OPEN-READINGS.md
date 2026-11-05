@@ -19,14 +19,14 @@ alone, by the same author's tools, so it is no independent implementation. A das
 | Case | One reading | Other reading | Reference | Second reading |
 |---|---|---|---|---|
 | `decisions/0.5` with `ph: "0.6"` | Invalid: `ph` is not the core version `ext` names | Kept, not acted on: a version the receiver doesn't implement (core §4 states both, without an order) | Invalid | Kept |
-| `ext` of `decisions/0.6.1`, or `decisions` | Invalid: not name and two-part version | Kept, not acted on | — | — |
+| `ext` of `decisions/0.6.1`, or `decisions` | Invalid: not name and two-part version | Kept, not acted on | Invalid | Invalid |
 | `note` with a non-date `terms.due`; more widely, a member on a type that doesn't list it | Validated | Ignored as an unknown member | Invalid | Valid |
-| `option.label: 1` | Invalid: Decisions §3 assigns the terms schema | Valid: the text states no type, and core §4 calls a schema constraint the text doesn't state an error in the schema | — | — |
+| `option.label: 1` | Invalid: Decisions §3 assigns the terms schema | Valid: the text states no type, and core §4 calls a schema constraint the text doesn't state an error in the schema | Invalid | Invalid |
 | `terms_rev: 0` on `withdrawn`, `reopened` or `related` | Invalid: `terms_rev` is at least 1 | Ignored: the member isn't defined on these types | Invalid | Invalid |
 | `evidence.presented` off-pattern or not a string | Invalid: the form core §5.2 states | Valid: "opaque to receivers" | Invalid | Invalid |
-| Malformed `terms_digest` | Invalid: the form core §4 defines | Valid and stale: it matches nothing | — | — |
-| An id containing whitespace in `supersedes` or `adopts` | Invalid: not an id | Valid: a string that names nothing | — | — |
-| `-0` | Valid: an integer without a fraction | Invalid: core §4 doesn't address it | — | — |
+| Malformed `terms_digest` | Invalid: the form core §4 defines | Valid and stale: it matches nothing | Invalid | Invalid |
+| An id containing whitespace in `supersedes` or `adopts` | Invalid: not an id | Valid: a string that names nothing | Invalid | Invalid |
+| `-0` | Valid: an integer without a fraction | Invalid: core §4 doesn't address it | Valid | Valid |
 | `dismissed` carrying `answer` | Valid, and the settlement view shows it | Null or invalid: "no answer is needed" | Valid | Valid |
 | `reopened` with `supersedes: []` | Valid: the member is present | Invalid: it must name what it reopens | Valid | Valid |
 | `:60` at a minute other than 23:59 UTC, or on a day with no leap second | Valid: RFC 3339's grammar | Invalid: RFC 3339 §5.7 | Valid | Valid |
