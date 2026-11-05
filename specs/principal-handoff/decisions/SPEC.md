@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Policy | [Release candidate](../README.md#release-candidate) (project policy, not normative) |
-| Version | 0.6 (2026-11-04); 0.5 (2026-11-01); 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Questions 0.1 |
+| Version | 0.6 (2026-11-05); 0.5 (2026-11-01); 0.4 (2026-11-01); 0.3 (2026-10-27); formerly Questions 0.1 |
 | Extension | `decisions/0.6`, an extension of [Principal Handoff Core 0.6](../core/SPEC.md) |
 | Modules | [Evidence](../evidence/SPEC.md) · [Criteria](../criteria/SPEC.md) |
 | License | Apache-2.0 |

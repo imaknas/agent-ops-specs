@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Policy | [Release candidate](../README.md#release-candidate) (project policy, not normative) |
-| Version | 0.6 (2026-11-04) |
+| Version | 0.6 (2026-11-05) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) |
 | Conformance vectors | [`conformance/`](conformance/) |
@@ -594,7 +594,7 @@ its conformance.
 4. A party that implements both versions MUST NOT make, about an item whose counterpart is configured for N−1, a record
    that has no valid N−1 form.
 
-**Change log.** 0.6 (2026-11-04): a stabilizing release. `target.ext` is the extension's name and `target.project`
+**Change log.** 0.6 (2026-11-05): a stabilizing release. `target.ext` is the extension's name and `target.project`
 follows the project pattern (§7), so 0.5 targets that differed only in the version, or in members 0.6 does not define,
 identify one relation. Held records are defined (§6). Mixed versions covers only N−1 and N; a converting party is
 configured for N and holds converted forms; 0.5 ↔ 0.6 conversion is record-local; a change of meaning renames the

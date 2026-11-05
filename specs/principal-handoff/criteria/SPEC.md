@@ -4,7 +4,7 @@
 |---|---|
 | Status | Experimental (no implementation besides the reference code, core §14) |
 | Policy | [Release candidate](../README.md#release-candidate) (project policy, not normative) |
-| Version | 0.6 (2026-11-04); 0.5 (2026-11-01); in core 0.4 §5.3 and Decisions 0.4 §2.1–§4.2 |
+| Version | 0.6 (2026-11-05); 0.5 (2026-11-01); in core 0.4 §5.3 and Decisions 0.4 §2.1–§4.2 |
 | Module | of [Principal Handoff: Decisions 0.6](../decisions/SPEC.md) (`decisions/0.6`); requires [Evidence 0.6](../evidence/SPEC.md) |
 | License | Apache-2.0 |
 | Schemas | [`schemas/`](schemas/) (record schema in [`../core/schemas/`](../core/schemas/)) |

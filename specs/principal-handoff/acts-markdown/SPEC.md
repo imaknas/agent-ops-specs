@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft |
 | Policy | [Release candidate](../README.md#release-candidate) (project policy, not normative) |
-| Version | 0.6 (2026-11-04); 0.5 (2026-11-01); in Acts 0.4 and 0.3 as §4–§7; formerly part of Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
+| Version | 0.6 (2026-11-05); 0.5 (2026-11-01); in Acts 0.4 and 0.3 as §4–§7; formerly part of Tasks 0.2 and Human Task Handoff (HTH) 0.1 |
 | Binding | of [Principal Handoff: Acts 0.6](../acts/SPEC.md) (`acts/0.6`), for a project's state document in Markdown |
 | License | Apache-2.0 |
 | Records | [Acts §3](../acts/SPEC.md#3-records) (schemas in [`../acts/schemas/`](../acts/schemas/)) |
