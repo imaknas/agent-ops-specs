@@ -33,6 +33,7 @@ Cite the specifications with the Zenodo concept DOI, which always resolves to th
 
 | Release | Contents | DOI |
 |---|---|---|
+| `release-2026-11-05b` | Principal Handoff 0.6.1 draft (release candidate) | [10.5281/zenodo.23980258](https://doi.org/10.5281/zenodo.23980258) |
 | `release-2026-11-05` | Principal Handoff 0.6 draft (release candidate) | [10.5281/zenodo.23974497](https://doi.org/10.5281/zenodo.23974497) |
 | `release-2026-11-01b` | Principal Handoff 0.5 draft | [10.5281/zenodo.23855164](https://doi.org/10.5281/zenodo.23855164) |
 | `release-2026-11-01` | Principal Handoff 0.4 draft | [10.5281/zenodo.23852711](https://doi.org/10.5281/zenodo.23852711) |

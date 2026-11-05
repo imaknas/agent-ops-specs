@@ -23,6 +23,9 @@ identifiers:
     value: 10.5281/zenodo.23680064
     description: All versions (Zenodo concept DOI)
   - type: doi
+    value: 10.5281/zenodo.23980258
+    description: Release release-2026-11-05b (Principal Handoff 0.6.1 draft, release candidate)
+  - type: doi
     value: 10.5281/zenodo.23974497
     description: Release release-2026-11-05 (Principal Handoff 0.6 draft, release candidate)
   - type: doi
