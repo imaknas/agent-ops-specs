@@ -46,7 +46,7 @@ def _criteria(terms: dict) -> list[str]:
 def _approved(r: dict, cfg: ph_core.Config) -> list[str]:
     """section 7: an approved record's own rules, beyond the core checks."""
     out = schema_subset.errors(r, json.loads((SCHEMAS / "approved.schema.json").read_text()), SCHEMAS)
-    if out:  # the rules below read what the schema has established
+    if out:  # the schema's required lists guarantee what the rules below read
         return out
     ap = r["approval"]
     if not ap["active"]:

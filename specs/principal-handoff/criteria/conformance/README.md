@@ -5,11 +5,13 @@ JSON fixtures for the [Criteria module](../SPEC.md). The reference runner is
 
 Both files are `{"suite": "criteria/0.6", "principal": …, "description": …, "cases": [ … ]}`.
 
-- `records.json` (SPEC §2, §7, core §11): `{id, record, valid, schema?, criteria, principal_type?}`. `valid` is
+- `records.json` (SPEC §2, §7, core §11): `{id, spec, record, valid, schema?, criteria, principal_type?}`. `spec` names
+  the section that decides the case; it is metadata and changes no expected result. `valid` is
   whether the record is valid under the core and Decisions, the same for every receiver whether or not it implements
   this module (an `approved` record gets the core checks only, core §11), and `schema` the type it validates as when
-  it is valid; `criteria` is `used` when this module uses the record's module content (SPEC §7), or the record has none,
-  and `ignored` when the record breaks a structural rule.
+  it is valid. For `approved` that names the schema this module has for the type; Decisions assigns the pair no schema
+  of its own, which is why its suite says `null` for the same pair. `criteria` is `used` when this module uses the
+  record's module content (SPEC §7), or the record has none, and `ignored` when the record breaks a structural rule.
 - `lifecycle.json` (SPEC §4, core §6): `{id, spec, records, expect}`; `records` are the records a principal side holds
   for one decision (grants, lapses, retractions, settlements under approvals, audits), in arrival order. `expect` is
   the Decisions state (as in [`../../decisions/conformance/`](../../decisions/conformance/)) plus `approval`, the id

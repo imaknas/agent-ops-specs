@@ -6,6 +6,7 @@ Other keywords (title, description, $id, $schema) are annotations and ignored. P
 """
 from __future__ import annotations
 
+import functools
 import json
 import pathlib
 import re
@@ -33,6 +34,12 @@ def _ecma(pattern: str) -> str:
     return re.sub(r"(?<!\\)\$", r"\\Z", pattern)
 
 
+@functools.lru_cache(maxsize=None)
+def load(path: pathlib.Path) -> dict:
+    """A schema file; the files do not change while a program runs."""
+    return json.loads(path.read_text())
+
+
 def _same(a, b) -> bool:
     return type(a) is type(b) and a == b
 
@@ -41,7 +48,7 @@ def errors(instance, schema: dict, base: pathlib.Path, path: str = "$") -> list[
     out = []
     if "$ref" in schema:
         target = base / schema["$ref"]
-        out += errors(instance, json.loads(target.read_text()), target.parent, path)
+        out += errors(instance, load(target), target.parent, path)
     if "type" in schema and not TYPES[schema["type"]](instance):
         return out + [f"{path}: not {schema['type']}"]
     if "const" in schema and not _same(instance, schema["const"]):

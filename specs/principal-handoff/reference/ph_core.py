@@ -68,14 +68,18 @@ def ext(name: str, policy: str, check: Callable[[dict], list[str]] | None = None
 def parse(text: str) -> tuple[dict | None, list[str]]:
     """core section 4: a record is an I-JSON object. This reads what a parsed value can no longer show: a duplicate
     member name and an unpaired surrogate. A fraction, an exponent or an out-of-range integer survives parsing, as a
-    float or a large int, and validate() rejects it. The caller supplies the text."""
+    float or a large int, and validate() rejects it. NaN and Infinity, which Python's reader takes, are not JSON. The
+    caller supplies the text."""
     def members(pairs: list) -> dict:
         if len({k for k, _ in pairs}) != len(pairs):
             raise ValueError("duplicate member name")
         return dict(pairs)
 
+    def constant(name: str) -> None:
+        raise ValueError(f"{name} is not JSON")
+
     try:
-        v = json.loads(text, object_pairs_hook=members)
+        v = json.loads(text, object_pairs_hook=members, parse_constant=constant)
     except (ValueError, RecursionError) as x:
         return None, [str(x)]
     if not isinstance(v, dict):
@@ -98,17 +102,21 @@ def validate(r: dict, e: Ext, cfg: Config) -> tuple[str | None, list[str]]:
     belong to the module."""
     t = r.get("type")
     if isinstance(t, str) and t in e.modules:
-        errs = schema_subset.errors(r, json.loads(RECORD_SCHEMA.read_text()), RECORD_SCHEMA.parent)
-        if r.get("ext") != e.name:
+        errs = schema_subset.errors(r, schema_subset.load(RECORD_SCHEMA), RECORD_SCHEMA.parent)
+        if errs:
+            return t, errs
+        # from here on the schemas' required lists and types guarantee the members read as r[...]
+        if r["ext"] != e.name:
             errs.append(f"ext is not {e.name}")
-        if r.get("origin") not in e.modules[t]:
-            errs.append(f"origin {r.get('origin')!r} may not emit {t}")
-        return t, errs or _common(r, cfg)
+        if r["origin"] not in e.modules[t]:
+            errs.append(f"origin {r['origin']!r} may not emit {t}")
+        return t, errs + _common(r, cfg)
     if t not in TYPES:
         return None, ["no schema for this type"]
-    errs = schema_subset.errors(r, json.loads((e.schemas / f"{t}.schema.json").read_text()), e.schemas)
+    errs = schema_subset.errors(r, schema_subset.load(e.schemas / f"{t}.schema.json"), e.schemas)
     if errs:
         return t, errs
+    # from here on the schemas' required lists and types guarantee the members read as r[...]
     errs = _common(r, cfg)
     if "due" in r.get("terms", {}) and not _calendar_date(r["terms"]["due"]):
         errs.append("terms.due is not a calendar date")
@@ -136,7 +144,8 @@ def validate(r: dict, e: Ext, cfg: Config) -> tuple[str | None, list[str]]:
 
 
 def _common(r: dict, cfg: Config) -> list[str]:
-    """Checks every record gets, module records included (core sections 4, 11 and R6)."""
+    """Checks every record gets, module records included (core sections 4, 11 and R6). The core record schema's required
+    list guarantees ts."""
     errs = []
     if not _bounded(r):
         errs.append("numbers are integers within 2^53 - 1")
@@ -161,7 +170,7 @@ def _bounded(v) -> bool:
 
 
 def _relation(r: dict) -> list[str]:
-    """core section 7."""
+    """core section 7. The schemas' required lists guarantee relation, its kind and target, origin and project."""
     out, rel = [], r["relation"]
     want, tg = RELATION_ORIGIN[rel["kind"]], rel["target"]
     if r["origin"] != want:
@@ -190,7 +199,7 @@ def _name(r: dict) -> str | None:
 
 
 def _authority(r: dict, cfg: Config) -> list[str]:
-    """core section 5.1."""
+    """core section 5.1. The schemas' required lists guarantee authority, its kind and its decider."""
     a, ev = r["authority"], r.get("evidence", {})
     kind, decider = a["kind"], a["decider"]
     out = []

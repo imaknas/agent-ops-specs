@@ -52,3 +52,7 @@ that changes validity, held records, state or conversion results for some set of
 defect that can only be fixed by a breaking change is fixed in 0.7, which becomes the release candidate and restarts the
 count. 1.0 is decided once both conditions hold, and is reached through core §14's Mixed versions; it may still be a
 draft under core §14.
+
+*Note on 0.6.1 (non-normative):* 0.6.1 strengthens the conformance suites and corrects the reference code where it
+disagreed with core §4: it accepted offset minutes above 59, rejected year 0000, and crashed on non-object members. The
+reference therefore passes the new fixtures only from 0.6.1.

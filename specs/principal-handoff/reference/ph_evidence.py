@@ -24,6 +24,8 @@ def breaches(r: dict) -> list[str]:
         return []
     t, out = r.get("type"), []
     out += schema_subset.errors(ev, json.loads((SCHEMAS / "evidence.schema.json").read_text()), SCHEMAS, "$.evidence")
+    if out:  # the schema's required lists and types guarantee what the rules below read
+        return out
     entries = ev.get("verifiable")
     if "verifiable" in ev:
         if t not in ("claimed", "note", "settled"):

@@ -5,6 +5,7 @@
   "cases": [
     {
       "id": "raised",
+      "spec": "acts §3",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -26,6 +27,7 @@
     },
     {
       "id": "raised-without-terms",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -43,6 +45,7 @@
     },
     {
       "id": "raised-by-principal-side",
+      "spec": "core §3 R1",
       "valid": false,
       "schema": null,
       "record": {
@@ -64,6 +67,7 @@
     },
     {
       "id": "amended",
+      "spec": "acts §3",
       "valid": true,
       "schema": "amended",
       "record": {
@@ -88,6 +92,7 @@
     },
     {
       "id": "withdrawn",
+      "spec": "acts §3",
       "valid": true,
       "schema": "withdrawn",
       "record": {
@@ -108,6 +113,7 @@
     },
     {
       "id": "withdrawn-bad-reason",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -125,6 +131,7 @@
     },
     {
       "id": "settled-principal",
+      "spec": "acts §3",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -148,6 +155,7 @@
     },
     {
       "id": "settled-by-requester",
+      "spec": "core §3 R2",
       "valid": false,
       "schema": null,
       "record": {
@@ -171,6 +179,7 @@
     },
     {
       "id": "settled-principal-wrong-decider",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -194,6 +203,7 @@
     },
     {
       "id": "settled-confirmed",
+      "spec": "acts §3",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -220,6 +230,7 @@
     },
     {
       "id": "settled-confirmed-without-proposal",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -243,6 +254,7 @@
     },
     {
       "id": "settled-delegated",
+      "spec": "core §5.1",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -271,6 +283,7 @@
     },
     {
       "id": "settled-delegated-without-mandate",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -294,6 +307,7 @@
     },
     {
       "id": "settled-delegated-as-principal",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -321,6 +335,7 @@
     },
     {
       "id": "settled-attested",
+      "spec": "acts §3",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -347,6 +362,7 @@
     },
     {
       "id": "settled-attested-without-basis",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -370,6 +386,7 @@
     },
     {
       "id": "settled-without-terms-rev",
+      "spec": "core §4, §6",
       "valid": false,
       "schema": null,
       "record": {
@@ -392,6 +409,7 @@
     },
     {
       "id": "emitted-by-principal-identifier",
+      "spec": "core §3 R6",
       "valid": false,
       "schema": null,
       "record": {
@@ -415,6 +433,7 @@
     },
     {
       "id": "reopened",
+      "spec": "acts §3",
       "valid": true,
       "schema": "reopened",
       "record": {
@@ -435,6 +454,7 @@
     },
     {
       "id": "reopened-without-supersedes",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -452,6 +472,7 @@
     },
     {
       "id": "claimed-by-agent",
+      "spec": "acts §3",
       "valid": true,
       "schema": "claimed",
       "record": {
@@ -472,6 +493,7 @@
     },
     {
       "id": "claimed-by-principal-side",
+      "spec": "core §3 R3",
       "valid": false,
       "schema": null,
       "record": {
@@ -492,6 +514,7 @@
     },
     {
       "id": "claimed-without-basis",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -510,6 +533,7 @@
     },
     {
       "id": "same-as-by-principal",
+      "spec": "core §7",
       "valid": true,
       "schema": "related",
       "record": {
@@ -533,6 +557,7 @@
     },
     {
       "id": "same-as-other-project-by-key",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -558,6 +583,7 @@
     },
     {
       "id": "same-as-by-requester",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -583,6 +609,7 @@
     },
     {
       "id": "derived-from-uri",
+      "spec": "core §7",
       "valid": true,
       "schema": "related",
       "record": {
@@ -606,6 +633,7 @@
     },
     {
       "id": "derived-from-by-principal",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -629,6 +657,7 @@
     },
     {
       "id": "note-quote",
+      "spec": "core §7",
       "valid": true,
       "schema": "note",
       "record": {
@@ -649,6 +678,7 @@
     },
     {
       "id": "note-without-about",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -666,6 +696,7 @@
     },
     {
       "id": "unimplemented-extension-not-acted-on",
+      "spec": "core §4",
       "valid": null,
       "schema": null,
       "record": {
@@ -689,6 +720,7 @@
     },
     {
       "id": "wrong-core-version",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -712,6 +744,7 @@
     },
     {
       "id": "settled-unknown-outcome",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -735,6 +768,7 @@
     },
     {
       "id": "reopened-without-restore-text",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -754,6 +788,7 @@
     },
     {
       "id": "amended-rev-1",
+      "spec": "core §4, §6",
       "valid": false,
       "schema": null,
       "record": {
@@ -777,6 +812,7 @@
     },
     {
       "id": "settled-rev-0",
+      "spec": "core §4, §6",
       "valid": false,
       "schema": null,
       "record": {
@@ -800,6 +836,7 @@
     },
     {
       "id": "attested-by-principal",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -826,6 +863,7 @@
     },
     {
       "id": "adopts-on-principal-kind",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -852,6 +890,7 @@
     },
     {
       "id": "adopts-on-attested",
+      "spec": "core §7",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -881,6 +920,7 @@
     },
     {
       "id": "chain-not-rooted",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -909,6 +949,7 @@
     },
     {
       "id": "relation-target-mixed",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -933,6 +974,7 @@
     },
     {
       "id": "relation-target-empty",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -954,6 +996,7 @@
     },
     {
       "id": "legal-principal-without-representative",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -978,6 +1021,7 @@
     },
     {
       "id": "legal-principal-with-representative",
+      "spec": "core §5.1",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -1003,6 +1047,7 @@
     },
     {
       "id": "withdrawn-replaced",
+      "spec": "acts §3",
       "valid": true,
       "schema": "withdrawn",
       "record": {
@@ -1023,6 +1068,7 @@
     },
     {
       "id": "replaced-by",
+      "spec": "core §7",
       "valid": true,
       "schema": "related",
       "record": {
@@ -1048,6 +1094,7 @@
     },
     {
       "id": "replaced-by-from-principal",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1073,6 +1120,7 @@
     },
     {
       "id": "replaced-by-other-project",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1098,6 +1146,7 @@
     },
     {
       "id": "replaced-by-uri",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1121,6 +1170,7 @@
     },
     {
       "id": "replaced-by-itself",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1146,6 +1196,7 @@
     },
     {
       "id": "relation-target-ext-with-version",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1171,6 +1222,7 @@
     },
     {
       "id": "relation-target-ext-off-pattern",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1196,6 +1248,7 @@
     },
     {
       "id": "relation-target-project-off-pattern",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1221,6 +1274,7 @@
     },
     {
       "id": "relation-target-uri-with-item-members",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1247,6 +1301,7 @@
     },
     {
       "id": "derived-from-other-extension",
+      "spec": "core §7",
       "valid": true,
       "schema": "related",
       "record": {
@@ -1272,6 +1327,7 @@
     },
     {
       "id": "derived-from-itself-has-no-effect",
+      "spec": "core §7",
       "valid": true,
       "schema": "related",
       "record": {
@@ -1297,6 +1353,7 @@
     },
     {
       "id": "relation-target-unknown-member-ignored",
+      "spec": "core §7",
       "valid": true,
       "schema": "related",
       "record": {
@@ -1323,6 +1380,7 @@
     },
     {
       "id": "relation-without-active",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1345,6 +1403,7 @@
     },
     {
       "id": "same-as-itself-has-no-effect",
+      "spec": "core §7",
       "valid": true,
       "schema": "related",
       "record": {
@@ -1370,6 +1429,7 @@
     },
     {
       "id": "replaced-by-other-extension",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1395,6 +1455,7 @@
     },
     {
       "id": "settled-under-approval-in-acts",
+      "spec": "core §11",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -1423,6 +1484,7 @@
     },
     {
       "id": "approved-not-in-acts",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -1451,6 +1513,7 @@
     },
     {
       "id": "terms-text-multiline",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -1472,6 +1535,7 @@
     },
     {
       "id": "terms-number-fraction",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1494,6 +1558,7 @@
     },
     {
       "id": "terms-rev-written-as-fraction",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1515,6 +1580,7 @@
     },
     {
       "id": "due-not-a-date",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1536,6 +1602,7 @@
     },
     {
       "id": "ts-not-a-date",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1557,6 +1624,7 @@
     },
     {
       "id": "ts-leap-second",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -1578,6 +1646,7 @@
     },
     {
       "id": "ts-offset",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -1599,6 +1668,7 @@
     },
     {
       "id": "id-with-trailing-newline",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1620,6 +1690,7 @@
     },
     {
       "id": "note-key-mismatch",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1640,6 +1711,7 @@
     },
     {
       "id": "note-about-key-and-quote",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -1661,6 +1733,7 @@
     },
     {
       "id": "note-unknown-origin",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -1681,29 +1754,10 @@
     },
     {
       "id": "without-ph",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ph-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": 1,
         "ext": "acts/0.6",
         "id": "r1",
         "type": "raised",
@@ -1720,30 +1774,11 @@
     },
     {
       "id": "without-ext",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
         "ph": "0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ext-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": 1,
         "id": "r1",
         "type": "raised",
         "origin": "requester",
@@ -1759,6 +1794,7 @@
     },
     {
       "id": "without-id",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1778,6 +1814,7 @@
     },
     {
       "id": "id-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1798,32 +1835,13 @@
     },
     {
       "id": "without-type",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
         "ph": "0.6",
         "ext": "acts/0.6",
         "id": "r1",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "type-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": 1,
         "origin": "requester",
         "by": "agent:demo",
         "key": "task-demo-aaaaaaaaaa",
@@ -1837,6 +1855,7 @@
     },
     {
       "id": "without-origin",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1844,26 +1863,6 @@
         "ext": "acts/0.6",
         "id": "r1",
         "type": "raised",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "origin-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": 1,
         "by": "agent:demo",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
@@ -1876,6 +1875,7 @@
     },
     {
       "id": "without-by",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1895,6 +1895,7 @@
     },
     {
       "id": "by-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1915,6 +1916,7 @@
     },
     {
       "id": "without-key",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1934,6 +1936,7 @@
     },
     {
       "id": "key-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1954,6 +1957,7 @@
     },
     {
       "id": "without-project",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1973,6 +1977,7 @@
     },
     {
       "id": "project-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -1993,6 +1998,7 @@
     },
     {
       "id": "without-ts",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2004,26 +2010,6 @@
         "by": "agent:demo",
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ts-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": 1,
         "terms_rev": 1,
         "terms": {
           "text": "Which one?"
@@ -2032,6 +2018,7 @@
     },
     {
       "id": "id-empty",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2052,6 +2039,7 @@
     },
     {
       "id": "id-with-a-space",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2072,6 +2060,7 @@
     },
     {
       "id": "id-too-long",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2092,6 +2081,7 @@
     },
     {
       "id": "id-at-the-limit-in-code-points",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -2112,6 +2102,7 @@
     },
     {
       "id": "id-over-the-limit-in-code-points",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2131,27 +2122,8 @@
       }
     },
     {
-      "id": "by-empty",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "by-with-a-space",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2171,87 +2143,8 @@
       }
     },
     {
-      "id": "by-too-long",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "by-at-the-limit-in-code-points",
-      "valid": true,
-      "schema": "raised",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "by-over-the-limit-in-code-points",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "project-empty",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "project-with-a-space",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2272,6 +2165,7 @@
     },
     {
       "id": "project-too-long",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2291,47 +2185,8 @@
       }
     },
     {
-      "id": "project-at-the-limit-in-code-points",
-      "valid": true,
-      "schema": "raised",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "project-over-the-limit-in-code-points",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "id-with-no-break-space",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2352,6 +2207,7 @@
     },
     {
       "id": "id-with-line-separator",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2371,27 +2227,8 @@
       }
     },
     {
-      "id": "id-with-ideographic-space",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a　b",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "id-with-byte-order-mark",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2411,47 +2248,8 @@
       }
     },
     {
-      "id": "id-with-newline",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a\nb",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "id-with-em-space",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a b",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "id-with-next-line-which-is-not-whitespace",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -2472,6 +2270,7 @@
     },
     {
       "id": "id-with-file-separator-which-is-not-whitespace",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -2491,47 +2290,8 @@
       }
     },
     {
-      "id": "id-with-mongolian-vowel-separator-which-is-not-whitespace",
-      "valid": true,
-      "schema": "raised",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a᠎b",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "id-with-zero-width-space-which-is-not-whitespace",
-      "valid": true,
-      "schema": "raised",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a​b",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "id-with-trailing-newline-only",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2551,27 +2311,8 @@
       }
     },
     {
-      "id": "key-empty",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "key-leading-dash",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2591,47 +2332,8 @@
       }
     },
     {
-      "id": "key-space",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "a b",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "key-slash",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "a/b",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "key-non-ascii",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2652,6 +2354,7 @@
     },
     {
       "id": "key-too-long",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2672,6 +2375,7 @@
     },
     {
       "id": "key-at-the-limit",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -2691,67 +2395,8 @@
       }
     },
     {
-      "id": "ext-with-three-version-parts",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6.1",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ext-without-a-version",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ph-of-another-version",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.5",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "ts-february-30",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2772,6 +2417,7 @@
     },
     {
       "id": "ts-february-29-common-year",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2792,6 +2438,7 @@
     },
     {
       "id": "ts-february-29-century",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2811,27 +2458,8 @@
       }
     },
     {
-      "id": "ts-april-31",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-04-31T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "ts-month-13",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2851,67 +2479,8 @@
       }
     },
     {
-      "id": "ts-month-0",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-00-10T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ts-day-0",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-11-00T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ts-day-32",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-11-32T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "ts-hour-24",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2932,6 +2501,7 @@
     },
     {
       "id": "ts-minute-60",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2952,6 +2522,7 @@
     },
     {
       "id": "ts-second-61",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2972,6 +2543,7 @@
     },
     {
       "id": "ts-offset-hour-24",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -2992,6 +2564,7 @@
     },
     {
       "id": "ts-offset-minute-60",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3012,6 +2585,7 @@
     },
     {
       "id": "ts-offset-minute-75",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3032,6 +2606,7 @@
     },
     {
       "id": "ts-no-offset",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3052,6 +2627,7 @@
     },
     {
       "id": "ts-space-separator",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3071,67 +2647,8 @@
       }
     },
     {
-      "id": "ts-date-only",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-11-05",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ts-no-seconds",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-11-05T09:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ts-empty-fraction",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-11-05T09:00:00.Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "ts-seven-fractional-digits",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3151,47 +2668,8 @@
       }
     },
     {
-      "id": "ts-two-digit-year",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "26-11-05T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
-      "id": "ts-empty",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "ts-february-29-leap-year",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3212,6 +2690,7 @@
     },
     {
       "id": "ts-february-29-400-years",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3232,6 +2711,7 @@
     },
     {
       "id": "ts-six-fractional-digits",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3251,27 +2731,8 @@
       }
     },
     {
-      "id": "ts-one-fractional-digit",
-      "valid": true,
-      "schema": "raised",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-11-05T09:00:00.1Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        }
-      }
-    },
-    {
       "id": "ts-lowercase",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3292,6 +2753,7 @@
     },
     {
       "id": "ts-largest-offset",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3312,6 +2774,7 @@
     },
     {
       "id": "ts-unknown-offset",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3332,6 +2795,7 @@
     },
     {
       "id": "ts-leap-second-utc",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3352,6 +2816,7 @@
     },
     {
       "id": "ts-leap-second-with-offset",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3372,6 +2837,7 @@
     },
     {
       "id": "ts-year-0",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3392,6 +2858,7 @@
     },
     {
       "id": "ts-last-year-with-offset",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3412,6 +2879,7 @@
     },
     {
       "id": "due-february-29-common-year",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3433,6 +2901,7 @@
     },
     {
       "id": "due-february-30",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3454,6 +2923,7 @@
     },
     {
       "id": "due-month-13",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3474,70 +2944,8 @@
       }
     },
     {
-      "id": "due-month-0",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?",
-          "due": "2026-00-10"
-        }
-      }
-    },
-    {
-      "id": "due-day-0",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?",
-          "due": "2026-11-00"
-        }
-      }
-    },
-    {
-      "id": "due-november-31",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?",
-          "due": "2026-11-31"
-        }
-      }
-    },
-    {
       "id": "due-words",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3558,28 +2966,8 @@
       }
     },
     {
-      "id": "due-compact",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?",
-          "due": "20261105"
-        }
-      }
-    },
-    {
       "id": "due-date-time",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3600,49 +2988,8 @@
       }
     },
     {
-      "id": "due-blank",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?",
-          "due": " "
-        }
-      }
-    },
-    {
-      "id": "due-number",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?",
-          "due": 20261105
-        }
-      }
-    },
-    {
       "id": "due-real-date",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3664,6 +3011,7 @@
     },
     {
       "id": "due-february-29-leap-year",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -3685,6 +3033,7 @@
     },
     {
       "id": "due-on-amended-not-a-date",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3708,31 +3057,8 @@
       }
     },
     {
-      "id": "due-on-amended",
-      "valid": true,
-      "schema": "amended",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a2",
-        "type": "amended",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T10:00:00Z",
-        "terms_rev": 2,
-        "terms": {
-          "text": "Which one?",
-          "due": "2026-11-30"
-        },
-        "supersedes": [
-          "r1"
-        ]
-      }
-    },
-    {
       "id": "terms-not-an-object",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -3751,6 +3077,7 @@
     },
     {
       "id": "terms-without-text",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -3771,6 +3098,7 @@
     },
     {
       "id": "terms-text-blank",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -3791,6 +3119,7 @@
     },
     {
       "id": "terms-text-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3810,28 +3139,8 @@
       }
     },
     {
-      "id": "amended-terms-not-an-object",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a2",
-        "type": "amended",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T10:00:00Z",
-        "terms_rev": 2,
-        "terms": "Which one?",
-        "supersedes": [
-          "r1"
-        ]
-      }
-    },
-    {
       "id": "amended-without-terms",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -3845,29 +3154,6 @@
         "project": "demo",
         "ts": "2026-10-27T10:00:00Z",
         "terms_rev": 2,
-        "supersedes": [
-          "r1"
-        ]
-      }
-    },
-    {
-      "id": "amended-by-blank",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a2",
-        "type": "amended",
-        "origin": "requester",
-        "by": " ",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T10:00:00Z",
-        "terms_rev": 2,
-        "terms": {
-          "text": "Which one, now?"
-        },
         "supersedes": [
           "r1"
         ]
@@ -3875,6 +3161,7 @@
     },
     {
       "id": "amended-from-principal-side",
+      "spec": "core §3 R1",
       "valid": false,
       "schema": null,
       "record": {
@@ -3898,6 +3185,7 @@
     },
     {
       "id": "withdrawn-from-principal-side",
+      "spec": "core §3 R1",
       "valid": false,
       "schema": null,
       "record": {
@@ -3918,6 +3206,7 @@
     },
     {
       "id": "reopened-from-requester",
+      "spec": "core §3 R2",
       "valid": false,
       "schema": null,
       "record": {
@@ -3938,6 +3227,7 @@
     },
     {
       "id": "amended-terms-text-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -3960,31 +3250,8 @@
       }
     },
     {
-      "id": "amended-due-words",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a2",
-        "type": "amended",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T10:00:00Z",
-        "terms_rev": 2,
-        "terms": {
-          "text": "Which one?",
-          "due": "soon"
-        },
-        "supersedes": [
-          "r1"
-        ]
-      }
-    },
-    {
       "id": "amended-due-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4009,6 +3276,7 @@
     },
     {
       "id": "reopened-by-blank",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4029,6 +3297,7 @@
     },
     {
       "id": "amended-terms-without-text",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -4052,6 +3321,7 @@
     },
     {
       "id": "amended-terms-text-blank",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -4075,6 +3345,7 @@
     },
     {
       "id": "raised-rev-2",
+      "spec": "core §4, §6",
       "valid": false,
       "schema": null,
       "record": {
@@ -4095,6 +3366,7 @@
     },
     {
       "id": "raised-without-rev",
+      "spec": "core §4, §6",
       "valid": false,
       "schema": null,
       "record": {
@@ -4114,6 +3386,7 @@
     },
     {
       "id": "raised-rev-true",
+      "spec": "core §4, §6",
       "valid": false,
       "schema": null,
       "record": {
@@ -4134,6 +3407,7 @@
     },
     {
       "id": "amended-without-rev",
+      "spec": "core §4, §6",
       "valid": false,
       "schema": null,
       "record": {
@@ -4146,29 +3420,6 @@
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T10:00:00Z",
-        "terms": {
-          "text": "Which one, now?"
-        },
-        "supersedes": [
-          "r1"
-        ]
-      }
-    },
-    {
-      "id": "amended-rev-0",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a2",
-        "type": "amended",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T10:00:00Z",
-        "terms_rev": 0,
         "terms": {
           "text": "Which one, now?"
         },
@@ -4179,6 +3430,7 @@
     },
     {
       "id": "amended-rev-skipped",
+      "spec": "core §4, §6",
       "valid": true,
       "schema": "amended",
       "record": {
@@ -4201,53 +3453,8 @@
       }
     },
     {
-      "id": "settled-rev-negative",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": -1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
-      "id": "settled-rev-not-an-integer",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": "1",
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
       "id": "settled-rev-true",
+      "spec": "core §4, §6",
       "valid": false,
       "schema": null,
       "record": {
@@ -4271,6 +3478,7 @@
     },
     {
       "id": "claim-rev-0",
+      "spec": "core §4, §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -4292,6 +3500,7 @@
     },
     {
       "id": "claim-rev-negative",
+      "spec": "core §4, §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -4312,49 +3521,8 @@
       }
     },
     {
-      "id": "claim-rev-not-an-integer",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "c1",
-        "type": "claimed",
-        "origin": "agent",
-        "by": "agent:other",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T07:00:00Z",
-        "outcome": "done",
-        "evidence": {
-          "basis": "heard it"
-        },
-        "terms_rev": "1"
-      }
-    },
-    {
-      "id": "claim-rev-true",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "c1",
-        "type": "claimed",
-        "origin": "agent",
-        "by": "agent:other",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T07:00:00Z",
-        "outcome": "done",
-        "evidence": {
-          "basis": "heard it"
-        },
-        "terms_rev": true
-      }
-    },
-    {
       "id": "claim-rev-1",
+      "spec": "core §4, §7",
       "valid": true,
       "schema": "claimed",
       "record": {
@@ -4376,6 +3544,7 @@
     },
     {
       "id": "note-rev-0",
+      "spec": "core §4, §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -4397,6 +3566,7 @@
     },
     {
       "id": "note-rev-negative",
+      "spec": "core §4, §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -4417,49 +3587,8 @@
       }
     },
     {
-      "id": "note-rev-not-an-integer",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "n1",
-        "type": "note",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "about": {
-          "key": "task-demo-aaaaaaaaaa"
-        },
-        "note": "Progress.",
-        "terms_rev": "1"
-      }
-    },
-    {
-      "id": "note-rev-true",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "n1",
-        "type": "note",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "about": {
-          "key": "task-demo-aaaaaaaaaa"
-        },
-        "note": "Progress.",
-        "terms_rev": true
-      }
-    },
-    {
       "id": "note-rev-1",
+      "spec": "core §4, §7",
       "valid": true,
       "schema": "note",
       "record": {
@@ -4481,6 +3610,7 @@
     },
     {
       "id": "integer-at-the-upper-bound",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -4502,6 +3632,7 @@
     },
     {
       "id": "integer-at-the-lower-bound",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -4523,6 +3654,7 @@
     },
     {
       "id": "integer-over-the-upper-bound",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4544,6 +3676,7 @@
     },
     {
       "id": "integer-under-the-lower-bound",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4564,54 +3697,8 @@
       }
     },
     {
-      "id": "fraction-in-an-unknown-member",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        },
-        "x_n": 1.5
-      }
-    },
-    {
-      "id": "fraction-inside-an-unknown-array",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        },
-        "x_n": [
-          1,
-          [
-            2.5
-          ]
-        ]
-      }
-    },
-    {
       "id": "fraction-inside-an-unknown-object",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4637,6 +3724,7 @@
     },
     {
       "id": "huge-integer-inside-an-unknown-array",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4660,6 +3748,7 @@
     },
     {
       "id": "booleans-and-null-in-an-unknown-member",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -4686,6 +3775,7 @@
     },
     {
       "id": "supersedes-not-an-array",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4704,6 +3794,7 @@
     },
     {
       "id": "supersedes-of-non-strings",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4724,6 +3815,7 @@
     },
     {
       "id": "supersedes-with-an-empty-id",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4743,27 +3835,8 @@
       }
     },
     {
-      "id": "supersedes-with-a-blank-id",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "w1",
-        "type": "withdrawn",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T11:00:00Z",
-        "reason": "not_needed",
-        "supersedes": [
-          "a b"
-        ]
-      }
-    },
-    {
       "id": "adopts-not-an-array",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4791,6 +3864,7 @@
     },
     {
       "id": "adopts-of-non-strings",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4820,6 +3894,7 @@
     },
     {
       "id": "adopts-with-an-empty-id",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4848,36 +3923,8 @@
       }
     },
     {
-      "id": "adopts-with-a-blank-id",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "attested",
-          "decider": "ps:v"
-        },
-        "evidence": {
-          "basis": "A payment record"
-        },
-        "adopts": [
-          "a b"
-        ]
-      }
-    },
-    {
       "id": "note-member-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4899,6 +3946,7 @@
     },
     {
       "id": "context-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -4920,6 +3968,7 @@
     },
     {
       "id": "note-member-may-be-blank",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -4940,28 +3989,8 @@
       }
     },
     {
-      "id": "context-may-be-empty",
-      "valid": true,
-      "schema": "raised",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?"
-        },
-        "context": ""
-      }
-    },
-    {
       "id": "unknown-member-ignored",
+      "spec": "core §4",
       "valid": true,
       "schema": "raised",
       "record": {
@@ -4987,6 +4016,7 @@
     },
     {
       "id": "settled-without-outcome",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -5009,6 +4039,7 @@
     },
     {
       "id": "settled-without-authority",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -5027,30 +4058,8 @@
       }
     },
     {
-      "id": "settled-outcome-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": 1,
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
       "id": "settled-outcome-unknown",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -5074,6 +4083,7 @@
     },
     {
       "id": "settled-other-outcome",
+      "spec": "acts §3",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -5096,99 +4106,8 @@
       }
     },
     {
-      "id": "terms-digest-uppercase",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
-      "id": "terms-digest-other-algorithm",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-512:0000000000000000000000000000000000000000000000000000000000000000",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
-      "id": "terms-digest-short",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:000000000000000000000000000000000000000000000000000000000000000",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
-      "id": "terms-digest-words",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "x",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
-      "id": "terms-digest-number",
+      "id": "terms-digest-not-a-string",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -5212,6 +4131,7 @@
     },
     {
       "id": "authority-not-an-object",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5232,6 +4152,7 @@
     },
     {
       "id": "authority-without-kind",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5254,6 +4175,7 @@
     },
     {
       "id": "authority-without-decider",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5276,6 +4198,7 @@
     },
     {
       "id": "authority-kind-unknown",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5298,56 +4221,8 @@
       }
     },
     {
-      "id": "authority-kind-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": 1,
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
-      "id": "authority-decider-empty",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "attested",
-          "decider": ""
-        },
-        "evidence": {
-          "basis": "A payment record"
-        }
-      }
-    },
-    {
       "id": "authority-decider-with-a-space",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5374,6 +4249,7 @@
     },
     {
       "id": "authority-decider-not-a-string",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5399,33 +4275,8 @@
       }
     },
     {
-      "id": "authority-decider-too-long",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "attested",
-          "decider": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        },
-        "evidence": {
-          "basis": "A payment record"
-        }
-      }
-    },
-    {
       "id": "confirmed-wrong-decider",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5452,6 +4303,7 @@
     },
     {
       "id": "delegated-without-under",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5479,6 +4331,7 @@
     },
     {
       "id": "delegated-without-chain",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5503,6 +4356,7 @@
     },
     {
       "id": "delegated-empty-chain",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5528,6 +4382,7 @@
     },
     {
       "id": "delegated-chain-not-ending-at-the-decider",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5556,6 +4411,7 @@
     },
     {
       "id": "delegated-chain-of-the-principal-alone",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5582,34 +4438,8 @@
       }
     },
     {
-      "id": "delegated-chain-of-the-decider-alone",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "delegated",
-          "decider": "ps:v",
-          "under": "standing:prefs",
-          "chain": [
-            "ps:v"
-          ]
-        }
-      }
-    },
-    {
       "id": "delegated-chain-through-a-delegate",
+      "spec": "core §5.1",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -5639,6 +4469,7 @@
     },
     {
       "id": "delegated-under-empty",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5667,6 +4498,7 @@
     },
     {
       "id": "delegated-under-blank",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5695,6 +4527,7 @@
     },
     {
       "id": "delegated-under-not-a-string",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5722,32 +4555,8 @@
       }
     },
     {
-      "id": "delegated-chain-not-an-array",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "delegated",
-          "decider": "ps:v",
-          "under": "standing:prefs",
-          "chain": "ps:v"
-        }
-      }
-    },
-    {
       "id": "delegated-chain-a-number",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5773,6 +4582,7 @@
     },
     {
       "id": "delegated-chain-with-a-blank-party-in-the-middle",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5802,6 +4612,7 @@
     },
     {
       "id": "delegated-chain-with-a-non-string-in-the-middle",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5830,87 +4641,8 @@
       }
     },
     {
-      "id": "delegated-chain-of-non-strings",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "delegated",
-          "decider": "ps:v",
-          "under": "standing:prefs",
-          "chain": [
-            1,
-            "ps:v"
-          ]
-        }
-      }
-    },
-    {
-      "id": "delegated-chain-with-a-blank-party",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "delegated",
-          "decider": "ps:v",
-          "under": "standing:prefs",
-          "chain": [
-            "a b",
-            "ps:v"
-          ]
-        }
-      }
-    },
-    {
-      "id": "representative-empty",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner",
-          "representative": ""
-        }
-      }
-    },
-    {
       "id": "representative-with-a-space",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5935,6 +4667,7 @@
     },
     {
       "id": "representative-not-a-string",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -5959,6 +4692,7 @@
     },
     {
       "id": "representative-on-a-natural-principal",
+      "spec": "core §5.1",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -5983,6 +4717,7 @@
     },
     {
       "id": "legal-principal-confirmed-without-representative",
+      "spec": "core §5.1",
       "valid": false,
       "schema": null,
       "record": {
@@ -6010,6 +4745,7 @@
     },
     {
       "id": "legal-principal-confirmed-with-representative",
+      "spec": "core §5.1",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -6038,6 +4774,7 @@
     },
     {
       "id": "legal-principal-delegated-needs-no-representative",
+      "spec": "core §5.1",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -6066,34 +4803,8 @@
       "principal_type": "legal"
     },
     {
-      "id": "legal-principal-attested-needs-no-representative",
-      "valid": true,
-      "schema": "settled",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "attested",
-          "decider": "ps:v"
-        },
-        "evidence": {
-          "basis": "A payment record"
-        }
-      },
-      "principal_type": "legal"
-    },
-    {
       "id": "evidence-not-an-object",
+      "spec": "core §5.2",
       "valid": false,
       "schema": null,
       "record": {
@@ -6118,6 +4829,7 @@
     },
     {
       "id": "evidence-proposal-blank",
+      "spec": "core §5.2",
       "valid": false,
       "schema": null,
       "record": {
@@ -6144,6 +4856,7 @@
     },
     {
       "id": "evidence-proposal-not-a-string",
+      "spec": "core §5.2",
       "valid": false,
       "schema": null,
       "record": {
@@ -6170,6 +4883,7 @@
     },
     {
       "id": "evidence-basis-blank",
+      "spec": "core §5.2",
       "valid": false,
       "schema": null,
       "record": {
@@ -6196,6 +4910,7 @@
     },
     {
       "id": "evidence-basis-not-a-string",
+      "spec": "core §5.2",
       "valid": false,
       "schema": null,
       "record": {
@@ -6221,33 +4936,8 @@
       }
     },
     {
-      "id": "evidence-presented-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "done",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        },
-        "evidence": {
-          "presented": 1
-        }
-      }
-    },
-    {
       "id": "evidence-presented",
+      "spec": "core §5.2",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -6274,6 +4964,7 @@
     },
     {
       "id": "evidence-unknown-member-ignored",
+      "spec": "core §5.2",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -6300,6 +4991,7 @@
     },
     {
       "id": "adopts-on-delegated",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6331,6 +5023,7 @@
     },
     {
       "id": "adopts-on-confirmed",
+      "spec": "core §7",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -6360,6 +5053,7 @@
     },
     {
       "id": "adopts-on-raised",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6382,33 +5076,8 @@
       }
     },
     {
-      "id": "adopts-on-amended",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "a2",
-        "type": "amended",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T10:00:00Z",
-        "terms_rev": 2,
-        "terms": {
-          "text": "Which one, now?"
-        },
-        "supersedes": [
-          "r1"
-        ],
-        "adopts": [
-          "c1"
-        ]
-      }
-    },
-    {
       "id": "adopts-on-withdrawn",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6432,6 +5101,7 @@
     },
     {
       "id": "adopts-on-reopened",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6455,6 +5125,7 @@
     },
     {
       "id": "adopts-on-claimed",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6477,33 +5148,8 @@
       }
     },
     {
-      "id": "adopts-on-related",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "l1",
-        "type": "related",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "relation": {
-          "kind": "derived_from",
-          "target": {
-            "uri": "a2a:task/1"
-          },
-          "active": true
-        },
-        "adopts": [
-          "c1"
-        ]
-      }
-    },
-    {
       "id": "adopts-on-note",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6527,6 +5173,7 @@
     },
     {
       "id": "withdrawn-without-reason",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -6539,26 +5186,6 @@
         "key": "task-demo-aaaaaaaaaa",
         "project": "demo",
         "ts": "2026-10-27T11:00:00Z",
-        "supersedes": [
-          "r1"
-        ]
-      }
-    },
-    {
-      "id": "withdrawn-reason-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "w1",
-        "type": "withdrawn",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T11:00:00Z",
-        "reason": 1,
         "supersedes": [
           "r1"
         ]
@@ -6566,6 +5193,7 @@
     },
     {
       "id": "claimed-without-outcome",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -6585,6 +5213,7 @@
     },
     {
       "id": "claimed-outcome-not-a-settlement-word",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -6605,6 +5234,7 @@
     },
     {
       "id": "claimed-without-evidence",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -6622,6 +5252,7 @@
     },
     {
       "id": "claimed-by-requester",
+      "spec": "acts §3",
       "valid": true,
       "schema": "claimed",
       "record": {
@@ -6642,6 +5273,7 @@
     },
     {
       "id": "claimed-by-a-role-not-listed",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -6662,6 +5294,7 @@
     },
     {
       "id": "note-about-not-an-object",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6680,6 +5313,7 @@
     },
     {
       "id": "note-about-empty",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6697,47 +5331,8 @@
       }
     },
     {
-      "id": "note-about-key-off-pattern",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "n1",
-        "type": "note",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "about": {
-          "key": "a b"
-        },
-        "note": "Progress."
-      }
-    },
-    {
-      "id": "note-about-key-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "n1",
-        "type": "note",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "about": {
-          "key": 1
-        },
-        "note": "Progress."
-      }
-    },
-    {
       "id": "note-about-quote-blank",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6758,6 +5353,7 @@
     },
     {
       "id": "note-about-quote-not-a-string",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6778,6 +5374,7 @@
     },
     {
       "id": "note-by-agent",
+      "spec": "acts §3",
       "valid": true,
       "schema": "note",
       "record": {
@@ -6797,6 +5394,7 @@
     },
     {
       "id": "note-origin-unknown",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -6816,6 +5414,7 @@
     },
     {
       "id": "relation-not-an-object",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6833,6 +5432,7 @@
     },
     {
       "id": "relation-without-kind",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6855,6 +5455,7 @@
     },
     {
       "id": "relation-kind-unknown",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6877,30 +5478,8 @@
       }
     },
     {
-      "id": "relation-kind-not-a-string",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "l1",
-        "type": "related",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "relation": {
-          "kind": 1,
-          "target": {
-            "uri": "a2a:task/1"
-          },
-          "active": true
-        }
-      }
-    },
-    {
       "id": "relation-without-target",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6921,6 +5500,7 @@
     },
     {
       "id": "relation-target-not-an-object",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6941,30 +5521,8 @@
       }
     },
     {
-      "id": "relation-target-an-array",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "l1",
-        "type": "related",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "relation": {
-          "kind": "derived_from",
-          "target": [
-            "uri"
-          ],
-          "active": true
-        }
-      }
-    },
-    {
       "id": "relation-active-not-a-boolean",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -6988,6 +5546,7 @@
     },
     {
       "id": "relation-target-uri-blank",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7011,6 +5570,7 @@
     },
     {
       "id": "relation-target-uri-not-a-string",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7034,6 +5594,7 @@
     },
     {
       "id": "relation-target-ext-not-a-string",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7058,31 +5619,8 @@
       }
     },
     {
-      "id": "relation-target-without-ext",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "l1",
-        "type": "related",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "relation": {
-          "kind": "derived_from",
-          "target": {
-            "project": "demo",
-            "key": "other-1"
-          },
-          "active": true
-        }
-      }
-    },
-    {
       "id": "relation-target-project-not-a-string",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7107,31 +5645,8 @@
       }
     },
     {
-      "id": "relation-target-without-project",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "l1",
-        "type": "related",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "relation": {
-          "kind": "derived_from",
-          "target": {
-            "ext": "acts",
-            "key": "other-1"
-          },
-          "active": true
-        }
-      }
-    },
-    {
       "id": "relation-target-key-not-a-string",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7157,6 +5672,7 @@
     },
     {
       "id": "relation-target-without-key",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7181,6 +5697,7 @@
     },
     {
       "id": "relation-target-key-off-pattern",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7206,6 +5723,7 @@
     },
     {
       "id": "related-without-relation",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7221,55 +5739,8 @@
       }
     },
     {
-      "id": "replaced-by-retracted",
-      "valid": true,
-      "schema": "related",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "l1",
-        "type": "related",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "relation": {
-          "kind": "replaced_by",
-          "target": {
-            "ext": "acts",
-            "project": "demo",
-            "key": "other-1"
-          },
-          "active": false
-        }
-      }
-    },
-    {
-      "id": "same-as-uri",
-      "valid": true,
-      "schema": "related",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "l1",
-        "type": "related",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "relation": {
-          "kind": "same_as",
-          "target": {
-            "uri": "ps:item/1"
-          },
-          "active": true
-        }
-      }
-    },
-    {
       "id": "derived-from-another-project-by-key",
+      "spec": "core §7",
       "valid": true,
       "schema": "related",
       "record": {
@@ -7295,6 +5766,7 @@
     },
     {
       "id": "related-from-an-unlisted-origin",
+      "spec": "core §7",
       "valid": false,
       "schema": null,
       "record": {
@@ -7318,6 +5790,7 @@
     },
     {
       "id": "type-unknown",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -7338,6 +5811,7 @@
     },
     {
       "id": "type-not-a-word",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -7360,6 +5834,7 @@
     },
     {
       "id": "reopened-restore-text-blank",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -7380,6 +5855,7 @@
     },
     {
       "id": "reopened-restore-text-not-a-string",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -7400,6 +5876,7 @@
     },
     {
       "id": "terms-text-with-carriage-return",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -7420,6 +5897,7 @@
     },
     {
       "id": "amended-terms-text-multiline",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -7443,6 +5921,7 @@
     },
     {
       "id": "claimed-by-registrar",
+      "spec": "acts §3",
       "valid": true,
       "schema": "claimed",
       "record": {
@@ -7463,6 +5942,7 @@
     },
     {
       "id": "note-by-registrar",
+      "spec": "acts §3",
       "valid": true,
       "schema": "note",
       "record": {
@@ -7482,6 +5962,7 @@
     },
     {
       "id": "settled-without-terms-digest",
+      "spec": "core §4",
       "valid": false,
       "schema": null,
       "record": {
@@ -7504,6 +5985,7 @@
     },
     {
       "id": "claimed-dropped",
+      "spec": "acts §3",
       "valid": true,
       "schema": "claimed",
       "record": {
@@ -7524,6 +6006,7 @@
     },
     {
       "id": "claim-outcome-already-done",
+      "spec": "acts §3",
       "valid": false,
       "schema": null,
       "record": {
@@ -7544,6 +6027,7 @@
     },
     {
       "id": "settled-already-done",
+      "spec": "acts §3",
       "valid": true,
       "schema": "settled",
       "record": {
@@ -7566,51 +6050,8 @@
       }
     },
     {
-      "id": "terms-options-are-unknown-to-acts",
-      "valid": true,
-      "schema": "raised",
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "r1",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms_rev": 1,
-        "terms": {
-          "text": "Which one?",
-          "options": "anything"
-        }
-      }
-    },
-    {
-      "id": "settled-outcome-of-decisions",
-      "valid": false,
-      "schema": null,
-      "record": {
-        "ph": "0.6",
-        "ext": "acts/0.6",
-        "id": "s1",
-        "type": "settled",
-        "origin": "principal",
-        "by": "ps:assistant",
-        "key": "task-demo-aaaaaaaaaa",
-        "project": "demo",
-        "ts": "2026-10-28T08:00:00Z",
-        "outcome": "decided",
-        "terms_rev": 1,
-        "terms_digest": "sha-256:83d94fcb636f0549e42c92c90600f69e2169688d10aaa2c5fea82b4aa337b529",
-        "authority": {
-          "kind": "principal",
-          "decider": "p:owner"
-        }
-      }
-    },
-    {
       "id": "raised-from-registrar-origin",
+      "spec": "core §3 R1",
       "valid": false,
       "schema": null,
       "record": {

@@ -6,6 +6,7 @@
   "cases": [
     {
       "id": "raised-with-criteria",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -74,6 +75,7 @@
     },
     {
       "id": "amended-with-criteria",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -145,6 +147,7 @@
     },
     {
       "id": "criteria-check-without-trust",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -211,6 +214,7 @@
     },
     {
       "id": "criteria-without-checks",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -254,6 +258,7 @@
     },
     {
       "id": "criteria-duplicate-check-ids",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -322,6 +327,7 @@
     },
     {
       "id": "criteria-answer-not-an-option",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -390,6 +396,7 @@
     },
     {
       "id": "criteria-check-without-implementation",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -454,6 +461,7 @@
     },
     {
       "id": "criteria-without-subject",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -518,6 +526,7 @@
     },
     {
       "id": "approved",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -547,6 +556,7 @@
     },
     {
       "id": "approved-confirmed",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -577,6 +587,7 @@
     },
     {
       "id": "approved-attested",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -607,6 +618,7 @@
     },
     {
       "id": "approved-delegated",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -641,6 +653,7 @@
     },
     {
       "id": "approved-without-presented",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -668,6 +681,7 @@
     },
     {
       "id": "approved-without-authority",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -693,6 +707,7 @@
     },
     {
       "id": "approved-adopting-a-claim",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -725,6 +740,7 @@
     },
     {
       "id": "approved-by-requester",
+      "spec": "core §11",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -753,6 +769,7 @@
     },
     {
       "id": "approved-without-terms-rev",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -781,6 +798,7 @@
     },
     {
       "id": "approved-bad-digest",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -810,6 +828,7 @@
     },
     {
       "id": "approval-retracted",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -834,6 +853,7 @@
     },
     {
       "id": "approval-retracted-without-supersedes",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -855,6 +875,7 @@
     },
     {
       "id": "settled-under-approval",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -910,6 +931,7 @@
     },
     {
       "id": "settled-under-approval-attested",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -966,6 +988,7 @@
     },
     {
       "id": "settled-under-approval-invalid-result",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1021,6 +1044,7 @@
     },
     {
       "id": "settled-under-approval-unsupported-result",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1076,6 +1100,7 @@
     },
     {
       "id": "settled-under-approval-without-verified",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1109,6 +1134,7 @@
     },
     {
       "id": "settled-under-approval-dismissed",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1160,6 +1186,7 @@
     },
     {
       "id": "approval-retracted-with-digest",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1185,6 +1212,7 @@
     },
     {
       "id": "approved-grant-without-digest",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1213,6 +1241,7 @@
     },
     {
       "id": "approved-legal-principal-without-representative",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1243,6 +1272,7 @@
     },
     {
       "id": "approved-confirmed-without-proposal",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1272,6 +1302,7 @@
     },
     {
       "id": "settled-under-empty-approval",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1327,6 +1358,7 @@
     },
     {
       "id": "criteria-not-an-object",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1360,6 +1392,7 @@
     },
     {
       "id": "criteria-subject-not-the-right-type",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1425,6 +1458,7 @@
     },
     {
       "id": "criteria-checks-not-the-right-type",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1468,6 +1502,7 @@
     },
     {
       "id": "criteria-without-answer",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1532,6 +1567,7 @@
     },
     {
       "id": "criteria-answer-not-the-right-type",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1597,6 +1633,7 @@
     },
     {
       "id": "criteria-subject-without-uri",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1664,6 +1701,7 @@
     },
     {
       "id": "criteria-subject-uri-not-a-string",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1732,6 +1770,7 @@
     },
     {
       "id": "check-implementation-without-uri",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1799,6 +1838,7 @@
     },
     {
       "id": "check-implementation-uri-not-a-string",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1867,6 +1907,7 @@
     },
     {
       "id": "criteria-subject-without-digest",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -1934,6 +1975,7 @@
     },
     {
       "id": "criteria-subject-digest-not-a-string",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2002,6 +2044,7 @@
     },
     {
       "id": "check-implementation-without-digest",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2069,6 +2112,7 @@
     },
     {
       "id": "check-implementation-digest-not-a-string",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2137,6 +2181,7 @@
     },
     {
       "id": "criteria-subject-uri-blank",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2205,6 +2250,7 @@
     },
     {
       "id": "criteria-subject-digest-off-pattern",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2273,6 +2319,7 @@
     },
     {
       "id": "criteria-answer-without-text",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2340,6 +2387,7 @@
     },
     {
       "id": "criteria-answer-text-blank",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2408,6 +2456,7 @@
     },
     {
       "id": "criteria-answer-text-not-a-string",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2475,143 +2524,8 @@
       "criteria": "ignored"
     },
     {
-      "id": "criteria-answer-option-not-a-string",
-      "record": {
-        "ph": "0.6",
-        "ext": "decisions/0.6",
-        "id": "r:q-demo-7",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "q-demo-7",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms": {
-          "text": "Merge the export feature (branch feature-export)?",
-          "options": [
-            {
-              "id": "merge",
-              "label": "Merge"
-            },
-            {
-              "id": "hold",
-              "label": "Hold"
-            }
-          ],
-          "default": "hold",
-          "criteria": {
-            "subject": {
-              "uri": "git:demo@refs/heads/feature-export",
-              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
-            },
-            "checks": [
-              {
-                "id": "tests",
-                "text": "The test suite passes on the subject commit",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/test.yml",
-                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              },
-              {
-                "id": "licence",
-                "text": "No dependency has a licence outside the allow-list",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/licences.yml",
-                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              }
-            ],
-            "answer": {
-              "text": "Merge the export feature",
-              "option": 1
-            }
-          }
-        },
-        "terms_rev": 1
-      },
-      "valid": true,
-      "schema": "raised",
-      "criteria": "ignored"
-    },
-    {
-      "id": "criteria-answer-option-with-a-space",
-      "record": {
-        "ph": "0.6",
-        "ext": "decisions/0.6",
-        "id": "r:q-demo-7",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "q-demo-7",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms": {
-          "text": "Merge the export feature (branch feature-export)?",
-          "options": [
-            {
-              "id": "merge",
-              "label": "Merge"
-            },
-            {
-              "id": "hold",
-              "label": "Hold"
-            }
-          ],
-          "default": "hold",
-          "criteria": {
-            "subject": {
-              "uri": "git:demo@refs/heads/feature-export",
-              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
-            },
-            "checks": [
-              {
-                "id": "tests",
-                "text": "The test suite passes on the subject commit",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/test.yml",
-                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              },
-              {
-                "id": "licence",
-                "text": "No dependency has a licence outside the allow-list",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/licences.yml",
-                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              }
-            ],
-            "answer": {
-              "text": "Merge the export feature",
-              "option": "a b"
-            }
-          }
-        },
-        "terms_rev": 1
-      },
-      "valid": true,
-      "schema": "raised",
-      "criteria": "ignored"
-    },
-    {
       "id": "criteria-answer-without-an-option",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2679,6 +2593,7 @@
     },
     {
       "id": "criteria-answer-option-with-no-options-in-the-terms",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2736,6 +2651,7 @@
     },
     {
       "id": "check-not-an-object",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2793,6 +2709,7 @@
     },
     {
       "id": "check-id-not-the-right-type",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2861,6 +2778,7 @@
     },
     {
       "id": "check-text-not-the-right-type",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2929,6 +2847,7 @@
     },
     {
       "id": "check-format-not-the-right-type",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -2997,6 +2916,7 @@
     },
     {
       "id": "check-implementation-not-the-right-type",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3062,6 +2982,7 @@
     },
     {
       "id": "check-trust-not-the-right-type",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3128,6 +3049,7 @@
     },
     {
       "id": "check-without-id",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3195,6 +3117,7 @@
     },
     {
       "id": "check-without-text",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3262,6 +3185,7 @@
     },
     {
       "id": "check-without-format",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3301,71 +3225,6 @@
                 "trust": [
                   "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
                 ]
-              },
-              {
-                "id": "licence",
-                "text": "No dependency has a licence outside the allow-list",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/licences.yml",
-                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              }
-            ],
-            "answer": {
-              "text": "Merge the export feature",
-              "option": "merge"
-            }
-          }
-        },
-        "terms_rev": 1
-      },
-      "valid": true,
-      "schema": "raised",
-      "criteria": "ignored"
-    },
-    {
-      "id": "check-without-trust",
-      "record": {
-        "ph": "0.6",
-        "ext": "decisions/0.6",
-        "id": "r:q-demo-7",
-        "type": "raised",
-        "origin": "requester",
-        "by": "agent:demo",
-        "key": "q-demo-7",
-        "project": "demo",
-        "ts": "2026-10-27T09:00:00Z",
-        "terms": {
-          "text": "Merge the export feature (branch feature-export)?",
-          "options": [
-            {
-              "id": "merge",
-              "label": "Merge"
-            },
-            {
-              "id": "hold",
-              "label": "Hold"
-            }
-          ],
-          "default": "hold",
-          "criteria": {
-            "subject": {
-              "uri": "git:demo@refs/heads/feature-export",
-              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
-            },
-            "checks": [
-              {
-                "id": "tests",
-                "text": "The test suite passes on the subject commit",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/test.yml",
-                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
-                }
               },
               {
                 "id": "licence",
@@ -3394,6 +3253,7 @@
     },
     {
       "id": "check-id-off-pattern",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3462,6 +3322,7 @@
     },
     {
       "id": "check-text-blank",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3530,6 +3391,7 @@
     },
     {
       "id": "check-format-with-a-space",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3598,6 +3460,7 @@
     },
     {
       "id": "check-implementation-uri-blank",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3666,6 +3529,7 @@
     },
     {
       "id": "check-implementation-digest-off-pattern",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3734,6 +3598,7 @@
     },
     {
       "id": "check-trust-empty",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3800,6 +3665,7 @@
     },
     {
       "id": "check-trust-of-non-strings",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3868,6 +3734,7 @@
     },
     {
       "id": "check-trust-blank",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3936,6 +3803,7 @@
     },
     {
       "id": "raised-without-criteria",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -3968,6 +3836,7 @@
     },
     {
       "id": "note-carrying-broken-criteria-is-not-module-content",
+      "spec": "criteria §2, §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4013,6 +3882,7 @@
     },
     {
       "id": "settled-under-another-mandate-is-not-module-content",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4046,6 +3916,7 @@
     },
     {
       "id": "settled-under-approval-with-results-evidence-ignores",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4101,6 +3972,7 @@
     },
     {
       "id": "reopened-naming-an-approval-is-not-module-content",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4130,6 +4002,7 @@
     },
     {
       "id": "approved-without-approval",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4155,6 +4028,7 @@
     },
     {
       "id": "approved-approval-not-an-object",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4181,6 +4055,7 @@
     },
     {
       "id": "approved-without-active",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4209,6 +4084,7 @@
     },
     {
       "id": "approved-active-not-a-boolean",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4238,6 +4114,7 @@
     },
     {
       "id": "approved-digest-not-a-string",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4267,6 +4144,7 @@
     },
     {
       "id": "approved-after-not-a-string",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4297,6 +4175,7 @@
     },
     {
       "id": "approved-after-with-a-space",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",
@@ -4327,6 +4206,7 @@
     },
     {
       "id": "approved-after",
+      "spec": "criteria §7",
       "record": {
         "ph": "0.6",
         "ext": "decisions/0.6",

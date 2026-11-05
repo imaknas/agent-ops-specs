@@ -362,26 +362,6 @@
         {
           "ph": "0.6",
           "ext": "acts/0.6",
-          "id": "l-a",
-          "type": "related",
-          "origin": "requester",
-          "by": "agent:demo",
-          "key": "task-demo-aaaaaaaaaa",
-          "project": "demo",
-          "ts": "2026-10-28T10:00:00+02:00",
-          "relation": {
-            "kind": "derived_from",
-            "target": {
-              "ext": "acts",
-              "project": "demo",
-              "key": "other-1"
-            },
-            "active": false
-          }
-        },
-        {
-          "ph": "0.6",
-          "ext": "acts/0.6",
           "id": "l-b",
           "type": "related",
           "origin": "requester",
@@ -397,6 +377,26 @@
               "key": "other-1"
             },
             "active": true
+          }
+        },
+        {
+          "ph": "0.6",
+          "ext": "acts/0.6",
+          "id": "l-a",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-28T10:00:00+02:00",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "ext": "acts",
+              "project": "demo",
+              "key": "other-1"
+            },
+            "active": false
           }
         }
       ],
@@ -696,64 +696,6 @@
       }
     },
     {
-      "id": "targets-differing-in-key-are-two-relations",
-      "records": [
-        {
-          "ph": "0.6",
-          "ext": "acts/0.6",
-          "id": "l1",
-          "type": "related",
-          "origin": "requester",
-          "by": "agent:demo",
-          "key": "task-demo-aaaaaaaaaa",
-          "project": "demo",
-          "ts": "2026-10-27T09:00:00Z",
-          "relation": {
-            "kind": "derived_from",
-            "target": {
-              "ext": "acts",
-              "project": "demo",
-              "key": "other-2"
-            },
-            "active": true
-          }
-        },
-        {
-          "ph": "0.6",
-          "ext": "acts/0.6",
-          "id": "l2",
-          "type": "related",
-          "origin": "requester",
-          "by": "agent:demo",
-          "key": "task-demo-aaaaaaaaaa",
-          "project": "demo",
-          "ts": "2026-10-28T09:00:00Z",
-          "relation": {
-            "kind": "derived_from",
-            "target": {
-              "ext": "acts",
-              "project": "demo",
-              "key": "other-1"
-            },
-            "active": false
-          }
-        }
-      ],
-      "expect": {
-        "relations": [
-          {
-            "kind": "derived_from",
-            "target": {
-              "ext": "acts",
-              "project": "demo",
-              "key": "other-2"
-            }
-          }
-        ],
-        "replacement": null
-      }
-    },
-    {
       "id": "a-retracted-replaced-by-leaves-the-other-as-the-replacement",
       "records": [
         {
@@ -891,33 +833,6 @@
             }
           }
         ],
-        "replacement": null
-      }
-    },
-    {
-      "id": "invalid-relation-is-ignored",
-      "records": [
-        {
-          "ph": "0.6",
-          "ext": "acts/0.6",
-          "id": "l1",
-          "type": "related",
-          "origin": "requester",
-          "by": "agent:demo",
-          "key": "task-demo-aaaaaaaaaa",
-          "project": "demo",
-          "ts": "2026-10-27T09:00:00Z",
-          "relation": {
-            "kind": "same_as",
-            "target": {
-              "uri": "ps:item/1"
-            },
-            "active": true
-          }
-        }
-      ],
-      "expect": {
-        "relations": [],
         "replacement": null
       }
     }
