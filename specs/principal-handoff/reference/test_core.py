@@ -11,7 +11,9 @@ import unittest
 
 import ph_acts
 import ph_core
+import ph_decisions
 
+EXTENSIONS = {"acts": ph_acts, "decisions": ph_decisions}
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONF = ROOT / "core" / "conformance"
 SCHEMAS = [ROOT / d / "schemas" for d in ("core", "acts", "decisions", "evidence", "criteria")]
@@ -41,6 +43,17 @@ class Core(unittest.TestCase):
                 self.assertEqual(ph_core.relations(held, ph_acts.EXT, cfg), c["expect"]["relations"])
                 again = ph_core.converting_held(list(reversed(c["records"])), ph_acts.EXT, cfg)
                 self.assertEqual(sorted(again, key=lambda r: r["id"]), sorted(held, key=lambda r: r["id"]))
+
+    def test_raw_text(self):
+        s = json.loads((CONF / "raw.json").read_text())
+        cfg = ph_core.Config(s["principal"], s["principal_type"] == "legal")
+        for c in s["cases"]:
+            with self.subTest(c["id"]):
+                record, errs = ph_core.parse(c["raw"])
+                name = None
+                if not errs:
+                    name, errs = EXTENSIONS.get(str(record.get("ext")).split("/")[0], ph_decisions).validate(record, cfg)
+                self.assertEqual((name if not errs else None, not errs), (c["schema"], c["valid"]), errs)
 
     def test_schemas_use_only_the_subset(self):
         def walk(x, where):

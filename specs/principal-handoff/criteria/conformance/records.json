@@ -1324,6 +1324,3036 @@
       "valid": true,
       "schema": "settled",
       "criteria": "ignored"
+    },
+    {
+      "id": "criteria-not-an-object",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": "x"
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-subject-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": 1,
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-checks-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": 1,
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-without-answer",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ]
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-answer-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": 1
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-subject-without-uri",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-subject-uri-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": 1,
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-implementation-without-uri",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-implementation-uri-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": 1,
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-subject-without-digest",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-subject-digest-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": 1
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-implementation-without-digest",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-implementation-digest-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": 1
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-subject-uri-blank",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": " ",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-subject-digest-off-pattern",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:ABC"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-answer-without-text",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-answer-text-blank",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": " ",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-answer-text-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": 1,
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-answer-option-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": 1
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-answer-option-with-a-space",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "a b"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "criteria-answer-without-an-option",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "used"
+    },
+    {
+      "id": "criteria-answer-option-with-no-options-in-the-terms",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-not-an-object",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              "x",
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-id-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": 1,
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-text-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": 1,
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-format-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": 1,
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-implementation-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": 1,
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-trust-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": 1
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-without-id",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-without-text",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-without-format",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-without-trust",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                }
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-id-off-pattern",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "-x",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-text-blank",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": " ",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-format-with-a-space",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "a b",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-implementation-uri-blank",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": " ",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-implementation-digest-off-pattern",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:ABC"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-trust-empty",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": []
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-trust-of-non-strings",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  1
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "check-trust-blank",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [
+              {
+                "id": "tests",
+                "text": "The test suite passes on the subject commit",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/test.yml",
+                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
+                },
+                "trust": [
+                  " "
+                ]
+              },
+              {
+                "id": "licence",
+                "text": "No dependency has a licence outside the allow-list",
+                "format": "in-toto",
+                "implementation": {
+                  "uri": "git:demo@ci/licences.yml",
+                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "trust": [
+                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
+                ]
+              }
+            ],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "ignored"
+    },
+    {
+      "id": "raised-without-criteria",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r:q-demo-7",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold"
+        },
+        "terms_rev": 1
+      },
+      "valid": true,
+      "schema": "raised",
+      "criteria": "used"
+    },
+    {
+      "id": "note-carrying-broken-criteria-is-not-module-content",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Merge the export feature (branch feature-export)?",
+          "options": [
+            {
+              "id": "merge",
+              "label": "Merge"
+            },
+            {
+              "id": "hold",
+              "label": "Hold"
+            }
+          ],
+          "default": "hold",
+          "criteria": {
+            "subject": {
+              "uri": "git:demo@refs/heads/feature-export",
+              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "checks": [],
+            "answer": {
+              "text": "Merge the export feature",
+              "option": "merge"
+            }
+          }
+        },
+        "about": {
+          "key": "q-demo-7"
+        }
+      },
+      "valid": true,
+      "schema": "note",
+      "criteria": "used"
+    },
+    {
+      "id": "settled-under-another-mandate-is-not-module-content",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s:q-demo-7:1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T11:05:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:805f49711872a0e6222fedac975a8609cf0d1b94bc7034d0a48b0bbd46dfec3c",
+        "answer": {
+          "text": "Merge the export feature",
+          "option": "merge"
+        },
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:verifier",
+          "under": "standing:prefs",
+          "chain": [
+            "p:owner",
+            "ps:verifier"
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "settled",
+      "criteria": "used"
+    },
+    {
+      "id": "settled-under-approval-with-results-evidence-ignores",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s:q-demo-7:1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T11:05:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:805f49711872a0e6222fedac975a8609cf0d1b94bc7034d0a48b0bbd46dfec3c",
+        "answer": {
+          "text": "Merge the export feature",
+          "option": "merge"
+        },
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:verifier",
+          "under": "approval:ap1",
+          "chain": [
+            "p:owner",
+            "ps:verifier"
+          ]
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "n:q-demo-7:1",
+                "entry": "tests"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-02-30T10:00:00Z"
+            },
+            {
+              "of": {
+                "record": "n:q-demo-7:1",
+                "entry": "licence"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-27T11:05:00Z"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "settled",
+      "criteria": "ignored"
+    },
+    {
+      "id": "reopened-naming-an-approval-is-not-module-content",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "o1",
+        "type": "reopened",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T11:05:00Z",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:verifier",
+          "under": "approval:ap1",
+          "chain": [
+            "p:owner",
+            "ps:verifier"
+          ]
+        },
+        "supersedes": [
+          "s1"
+        ]
+      },
+      "valid": true,
+      "schema": "reopened",
+      "criteria": "used"
+    },
+    {
+      "id": "approved-without-approval",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "valid": true,
+      "schema": "approved",
+      "criteria": "ignored"
+    },
+    {
+      "id": "approved-approval-not-an-object",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": "x",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "valid": true,
+      "schema": "approved",
+      "criteria": "ignored"
+    },
+    {
+      "id": "approved-without-active",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": "sha-256:805f49711872a0e6222fedac975a8609cf0d1b94bc7034d0a48b0bbd46dfec3c"
+        },
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "valid": true,
+      "schema": "approved",
+      "criteria": "ignored"
+    },
+    {
+      "id": "approved-active-not-a-boolean",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": "sha-256:805f49711872a0e6222fedac975a8609cf0d1b94bc7034d0a48b0bbd46dfec3c",
+          "active": "true"
+        },
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "valid": true,
+      "schema": "approved",
+      "criteria": "ignored"
+    },
+    {
+      "id": "approved-digest-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": 1,
+          "active": true
+        },
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "valid": true,
+      "schema": "approved",
+      "criteria": "ignored"
+    },
+    {
+      "id": "approved-after-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": "sha-256:805f49711872a0e6222fedac975a8609cf0d1b94bc7034d0a48b0bbd46dfec3c",
+          "active": true,
+          "after": 1
+        },
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "valid": true,
+      "schema": "approved",
+      "criteria": "ignored"
+    },
+    {
+      "id": "approved-after-with-a-space",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": "sha-256:805f49711872a0e6222fedac975a8609cf0d1b94bc7034d0a48b0bbd46dfec3c",
+          "active": true,
+          "after": "a b"
+        },
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "valid": true,
+      "schema": "approved",
+      "criteria": "ignored"
+    },
+    {
+      "id": "approved-after",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-7",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 1,
+        "approval": {
+          "terms_digest": "sha-256:805f49711872a0e6222fedac975a8609cf0d1b94bc7034d0a48b0bbd46dfec3c",
+          "active": true,
+          "after": "s1"
+        },
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "evidence": {
+          "presented": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      },
+      "valid": true,
+      "schema": "approved",
+      "criteria": "used"
     }
   ]
 }

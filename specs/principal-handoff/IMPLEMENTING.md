@@ -106,7 +106,8 @@ not (core §1, §4). Then check what a schema can't say:
 - [ ] The record is I-JSON, and its numbers are integers within ±(2^53 − 1) written without a fraction or exponent,
       anywhere in the record (core §4). Check this on the raw text: most JSON parsers silently keep the last duplicate
       member and turn `1.0` and `1e2` into `1` and `100`.
-- [ ] `ts` is a real RFC 3339 instant with at most six fractional digits (core §4). `terms.due` is a real calendar date.
+- [ ] `ts` is a real RFC 3339 instant with at most six fractional digits (core §4). `terms.due` is a real calendar
+      date.
 - [ ] `by` is not the principal identifier (R6).
 - [ ] The transport authenticated `by`, in a role that may emit this record (core §13). The fixtures can't test this
       one.
@@ -129,8 +130,8 @@ treated as instructions (core §13).
 
 ## 5. Compute the answer
 
-Group what you hold by item, (extension name, `project`, `key`). A requester computes the **settlement view** (core §6),
-from need records and settlement-register records only:
+Group what you hold by item, (extension name, `project`, `key`). A requester computes the **settlement view** (core
+§6), from need records and settlement-register records only:
 
 ```
 fold(register):                                    # need: raised, amended, withdrawn
@@ -197,14 +198,15 @@ The fixtures are JSON and don't depend on any language. Run them from `decisions
 | File | What to do | What must match |
 |---|---|---|
 | `core/conformance/terms-digest.json` | Compute `canonical` and `digest` from `record` | Both, byte for byte |
+| `core/conformance/raw.json` | Read each `raw` with your strict reader, then validate it, with `principal` configured. Skip the cases whose id begins with `acts-` | `valid`: text that doesn't parse, or isn't an object, is invalid |
 | `decisions/conformance/records.json` | Validate each `record`, with `principal` and `principal_type` configured | `valid`: `true`, `false`, or `null` (a version or extension you don't implement: kept, not acted on) |
 | `decisions/conformance/lifecycle.json` | Compute the settlement view of `records` | `settlement` (the id of the current settlement-register record, a `reopened` one included, else `null`); `outcome`, `answer` and `authority` (the kind), which are `null` unless that record is a `settled`; `stale` (`false` unless it is). Use only need and settlement-register records. Fold each case reversed too: the result must not change |
 
 Three pitfalls catch most first attempts:
 
-- **Two different orders.** RFC 8785 sorts member names by UTF-16 code units, while `id` ties and §10's keep-the-greater
-  compare in code-point order. They differ outside the Basic Multilingual Plane, and your language's default gives you
-  only one of them. RFC 8785's string escaping and number format are exact too.
+- **Two different orders.** RFC 8785 sorts member names by UTF-16 code units, while `id` ties and §10's
+  keep-the-greater compare in code-point order. They differ outside the Basic Multilingual Plane, and your language's
+  default gives you only one of them. RFC 8785's string escaping and number format are exact too.
 - **Validation before deduplication.** Otherwise an invalid record can block a valid one with the same id.
 - **`supersedes` names ids of the same register only.** Ids are unique per `origin`, so the same id can appear in
   different registers.
@@ -212,8 +214,8 @@ Three pitfalls catch most first attempts:
 Your implementation doesn't need the rest of the suite: `relations.json` and the other `lifecycle.json` members are for
 a principal side, and `convert.json` is for a party that implements two versions.
 
-Passing doesn't prove everything yet. The suite doesn't exercise `ts` with offsets or fractions, `terms.due`, non-ASCII
-ids, raw-text problems such as duplicate members, or a reused id that changes the answer, so test those yourself.
+Passing doesn't prove everything yet. Each case holds the records of one item, so the suite can't show an id reused
+across two items (core §10). Test that yourself.
 
 [`reference/`](reference/) is a standard-library Python reading of all this. It's a good way to investigate a
 disagreement, but passing the fixtures matters more than matching it.

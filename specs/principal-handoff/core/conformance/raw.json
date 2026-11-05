@@ -1,0 +1,524 @@
+{
+  "suite": "core/0.6",
+  "description": "The text of a record -> whether it is valid (core §4). What a parsed value can no longer show: duplicate member names, numbers written with a fraction or an exponent, unpaired surrogates. A record is validated under the extension its ext names; text that does not parse, or is not an object, is invalid whatever it names.",
+  "principal": "p:owner",
+  "principal_type": "natural",
+  "cases": [
+    {
+      "id": "decisions-plain",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-escaped-member-name",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-escaped-pair-of-surrogates",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"😀\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-escaped-pair-in-uppercase-hex",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"😀\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-whitespace-between-tokens",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\" ,\n\t\"terms_rev\" : 1,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-member-names-differing-in-case",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":1,\"X_a\":2}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-minus-zero",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":-0}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-arrays-and-nested-values",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":[\"a\",1,{\"b\":[true,null]}]}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-integer-at-the-bound",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":9007199254740991}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "decisions-duplicate-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"key\":\"q-demo-1\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-duplicate-member-with-different-values",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"note\":\"a\",\"note\":\"b\"}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-duplicate-member-in-terms",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\",\"text\":\"Which two?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-duplicate-member-one-spelled-with-an-escape",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\",\"text\":\"Which two?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-duplicate-member-in-an-unknown-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":{\"b\":1,\"b\":1}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-duplicate-member-inside-an-array",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":[{\"b\":1,\"b\":2}]}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-terms-rev-with-a-fraction",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1.0,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-terms-rev-with-an-exponent",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1e0,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-terms-rev-with-an-uppercase-exponent",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1E0,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-exponent-in-an-unknown-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":1e2}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-fraction-in-an-unknown-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":1.0}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-negative-exponent-that-is-whole",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":100e-2}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-minus-zero-with-a-fraction",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":-0.0}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-fraction-inside-terms",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\",\"x_a\":[1.0]}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-over-the-bound",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":9007199254740992}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-under-the-bound",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":-9007199254740992}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-exponent-out-of-double-range",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":1e400}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-lone-high-surrogate",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"\\ud83d\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-lone-low-surrogate",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"\\ude00\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-surrogates-in-the-wrong-order",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"\\ude00\\ud83d\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-high-surrogate-before-a-letter",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"\\ud83dA\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-lone-surrogate-in-note",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"note\":\"\\ud83d\"}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-lone-surrogate-in-an-unknown-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":[\"\\ud83d\"]}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "decisions-lone-surrogate-in-a-member-name",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"decisions/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"q-demo-1\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_\\ud83d\":1}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-plain",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-escaped-member-name",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-escaped-pair-of-surrogates",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"😀\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-escaped-pair-in-uppercase-hex",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"😀\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-whitespace-between-tokens",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\" ,\n\t\"terms_rev\" : 1,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-member-names-differing-in-case",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":1,\"X_a\":2}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-minus-zero",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":-0}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-arrays-and-nested-values",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":[\"a\",1,{\"b\":[true,null]}]}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-integer-at-the-bound",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":9007199254740991}",
+      "valid": true,
+      "schema": "raised"
+    },
+    {
+      "id": "acts-duplicate-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"key\":\"task-demo-aaaaaaaaaa\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-duplicate-member-with-different-values",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"note\":\"a\",\"note\":\"b\"}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-duplicate-member-in-terms",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\",\"text\":\"Which two?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-duplicate-member-one-spelled-with-an-escape",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\",\"text\":\"Which two?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-duplicate-member-in-an-unknown-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":{\"b\":1,\"b\":1}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-duplicate-member-inside-an-array",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":[{\"b\":1,\"b\":2}]}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-terms-rev-with-a-fraction",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1.0,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-terms-rev-with-an-exponent",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1e0,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-terms-rev-with-an-uppercase-exponent",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1E0,\"terms\":{\"text\":\"Which one?\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-exponent-in-an-unknown-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":1e2}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-fraction-in-an-unknown-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":1.0}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-negative-exponent-that-is-whole",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":100e-2}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-minus-zero-with-a-fraction",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":-0.0}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-fraction-inside-terms",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\",\"x_a\":[1.0]}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-over-the-bound",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":9007199254740992}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-under-the-bound",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":-9007199254740992}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-exponent-out-of-double-range",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":1e400}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-lone-high-surrogate",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"\\ud83d\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-lone-low-surrogate",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"\\ude00\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-surrogates-in-the-wrong-order",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"\\ude00\\ud83d\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-high-surrogate-before-a-letter",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"\\ud83dA\"}}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-lone-surrogate-in-note",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"note\":\"\\ud83d\"}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-lone-surrogate-in-an-unknown-member",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_a\":[\"\\ud83d\"]}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "acts-lone-surrogate-in-a-member-name",
+      "raw": "{\"ph\":\"0.6\",\"ext\":\"acts/0.6\",\"id\":\"r1\",\"type\":\"raised\",\"origin\":\"requester\",\"by\":\"agent:demo\",\"key\":\"task-demo-aaaaaaaaaa\",\"project\":\"demo\",\"ts\":\"2026-10-27T09:00:00Z\",\"terms_rev\":1,\"terms\":{\"text\":\"Which one?\"},\"x_\\ud83d\":1}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "empty-text",
+      "raw": "",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "not-json",
+      "raw": "raised",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "truncated",
+      "raw": "{\"ph\":\"0.6\"",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "trailing-content",
+      "raw": "{} {}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "trailing-comma",
+      "raw": "{\"ph\":\"0.6\",}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "single-quotes",
+      "raw": "{'ph':'0.6'}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "comment",
+      "raw": "{\"ph\":\"0.6\"} // x",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "nan",
+      "raw": "{\"x_a\":NaN}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "infinity",
+      "raw": "{\"x_a\":Infinity}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "leading-zero",
+      "raw": "{\"x_a\":01}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "leading-plus",
+      "raw": "{\"x_a\":+1}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "bare-fraction",
+      "raw": "{\"x_a\":.5}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "raw-newline-in-a-string",
+      "raw": "{\"x_a\":\"a\nb\"}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "bad-escape",
+      "raw": "{\"x_a\":\"\\x41\"}",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "an-array",
+      "raw": "[]",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "a-string",
+      "raw": "\"raised\"",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "a-number",
+      "raw": "1",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "null",
+      "raw": "null",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "true",
+      "raw": "true",
+      "valid": false,
+      "schema": null
+    },
+    {
+      "id": "an-empty-object",
+      "raw": "{}",
+      "valid": false,
+      "schema": null
+    }
+  ]
+}

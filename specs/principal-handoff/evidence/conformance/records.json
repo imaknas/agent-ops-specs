@@ -638,6 +638,1532 @@
       "valid": true,
       "schema": "note",
       "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-not-an-array",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": "x"
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-entry-not-an-object",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            "x"
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-entry-a-number",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            1
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-without-id",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-id-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": 1,
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-without-format",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-format-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": 1,
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-without-statement",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-statement-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": 1,
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-id-off-pattern",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "-x",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-id-too-long",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-format-with-a-space",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "a b",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-format-too-long",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-statement-blank",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": " ",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-proof-by-value",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof": "eyJ4Ijox"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "used"
+    },
+    {
+      "id": "verifiable-proof-blank",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof": " "
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-proof-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof": 1
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-proof-ref-not-an-object",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": "x"
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-proof-ref-without-uri",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-proof-ref-uri-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": 1,
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-proof-ref-without-digest",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-proof-ref-digest-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": "https://proofs.example/p/81f2",
+                "digest": 1
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verifiable-proof-ref-uri-blank",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "terms_rev": 1,
+        "evidence": {
+          "basis": "a TLSNotary proof of the transfer",
+          "verifiable": [
+            {
+              "id": "payment",
+              "format": "tlsnotary",
+              "statement": "the bank's site showed a transfer of EUR 120 with reference task-demo-aaaaaaaaaa on 2026-10-28",
+              "proof_ref": {
+                "uri": " ",
+                "digest": "sha-256:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            }
+          ]
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "ignored"
+    },
+    {
+      "id": "evidence-verified-not-an-array",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": "x"
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-result-not-an-object",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            "x"
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-without-of",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": 1,
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-without-verifier",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-verifier-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": 1,
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-without-result",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-result-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": 1,
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-without-at",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-at-not-the-right-type",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": 1
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-at-words",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "yesterday"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-verifier-with-a-space",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "a b",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-without-record",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-record-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": 1,
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-without-entry",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-entry-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": 1
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-record-with-a-space",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "a b",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-entry-off-pattern",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "-x"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-origin-not-a-string",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment",
+                "origin": 1
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-origin-off-pattern",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment",
+                "origin": "Principal"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "ignored"
+    },
+    {
+      "id": "verified-of-origin",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment",
+                "origin": "agent"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "used"
+    },
+    {
+      "id": "verified-unsupported",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "unsupported",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "used"
+    },
+    {
+      "id": "verified-valid",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n5",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "valid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "note": "The proof did not verify against the notaries this side trusts."
+      },
+      "valid": true,
+      "schema": "note",
+      "evidence": "used"
+    },
+    {
+      "id": "reopened-with-verified",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "o1",
+        "type": "reopened",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "evidence": {
+          "verified": [
+            {
+              "of": {
+                "record": "c1",
+                "entry": "payment"
+              },
+              "verifier": "ps:verifier",
+              "result": "invalid",
+              "at": "2026-10-27T10:00:00Z"
+            }
+          ]
+        },
+        "supersedes": [
+          "s1"
+        ],
+        "restore_text": "Renew the domain"
+      },
+      "valid": true,
+      "schema": "reopened",
+      "evidence": "ignored"
+    },
+    {
+      "id": "claimed-without-module-content",
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "outcome": "done",
+        "evidence": {
+          "basis": "heard it"
+        }
+      },
+      "valid": true,
+      "schema": "claimed",
+      "evidence": "used"
     }
   ]
 }

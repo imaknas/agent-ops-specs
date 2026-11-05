@@ -12,6 +12,14 @@ record, ownership, authority and state rules of the core are exercised through e
   lowercase hex SHA-256 of `canonical`'s UTF-8 bytes. The cases cover member order, non-ASCII text, and characters
   JSON must escape (a newline, a quote, a tab, a backslash, U+001F) next to ones it must not (U+007F, `é`, and a
   character outside the Basic Multilingual Plane).
+- `raw.json` (SPEC §4): `{"suite": "core/0.6", "description", "principal", "principal_type", "cases": [{id, raw, valid,
+  schema}]}`. `raw` is the text of a record, held in a JSON string, for what a parser loses: duplicate member names,
+  numbers written with a fraction or an exponent, unpaired surrogates. Read it with a strict reader and validate what
+  that gives under the extension its `ext` names. `valid` is whether the record is valid; `schema` is the type it
+  validates as, or `null`. A case whose id begins with `acts-` or `decisions-` is for that extension, and an
+  implementation of the other skips it; the rest don't parse or aren't objects, and are invalid for every
+  implementation. An escape in the record's text has a doubled backslash in the file: `"\\ud83d"` in the file is the
+  six characters `\ud83d` of the record.
 - `convert.json` (SPEC §6, §7, §10, §14, Acts §6, Decisions §6, Criteria §10): `{"suite": "core/0.6", "description",
   "principal", "cases": [{id, module?, record, to, expect}], "held": [{id, records, expect}]}`.
   - In `cases`, `record` is converted to version `to` (`"0.5"` or `"0.6"`) from the record alone; `expect` is the

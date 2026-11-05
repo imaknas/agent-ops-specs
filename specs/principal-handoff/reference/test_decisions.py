@@ -29,7 +29,9 @@ class Conformance(unittest.TestCase):
                 if c["valid"] is None:  # an extension or version not implemented: kept, not acted on (core sections 4, 6)
                     self.assertFalse(ph_core.implemented(c["record"], decisions.EXT))
                 elif c["valid"]:
-                    self.assertEqual((name, errs), (c["schema"], []))
+                    # a module pair has no schema of its own (section 3, core section 4)
+                    self.assertEqual((None if name in decisions.EXT.modules else name, errs), (c["schema"], []))
+                    self.assertTrue(ph_core.implemented(c["record"], decisions.EXT))
                 else:
                     self.assertTrue(errs, f"expected invalid, validated against {name}")
 

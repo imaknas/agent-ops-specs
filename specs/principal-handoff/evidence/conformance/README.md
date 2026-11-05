@@ -8,4 +8,5 @@ JSON fixtures for the [Evidence module](../SPEC.md). The reference runner is
   (its `ext` says which). `valid` is whether it is valid under the core and its extension, the same for every receiver
   whether or not it implements this module, and `schema` the type it validates as when it is valid; `evidence` is
   `used` when a verifier keeps the record's `verifiable` and `verified`, and `ignored` when the record breaks a
-  structural rule of SPEC §2. A malformed entry never makes a record invalid.
+  structural rule of SPEC §2 (a record with neither member has nothing to ignore, and is `used`). A malformed entry
+  never makes a record invalid.

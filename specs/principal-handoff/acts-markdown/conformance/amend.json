@@ -141,6 +141,44 @@
         ],
         "warn": []
       }
+    },
+    {
+      "id": "incomplete-not-amended",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain for two years (waiting on owner: task-demo-aaaaaaaaaa)",
+        "```",
+        "code"
+      ],
+      "latest": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "expect": {
+        "amended": [],
+        "warn": []
+      }
+    },
+    {
+      "id": "two-lines-with-one-new-text-amend-once",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew for two years (waiting on owner: task-demo-aaaaaaaaaa)",
+        "- [ ] [owner] Renew for two years (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "latest": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "expect": {
+        "amended": [
+          {
+            "key": "task-demo-aaaaaaaaaa",
+            "text": "Renew for two years"
+          }
+        ],
+        "warn": []
+      }
     }
   ]
 }

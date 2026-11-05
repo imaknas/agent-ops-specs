@@ -950,6 +950,284 @@
       },
       "to": "0.6",
       "expect": null
+    },
+    {
+      "id": "target-ext-starting-with-a-digit-has-no-0.6-form",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "1decisions/0.5",
+            "project": "demo",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": null
+    },
+    {
+      "id": "target-ext-starting-with-a-dash-has-no-0.6-form",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "-decisions/0.5",
+            "project": "demo",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": null
+    },
+    {
+      "id": "target-project-empty-has-no-0.6-form",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions/0.5",
+            "project": "",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": null
+    },
+    {
+      "id": "target-project-too-long-has-no-0.6-form",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions/0.5",
+            "project": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": null
+    },
+    {
+      "id": "target-project-at-the-limit-in-code-points",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions/0.5",
+            "project": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions",
+            "project": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "target-project-with-a-byte-order-mark-has-no-0.6-form",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions/0.5",
+            "project": "a﻿b",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": null
+    },
+    {
+      "id": "target-project-not-a-string-has-no-0.6-form",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions/0.5",
+            "project": 1,
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": null
+    },
+    {
+      "id": "target-project-with-a-file-separator-converts",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions/0.5",
+            "project": "a\u001cb",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions",
+            "project": "a\u001cb",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "uri-target-is-not-normalised",
+      "record": {
+        "ph": "0.5",
+        "ext": "acts/0.5",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": "A2A:Task/1/"
+          },
+          "active": true
+        }
+      },
+      "to": "0.6",
+      "expect": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": "A2A:Task/1/"
+          },
+          "active": true
+        }
+      }
     }
   ],
   "held": [
@@ -1183,6 +1461,477 @@
             }
           }
         ]
+      }
+    },
+    {
+      "id": "a-0.5-record-invalid-in-0.5-is-not-held",
+      "records": [
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "s5",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "outcome": "done",
+          "terms_rev": 1,
+          "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
+          "authority": {
+            "kind": "principal",
+            "decider": "ps:assistant"
+          }
+        },
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h9",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions/0.5",
+              "project": "demo",
+              "key": "q-demo-9"
+            },
+            "active": true
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h9"
+        ],
+        "relations": [
+          {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions",
+              "project": "demo",
+              "key": "q-demo-9"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ph-0.5-with-a-0.6-ext-is-not-held",
+      "records": [
+        {
+          "ph": "0.5",
+          "ext": "acts/0.6",
+          "id": "h1",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "uri": "a2a:task/1"
+            },
+            "active": true
+          }
+        },
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h9",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions/0.5",
+              "project": "demo",
+              "key": "q-demo-9"
+            },
+            "active": true
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h9"
+        ],
+        "relations": [
+          {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions",
+              "project": "demo",
+              "key": "q-demo-9"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ph-0.6-with-a-0.5-ext-is-not-held",
+      "records": [
+        {
+          "ph": "0.6",
+          "ext": "acts/0.5",
+          "id": "h2",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "uri": "a2a:task/1"
+            },
+            "active": true
+          }
+        },
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h9",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions/0.5",
+              "project": "demo",
+              "key": "q-demo-9"
+            },
+            "active": true
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h9"
+        ],
+        "relations": [
+          {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions",
+              "project": "demo",
+              "key": "q-demo-9"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ph-0.5-without-ext-is-not-held",
+      "records": [
+        {
+          "ph": "0.5",
+          "id": "h3",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "uri": "a2a:task/1"
+            },
+            "active": true
+          }
+        },
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h9",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions/0.5",
+              "project": "demo",
+              "key": "q-demo-9"
+            },
+            "active": true
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h9"
+        ],
+        "relations": [
+          {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions",
+              "project": "demo",
+              "key": "q-demo-9"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "replaced-by-naming-the-extension-without-a-version-is-invalid-in-0.5",
+      "records": [
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h4",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "replaced_by",
+            "target": {
+              "ext": "acts",
+              "project": "demo",
+              "key": "task-demo-bbbbbbbbbb"
+            },
+            "active": true
+          }
+        },
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h9",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions/0.5",
+              "project": "demo",
+              "key": "q-demo-9"
+            },
+            "active": true
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h9"
+        ],
+        "relations": [
+          {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions",
+              "project": "demo",
+              "key": "q-demo-9"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "replaced-by-of-another-version-is-invalid-in-0.5",
+      "records": [
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h5",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "replaced_by",
+            "target": {
+              "ext": "acts/0.4",
+              "project": "demo",
+              "key": "task-demo-bbbbbbbbbb"
+            },
+            "active": true
+          }
+        },
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h9",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions/0.5",
+              "project": "demo",
+              "key": "q-demo-9"
+            },
+            "active": true
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h9"
+        ],
+        "relations": [
+          {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions",
+              "project": "demo",
+              "key": "q-demo-9"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "replaced-by-of-its-own-version-is-held",
+      "records": [
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h6",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "replaced_by",
+            "target": {
+              "ext": "acts/0.5",
+              "project": "demo",
+              "key": "task-demo-bbbbbbbbbb"
+            },
+            "active": true
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h6"
+        ],
+        "relations": [
+          {
+            "kind": "replaced_by",
+            "target": {
+              "ext": "acts",
+              "project": "demo",
+              "key": "task-demo-bbbbbbbbbb"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-0.5-related-without-a-relation-is-not-held",
+      "records": [
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h8",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z"
+        },
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h9",
+          "type": "related",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "relation": {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions/0.5",
+              "project": "demo",
+              "key": "q-demo-9"
+            },
+            "active": true
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h9"
+        ],
+        "relations": [
+          {
+            "kind": "derived_from",
+            "target": {
+              "ext": "decisions",
+              "project": "demo",
+              "key": "q-demo-9"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-non-relation-of-0.5-is-held",
+      "records": [
+        {
+          "ph": "0.5",
+          "ext": "acts/0.5",
+          "id": "h7",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "task-demo-aaaaaaaaaa",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "outcome": "done",
+          "terms_rev": 1,
+          "terms_digest": "sha-256:0000000000000000000000000000000000000000000000000000000000000000",
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          }
+        }
+      ],
+      "expect": {
+        "held": [
+          "h7"
+        ],
+        "relations": []
       }
     }
   ]

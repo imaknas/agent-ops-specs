@@ -7,6 +7,7 @@ Standard library only, Python >= 3.11. Extensions plug in through an Ext descrip
                                                    check(record) -> [errors] adds the extension's own rules;
                                                    modules maps a module record type to the origins that may emit it
   Config(principal, legal=False)                   the configured principal (core R6)
+  parse(text)                                      -> (record or None, [errors]): the strict reading of a record's text
   validate(record, ext, config)                    -> (type or None, [errors])
   fold(records, ext, config)                       -> the item's state, independent of arrival order
   settlement_view(records, ext, config)            -> the part of the state a requester computes (core section 12)
@@ -25,7 +26,7 @@ import json
 import pathlib
 import re
 from dataclasses import dataclass, field
-from datetime import date, datetime, timedelta, timezone
+from datetime import date
 from typing import Callable
 
 import schema_subset
@@ -64,46 +65,72 @@ def ext(name: str, policy: str, check: Callable[[dict], list[str]] | None = None
     return Ext(name, ROOT / name.split("/")[0] / "schemas", policy, check or (lambda r: []), modules or {})
 
 
+def parse(text: str) -> tuple[dict | None, list[str]]:
+    """core section 4: a record is an I-JSON object. This reads what a parsed value can no longer show: a duplicate
+    member name and an unpaired surrogate. A fraction, an exponent or an out-of-range integer survives parsing, as a
+    float or a large int, and validate() rejects it. The caller supplies the text."""
+    def members(pairs: list) -> dict:
+        if len({k for k, _ in pairs}) != len(pairs):
+            raise ValueError("duplicate member name")
+        return dict(pairs)
+
+    try:
+        v = json.loads(text, object_pairs_hook=members)
+    except (ValueError, RecursionError) as x:
+        return None, [str(x)]
+    if not isinstance(v, dict):
+        return None, ["a record is an object"]
+    return (None, ["unpaired surrogate"]) if _unpaired(v) else (v, [])
+
+
+def _unpaired(v) -> bool:
+    """json.loads joins paired escapes, so any surrogate left in a string is unpaired."""
+    if isinstance(v, str):
+        return any("\ud800" <= c <= "\udfff" for c in v)
+    if isinstance(v, dict):
+        return any(_unpaired(k) or _unpaired(x) for k, x in v.items())
+    return isinstance(v, list) and any(_unpaired(x) for x in v)
+
+
 def validate(r: dict, e: Ext, cfg: Config) -> tuple[str | None, list[str]]:
-    """Schema by (type, origin) as the extension lists it, then the rules a schema cannot state. A module record
-    (core section 11) gets the core checks only; its own schema and rules belong to the module."""
+    """Schema by (type, origin) as the extension lists it, then the rules a schema cannot state, which read what the
+    schema has established. A module record (core section 11) gets the core checks only; its own schema and rules
+    belong to the module."""
     t = r.get("type")
-    if t in e.modules:
+    if isinstance(t, str) and t in e.modules:
         errs = schema_subset.errors(r, json.loads(RECORD_SCHEMA.read_text()), RECORD_SCHEMA.parent)
         if r.get("ext") != e.name:
             errs.append(f"ext is not {e.name}")
         if r.get("origin") not in e.modules[t]:
             errs.append(f"origin {r.get('origin')!r} may not emit {t}")
-        return t, errs + _common(r, cfg)
-    path = e.schemas / f"{t}.schema.json"
-    if t not in TYPES or not path.exists():
+        return t, errs or _common(r, cfg)
+    if t not in TYPES:
         return None, ["no schema for this type"]
-    errs = schema_subset.errors(r, json.loads(path.read_text()), e.schemas) + _common(r, cfg)
-    due = (r.get("terms") or {}).get("due") if isinstance(r.get("terms"), dict) else None
-    if isinstance(due, str) and re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", due):
-        try:
-            date.fromisoformat(due)
-        except ValueError:
-            errs.append("terms.due is not a calendar date")
-    if t in OWNER and r.get("origin") not in OWNER[t]:  # R1, R2
-        errs.append(f"origin {r.get('origin')!r} may not emit {t}")
+    errs = schema_subset.errors(r, json.loads((e.schemas / f"{t}.schema.json").read_text()), e.schemas)
+    if errs:
+        return t, errs
+    errs = _common(r, cfg)
+    if "due" in r.get("terms", {}) and not _calendar_date(r["terms"]["due"]):
+        errs.append("terms.due is not a calendar date")
+    if t in OWNER and r["origin"] not in OWNER[t]:  # R1, R2
+        errs.append(f"origin {r['origin']!r} may not emit {t}")
     rev = r.get("terms_rev")
-    if t == "amended" and isinstance(rev, int) and rev < 2:  # core section 6
+    if t == "amended" and rev < 2:  # core section 6
         errs.append("amended terms_rev must be at least 2")
-    if t not in ("raised", "amended") and isinstance(rev, int) and rev < 1:
+    if rev is not None and rev < 1:  # core section 4
         errs.append(f"{t} terms_rev must be at least 1")
-    if t == "claimed" and r.get("origin") == "principal":  # R3: the owner records, it does not claim
+    if t == "claimed" and r["origin"] == "principal":  # R3: the owner records, it does not claim
         errs.append("the principal side settles; it does not claim")
     if t == "related":
         errs += _relation(r)
     if t == "settled":
         errs += _authority(r, cfg)
-    if "adopts" in r and (t != "settled" or (r.get("authority") or {}).get("kind") not in ("confirmed", "attested")):
+    if "adopts" in r and (t != "settled" or r["authority"]["kind"] not in ("confirmed", "attested")):
         errs.append("adopts only on confirmed or attested settlements")
     errs += e.check(r)
-    if t == "note" and len((r.get("about") or {}).keys() & {"key", "quote"}) != 1:
+    if t == "note" and len(r["about"].keys() & {"key", "quote"}) != 1:
         errs.append("about has exactly one of key and quote")
-    if t == "note" and "key" in (r.get("about") or {}) and r["about"]["key"] != r.get("key"):
+    if t == "note" and "key" in r["about"] and r["about"]["key"] != r["key"]:
         errs.append("a note about a key carries that key")
     return t, errs
 
@@ -113,7 +140,7 @@ def _common(r: dict, cfg: Config) -> list[str]:
     errs = []
     if not _bounded(r):
         errs.append("numbers are integers within 2^53 - 1")
-    if isinstance(r.get("ts"), str) and _instant(r["ts"]) is None:
+    if _instant(r["ts"]) is None:
         errs.append("ts is not an RFC 3339 date-time")
     if r.get("by") == cfg.principal:  # R6: the principal never emits records itself
         errs.append("the principal identifier cannot emit records")
@@ -135,19 +162,18 @@ def _bounded(v) -> bool:
 
 def _relation(r: dict) -> list[str]:
     """core section 7."""
-    out, rel = [], r.get("relation") or {}
-    want = RELATION_ORIGIN.get(rel.get("kind"))
-    if want and r.get("origin") != want:
-        out.append(f"{rel.get('kind')} is emitted by {want}")
-    tg = rel.get("target") or {}
+    out, rel = [], r["relation"]
+    want, tg = RELATION_ORIGIN[rel["kind"]], rel["target"]
+    if r["origin"] != want:
+        out.append(f"{rel['kind']} is emitted by {want}")
     item = all(k in tg for k in ("ext", "project", "key"))
     if item == ("uri" in tg) or (not item and tg.keys() & {"ext", "project", "key"}):  # exactly one form
         out.append("relation target must be an item {ext, project, key} or a {uri}")
-    if r.get("origin") == "principal" and item and tg["project"] != r.get("project"):
+    if r["origin"] == "principal" and item and tg["project"] != r["project"]:
         out.append("the principal side names another project's item only by uri")
     # naming another deployment's item by uri (R5) is a duty, not a validity rule
-    if rel.get("kind") == "replaced_by" and not (
-            item and tg["ext"] == _name(r) and tg["project"] == r.get("project") and tg["key"] != r.get("key")):
+    if rel["kind"] == "replaced_by" and not (
+            item and tg["ext"] == _name(r) and tg["project"] == r["project"] and tg["key"] != r["key"]):
         out.append("replaced_by targets another item of the same extension and project, in the item form")
     return out
 
@@ -165,8 +191,8 @@ def _name(r: dict) -> str | None:
 
 def _authority(r: dict, cfg: Config) -> list[str]:
     """core section 5.1."""
-    a, ev = r.get("authority") or {}, r.get("evidence") or {}
-    kind, decider = a.get("kind"), a.get("decider")
+    a, ev = r["authority"], r.get("evidence", {})
+    kind, decider = a["kind"], a["decider"]
     out = []
     if kind in ("principal", "confirmed"):
         if decider != cfg.principal:
@@ -192,25 +218,39 @@ TS = re.compile(r"([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-
                 r"(?:([Zz])|([+-])([0-9]{2}):([0-9]{2}))")
 
 
-def _instant(ts: str) -> datetime | None:
-    """core section 4: an instant, offsets applied, every fractional digit kept; a leap second (:60) compares as the
-    last microsecond of its minute. None if ts is not an RFC 3339 date-time."""
-    m = TS.fullmatch(ts)
-    if not m:
-        return None
-    y, mo, d, h, mi, sec = (int(x) for x in m.groups()[:6])
-    frac = int((m.group(7) or "0").ljust(6, "0"))
-    if sec == 60:
-        sec, frac = 59, 999999
+def _day(y: int, mo: int, d: int) -> int | None:
+    """The day number of a date of the proleptic Gregorian calendar, or None. RFC 3339 years run from 0000; date has no
+    year 0, and the calendar repeats every 400 years."""
     try:
-        off = timedelta(0) if m.group(8) else (1 if m.group(9) == "+" else -1) * timedelta(
-            hours=int(m.group(10)), minutes=int(m.group(11)))
-        return datetime(y, mo, d, h, mi, sec, frac, tzinfo=timezone(off))
+        return date(y, mo, d).toordinal() if y else date(400, mo, d).toordinal() - 146097
     except ValueError:
         return None
 
 
-def _when(ts: str) -> datetime:
+def _calendar_date(due: str) -> bool:
+    """core section 4: terms.due, which the schema has shown to be YYYY-MM-DD, is a real date."""
+    return _day(*(int(x) for x in due.split("-"))) is not None
+
+
+def _instant(ts: str) -> int | None:
+    """core section 4: the instant in microseconds, offsets applied, every fractional digit kept; a leap second (:60)
+    compares as the last microsecond of its minute. None if ts is not an RFC 3339 date-time."""
+    m = TS.fullmatch(ts)
+    if not m:
+        return None
+    y, mo, d, h, mi, sec = (int(x) for x in m.groups()[:6])
+    oh, om = int(m.group(10) or 0), int(m.group(11) or 0)
+    day = _day(y, mo, d)
+    if day is None or h > 23 or mi > 59 or sec > 60 or oh > 23 or om > 59:
+        return None
+    frac = int((m.group(7) or "0").ljust(6, "0"))
+    if sec == 60:
+        sec, frac = 59, 999999
+    off = (oh * 3600 + om * 60) * (-1 if m.group(9) == "-" else 1)
+    return (day * 86400 + h * 3600 + mi * 60 + sec - off) * 1000000 + frac
+
+
+def _when(ts: str) -> int:
     return _instant(ts)
 
 
@@ -285,7 +325,7 @@ def fold(records: list[dict], e: Ext, cfg: Config) -> dict:
     """State of one item from all the records a receiver holds for it, in any order. Invalid records are ignored and
     listed; valid module records are left to their module and not listed (core section 11)."""
     valid = held(records, e, cfg)
-    ignored = {r["id"] for r in records if r.get("id") is not None and validate(r, e, cfg)[1]}
+    ignored = {r["id"] for r in records if isinstance(r.get("id"), str) and validate(r, e, cfg)[1]}
     ignored -= {r["id"] for r in valid}
     needs = [r for r in valid if r["type"] in NEED]
     need, need_conflict = _register(needs)

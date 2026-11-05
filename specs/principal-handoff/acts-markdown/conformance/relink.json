@@ -260,6 +260,50 @@
           "- [ ] [owner] Renew the domain (waiting on owner: ask-demo-1f2e3d)"
         ]
       }
+    },
+    {
+      "id": "incomplete-not-relinked",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain",
+        "```",
+        "code"
+      ],
+      "active": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "expect": {
+        "relinked": [],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain",
+          "```",
+          "code"
+        ]
+      }
+    },
+    {
+      "id": "other-line-does-not-stop-a-one-to-one-match",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] Renew the domain",
+        "- [ ] [owner] Sign the contract"
+      ],
+      "active": {
+        "task-demo-aaaaaaaaaa": "Renew the domain"
+      },
+      "expect": {
+        "relinked": [
+          "task-demo-aaaaaaaaaa"
+        ],
+        "document": [
+          "## Tasks",
+          "- [ ] [owner] Renew the domain (waiting on owner: task-demo-aaaaaaaaaa)",
+          "- [ ] [owner] Sign the contract"
+        ]
+      }
     }
   ]
 }

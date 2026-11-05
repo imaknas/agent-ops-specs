@@ -123,6 +123,7 @@ class Records(unittest.TestCase):
                     self.assertFalse(ph_core.implemented(c["record"], acts.EXT))
                 elif c["valid"]:
                     self.assertEqual((name, errs), (c["schema"], []))
+                    self.assertTrue(ph_core.implemented(c["record"], acts.EXT))
                 else:
                     self.assertTrue(errs, f"expected invalid, validated against {name}")
 

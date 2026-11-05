@@ -1263,6 +1263,40 @@
           "- (none)"
         ]
       }
+    },
+    {
+      "id": "note-about-a-key-with-no-line-adds-nothing",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- (none)"
+      ],
+      "record": {
+        "ph": "0.6",
+        "ext": "acts/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "task-demo-aaaaaaaaaa",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "task-demo-aaaaaaaaaa"
+        },
+        "note": "The renewal moved to Friday"
+      },
+      "latest": {
+        "text": "Renew the domain",
+        "terms_rev": 1
+      },
+      "expect": {
+        "changed": false,
+        "document": [
+          "## Tasks",
+          "- (none)"
+        ]
+      }
     }
   ]
 }

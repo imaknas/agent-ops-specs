@@ -923,6 +923,24 @@
         ],
         "unclosed": null
       }
+    },
+    {
+      "id": "en-marker-alone-has-no-text",
+      "profile": "en",
+      "document": [
+        "## Tasks",
+        "- [ ] [owner] (waiting on owner: task-demo-aaaaaaaaaa)"
+      ],
+      "expect": {
+        "sections": [
+          0
+        ],
+        "tasks": [],
+        "problems": [
+          1
+        ],
+        "unclosed": null
+      }
     }
   ]
 }

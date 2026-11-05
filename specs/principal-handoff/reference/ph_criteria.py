@@ -46,8 +46,10 @@ def _criteria(terms: dict) -> list[str]:
 def _approved(r: dict, cfg: ph_core.Config) -> list[str]:
     """section 7: an approved record's own rules, beyond the core checks."""
     out = schema_subset.errors(r, json.loads((SCHEMAS / "approved.schema.json").read_text()), SCHEMAS)
-    ap = r.get("approval") if isinstance(r.get("approval"), dict) else {}
-    if not ap.get("active", True):
+    if out:  # the rules below read what the schema has established
+        return out
+    ap = r["approval"]
+    if not ap["active"]:
         out += [] if r.get("supersedes") else ["a retraction lists the approval it retracts in supersedes"]
         return out + (["terms_digest and after only on a grant"] if ap.keys() & {"terms_digest", "after"} else [])
     out += ["a grant needs terms_rev"] if "terms_rev" not in r else []

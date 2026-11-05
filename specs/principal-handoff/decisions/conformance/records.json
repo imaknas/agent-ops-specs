@@ -1277,42 +1277,6 @@
             }
           ],
           "default": "hold",
-          "criteria": {
-            "subject": {
-              "uri": "git:demo@refs/heads/feature-export",
-              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
-            },
-            "checks": [
-              {
-                "id": "tests",
-                "text": "The test suite passes on the subject commit",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/test.yml",
-                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              },
-              {
-                "id": "licence",
-                "text": "No dependency has a licence outside the allow-list",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/licences.yml",
-                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              }
-            ],
-            "answer": {
-              "text": "Merge the export feature",
-              "option": "merge"
-            }
-          },
           "x_budget": 1.5
         },
         "terms_rev": 1
@@ -1345,42 +1309,6 @@
             }
           ],
           "default": "hold",
-          "criteria": {
-            "subject": {
-              "uri": "git:demo@refs/heads/feature-export",
-              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
-            },
-            "checks": [
-              {
-                "id": "tests",
-                "text": "The test suite passes on the subject commit",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/test.yml",
-                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              },
-              {
-                "id": "licence",
-                "text": "No dependency has a licence outside the allow-list",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/licences.yml",
-                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              }
-            ],
-            "answer": {
-              "text": "Merge the export feature",
-              "option": "merge"
-            }
-          },
           "x_budget": 9007199254740992
         },
         "terms_rev": 1
@@ -1413,42 +1341,6 @@
             }
           ],
           "default": "hold",
-          "criteria": {
-            "subject": {
-              "uri": "git:demo@refs/heads/feature-export",
-              "digest": "sha-256:3333333333333333333333333333333333333333333333333333333333333333"
-            },
-            "checks": [
-              {
-                "id": "tests",
-                "text": "The test suite passes on the subject commit",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/test.yml",
-                  "digest": "sha-256:4444444444444444444444444444444444444444444444444444444444444444"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              },
-              {
-                "id": "licence",
-                "text": "No dependency has a licence outside the allow-list",
-                "format": "in-toto",
-                "implementation": {
-                  "uri": "git:demo@ci/licences.yml",
-                  "digest": "sha-256:2222222222222222222222222222222222222222222222222222222222222222"
-                },
-                "trust": [
-                  "sigstore:https://github.com/demo/demo/.github/workflows/ci.yml@refs/heads/main"
-                ]
-              }
-            ],
-            "answer": {
-              "text": "Merge the export feature",
-              "option": "merge"
-            }
-          },
           "x_budget": 5000
         },
         "terms_rev": 1
@@ -1849,7 +1741,8 @@
           "quote": "the domain"
         },
         "note": "The bank said Friday"
-      }
+      },
+      "schema": null
     },
     {
       "id": "id-with-byte-order-mark",
@@ -1868,6 +1761,6977 @@
           "quote": "the thing about the bank"
         },
         "note": "The bank said Friday"
+      },
+      "schema": null
+    },
+    {
+      "id": "without-ph",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ph-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": 1,
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "without-ext",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ext-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": 1,
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "without-id",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": 1,
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "without-type",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "type-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": 1,
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "without-origin",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "origin-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": 1,
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "without-by",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "by-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": 1,
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "without-key",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "key-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": 1,
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "without-project",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "project-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": 1,
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "without-ts",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": 1,
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a b",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-too-long",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-at-the-limit-in-code-points",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-over-the-limit-in-code-points",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "by-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "by-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "a b",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "by-too-long",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "by-at-the-limit-in-code-points",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "by-over-the-limit-in-code-points",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "project-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "project-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "a b",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "project-too-long",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "project-at-the-limit-in-code-points",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "project-over-the-limit-in-code-points",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-no-break-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a b",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-line-separator",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a b",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-ideographic-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a　b",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-newline",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a\nb",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-em-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a b",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-next-line-which-is-not-whitespace",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ab",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-file-separator-which-is-not-whitespace",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a\u001cb",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-mongolian-vowel-separator-which-is-not-whitespace",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a᠎b",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-zero-width-space-which-is-not-whitespace",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a​b",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "id-with-trailing-newline-only",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1\n",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "key-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "key-leading-dash",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "-x",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "key-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "a b",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "key-slash",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "a/b",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "key-non-ascii",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "é",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "key-too-long",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "key-at-the-limit",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ext-with-three-version-parts",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6.1",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ext-without-a-version",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ph-of-another-version",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.5",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-february-30",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-02-30T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-february-29-common-year",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-02-29T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-february-29-century",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "1900-02-29T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-april-31",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-04-31T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-month-13",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-13-01T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-month-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-00-10T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-day-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-00T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-day-32",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-32T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-hour-24",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T24:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-minute-60",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:60:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-second-61",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:61Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-offset-hour-24",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00+24:00",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-offset-minute-60",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00+00:60",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-offset-minute-75",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00-05:75",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-no-offset",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-space-separator",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05 09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-date-only",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-no-seconds",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-empty-fraction",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00.Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-two-digit-year",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "26-11-05T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-february-29-leap-year",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2024-02-29T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-february-29-400-years",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2000-02-29T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-six-fractional-digits",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00.123456Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-one-fractional-digit",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00.1Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-lowercase",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05t09:00:00z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-largest-offset",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00+23:59",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-unknown-offset",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-11-05T09:00:00-00:00",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-leap-second-utc",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2016-12-31T23:59:60Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-leap-second-with-offset",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2016-12-31T15:59:60-08:00",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-year-0",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "0000-01-01T00:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "ts-last-year-with-offset",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "9999-12-31T23:59:59-23:59",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "due-february-29-common-year",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-02-29"
+        }
+      }
+    },
+    {
+      "id": "due-february-30",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-02-30"
+        }
+      }
+    },
+    {
+      "id": "due-month-13",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-13-01"
+        }
+      }
+    },
+    {
+      "id": "due-month-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-00-10"
+        }
+      }
+    },
+    {
+      "id": "due-day-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-11-00"
+        }
+      }
+    },
+    {
+      "id": "due-november-31",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-11-31"
+        }
+      }
+    },
+    {
+      "id": "due-words",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "not-a-date"
+        }
+      }
+    },
+    {
+      "id": "due-compact",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "20261105"
+        }
+      }
+    },
+    {
+      "id": "due-date-time",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-11-05T00:00:00Z"
+        }
+      }
+    },
+    {
+      "id": "due-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": " "
+        }
+      }
+    },
+    {
+      "id": "due-number",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": 20261105
+        }
+      }
+    },
+    {
+      "id": "due-real-date",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-11-05"
+        }
+      }
+    },
+    {
+      "id": "due-february-29-leap-year",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "due": "2024-02-29"
+        }
+      }
+    },
+    {
+      "id": "due-on-amended-not-a-date",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-02-30"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "due-on-amended",
+      "valid": true,
+      "schema": "amended",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one?",
+          "due": "2026-11-30"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "terms-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": "Which one?"
+      }
+    },
+    {
+      "id": "terms-without-text",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "due": "2026-11-05"
+        }
+      }
+    },
+    {
+      "id": "terms-text-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": " \t"
+        }
+      }
+    },
+    {
+      "id": "terms-text-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": 1
+        }
+      }
+    },
+    {
+      "id": "amended-terms-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": "Which one?",
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-without-terms",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-by-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": " ",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one, now?"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-from-principal-side",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one, now?"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "withdrawn-from-principal-side",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "w1",
+        "type": "withdrawn",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "reason": "not_needed",
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "reopened-from-requester",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "o1",
+        "type": "reopened",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "supersedes": [
+          "s1"
+        ]
+      }
+    },
+    {
+      "id": "amended-terms-text-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": 1
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-due-words",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one?",
+          "due": "soon"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-due-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one?",
+          "due": 20261105
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "reopened-by-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "o1",
+        "type": "reopened",
+        "origin": "principal",
+        "by": " ",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "supersedes": [
+          "s1"
+        ]
+      }
+    },
+    {
+      "id": "amended-terms-without-text",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "due": "2026-11-05"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-terms-text-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": " "
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "raised-rev-2",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "raised-without-rev",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "raised-rev-true",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": true,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "amended-without-rev",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms": {
+          "text": "Which one, now?"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-rev-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 0,
+        "terms": {
+          "text": "Which one, now?"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-rev-skipped",
+      "valid": true,
+      "schema": "amended",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 7,
+        "terms": {
+          "text": "Which one, now?"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "settled-rev-negative",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": -1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "settled-rev-not-an-integer",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": "1",
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "settled-rev-true",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": true,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "claim-rev-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "terms_rev": 0
+      }
+    },
+    {
+      "id": "claim-rev-negative",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "terms_rev": -3
+      }
+    },
+    {
+      "id": "claim-rev-not-an-integer",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "terms_rev": "1"
+      }
+    },
+    {
+      "id": "claim-rev-true",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "terms_rev": true
+      }
+    },
+    {
+      "id": "claim-rev-1",
+      "valid": true,
+      "schema": "claimed",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "terms_rev": 1
+      }
+    },
+    {
+      "id": "note-rev-0",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        },
+        "note": "Progress.",
+        "terms_rev": 0
+      }
+    },
+    {
+      "id": "note-rev-negative",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        },
+        "note": "Progress.",
+        "terms_rev": -3
+      }
+    },
+    {
+      "id": "note-rev-not-an-integer",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        },
+        "note": "Progress.",
+        "terms_rev": "1"
+      }
+    },
+    {
+      "id": "note-rev-true",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        },
+        "note": "Progress.",
+        "terms_rev": true
+      }
+    },
+    {
+      "id": "note-rev-1",
+      "valid": true,
+      "schema": "note",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        },
+        "note": "Progress.",
+        "terms_rev": 1
+      }
+    },
+    {
+      "id": "integer-at-the-upper-bound",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": 9007199254740991
+      }
+    },
+    {
+      "id": "integer-at-the-lower-bound",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": -9007199254740991
+      }
+    },
+    {
+      "id": "integer-over-the-upper-bound",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": 9007199254740992
+      }
+    },
+    {
+      "id": "integer-under-the-lower-bound",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": -9007199254740992
+      }
+    },
+    {
+      "id": "fraction-in-an-unknown-member",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": 1.5
+      }
+    },
+    {
+      "id": "fraction-inside-an-unknown-array",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": [
+          1,
+          [
+            2.5
+          ]
+        ]
+      }
+    },
+    {
+      "id": "fraction-inside-an-unknown-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": {
+          "a": {
+            "b": 2.5
+          }
+        }
+      }
+    },
+    {
+      "id": "huge-integer-inside-an-unknown-array",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": [
+          9007199254740992
+        ]
+      }
+    },
+    {
+      "id": "booleans-and-null-in-an-unknown-member",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_n": [
+          true,
+          false,
+          null,
+          "1.5"
+        ]
+      }
+    },
+    {
+      "id": "supersedes-not-an-array",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "w1",
+        "type": "withdrawn",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "reason": "not_needed",
+        "supersedes": "r1"
+      }
+    },
+    {
+      "id": "supersedes-of-non-strings",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "w1",
+        "type": "withdrawn",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "reason": "not_needed",
+        "supersedes": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "supersedes-with-an-empty-id",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "w1",
+        "type": "withdrawn",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "reason": "not_needed",
+        "supersedes": [
+          ""
+        ]
+      }
+    },
+    {
+      "id": "supersedes-with-a-blank-id",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "w1",
+        "type": "withdrawn",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "reason": "not_needed",
+        "supersedes": [
+          "a b"
+        ]
+      }
+    },
+    {
+      "id": "adopts-not-an-array",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:v"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        },
+        "adopts": "r1"
+      }
+    },
+    {
+      "id": "adopts-of-non-strings",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:v"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        },
+        "adopts": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "adopts-with-an-empty-id",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:v"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        },
+        "adopts": [
+          ""
+        ]
+      }
+    },
+    {
+      "id": "adopts-with-a-blank-id",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:v"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        },
+        "adopts": [
+          "a b"
+        ]
+      }
+    },
+    {
+      "id": "note-member-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "note": 1
+      }
+    },
+    {
+      "id": "context-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "context": 1
+      }
+    },
+    {
+      "id": "note-member-may-be-blank",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "note": " "
+      }
+    },
+    {
+      "id": "context-may-be-empty",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "context": ""
+      }
+    },
+    {
+      "id": "unknown-member-ignored",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "x_private": {
+          "anything": [
+            "goes"
+          ]
+        }
+      }
+    },
+    {
+      "id": "settled-without-outcome",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "settled-without-authority",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "settled-outcome-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": 1,
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "settled-outcome-unknown",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "maybe",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "settled-other-outcome",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "dismissed",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        }
+      }
+    },
+    {
+      "id": "terms-digest-uppercase",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "terms-digest-other-algorithm",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-512:0000000000000000000000000000000000000000000000000000000000000000",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "terms-digest-short",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:000000000000000000000000000000000000000000000000000000000000000",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "terms-digest-words",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "x",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "terms-digest-number",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": 1,
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "authority-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": "principal",
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "authority-without-kind",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "authority-without-decider",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "authority-kind-unknown",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "assistant",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "authority-kind-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": 1,
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "authority-decider-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": ""
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        }
+      }
+    },
+    {
+      "id": "authority-decider-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "a b"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        }
+      }
+    },
+    {
+      "id": "authority-decider-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": 1
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        }
+      }
+    },
+    {
+      "id": "authority-decider-too-long",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        }
+      }
+    },
+    {
+      "id": "confirmed-wrong-decider",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "confirmed",
+          "decider": "ps:assistant"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "proposal": "proposal-1"
+        }
+      }
+    },
+    {
+      "id": "delegated-without-under",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "chain": [
+            "p:owner",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-without-chain",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-empty-chain",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": []
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-not-ending-at-the-decider",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "p:owner",
+            "ps:other"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-of-the-principal-alone",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "p:owner"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-of-the-decider-alone",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-through-a-delegate",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "p:owner",
+            "ps:assistant",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-under-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "",
+          "chain": [
+            "p:owner",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-under-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": " ",
+          "chain": [
+            "p:owner",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-under-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": 1,
+          "chain": [
+            "p:owner",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-not-an-array",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": "ps:v"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-a-number",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": 5
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-with-a-blank-party-in-the-middle",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "p:owner",
+            "a b",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-with-a-non-string-in-the-middle",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "p:owner",
+            1,
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-of-non-strings",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            1,
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "delegated-chain-with-a-blank-party",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "a b",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "representative-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner",
+          "representative": ""
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "representative-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner",
+          "representative": "a b"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "representative-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner",
+          "representative": 1
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "representative-on-a-natural-principal",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner",
+          "representative": "person:1"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "legal-principal-confirmed-without-representative",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "confirmed",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "proposal": "proposal-1"
+        }
+      },
+      "principal_type": "legal"
+    },
+    {
+      "id": "legal-principal-confirmed-with-representative",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "confirmed",
+          "decider": "p:owner",
+          "representative": "person:1"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "proposal": "proposal-1"
+        }
+      },
+      "principal_type": "legal"
+    },
+    {
+      "id": "legal-principal-delegated-needs-no-representative",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "p:owner",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      },
+      "principal_type": "legal"
+    },
+    {
+      "id": "legal-principal-attested-needs-no-representative",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:v"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": "A payment record"
+        }
+      },
+      "principal_type": "legal"
+    },
+    {
+      "id": "evidence-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "confirmed",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": "proposal-1"
+      }
+    },
+    {
+      "id": "evidence-proposal-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "confirmed",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "proposal": " "
+        }
+      }
+    },
+    {
+      "id": "evidence-proposal-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "confirmed",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "proposal": 1
+        }
+      }
+    },
+    {
+      "id": "evidence-basis-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:v"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": " "
+        }
+      }
+    },
+    {
+      "id": "evidence-basis-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "attested",
+          "decider": "ps:v"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "basis": 1
+        }
+      }
+    },
+    {
+      "id": "evidence-presented-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "presented": 1
+        }
+      }
+    },
+    {
+      "id": "evidence-presented",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "presented": "sha-256:0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      }
+    },
+    {
+      "id": "evidence-unknown-member-ignored",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "x_other": 1
+        }
+      }
+    },
+    {
+      "id": "adopts-on-delegated",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "delegated",
+          "decider": "ps:v",
+          "under": "standing:prefs",
+          "chain": [
+            "p:owner",
+            "ps:v"
+          ]
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-confirmed",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "confirmed",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "evidence": {
+          "proposal": "proposal-1"
+        },
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-raised",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        },
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-amended",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one, now?"
+        },
+        "supersedes": [
+          "r1"
+        ],
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-withdrawn",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "w1",
+        "type": "withdrawn",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "reason": "not_needed",
+        "supersedes": [
+          "r1"
+        ],
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-reopened",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "o1",
+        "type": "reopened",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T09:00:00Z",
+        "supersedes": [
+          "s1"
+        ],
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-claimed",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        },
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-related",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": "a2a:task/1"
+          },
+          "active": true
+        },
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "adopts-on-note",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        },
+        "note": "Progress.",
+        "adopts": [
+          "c1"
+        ]
+      }
+    },
+    {
+      "id": "withdrawn-without-reason",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "w1",
+        "type": "withdrawn",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "withdrawn-reason-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "w1",
+        "type": "withdrawn",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T11:00:00Z",
+        "reason": 1,
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "claimed-without-outcome",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "claimed-outcome-not-a-settlement-word",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "maybe",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "claimed-without-evidence",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "claimed-by-requester",
+      "valid": true,
+      "schema": "claimed",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "claimed-by-a-role-not-listed",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "auditor",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "note-about-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": "q",
+        "note": "Progress."
+      }
+    },
+    {
+      "id": "note-about-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {},
+        "note": "Progress."
+      }
+    },
+    {
+      "id": "note-about-key-off-pattern",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "a b"
+        },
+        "note": "Progress."
+      }
+    },
+    {
+      "id": "note-about-key-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": 1
+        },
+        "note": "Progress."
+      }
+    },
+    {
+      "id": "note-about-quote-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "quote": " "
+        },
+        "note": "Progress."
+      }
+    },
+    {
+      "id": "note-about-quote-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n1",
+        "type": "note",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "quote": 1
+        },
+        "note": "Progress."
+      }
+    },
+    {
+      "id": "note-by-agent",
+      "valid": true,
+      "schema": "note",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n2",
+        "type": "note",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        }
+      }
+    },
+    {
+      "id": "note-origin-unknown",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n3",
+        "type": "note",
+        "origin": "auditor",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        }
+      }
+    },
+    {
+      "id": "relation-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": "derived_from"
+      }
+    },
+    {
+      "id": "relation-without-kind",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "target": {
+            "uri": "a2a:task/1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-kind-unknown",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "parent_of",
+          "target": {
+            "uri": "a2a:task/1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-kind-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": 1,
+          "target": {
+            "uri": "a2a:task/1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-without-target",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": "a2a:task/1",
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-an-array",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": [
+            "uri"
+          ],
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-active-not-a-boolean",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": "a2a:task/1"
+          },
+          "active": "true"
+        }
+      }
+    },
+    {
+      "id": "relation-target-uri-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": " "
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-uri-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": 1
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-ext-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": 1,
+            "project": "demo",
+            "key": "other-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-without-ext",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "project": "demo",
+            "key": "other-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-project-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions",
+            "project": 1,
+            "key": "other-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-without-project",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions",
+            "key": "other-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-key-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions",
+            "project": "demo",
+            "key": 1
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-without-key",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions",
+            "project": "demo"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "relation-target-key-off-pattern",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions",
+            "project": "demo",
+            "key": "a b"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "related-without-relation",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z"
+      }
+    },
+    {
+      "id": "replaced-by-from-principal",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "decisions",
+            "project": "demo",
+            "key": "other-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "replaced-by-itself",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "decisions",
+            "project": "demo",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "replaced-by-other-project",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "decisions",
+            "project": "other",
+            "key": "other-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "replaced-by-other-extension",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "acts",
+            "project": "demo",
+            "key": "other-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "replaced-by-retracted",
+      "valid": true,
+      "schema": "related",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "replaced_by",
+          "target": {
+            "ext": "decisions",
+            "project": "demo",
+            "key": "other-1"
+          },
+          "active": false
+        }
+      }
+    },
+    {
+      "id": "same-as-itself-has-no-effect",
+      "valid": true,
+      "schema": "related",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "same_as",
+          "target": {
+            "ext": "decisions",
+            "project": "demo",
+            "key": "q-demo-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "same-as-uri",
+      "valid": true,
+      "schema": "related",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "same_as",
+          "target": {
+            "uri": "ps:item/1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "derived-from-another-project-by-key",
+      "valid": true,
+      "schema": "related",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "ext": "decisions",
+            "project": "other",
+            "key": "other-1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "related-from-an-unlisted-origin",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "l1",
+        "type": "related",
+        "origin": "agent",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "relation": {
+          "kind": "derived_from",
+          "target": {
+            "uri": "a2a:task/1"
+          },
+          "active": true
+        }
+      }
+    },
+    {
+      "id": "type-unknown",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "resolved",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "type-not-a-word",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": [
+          "raised"
+        ],
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?"
+        }
+      }
+    },
+    {
+      "id": "answer-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": "Yes"
+      }
+    },
+    {
+      "id": "answer-without-text",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "option": "a"
+        }
+      }
+    },
+    {
+      "id": "answer-text-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": " "
+        }
+      }
+    },
+    {
+      "id": "answer-text-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": 1
+        }
+      }
+    },
+    {
+      "id": "answer-option-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes",
+          "option": 1
+        }
+      }
+    },
+    {
+      "id": "answer-option-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes",
+          "option": ""
+        }
+      }
+    },
+    {
+      "id": "answer-option-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes",
+          "option": "a b"
+        }
+      }
+    },
+    {
+      "id": "answer-option-too-long",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes",
+          "option": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        }
+      }
+    },
+    {
+      "id": "answer-option-at-the-limit-in-code-points",
+      "valid": true,
+      "schema": "settled",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "s1",
+        "type": "settled",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T08:00:00Z",
+        "outcome": "decided",
+        "terms_rev": 1,
+        "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+        "authority": {
+          "kind": "principal",
+          "decider": "p:owner"
+        },
+        "answer": {
+          "text": "Yes",
+          "option": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀"
+        }
+      }
+    },
+    {
+      "id": "claim-without-answer",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        }
+      }
+    },
+    {
+      "id": "claim-answer-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": "Yes"
+      }
+    },
+    {
+      "id": "claim-answer-without-text",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "option": "a"
+        }
+      }
+    },
+    {
+      "id": "claim-answer-text-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": " "
+        }
+      }
+    },
+    {
+      "id": "claim-answer-text-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": 1
+        }
+      }
+    },
+    {
+      "id": "claim-answer-option-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes",
+          "option": 1
+        }
+      }
+    },
+    {
+      "id": "claim-answer-option-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes",
+          "option": "a b"
+        }
+      }
+    },
+    {
+      "id": "claim-outcome-dismissed",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "agent",
+        "by": "agent:other",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "dismissed",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "claim-by-registrar",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "c1",
+        "type": "claimed",
+        "origin": "registrar",
+        "by": "agent:registrar",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-28T07:00:00Z",
+        "outcome": "decided",
+        "evidence": {
+          "basis": "heard it"
+        },
+        "answer": {
+          "text": "Yes"
+        }
+      }
+    },
+    {
+      "id": "note-by-registrar",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "n4",
+        "type": "note",
+        "origin": "registrar",
+        "by": "agent:registrar",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "about": {
+          "key": "q-demo-1"
+        }
+      }
+    },
+    {
+      "id": "options-not-an-array",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": "a"
+        }
+      }
+    },
+    {
+      "id": "option-not-an-object",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            "a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-without-id",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "label": "A"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-without-label",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "a"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-id-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": 1,
+              "label": "A"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-id-empty",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "",
+              "label": "A"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-id-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "a b",
+              "label": "A"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-id-too-long",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "label": "A"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-id-at-the-limit-in-code-points",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+              "label": "A"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-label-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "a",
+              "label": " "
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "option-label-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "a",
+              "label": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "options-duplicate-ids-on-amended",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "a",
+              "label": "A"
+            },
+            {
+              "id": "a",
+              "label": "B"
+            }
+          ]
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-options-not-an-array",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one?",
+          "options": "a"
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "amended-option-id-with-a-space",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "a2",
+        "type": "amended",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T10:00:00Z",
+        "terms_rev": 2,
+        "terms": {
+          "text": "Which one?",
+          "options": [
+            {
+              "id": "a b",
+              "label": "A"
+            }
+          ]
+        },
+        "supersedes": [
+          "r1"
+        ]
+      }
+    },
+    {
+      "id": "default-blank",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "default": " "
+        }
+      }
+    },
+    {
+      "id": "default-not-a-string",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "default": 1
+        }
+      }
+    },
+    {
+      "id": "default-free-text",
+      "valid": true,
+      "schema": "raised",
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "r1",
+        "type": "raised",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "terms_rev": 1,
+        "terms": {
+          "text": "Which one?",
+          "default": "Whichever is cheaper"
+        }
+      }
+    },
+    {
+      "id": "approved-is-a-listed-pair",
+      "valid": true,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap1",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "approval": {
+          "active": false
+        },
+        "supersedes": [
+          "ap0"
+        ]
+      }
+    },
+    {
+      "id": "approved-from-the-requester",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap2",
+        "type": "approved",
+        "origin": "requester",
+        "by": "agent:demo",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "approval": {
+          "active": false
+        },
+        "supersedes": [
+          "ap0"
+        ]
+      }
+    },
+    {
+      "id": "approved-not-a-real-date",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap3",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-02-30T09:00:00Z",
+        "approval": {
+          "active": false
+        },
+        "supersedes": [
+          "ap0"
+        ]
+      }
+    },
+    {
+      "id": "approved-by-the-principal-identifier",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap4",
+        "type": "approved",
+        "origin": "principal",
+        "by": "p:owner",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "approval": {
+          "active": false
+        },
+        "supersedes": [
+          "ap0"
+        ]
+      }
+    },
+    {
+      "id": "approved-with-a-fraction",
+      "valid": false,
+      "schema": null,
+      "record": {
+        "ph": "0.6",
+        "ext": "decisions/0.6",
+        "id": "ap5",
+        "type": "approved",
+        "origin": "principal",
+        "by": "ps:assistant",
+        "key": "q-demo-1",
+        "project": "demo",
+        "ts": "2026-10-27T09:00:00Z",
+        "approval": {
+          "active": false
+        },
+        "supersedes": [
+          "ap0"
+        ],
+        "x_n": 1.5
       }
     }
   ],
