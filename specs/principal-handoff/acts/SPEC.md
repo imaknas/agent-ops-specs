@@ -52,7 +52,8 @@ with the access it has.
 
 ## 2. Model
 
-- **Terms:** `{"text": …, "due"?: "YYYY-MM-DD"}`. `text` is a single line.
+- **Terms:** `{"text": …, "due"?: "YYYY-MM-DD"}`. `text` is a single line: no LF or CR, though other separators, such
+  as U+2028, are allowed.
 - **Settlement outcomes:** `done` (the principal did it), `dropped` (it will not be done), `already_done` (it had
   been done before it was raised, or repeats an item already settled; the settlement SHOULD be accompanied by a
   `same_as` relation to that item).
@@ -177,8 +178,8 @@ The binding's open issues are in Acts Markdown §9.
 | Implementation | Roles | Profiles | Status |
 |---|---|---|---|
 | [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state, the Evidence and Criteria modules (no transport) | `en`, `zh-hant` | passes the 0.6 conformance suites of every document |
-| [brunna](https://github.com/imaknas/brunna) | registrar and requesters for Acts; requesters for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.5 and Decisions 0.5; passes the 0.5 suites |
-| Muninn, with brunna's built-in owner side | principal side | | implements Acts 0.5 and Decisions 0.5; passes the 0.5 suites |
+| [brunna](https://github.com/imaknas/brunna) | requester, registrar and converting party for Acts; requester and converting party for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.6 and Decisions 0.6; passes the 0.6.1 suites |
+| Muninn, with brunna's built-in owner side | principal side | | implements the principal side of 0.6; Muninn passes `records`, `lifecycle`, `relations`, `raw`, terms-digest and `convert` of 0.6.1 (without Criteria cases) |
 
 The reference code, brunna and Muninn share an author, so under core §14 they are not independent: no class of this
 document or of the binding has two independent implementations yet.

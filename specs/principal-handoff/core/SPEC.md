@@ -191,11 +191,11 @@ IEEE 754 doubles) that follows the rules of this section and of its extension;
 | `by` | string | yes | Party identifier of the emitter. |
 | `key` | string | yes | Key of the item. |
 | `project` | string | yes | Project of the item. |
-| `ts` | string | yes | RFC 3339 date-time at which the record was created, with at most six fractional digits; a value that is not a valid date-time makes the record invalid. Receivers compare `ts` values as instants, offsets applied, using every fractional digit given; a leap second (`:60`) compares as the last microsecond of its minute. Senders SHOULD use UTC (`Z`). |
+| `ts` | string | yes | RFC 3339 date-time at which the record was created, with at most six fractional digits; a value that is not a valid date-time makes the record invalid. Receivers compare `ts` values as instants, offsets applied, using every fractional digit given; a leap second (`:60`), with or without a fraction, compares as the last microsecond of its minute. `:60` is judged by RFC 3339's grammar: whether a leap second occurred at that minute isn't checked. Senders SHOULD use UTC (`Z`). |
 | `supersedes` | array of strings | no | Ids of records in the same register that this one replaces (§6), or of the records a module says. |
 | `terms` | object | on `raised`, `amended` | The item's terms; the members are defined by the extension and its modules. `text` is always present. |
 | `terms_rev` | integer ≥ 1 | on `raised`, `amended`, `settled` | On need records, the terms version (1 on `raised`, increasing by one on each `amended`). On a settlement, the terms version it was made against. On a claim or note (optional), the terms version it refers to. |
-| `terms_digest` | string | on `settled` | The terms digest (below) of the need record the settlement was made against, so that a settlement cannot be carried over to other terms at the same `terms_rev` (§6). |
+| `terms_digest` | string | on `settled` | The terms digest (below) of the need record the settlement was made against, so that a settlement cannot be carried over to other terms at the same `terms_rev` (§6). A value not in the digest's form makes the record invalid, not stale. |
 | `outcome` | string | on `settled`, `claimed` | What the settlement says or the claim asserts; values defined by the extension. |
 | `authority` | object | on `settled` | §5. |
 | `evidence` | object | no | §5. |
@@ -208,9 +208,11 @@ IEEE 754 doubles) that follows the rules of this section and of its extension;
 
 Receivers MUST ignore members they do not recognise. Senders MAY add members; names beginning with `x_` are reserved
 for private extensions. Every number in a record MUST be an integer between −(2^53 − 1) and 2^53 − 1, written
-without a fraction or an exponent, so that every receiver serialises it alike (§10). `terms.due`, where an extension
-defines it, MUST be a calendar date. Every string member this family defines, other than `note` and `context`,
-contains a character that is not whitespace.
+without a fraction or an exponent, so that every receiver serialises it alike (§10). `-0` is the integer 0. `terms.due`,
+where an extension defines it, MUST be a calendar date. A member the table above defines is held to its stated form on
+a record of any core type that carries it (§11 says what holds for a module record): a `note` with a non-date
+`terms.due` or a malformed `terms_digest`, or a `withdrawn`, `reopened` or `related` with `terms_rev: 0`, is invalid.
+Every string member this family defines, other than `note` and `context`, contains a character that is not whitespace.
 
 **Terms digest.** The terms digest of a need record (`raised` or `amended`) is `sha-256:` followed by the lowercase
 hexadecimal SHA-256 of the UTF-8 bytes of the RFC 8785 serialisation of the JSON object whose members are exactly
@@ -250,7 +252,9 @@ therefore leaves `type` open, and the extension's table decides which types are 
 For a module pair the extension assigns no schema of its own: receivers apply the core record schema, and the module's
 schema is one of its structural rules (§11). A record whose `ph` is not the core version its `ext` names is invalid. A
 receiver that does not implement the extension or version named in `ext` MUST NOT act on the record; it SHOULD consume
-it without error and MAY report it. The schemas use JSON Schema draft 2020-12 restricted to `type`, `required`,
+it without error and MAY report it. A receiver judges `ph` against `ext` only for a version it implements:
+`decisions/0.5` with `ph: "0.6"` is invalid for a receiver that implements 0.5, and kept, not acted on, for one that
+doesn't. The schemas use JSON Schema draft 2020-12 restricted to `type`, `required`,
 `properties`, `enum`, `const`, `pattern` (an ECMAScript regular expression with Unicode (`u`) semantics, in which `$`
 matches only at the end of the string), `items` and `$ref` (a relative path), plus the annotations `$schema`, `$id` (the
 schema's path from the family's root, against which `$ref` resolves), `title` and `description`, so that a small
@@ -293,7 +297,7 @@ naming the natural person who acted for it; this is a validity rule, evaluated u
 
 | Member | Meaning |
 |---|---|
-| `presented` | Digest (`sha-256:` + lowercase hex), opaque to receivers, of exactly what was shown to the person who decided or confirmed: the terms at `terms_rev` and any options or consequences the principal side displayed (§9). |
+| `presented` | Digest (`sha-256:` + lowercase hex), opaque to receivers, of exactly what was shown to the person who decided or confirmed: the terms at `terms_rev` and any options or consequences the principal side displayed (§9). Only its content is opaque: a value not in this form makes the record invalid. |
 | `proposal` | For `confirmed`: id of the record, or digest of the content, that was confirmed. |
 | `basis` | For `attested`, and on claims: what the evidence was, in words. |
 
@@ -321,7 +325,8 @@ Each register is folded separately, over all its records a receiver holds, regar
   greater `id` in Unicode code-point order. If there is no head (`supersedes` links form a cycle), the same rule
   applies to all records of the register.
 - There is a **conflict** in the register when there is more than one head, or a cycle (a record that lists itself
-  in `supersedes` is a cycle). Receivers MUST use the current record and SHOULD report the conflict to a person.
+  in `supersedes` is a cycle). A record that lists itself names only itself: a record of another type with that id
+  stays a head. Receivers MUST use the current record and SHOULD report the conflict to a person.
 
 A requester's `amended` and `withdrawn` MUST list the item's current need record in `supersedes`, and every
 principal-side `settled` or `reopened` made while the settlement register holds records MUST list its current record.
@@ -337,7 +342,7 @@ From the two current records, the item's state is:
 
 | Settlement (current) | Need (current) | State |
 |---|---|---|
-| `settled` | any, or none | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the highest `terms_rev` among the held `raised` and `amended`, or if the current need record is a `raised` or `amended` with the same `terms_rev` and a terms digest other than its `terms_digest` (a current `withdrawn` is compared by `terms_rev` only). |
+| `settled` | any, or none | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the highest `terms_rev` among the held `raised` and `amended`, or if the current need record is a `raised` or `amended` with the same `terms_rev` and a terms digest other than its `terms_digest` (a current `withdrawn` is compared by `terms_rev` only). A `terms_rev` that a `withdrawn` carries isn't counted in that highest. |
 | none, or `reopened` | `raised` or `amended` | **open** |
 | none, or `reopened` | `withdrawn` | by the extension's policy (§11): **open** under the *keep* policy (the principal side keeps presenting it and asks the principal), **withdrawn** under the *stop* policy (it is no longer presented) |
 | none, or `reopened` | none | **unknown**: no need record is held yet |
@@ -444,7 +449,8 @@ decides.
   a crash. A sender MUST NOT reuse an id for a different record. Ids are scoped by `origin` so that no party can
   displace another role's record by reusing its id; every reference to an id (`supersedes`, `adopts`, and those a
   module defines) names a record of the origin that reference implies (the register's owner, a claimant, the
-  principal side), or of the origin it states.
+  principal side), or of the origin it states. An id in `supersedes` or `adopts` has the form of an `id` (§4), whether
+  or not a record with that id is held.
 - Receivers MUST discard a record identical to one they have already processed with the same (`ext` name, `project`,
   `origin`, `id`). A record that fails validation, or names a version the receiver does not implement (§4, kept as §6
   says), is not processed: it is ignored, and does not block a valid record with the same id. A receiver that sees an id
@@ -594,7 +600,10 @@ its conformance.
 4. A party that implements both versions MUST NOT make, about an item whose counterpart is configured for N−1, a record
    that has no valid N−1 form.
 
-**Change log.** 0.6 (2026-11-05): a stabilizing release. `target.ext` is the extension's name and `target.project`
+**Change log.** 0.6.2 (records keep `ph` and `ext` at "0.6"): fixtures and clarifying sentences record readings the
+listed implementations share (§4, §5.2, §6, §10, Acts §2, Decisions §2 and §3); no rule or schema changes.
+
+0.6 (2026-11-05): a stabilizing release. `target.ext` is the extension's name and `target.project`
 follows the project pattern (§7), so 0.5 targets that differed only in the version, or in members 0.6 does not define,
 identify one relation. Held records are defined (§6). Mixed versions covers only N−1 and N; a converting party is
 configured for N and holds converted forms; 0.5 ↔ 0.6 conversion is record-local; a change of meaning renames the
@@ -666,7 +675,8 @@ Open issues, to be specified later:
   principal side that signs every decision a person makes (0.4 §5.2 and §12 had a first version).
 - **Ending a transition.** How a party stops speaking N−1, what happens to the records it holds in N−1 (received or
   emitted), and to N−1 records still in transit, is not specified yet. It is to be designed together with minor
-  versions (below), using what implementations report from the 0.5 to 0.6 upgrade.
+  versions (below), using what implementations report from the 0.5 to 0.6 upgrade. Two implementations still hold
+  records older than N−1 that open items depend on, and a receiver can't learn a counterpart's version before sending.
 - **Minor versions.** How 1.x versions add record types, outcome values and members so that older receivers can
   handle them is to be designed for 1.0; conversions between versions should remain functions of the record alone.
 

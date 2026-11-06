@@ -60,7 +60,7 @@ which also defines *principal*, *principal side*, *requester*, *delegate*, *item
 - **Keys** are assigned by the requester, unique among the decisions its project raises. They are not derived from
   the text: raising the same text again is a new decision.
 - **Settlement outcomes:** `decided` (carries `answer`) and `dismissed` (no answer is needed; the `note` SHOULD say
-  why).
+  why). A `dismissed` can still carry `answer`, and the settlement view shows it (core §6).
 - **Claim outcomes:** `decided` (carries `answer`): someone heard the principal decide, for example in the
   requester's own session.
 - **Attested settlements:** the principal side MUST NOT settle a decision `attested` (including by adopting a claim,
@@ -92,7 +92,7 @@ Records use the [core record](../core/SPEC.md#4-records) with `ext: "decisions/0
 | `approved` | `principal` | (a [Criteria](../criteria/SPEC.md) pair) | none here: receivers check it as core §11 says, and only receivers that implement Criteria act on it |
 
 Validity rules (core §4): option ids are unique within the terms; option ids and `answer.option` are 1–64 characters
-without whitespace; `decided` carries `answer`.
+without whitespace; an option's `label` is a string; `decided` carries `answer`.
 
 If `answer.option` is present, the principal side MUST make it one of the options at the `terms_rev` it records. A
 receiver that finds it is not, or cannot check because it never saw the terms, MUST still accept the settlement, treat

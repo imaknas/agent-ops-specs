@@ -57,3 +57,13 @@ draft under core §14.
 *Note on 0.6.1 (non-normative):* 0.6.1 strengthens the conformance suites and corrects the reference code where it
 disagreed with core §4: it accepted offset minutes above 59, rejected year 0000, and crashed on non-object members. The
 reference therefore passes the new fixtures only from 0.6.1.
+
+*Note on 0.6.2 (non-normative):* 0.6.2 records readings from the [open readings](OPEN-READINGS.md), as fixtures and short
+clarifying sentences: a member core §4's table defines keeps its stated form on every core type, including `terms_rev`
+at least 1 and `terms.due` a calendar date; `option.label` is a string; the form of `evidence.presented` and
+`terms_digest`; the form of an id in `supersedes` and `adopts`; `-0` is the integer 0; `dismissed` can carry `answer`;
+`reopened` with `supersedes: []` is valid; `:60` is valid at any minute, and with a fraction also compares as the last
+microsecond of its minute; a `withdrawn`'s `terms_rev` doesn't count towards the highest; a record that lists itself
+names only itself; U+2028 is allowed in Acts `terms.text`; `ph` is judged against `ext` only for a version a receiver
+implements; and an unknown member may contain only whitespace. All listed implementations already behave this way
+(Muninn after its fix to that last case). The reference code didn't change.

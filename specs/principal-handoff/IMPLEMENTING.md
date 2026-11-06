@@ -89,7 +89,8 @@ item:
 
 1. **`ext` names an extension or version you don't implement:** keep it, do not act on it (core §4, §6).
 2. **Invalid:** ignore it. It must not block a valid record with the same id (core §10). A `ph` that isn't the core
-   version `ext` names makes the record invalid.
+   version `ext` names makes the record invalid; step 1 has already set aside any `ext` you don't implement, whatever
+   its `ph`.
 3. **Identical to one you have, under the same (extension name, `project`, `origin`, `type`, `id`):** discard it. A
    record never displaces one of another type.
 4. **Same five values, different content:** keep the one whose RFC 8785 serialisation is greater in code-point order,
@@ -104,16 +105,16 @@ characters as code points, and take whitespace to be ECMAScript's, which include
 not (core §1, §4). Then check what a schema can't say:
 
 - [ ] The record is I-JSON, and its numbers are integers within ±(2^53 − 1) written without a fraction or exponent,
-      anywhere in the record (core §4). Check this on the raw text: most JSON parsers silently keep the last duplicate
-      member and turn `1.0` and `1e2` into `1` and `100`.
-- [ ] `ts` is a real RFC 3339 instant with at most six fractional digits (core §4). `terms.due` is a real calendar
-      date.
+      anywhere in the record (core §4). `-0` is the integer 0. Check this on the raw text: most JSON parsers silently
+      keep the last duplicate member and turn `1.0` and `1e2` into `1` and `100`.
+- [ ] `ts` is a real RFC 3339 instant with at most six fractional digits (core §4). `:60` is valid at any minute: don't
+      check whether a leap second occurred. `terms.due` is a real calendar date, on any type that carries it.
 - [ ] `by` is not the principal identifier (R6).
 - [ ] The transport authenticated `by`, in a role that may emit this record (core §13). The fixtures can't test this
       one.
 - [ ] The (`type`, `origin`) pair is one Decisions §3 lists: `raised`, `amended`, `withdrawn` only from `requester`;
       `settled`, `reopened` only from `principal`.
-- [ ] `amended.terms_rev` ≥ 2; any other `terms_rev` ≥ 1 (core §4, §6).
+- [ ] `amended.terms_rev` ≥ 2; any other `terms_rev` ≥ 1, on any type that carries it (core §4, §6).
 - [ ] `settled.authority` follows core §5.1: `principal` and `confirmed` have the principal as `decider`, and
       `confirmed` has `evidence.proposal`; `delegated` has `under` and a `chain` from the principal to a `decider` who
       is not the principal; `attested` has `evidence.basis` and a `decider` who is not the principal. A legal-person
@@ -152,7 +153,9 @@ else:
 ```
 
 `ts` values compare as instants with offsets applied, and every fractional digit counts: `10:00:00+08:00` equals
-`02:00:00Z`. A record that lists itself in `supersedes` is reported as a conflict, and stays a head.
+`02:00:00Z`. Any `:60` compares as the last microsecond of its minute, so `:60.5` equals `:59.999999`. A record that
+lists itself in `supersedes` is reported as a conflict, and stays a head; it names only itself, so a record of another
+type with that id stays a head too. A `terms_rev` on a `withdrawn` doesn't count towards the highest.
 
 **The terms digest** (core §4) is `sha-256:` + the lowercase hex SHA-256 of the UTF-8 bytes of the
 [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785) serialisation of an object with exactly `ext` (name only), `project`,
@@ -186,14 +189,17 @@ terms you have since changed.
 
 - Apply it by judgement: decide what in your project changes. Don't apply answers mechanically (Decisions §5). If
   `answer.option` names no option you know, `answer.text` is authoritative (Decisions §3).
-- `dismissed` means no answer is needed. Stop waiting; raise a new decision if the need returns.
+- `dismissed` means no answer is needed, though it can carry one, which the settlement view shows. Stop waiting; raise
+  a new decision if the need returns.
 - A settlement can be replaced or reopened later, because the principal changed their mind. If you acted on an earlier
   answer, review what you did. The same goes for a stale settlement (Decisions §5).
 - Silence means nothing. A due date passing, a timeout or a closed session changes no state (core R4).
 
 ## 7. Check your work
 
-The fixtures are JSON and don't depend on any language. Run them from `decisions/conformance/` and `core/conformance/`:
+The fixtures are JSON and don't depend on any language. Run them from `decisions/conformance/` and `core/conformance/`,
+as a receiver of 0.6 alone: a record of another version is kept and not acted on, even if you also implement that
+version.
 
 | File | What to do | What must match |
 |---|---|---|
