@@ -19,7 +19,7 @@ alone, by the same author's tools, so it is no independent implementation. Brunn
 | Case | One reading | Other reading | Reference | Second reading | Brunna | Muninn |
 |---|---|---|---|---|---|---|
 | `ext` of `decisions/0.6.1`, or `decisions` | Invalid: not name and two-part version | Kept, not acted on | Invalid | Invalid | Kept | Kept |
-| A member defined for other types, on a record that doesn't list it: `answer` or `restore_text` on a `note`, a `note` whose `authority` breaks core §5.1, an unknown `outcome` on a `note`; `terms_rev: 0` or a bad `due` on the module record `approved` | Ignored as an unknown member | Held to its definition | Ignored | Not asked | Ignored (`answer` on a `note`) | Not asked |
+| A member defined for other types, on a core type that doesn't list it: `answer` or `restore_text` on a `note`; an extension's or core §5's and §7's rules on a type they don't name, such as a `note` whose `authority.decider` breaks core §5.1, a `target` with both `uri` and `key`, or an `outcome` the extension doesn't define. The core record schema, `terms_rev` and `terms.due` are not open: they hold on every core type (core §4) | Ignored as an unknown member | Held to its definition | Ignored, except Acts' single-line `terms.text` | Not asked | Ignored (`answer` on a `note`) | Not asked |
 | A byte order mark at the start of the text (RFC 8259 "MAY ignore") | Rejected | Ignored | Rejected | Rejected | Rejected in text, ignored in bytes | Rejected |
 
 On the `ext` case neither reading acts on the record, so no state differs.
@@ -28,7 +28,8 @@ On the `ext` case neither reading acts on the record, so no state differs.
 
 - Core §6's records a party "emitted" carry no validity condition, unlike those it has kept. Brunna still validates its
   own.
-- Core §14 leaves out records older than N−1. Both brunna and Muninn still read them.
+- Core §14 leaves out records older than N−1. Both brunna and Muninn still hold and read them, and open items depend on
+  them; a party can't learn a counterpart's version before sending.
 
 ## Suite format
 

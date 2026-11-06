@@ -49,9 +49,10 @@ maintainers make no breaking change to core, Acts, Acts Markdown, Decisions, or 
 keeps `ph` and `ext` at "0.6" and changes only wording and examples, always corrects schemas and fixtures that are in
 error under core §4, and adds new fixtures only where every implementation listed as passing the 0.6 suites (in [Acts
 §10](acts/SPEC.md#10-implementations), which lists both extensions) already passes them. A breaking change is anything
-that changes validity, held records, state or conversion results for some set of records, or adds or changes a MUST. A
-defect that can only be fixed by a breaking change is fixed in 0.7, which becomes the release candidate and restarts the
-count. 1.0 is decided once both conditions hold, and is reached through core §14's Mixed versions; it may still be a
+that changes validity, held records, state or conversion results for some set of records, or adds or changes a MUST.
+Choosing among readings the text leaves open, where all implementations listed as passing the 0.6 suites agree, isn't a
+breaking change. A defect that can only be fixed by a breaking change is fixed in 0.7, which becomes the release
+candidate and restarts the count. 1.0 is decided once both conditions hold, and is reached through core §14's Mixed versions; it may still be a
 draft under core §14.
 
 *Note on 0.6.1 (non-normative):* 0.6.1 strengthens the conformance suites and corrects the reference code where it
@@ -59,11 +60,13 @@ disagreed with core §4: it accepted offset minutes above 59, rejected year 0000
 reference therefore passes the new fixtures only from 0.6.1.
 
 *Note on 0.6.2 (non-normative):* 0.6.2 records readings from the [open readings](OPEN-READINGS.md), as fixtures and short
-clarifying sentences: a member core §4's table defines keeps its stated form on every core type, including `terms_rev`
-at least 1 and `terms.due` a calendar date; `option.label` is a string; the form of `evidence.presented` and
-`terms_digest`; the form of an id in `supersedes` and `adopts`; `-0` is the integer 0; `dismissed` can carry `answer`;
-`reopened` with `supersedes: []` is valid; `:60` is valid at any minute, and with a fraction also compares as the last
-microsecond of its minute; a `withdrawn`'s `terms_rev` doesn't count towards the highest; a record that lists itself
-names only itself; U+2028 is allowed in Acts `terms.text`; `ph` is judged against `ext` only for a version a receiver
-implements; and an unknown member may contain only whitespace. All listed implementations already behave this way
-(Muninn after its fix to that last case). The reference code didn't change.
+clarifying sentences: the core record schema, `terms_rev` of at least 1 and a calendar-date `terms.due` hold on every
+core type; `option.label` is a string; the form of `evidence.presented` and `terms_digest`; the form of an id in
+`supersedes` and `adopts`; `-0` is the integer 0; `dismissed` can carry `answer`; `reopened` with `supersedes: []` is
+valid; `:60` is valid at any minute, and with a fraction also compares as the last microsecond of its minute; a
+`withdrawn`'s `terms_rev` doesn't count towards the highest; a record's own id in its `supersedes` names only that
+record; U+2028 is allowed in Acts `terms.text`; `ph` is judged against `ext` only for a version a receiver implements;
+and an unknown member may contain only whitespace. This is how the listed implementations read these cases (Muninn after
+its fix to that last case); the 0.6.2 tag is made only after they have passed its suites. The reference now computes the
+same `conflict` in every arrival order when records of different types share an id, and its runners compare
+`records.json` in three values.

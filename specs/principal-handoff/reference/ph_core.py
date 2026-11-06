@@ -9,6 +9,7 @@ Standard library only, Python >= 3.11. Extensions plug in through an Ext descrip
   Config(principal, legal=False)                   the configured principal (core R6)
   parse(text)                                      -> (record or None, [errors]): the strict reading of a record's text
   validate(record, ext, config)                    -> (type or None, [errors])
+  classify(record, ext, config)                    -> "valid", "invalid" or "kept" (a version ext does not implement)
   fold(records, ext, config)                       -> the item's state, independent of arrival order
   settlement_view(records, ext, config)            -> the part of the state a requester computes (core section 12)
   terms_digest(need_record)                        -> "sha-256:<hex>" over the item and its terms (core section 4)
@@ -43,6 +44,7 @@ OWNER = {"raised": {"requester"}, "amended": {"requester"}, "withdrawn": {"reque
 # core section 7: which role emits each relation kind
 RELATION_ORIGIN = {"same_as": "principal", "derived_from": "requester", "replaced_by": "requester"}
 VIEW = ("settlement", "outcome", "answer", "authority", "stale")  # the settlement view (core section 6)
+EXT_FORM = re.compile(r"[a-z][a-z0-9-]*/[0-9]+\.[0-9]+")  # core section 4: name and two-part version
 
 
 @dataclass(frozen=True)
@@ -188,9 +190,18 @@ def _relation(r: dict) -> list[str]:
 
 
 def implemented(r: dict, e: Ext) -> bool:
-    """core section 4: whether the record names the extension and version e implements; one that does not is kept
-    and not acted on (core section 6)."""
-    return r.get("ext") == e.name and r.get("ph") == e.name.split("/")[1]
+    """core section 4: whether ext names the extension and version e implements. ph doesn't enter into it: a receiver
+    judges ph against ext only for a version it implements."""
+    return r.get("ext") == e.name
+
+
+def classify(r: dict, e: Ext, cfg: Config) -> str:
+    """core sections 4 and 6: "kept" for an ext naming a version e does not implement, which is not acted on, whatever
+    its ph; otherwise "valid" or "invalid". An ext without the form of name and version is invalid in this reading."""
+    x = r.get("ext")
+    if isinstance(x, str) and EXT_FORM.fullmatch(x) and not implemented(r, e):
+        return "kept"
+    return "invalid" if validate(r, e, cfg)[1] else "valid"
 
 
 def _name(r: dict) -> str | None:
@@ -271,25 +282,31 @@ def _register(records: list[dict]) -> tuple[dict | None, bool]:
     """core section 6: current record (latest head, ties by greater id) and whether there is a conflict."""
     if not records:
         return None, False
-    by_id = {r["id"]: r for r in records}
-    replaced = {s for r in records for s in r.get("supersedes", []) if s in by_id and s != r["id"]}  # self: still a head
+    replaced = {s for r in records for s in r.get("supersedes", []) if s != r["id"]}  # its own id: still a head
     heads = [r for r in records if r["id"] not in replaced] or records
-    return _latest(heads), len(heads) > 1 or _cycle(by_id)
+    return _latest(heads), len(heads) > 1 or _cycle(records)
 
 
-def _cycle(by_id: dict) -> bool:
-    for start in by_id.values():
-        seen, stack = set(), [start]
+def _cycle(records: list[dict]) -> bool:
+    """Whether a record reaches itself through supersedes. Records of different types can share an id (core section 10),
+    so a record is its (type, id); an id names every record with it, except that a record's own id names only itself
+    (core section 6)."""
+    with_id: dict[str, list[dict]] = {}
+    for r in records:
+        with_id.setdefault(r["id"], []).append(r)
+
+    def named(r: dict) -> list[dict]:
+        return [x for s in r.get("supersedes", []) for x in ([r] if s == r["id"] else with_id.get(s, []))]
+
+    for start in records:
+        seen, stack = set(), named(start)
         while stack:
             r = stack.pop()
-            if r["id"] in seen:
-                continue
-            seen.add(r["id"])
-            for s in r.get("supersedes", []):
-                if s == start["id"]:
-                    return True
-                if s in by_id:
-                    stack.append(by_id[s])
+            if r is start:
+                return True
+            if (r["type"], r["id"]) not in seen:
+                seen.add((r["type"], r["id"]))
+                stack.extend(named(r))
     return False
 
 

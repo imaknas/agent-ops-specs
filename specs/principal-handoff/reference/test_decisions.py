@@ -26,14 +26,11 @@ class Conformance(unittest.TestCase):
             with self.subTest(c["id"]):
                 cfg = Config(s["principal"], c.get("principal_type", s.get("principal_type")) == "legal")
                 name, errs = decisions.validate(c["record"], cfg)
-                if c["valid"] is None:  # an extension or version not implemented: kept, not acted on (core sections 4, 6)
-                    self.assertFalse(ph_core.implemented(c["record"], decisions.EXT))
-                elif c["valid"]:
+                # null: an extension or version not implemented, kept and not acted on (core sections 4, 6)
+                self.assertEqual(decisions.classify(c["record"], cfg), {True: "valid", False: "invalid", None: "kept"}[c["valid"]], errs)
+                if c["valid"]:
                     # a module pair has no schema of its own (section 3, core section 4)
                     self.assertEqual((None if name in decisions.EXT.modules else name, errs), (c["schema"], []))
-                    self.assertTrue(ph_core.implemented(c["record"], decisions.EXT))
-                else:
-                    self.assertTrue(errs, f"expected invalid, validated against {name}")
 
     def test_relations(self):
         s = suite("relations.json")

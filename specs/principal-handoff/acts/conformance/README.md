@@ -17,7 +17,8 @@ fixtures of the [Acts Markdown binding](../../acts-markdown/SPEC.md) are in
   case; it is metadata and changes no expected result. Valid records name the schema they validate
   against; invalid ones fail the schema or a validity rule of core §4–§7 or SPEC §3. `valid` is `null` for a record of
   an extension or version the receiver does not implement, which it keeps without acting on it (core §4, §6); the suite
-  runs as a receiver of its own version alone. Records with Evidence content are in the
+  runs as a receiver of its own version alone, and a runner compares three values, valid, invalid and kept, since
+  judging `ph` before `ext` gives invalid where `null` is expected. Records with Evidence content are in the
   [Evidence suite](../../evidence/conformance/).
 - `lifecycle.json` (core §6, SPEC §2): `{id, spec, records, expect}`; `records` are all the records one receiver holds
   for one act, in arrival order. `expect` is `{state, outcome, settlement, authority, answer, stale, withdrawn,

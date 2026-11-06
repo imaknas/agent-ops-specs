@@ -119,13 +119,10 @@ class Records(unittest.TestCase):
             with self.subTest(c["id"]):
                 cfg = Config(s["principal"], c.get("principal_type", s.get("principal_type")) == "legal")
                 name, errs = acts.validate(c["record"], cfg)
-                if c["valid"] is None:  # an extension or version not implemented: kept, not acted on (core sections 4, 6)
-                    self.assertFalse(ph_core.implemented(c["record"], acts.EXT))
-                elif c["valid"]:
+                # null: an extension or version not implemented, kept and not acted on (core sections 4, 6)
+                self.assertEqual(acts.classify(c["record"], cfg), {True: "valid", False: "invalid", None: "kept"}[c["valid"]], errs)
+                if c["valid"]:
                     self.assertEqual((name, errs), (c["schema"], []))
-                    self.assertTrue(ph_core.implemented(c["record"], acts.EXT))
-                else:
-                    self.assertTrue(errs, f"expected invalid, validated against {name}")
 
     def test_relations(self):
         s = suite("relations.json")

@@ -1,6 +1,7 @@
 """Reference reading of Principal Handoff Decisions 0.6 (decisions/SPEC.md sections 2 to 4), on ph_core.
 
   validate(record, config)        -> (type or None, [errors])
+  classify(record, config)        -> "valid", "invalid" or "kept" (a version not implemented)
   fold(records, config)           -> the decision's state (core section 6; a withdrawn need: no longer presented)
   settlement_view(records, config) -> what a requester computes (core section 12)
 """
@@ -27,6 +28,10 @@ EXT = ph_core.ext("decisions/0.6", "stop", _check, modules={"approved": {"princi
 
 def validate(r: dict, cfg: ph_core.Config) -> tuple[str | None, list[str]]:
     return ph_core.validate(r, EXT, cfg)
+
+
+def classify(r: dict, cfg: ph_core.Config) -> str:
+    return ph_core.classify(r, EXT, cfg)
 
 
 def fold(records: list[dict], cfg: ph_core.Config) -> dict:

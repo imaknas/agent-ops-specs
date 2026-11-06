@@ -453,6 +453,10 @@ def validate(r: dict, cfg: ph_core.Config) -> tuple[str | None, list[str]]:
     return ph_core.validate(r, EXT, cfg)
 
 
+def classify(r: dict, cfg: ph_core.Config) -> str:
+    return ph_core.classify(r, EXT, cfg)
+
+
 def fold(records: list[dict], cfg: ph_core.Config) -> dict:
     """State of one act. A withdrawn need leaves it open: the principal is asked (acts/SPEC.md section 2)."""
     return ph_core.fold(records, EXT, cfg)

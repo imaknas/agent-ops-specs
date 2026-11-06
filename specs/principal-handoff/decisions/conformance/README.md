@@ -14,7 +14,8 @@ configured principal identifier (core R6).
   ones fail the schema or a validity rule: ownership (core R1–R3, R6), authority (core §5.1), the
   record rules of core §4 and §7, and that `decided` carries an `answer`. `valid` is `null` for a record of an extension
   or version the receiver does not implement, which it keeps without acting on it (core §4, §6); the suite runs as a
-  receiver of its own version alone. Records with module
+  receiver of its own version alone, and a runner compares three values, valid, invalid and kept, since judging `ph`
+  before `ext` gives invalid where `null` is expected. Records with module
   content are in the [Evidence](../../evidence/conformance/) and [Criteria](../../criteria/conformance/) suites; the
   `approved` cases here check only the pair and the core checks (core §11).
 - `lifecycle.json` (core §6, SPEC §2 and §4): `{id, spec, records, expect}`; `records` are all the records one

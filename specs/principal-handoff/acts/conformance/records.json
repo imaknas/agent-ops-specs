@@ -4015,7 +4015,7 @@
       }
     },
     {
-      "id": "supersedes-with-a-blank-id",
+      "id": "supersedes-with-an-id-with-whitespace",
       "spec": "core §10",
       "valid": false,
       "schema": null,
@@ -4124,7 +4124,7 @@
       }
     },
     {
-      "id": "adopts-with-a-blank-id",
+      "id": "adopts-with-an-id-with-whitespace",
       "spec": "core §10",
       "valid": false,
       "schema": null,

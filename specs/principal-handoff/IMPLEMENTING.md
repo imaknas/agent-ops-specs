@@ -108,13 +108,13 @@ not (core §1, §4). Then check what a schema can't say:
       anywhere in the record (core §4). `-0` is the integer 0. Check this on the raw text: most JSON parsers silently
       keep the last duplicate member and turn `1.0` and `1e2` into `1` and `100`.
 - [ ] `ts` is a real RFC 3339 instant with at most six fractional digits (core §4). `:60` is valid at any minute: don't
-      check whether a leap second occurred. `terms.due` is a real calendar date, on any type that carries it.
+      check whether a leap second occurred. `terms.due` is a real calendar date, on any core type that carries it.
 - [ ] `by` is not the principal identifier (R6).
 - [ ] The transport authenticated `by`, in a role that may emit this record (core §13). The fixtures can't test this
       one.
 - [ ] The (`type`, `origin`) pair is one Decisions §3 lists: `raised`, `amended`, `withdrawn` only from `requester`;
       `settled`, `reopened` only from `principal`.
-- [ ] `amended.terms_rev` ≥ 2; any other `terms_rev` ≥ 1, on any type that carries it (core §4, §6).
+- [ ] `amended.terms_rev` ≥ 2; any other `terms_rev` ≥ 1, on any core type that carries it (core §4, §6).
 - [ ] `settled.authority` follows core §5.1: `principal` and `confirmed` have the principal as `decider`, and
       `confirmed` has `evidence.proposal`; `delegated` has `under` and a `chain` from the principal to a `decider` who
       is not the principal; `attested` has `evidence.basis` and a `decider` who is not the principal. A legal-person
@@ -154,8 +154,8 @@ else:
 
 `ts` values compare as instants with offsets applied, and every fractional digit counts: `10:00:00+08:00` equals
 `02:00:00Z`. Any `:60` compares as the last microsecond of its minute, so `:60.5` equals `:59.999999`. A record that
-lists itself in `supersedes` is reported as a conflict, and stays a head; it names only itself, so a record of another
-type with that id stays a head too. A `terms_rev` on a `withdrawn` doesn't count towards the highest.
+lists itself in `supersedes` is reported as a conflict, and stays a head; its own id there names only that record, so a
+record of another type with that id stays a head too. A `terms_rev` on a `withdrawn` doesn't count towards the highest.
 
 **The terms digest** (core §4) is `sha-256:` + the lowercase hex SHA-256 of the UTF-8 bytes of the
 [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785) serialisation of an object with exactly `ext` (name only), `project`,

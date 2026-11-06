@@ -209,10 +209,8 @@ IEEE 754 doubles) that follows the rules of this section and of its extension;
 Receivers MUST ignore members they do not recognise. Senders MAY add members; names beginning with `x_` are reserved
 for private extensions. Every number in a record MUST be an integer between −(2^53 − 1) and 2^53 − 1, written
 without a fraction or an exponent, so that every receiver serialises it alike (§10). `-0` is the integer 0. `terms.due`,
-where an extension defines it, MUST be a calendar date. A member the table above defines is held to its stated form on
-a record of any core type that carries it (§11 says what holds for a module record): a `note` with a non-date
-`terms.due` or a malformed `terms_digest`, or a `withdrawn`, `reopened` or `related` with `terms_rev: 0`, is invalid.
-Every string member this family defines, other than `note` and `context`, contains a character that is not whitespace.
+where an extension defines it, MUST be a calendar date. The core record schema, `terms_rev` of at least 1 and a
+calendar-date `terms.due` hold on any core type that carries the member. Every string member this family defines, other than `note` and `context`, contains a character that is not whitespace.
 
 **Terms digest.** The terms digest of a need record (`raised` or `amended`) is `sha-256:` followed by the lowercase
 hexadecimal SHA-256 of the UTF-8 bytes of the RFC 8785 serialisation of the JSON object whose members are exactly
@@ -325,8 +323,8 @@ Each register is folded separately, over all its records a receiver holds, regar
   greater `id` in Unicode code-point order. If there is no head (`supersedes` links form a cycle), the same rule
   applies to all records of the register.
 - There is a **conflict** in the register when there is more than one head, or a cycle (a record that lists itself
-  in `supersedes` is a cycle). A record that lists itself names only itself: a record of another type with that id
-  stays a head. Receivers MUST use the current record and SHOULD report the conflict to a person.
+  in `supersedes` is a cycle). A record's own id in its `supersedes` names only that record, not a record of another
+  type with that id; any other id there names every such record of the register (§10). Receivers MUST use the current record and SHOULD report the conflict to a person.
 
 A requester's `amended` and `withdrawn` MUST list the item's current need record in `supersedes`, and every
 principal-side `settled` or `reopened` made while the settlement register holds records MUST list its current record.
@@ -342,7 +340,7 @@ From the two current records, the item's state is:
 
 | Settlement (current) | Need (current) | State |
 |---|---|---|
-| `settled` | any, or none | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the highest `terms_rev` among the held `raised` and `amended`, or if the current need record is a `raised` or `amended` with the same `terms_rev` and a terms digest other than its `terms_digest` (a current `withdrawn` is compared by `terms_rev` only). A `terms_rev` that a `withdrawn` carries isn't counted in that highest. |
+| `settled` | any, or none | **settled**, with its `outcome`. It is **stale** if its `terms_rev` is lower than the highest `terms_rev` among the held `raised` and `amended`, or if the current need record is a `raised` or `amended` with the same `terms_rev` and a terms digest other than its `terms_digest`; when the current need is `withdrawn`, only the first test applies. |
 | none, or `reopened` | `raised` or `amended` | **open** |
 | none, or `reopened` | `withdrawn` | by the extension's policy (§11): **open** under the *keep* policy (the principal side keeps presenting it and asks the principal), **withdrawn** under the *stop* policy (it is no longer presented) |
 | none, or `reopened` | none | **unknown**: no need record is held yet |
@@ -601,7 +599,8 @@ its conformance.
    that has no valid N−1 form.
 
 **Change log.** 0.6.2 (records keep `ph` and `ext` at "0.6"): fixtures and clarifying sentences record readings the
-listed implementations share (§4, §5.2, §6, §10, Acts §2, Decisions §2 and §3); no rule or schema changes.
+listed implementations share (§4, §5.2, §6, §10, Acts §2, Decisions §2 and §3); no result any listed implementation
+computes changes.
 
 0.6 (2026-11-05): a stabilizing release. `target.ext` is the extension's name and `target.project`
 follows the project pattern (§7), so 0.5 targets that differed only in the version, or in members 0.6 does not define,
@@ -675,8 +674,7 @@ Open issues, to be specified later:
   principal side that signs every decision a person makes (0.4 §5.2 and §12 had a first version).
 - **Ending a transition.** How a party stops speaking N−1, what happens to the records it holds in N−1 (received or
   emitted), and to N−1 records still in transit, is not specified yet. It is to be designed together with minor
-  versions (below), using what implementations report from the 0.5 to 0.6 upgrade. Two implementations still hold
-  records older than N−1 that open items depend on, and a receiver can't learn a counterpart's version before sending.
+  versions (below), using what implementations report from the 0.5 to 0.6 upgrade.
 - **Minor versions.** How 1.x versions add record types, outcome values and members so that older receivers can
   handle them is to be designed for 1.0; conversions between versions should remain functions of the record alone.
 

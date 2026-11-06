@@ -4358,6 +4358,27 @@
         {
           "ph": "0.6",
           "ext": "decisions/0.6",
+          "id": "s0",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T02:00:00Z",
+          "outcome": "decided",
+          "terms_rev": 1,
+          "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          },
+          "answer": {
+            "text": "No"
+          }
+        },
+        {
+          "ph": "0.6",
+          "ext": "decisions/0.6",
           "id": "s1",
           "type": "settled",
           "origin": "principal",
@@ -4381,6 +4402,101 @@
         "state": "settled",
         "outcome": "decided",
         "settlement": "s1",
+        "authority": "principal",
+        "answer": {
+          "text": "Yes"
+        },
+        "stale": false,
+        "withdrawn": false,
+        "terms_rev": 1,
+        "conflict": true,
+        "claims": [],
+        "ignored": []
+      }
+    },
+    {
+      "id": "self-superseding-record-with-a-successor",
+      "spec": "core §6: the reopened s1 lists itself, a cycle whichever record with that id arrives last; s2 names both and is the only head",
+      "records": [
+        {
+          "ph": "0.6",
+          "ext": "decisions/0.6",
+          "id": "r1",
+          "type": "raised",
+          "origin": "requester",
+          "by": "agent:demo",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-27T09:00:00Z",
+          "terms_rev": 1,
+          "terms": {
+            "text": "Which one?"
+          }
+        },
+        {
+          "ph": "0.6",
+          "ext": "decisions/0.6",
+          "id": "s1",
+          "type": "reopened",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T01:00:00Z",
+          "supersedes": [
+            "s1"
+          ]
+        },
+        {
+          "ph": "0.6",
+          "ext": "decisions/0.6",
+          "id": "s1",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T02:00:00Z",
+          "outcome": "decided",
+          "terms_rev": 1,
+          "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          },
+          "answer": {
+            "text": "Yes"
+          }
+        },
+        {
+          "ph": "0.6",
+          "ext": "decisions/0.6",
+          "id": "s2",
+          "type": "settled",
+          "origin": "principal",
+          "by": "ps:assistant",
+          "key": "q-demo-1",
+          "project": "demo",
+          "ts": "2026-10-28T03:00:00Z",
+          "outcome": "decided",
+          "terms_rev": 1,
+          "terms_digest": "sha-256:f4a371d3451432d6dca9a61774d156a1eb725a15e991cc5325d5b65985cbb166",
+          "authority": {
+            "kind": "principal",
+            "decider": "p:owner"
+          },
+          "answer": {
+            "text": "Yes"
+          },
+          "supersedes": [
+            "s1"
+          ]
+        }
+      ],
+      "expect": {
+        "state": "settled",
+        "outcome": "decided",
+        "settlement": "s2",
         "authority": "principal",
         "answer": {
           "text": "Yes"
