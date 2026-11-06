@@ -46,8 +46,8 @@ cd reference && python3 -m unittest
 0.6 is a release candidate. Until an implementation independent of this family's author passes the 0.6 suites of a
 requester or principal side of Acts or Decisions, and at least three months have passed since 0.6 was released, the
 maintainers make no breaking change to core, Acts, Acts Markdown, Decisions, or the Evidence and Criteria modules. 0.6.x
-keeps `ph` and `ext` at "0.6" and changes only wording and examples, always corrects schemas and fixtures that are in
-error under core §4, and adds new fixtures only where every implementation listed as passing the 0.6 suites (in [Acts
+keeps `ph` and `ext` at "0.6" and changes only wording and examples, always corrects schemas, fixtures and reference code that are
+in error under core §4, and adds new fixtures only where every implementation listed as passing the 0.6 suites (in [Acts
 §10](acts/SPEC.md#10-implementations), which lists both extensions) already passes them. A breaking change is anything
 that changes validity, held records, state or conversion results for some set of records, or adds or changes a MUST.
 Choosing among readings the text leaves open, where all implementations listed as passing the 0.6 suites agree, isn't a
@@ -66,7 +66,8 @@ core type; `option.label` is a string; the form of `evidence.presented` and `ter
 valid; `:60` is valid at any minute, and with a fraction also compares as the last microsecond of its minute; a
 `withdrawn`'s `terms_rev` doesn't count towards the highest; a record's own id in its `supersedes` names only that
 record; U+2028 is allowed in Acts `terms.text`; `ph` is judged against `ext` only for a version a receiver implements;
-and an unknown member may contain only whitespace. This is how the listed implementations read these cases (Muninn after
-its fix to that last case); the 0.6.2 tag is made only after they have passed its suites. The reference now computes the
-same `conflict` in every arrival order when records of different types share an id, and its runners compare
-`records.json` in three values.
+and an unknown member may contain only whitespace. This is how brunna and Muninn read these cases (Muninn after its fix to
+that last case), and all listed implementations share one author; the 0.6.2 tag is made only after they have passed its
+suites. The sentence above on choosing among readings is new in 0.6.2. Two defects in the reference code are corrected,
+so it passes these suites only from 0.6.2: `conflict` could depend on arrival order when records of different types
+share an id, and `decisions/0.5` with `ph: "0.6"` was classified invalid, not kept.

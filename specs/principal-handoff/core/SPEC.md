@@ -209,8 +209,9 @@ IEEE 754 doubles) that follows the rules of this section and of its extension;
 Receivers MUST ignore members they do not recognise. Senders MAY add members; names beginning with `x_` are reserved
 for private extensions. Every number in a record MUST be an integer between −(2^53 − 1) and 2^53 − 1, written
 without a fraction or an exponent, so that every receiver serialises it alike (§10). `-0` is the integer 0. `terms.due`,
-where an extension defines it, MUST be a calendar date. The core record schema, `terms_rev` of at least 1 and a
-calendar-date `terms.due` hold on any core type that carries the member. Every string member this family defines, other than `note` and `context`, contains a character that is not whitespace.
+where an extension defines it, MUST be a calendar date. On a record of a version the receiver implements, the forms the
+core record schema gives the members of this table, `terms_rev` of at least 1 and a calendar-date `terms.due` hold on
+any core type that carries the member. Every string member this family defines, other than `note` and `context`, contains a character that is not whitespace.
 
 **Terms digest.** The terms digest of a need record (`raised` or `amended`) is `sha-256:` followed by the lowercase
 hexadecimal SHA-256 of the UTF-8 bytes of the RFC 8785 serialisation of the JSON object whose members are exactly
@@ -324,7 +325,7 @@ Each register is folded separately, over all its records a receiver holds, regar
   applies to all records of the register.
 - There is a **conflict** in the register when there is more than one head, or a cycle (a record that lists itself
   in `supersedes` is a cycle). A record's own id in its `supersedes` names only that record, not a record of another
-  type with that id; any other id there names every such record of the register (§10). Receivers MUST use the current record and SHOULD report the conflict to a person.
+  type with that id; any other id there names every record of the register with that id (§10). Receivers MUST use the current record and SHOULD report the conflict to a person.
 
 A requester's `amended` and `withdrawn` MUST list the item's current need record in `supersedes`, and every
 principal-side `settled` or `reopened` made while the settlement register holds records MUST list its current record.
@@ -599,8 +600,8 @@ its conformance.
    that has no valid N−1 form.
 
 **Change log.** 0.6.2 (records keep `ph` and `ext` at "0.6"): fixtures and clarifying sentences record readings the
-listed implementations share (§4, §5.2, §6, §10, Acts §2, Decisions §2 and §3); no result any listed implementation
-computes changes.
+listed implementations share (§4, §5.2, §6, §10, Acts §2, Decisions §2 and §3). Readings are unchanged; the family
+README names the defects corrected in the reference code and an implementation.
 
 0.6 (2026-11-05): a stabilizing release. `target.ext` is the extension's name and `target.project`
 follows the project pattern (§7), so 0.5 targets that differed only in the version, or in members 0.6 does not define,

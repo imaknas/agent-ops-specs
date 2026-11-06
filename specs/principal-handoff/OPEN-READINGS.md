@@ -24,12 +24,23 @@ alone, by the same author's tools, so it is no independent implementation. Brunn
 
 On the `ext` case neither reading acts on the record, so no state differs.
 
+## State
+
+- Two records of one register with the same id, different types and equal `ts`: `raised` and `withdrawn`, or `settled`
+  and `reopened`. Core §6 breaks a tie by the greater id, which can't separate them, though it promises a result
+  independent of arrival order. The reference's result depends on arrival order. Core §10 already tells a sender not to
+  use one id for two records, so this takes a sender's breach, and settling it changes state.
+- An Acts `settled` carrying `answer`: the reference shows it in the settlement view, though core §6 limits the view to
+  members the extension defines, and Acts defines none.
+
 ## Holding records
 
 - Core §6's records a party "emitted" carry no validity condition, unlike those it has kept. Brunna still validates its
   own.
 - Core §14 leaves out records older than N−1. Both brunna and Muninn still hold and read them, and open items depend on
   them; a party can't learn a counterpart's version before sending.
+- The readings recorded in 0.6.2 are stated for 0.6. Whether a converting party applies them to 0.5 records (a non-date
+  `terms.due` on a `note`) wasn't compared; the reference does.
 
 ## Suite format
 
