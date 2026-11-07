@@ -599,7 +599,7 @@ its conformance.
 4. A party that implements both versions MUST NOT make, about an item whose counterpart is configured for N−1, a record
    that has no valid N−1 form.
 
-**Change log.** 0.6.2 (records keep `ph` and `ext` at "0.6"): fixtures and clarifying sentences record readings the
+**Change log.** 0.6.2 (2026-11-07; records keep `ph` and `ext` at "0.6"): fixtures and clarifying sentences record readings the
 listed implementations share (§4, §5.2, §6, §10, Acts §2, Decisions §2 and §3). Readings are unchanged; the family
 README names the defects corrected in the reference code and an implementation.
 

@@ -178,8 +178,8 @@ The binding's open issues are in Acts Markdown §9.
 | Implementation | Roles | Profiles | Status |
 |---|---|---|---|
 | [`../reference/`](../reference/) in this repository | reader, registrar logic, record validation and state, the Evidence and Criteria modules (no transport) | `en`, `zh-hant` | passes the 0.6 conformance suites of every document |
-| [brunna](https://github.com/imaknas/brunna) | requester, registrar and converting party for Acts; requester and converting party for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.6 and Decisions 0.6; passes the 0.6.1 suites |
-| Muninn, with brunna's built-in owner side | principal side | | implements the principal side of 0.6; Muninn passes `records`, `lifecycle`, `relations`, `raw`, terms-digest and `convert` of 0.6.1 (without Criteria cases) |
+| [brunna](https://github.com/imaknas/brunna) | requester, registrar and converting party for Acts; requester and converting party for Decisions | `zh-hant`, `en` | the reference deployment this document is generalised from; implements Acts 0.6 and Decisions 0.6; passes the 0.6.2 suites for these roles, run as a receiver of 0.6 alone |
+| Muninn, with brunna's built-in owner side | principal side | | implements the principal side of 0.6; Muninn passes `records`, `lifecycle`, `relations`, `raw`, terms-digest and `convert` of 0.6.2 (without Criteria cases), run as a receiver of 0.6 alone |
 
 The reference code, brunna and Muninn share an author, so under core §14 they are not independent: no class of this
 document or of the binding has two independent implementations yet.

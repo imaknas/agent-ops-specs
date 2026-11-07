@@ -66,8 +66,8 @@ core type; `option.label` is a string; the form of `evidence.presented` and `ter
 valid; `:60` is valid at any minute, and with a fraction also compares as the last microsecond of its minute; a
 `withdrawn`'s `terms_rev` doesn't count towards the highest; a record's own id in its `supersedes` names only that
 record; U+2028 is allowed in Acts `terms.text`; `ph` is judged against `ext` only for a version a receiver implements;
-and an unknown member may contain only whitespace. This is how brunna and Muninn read these cases (Muninn after its fix to
-that last case), and all listed implementations share one author; the 0.6.2 tag is made only after they have passed its
-suites. The sentence above on choosing among readings is new in 0.6.2. Two defects in the reference code are corrected,
+and an unknown member may contain only whitespace. This is how brunna and Muninn read these cases, and all listed implementations share one author. Both
+ran these suites before the 0.6.2 tag was made and pass them, after fixing what they found: Muninn the check in that last
+case and `conflict` under arrival order, both of them a record with no `ext` kept instead of invalid. The sentence above on choosing among readings is new in 0.6.2. Two defects in the reference code are corrected,
 so it passes these suites only from 0.6.2: `conflict` could depend on arrival order when records of different types
 share an id, and `decisions/0.5` with `ph: "0.6"` was classified invalid, not kept.
